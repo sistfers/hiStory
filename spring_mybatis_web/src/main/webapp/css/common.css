@@ -1,0 +1,1205 @@
+/* ================================================= */
+/* update : 2008-06-01 choi                                             */
+/* ================================================= */
+/* 1. default                                                              */
+/* 2. LINK                                                      */
+/* 3. TEXT  
+/* 4. TD                                                     */
+/* 5. INPUT&Textbox   
+/* 6. button  
+/* 7. tab                                                      */
+/* ================================================= */
+ 
+
+
+/* 1. Default                                        */
+
+		body {
+			color:#3B100A;
+			font-family: Dotum, sans-serif;
+			font-size : 9pt;
+			scrollbar-face-color:#EBEBEB;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#C8C8C8;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#BCBCBC;
+			scrollbar-track-color:#F3F3F3;
+			margin-left: 0px;
+			margin-top: 0px;
+			scrollbar:yes;
+		}
+
+		TD {
+			color:#666262;
+			font-family: Dotum, sans-serif;
+			font-size : 9pt;
+			line-height:160%;
+			scrollbar-face-color:#EBEBEB;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#C8C8C8;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#BCBCBC;
+			scrollbar-track-color:#F3F3F3;
+			margin : 0 px;
+			
+		}
+		
+
+		TEXTAREA  {
+			font-family: Gulim, sans-serif;
+			font-size: 9pt;
+			line-height:160%;
+			font-weight: normal;
+			font-style: normal;
+			color: #747474;							
+			border: 1px solid #e1e1e1;																
+			margin-left : 0px;
+			margin-right : 0px;
+			padding-top : 2px;
+			padding-bottom : 2px;
+			padding-left : 2px;
+			padding-right : 2px;
+			ime-mode: active;	
+			scrollbar-face-color:#F7F7F7;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#F7F7F7;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#C0C0C0;
+			scrollbar-track-color:#F3F3F3;
+		}
+		
+
+		.textfield {
+			font-family: Dotum, sans-serif;
+			font-size: 9pt;
+			line-height:14px;
+			font-weight: normal;
+			font-style: normal;
+			color: #4D5871;							
+			border: 1px solid #DADADA;
+			background-color : #FFFFFF ;
+			ime-mode: active;			
+			margin-top : 0px;
+			margin-bottom : 0px;													
+			margin-left : 1px;
+			margin-right : 0px;
+	
+			scrollbar-face-color:#EBEBEB;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#C8C8C8;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#BCBCBC;
+			scrollbar-track-color:#F3F3F3;
+		}
+		
+
+		.textfield_m {
+			font-family: Dotum, sans-serif;
+			font-size: 9pt;
+			line-height:14px;
+			text-align: right;
+			font-weight: normal;
+			font-style: normal;
+			color: #4D5871;							
+			border: 1px solid #DADADA;
+			background-color : #FFFFFF ;
+			ime-mode: active;			
+			margin-top : 0px;
+			margin-bottom : 0px;													
+			margin-left : 1px;
+			margin-right : 0px;
+	
+			scrollbar-face-color:#EBEBEB;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#C8C8C8;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#BCBCBC;
+			scrollbar-track-color:#F3F3F3;
+		}
+		
+
+		.textfield_m_i {
+			font-family: Dotum, sans-serif;
+			font-size: 9pt;
+			line-height:14px;
+			text-align: right;
+			font-weight: normal;
+			font-style: normal;
+			color: #4D5871;							
+			border: 1px solid #DADADA;
+			background-color : #EFEFEF ;
+			ime-mode: active;			
+			margin-top : 0px;
+			margin-bottom : 0px;													
+			margin-left : 1px;
+			margin-right : 0px;
+	
+			scrollbar-face-color:#EBEBEB;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#C8C8C8;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#BCBCBC;
+			scrollbar-track-color:#F3F3F3;
+		}
+		
+
+		.textfield_i {
+			font-family: Dotum, sans-serif;
+			font-size: 9pt;
+			line-height:14px;
+			font-weight: normal;
+			font-style: normal;
+			color: #4D5871;							
+			border: 1px solid #DADADA;
+			background-color : #EFEFEF ;
+			ime-mode: active;			
+			margin-top : 0px;
+			margin-bottom : 0px;													
+			margin-left : 1px;
+			margin-right : 0px;
+	
+			scrollbar-face-color:#EBEBEB;
+			scrollbar-highlight-color:#FFFFFF;
+			scrollbar-3dlight-color:#C8C8C8;
+			scrollbar-darkshadow-color:#EEEEEE;
+			scrollbar-shadow-color:#C0C0C0;
+			scrollbar-arrow-color:#BCBCBC;
+			scrollbar-track-color:#F3F3F3;
+		}
+		
+		
+		
+	    .RadioStyle {
+	                            border: 0px;	
+	        }
+	                
+	    .CheckStyle {
+	                            border: 0px;	
+	        }		
+	    img		{
+			border: 0px;
+			} 
+			
+
+
+
+
+
+
+
+
+					
+
+/* 3. Text                                      */
+				
+		.path{
+			font-size: 8pt;
+			color: #9992A2;
+			text-align: right;
+			padding-top: 8px;
+			padding-bottom: 2px;
+			padding-left : 10px;
+			padding-right : 4px;
+		}
+		
+		
+				
+		.top2{
+			font-size: 9pt;
+			color: #6450C5;
+			text-align: right;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			padding-left : 2px;
+			padding-right : 4px;
+		}
+		
+		
+		
+	    .btn_r{
+
+			text-align: right;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 10px;
+			padding-right : 0px;
+		}
+		
+		
+		
+		
+/* -start- t01 (보드01type) */	
+		
+		
+/* ----------t01테이블--------- */
+		
+		
+						
+		.table01{
+			background-color: #A3B0DD;
+			cellspacing : 1px;
+		}
+		
+		
+				
+						
+		.t01{
+			font-size: 9pt;
+			color: #494CAA;
+			text-align: center;
+			padding-top: 4px;
+			padding-bottom: 1px;
+			padding-left : 4px;
+			padding-right : 4px;
+ 			background-repeat: repeat;
+/*-- 		background-image :url("../images/com/td_bg01.gif");  -- */
+ 			background-color:#DCEAF6;
+		}
+
+		
+						
+		.t01_w{
+			font-size: 8pt;
+			color: #494CAA;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: 1px;
+			padding-bottom: 1px;
+			padding-left : 4px;
+			padding-right : 4px;
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		.t01_w2{
+			font-size: 8pt;
+			color: #494CAA;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: 0px;
+			padding-bottom: 2px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}
+
+		
+						
+		.t01_w_out{
+			font-size: 8pt;
+			color: #494CAA;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 4px;
+			padding-right : 4px;
+			
+		}
+
+
+		
+						
+		.t01_w_out_center{
+			font-size: 8pt;
+			color: #494CAA;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 4px;
+			padding-right : 4px;
+			
+		}
+		
+						
+		.t01_w_out_m{
+			font-size: 8pt;
+			color: #494CAA;
+ 			background-color: #ffffff;
+			text-align: right;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 4px;
+			padding-right : 4px;
+			
+		}
+		
+		
+		
+		
+		
+		.t01_w2_tb{
+			font-size: 8pt;
+			color: #1174BA;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: 1px;
+			padding-bottom: 2px;
+			padding-left : 6px;
+			padding-right : 4px;
+		}
+		
+
+		
+						
+		.t_t{
+			font-size: 8pt;
+			color: #4D5871;
+			line-height:90%;
+			text-align: left;
+			padding-top: 0px;
+			padding-bottom: 3px;
+			padding-left : 4px;
+			padding-right : 4px;
+			
+		}
+
+		
+						
+		.t_t_b{
+			font-size: 8pt;
+			color: #3884DA;
+			line-height:90%;
+			text-align: left;
+			padding-top: 0px;
+			padding-bottom: 3px;
+			padding-left : 4px;
+			padding-right : 4px;
+			
+		}		
+			
+
+
+		
+		
+		
+/* -start- radio btn 옆의 text */		
+		
+		.t_radio{
+			font-size: 8pt;
+			color: #494CAA;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: -2px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}		
+			
+/* -end- radio btn 옆의 text */		
+		
+		
+		
+		
+		
+		
+/*t02*/		
+			
+						
+		.table02{
+			background-color: #D4DAE5;
+			cellspacing : 1px;
+		}
+			
+		
+				
+		
+		.t02{
+			font-size: 9pt;
+			color: #4E489E;
+ 			background-color: #EFEDED;
+			text-align: center;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}		
+		
+		
+		
+		
+		.t02_btn_side{
+			font-size: 9pt;
+			color: #4E489E;
+			text-align: center;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_form2_w{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w_l{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_g{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #E5E5E5;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		.t02_l_g{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #E5E5E5;
+			text-align: left;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		.t02_m_g{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #E5E5E5;
+			text-align: right;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_green{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #DAE8C5;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_blue{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ADC6EA;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w_m{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ffffff;
+			text-align: right;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_green_m{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #DAE8C5;
+			text-align: right;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w_form{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w_form_l{
+			font-size: 8pt;
+			color: #807D8C;
+ 			background-color: #ffffff;
+			text-align: left;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w_tb{
+			font-size: 8pt;		
+			font-weight: bold;
+			color: #5D5970;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		.t02_w_btn{
+			font-size: 8pt;
+			color: #1534A8;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+				
+				
+							
+
+		
+		
+		.t03{
+			font-size: 9pt;
+			color: #494CAA;
+			text-align: left;
+			padding-top: 9px;
+			padding-bottom: 7px;
+			padding-left : 4px;
+			padding-right : 4px;
+ 			background-repeat: repeat;
+ 			background-image :url("../images/com/td_bg01.gif"); 
+		}
+
+		
+		
+		
+		.t03_ot{
+			font-size: 9pt;
+			color: #494CAA;
+			text-align: left;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 4px;
+			padding-right : 4px;
+		}		
+		
+		
+		
+		
+		.t_cal{
+			font-size: 8pt;
+			color: #54489E;
+ 			background-color: #DAEBE5;
+			text-align: center;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}		
+		
+		
+		
+		
+		.t_cal_red{
+			font-size: 8pt;
+			color: #B64040;
+ 			background-color: #DAEBE5;
+			text-align: center;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}		
+		
+		
+		
+		
+		.t_cal_w{
+			font-size: 8pt;
+			color: #85A2C3;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}		
+		
+		
+		
+		
+		.t_cal_w_b{
+			font-size: 8pt;
+			color: #85A2C3;		
+			font-weight: bold;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}		
+		
+		
+		
+		
+		.t_cal_w_red{
+			font-size: 8pt;
+			color: #B64040;
+ 			background-color: #ffffff;
+			text-align: center;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}		
+		
+	
+		
+		
+		
+		
+						
+		.table04{
+			background-color: #D4DAE5;
+			cellspacing : 1px;
+		}		
+		
+				
+				
+							
+
+		
+		
+		.t04{
+			font-size: 9pt;
+			background-color: #EAF0F8;
+			text-align: left;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			padding-left : 4px;
+			padding-right : 4px;
+		}		
+		
+		
+		
+		
+		.title01{
+			font-size: 9pt;
+			color: #2A0A9B;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 6px;
+			padding-bottom: 2px;
+			padding-left : 19px;
+			padding-right : 4px;
+ 			background-repeat: no-repeat;
+ 			background-image :url("../images/com/b11.gif"); 
+		}		
+		
+		
+		
+		
+		.title01-1{
+			font-size: 9pt;
+			color: #2A0A9B;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 19px;
+			padding-right : 4px;
+ 			background-repeat: no-repeat;
+ 			background-image :url("../images/com/b12.gif"); 
+		}		
+				
+		
+		
+		
+		
+						
+		.info{
+			font-size: 9pt;
+			color: #2A0A9B;
+			line-height : 15px;
+			text-align: left;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			padding-left : 0px;
+			padding-right : 4px;
+		}
+		
+		
+		
+				
+		
+		.board01{
+			font-size: 8pt;
+			color: #656A89;
+			text-align: left;
+			padding-top: 4px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		
+				
+		
+		.board02{
+			font-size: 8pt;
+			color: #312886;
+			text-align: left;
+			line-height : 13px;
+			padding-top: 3px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		
+				
+		
+		.board02_r{
+			font-size: 8pt;
+			color: #312886;
+			text-align: right;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 4px;
+		}
+		
+
+		
+		
+		
+		
+				
+		
+		.topmenu_sp{
+			font-size: 8pt;
+			color: #80A4D9;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 4px;
+		}
+		
+		
+		
+		
+				
+		
+		.btnA{
+			font-size: 9pt;
+			color: #522D7F;		
+			font-weight: bold;
+			text-align: center;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 0px;
+			padding-right : 0px;
+		}
+		
+
+		
+		
+		
+		
+				
+		
+		.btnB{
+			font-size: 8pt;
+			color: #522D7F;
+			text-align: center;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+
+		
+		
+		
+		
+				
+		
+		.btnD{
+			font-size: 8pt;
+			color: #522D7F;
+			text-align: center;
+			padding-top: 2px;
+			padding-bottom: 0px;
+			padding-left : 2px;
+			padding-right : 2px;
+		}
+		
+		
+		
+		
+				
+		
+		.b_r{
+			text-align: right;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			padding-right : 7px;
+		}
+			
+		
+		
+				
+		
+		.list_num{
+			text-align: center;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			padding-right : 7px;
+		}
+			
+		
+		
+				
+		
+		.num{
+			text-align: center;
+			padding-top: 0px;
+			padding-bottom: 3px;
+			padding-right : 2px;
+		}
+		
+		.cardnum{
+    		padding-top:1px;
+		    padding-right:1px;
+   			padding-left:1px;
+   			mso-ignore:padding;
+   			color:windowtext;
+  			font-size:11.0pt;
+    		font-weight:400;
+    		font-style:normal;
+    		text-decoration:none;
+    		font-family:돋움;
+    		mso-generic-font-family:auto;
+    		mso-font-charset:129;
+    		mso-number-format:"\@";
+    		text-align:general;
+    		vertical-align:bottom;
+    		mso-background-source:auto;
+    		mso-pattern:auto;
+    		white-space:nowrap;
+    	}
+			
+/* 서브페이지 */
+
+		
+		
+		
+		.leftmenu{
+			font-size: 9pt;
+			color: #494CAA;
+			text-align: left;
+			padding-top: 2px;
+			padding-bottom: 1px;
+			padding-left : 4px;
+			padding-right : 4px;
+		}
+		
+		
+		
+		
+						
+		.subtitle_b{
+			font-size: 11pt;
+			color: #000000;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 0px;
+			padding-right : 4px;
+		}
+		
+		
+						
+		.subtitle01{
+			font-size: 11pt;
+			color: #D8391D;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}
+		
+		
+						
+		.subtitle02{
+			font-size: 11pt;
+			color: #6AA218;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}
+		
+		
+						
+		.subtitle03{
+			font-size: 11pt;
+			color: #378B77;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}
+		
+		
+						
+		.subtitle04{
+			font-size: 11pt;
+			color: #7B1FC3;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}
+		
+		.subtitle05{
+			font-size: 11pt;
+			color: #5638CF;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}
+						
+		.subtitle07{
+			font-size: 11pt;
+			color: #4C30BB;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}
+		
+		
+						
+		.subtitle99{
+			font-size: 11pt;
+			color: #345AAF;
+			text-align: left;		
+			font-weight: bold;
+			padding-top: 4px;
+			padding-bottom: 2px;
+			padding-left : 20px;
+			padding-right : 4px;
+		}		
+	
+
+			
+/* bg 색상 */
+
+
+		.line01 {background-color:#7A9EDE;	}
+
+
+		.line02 {background-color:#CED4DE;	}
+
+
+		.line03 {background-color:#DCDCDC;	}
+
+
+
+
+
+
+
+	
+
+	 
+/* 2. 링크                                   */
+
+a:visited{ 
+       color:#89898C;
+       text-decoration:none;
+}
+
+
+a:hover, a:active{  
+       color:#C6421A;		
+	   font-weight: bold;
+       text-decoration:none;
+}
+
+
+a:link{  
+       color:#89898C;
+       text-decoration:none;
+}
+s
+
+/*링크스타일*/
+
+
+.link_mainbottom, 
+.link_mainbottom:link, 
+.link_mainbottom:visited, 
+.link_mainbottom:hover {
+	   font-size: 8pt;
+       color:#4646AE;
+       text-decoration:none;
+	   text-align: right;
+}
+
+
+
+.link_topmenu, 
+.link_topmenu:link, 
+.link_topmenu:visited, 
+.link_topmenu:hover {
+	   font-size: 9pt;
+       color:#4646AE;
+       text-decoration:none;
+	   text-align: right;
+}
+
+
+
+
+.link_leftmenu, 
+.link_leftmenu:link, 
+.link_leftmenu:visited, 
+.link_leftmenu:hover {
+	   font-size: 9pt;
+       color:#4646AE;
+       text-decoration:none;
+	   text-align: right;
+}
+
+
+		
+/* 5. INPUT&Textbox                                       */
+
+
+		.TB_OLK {
+			font-family: Gulim, sans-serif;
+			font-size: 9pt;
+			color: #4D4D4D;
+			background-color: #FFFFFF;
+            border: 1px solid #cbcbcb;
+			text-align: left;
+            ime-mode: active;
+		}
+		
+		.TB_OLE {
+			font-family: Gulim, sans-serif;
+			font-size: 9pt;
+			color: #4D4D4D;
+			background-color: #FFFFFF;
+            border: 1px solid #cbcbcb;
+			text-align: left;
+            ime-mode: inactive;
+		}
+		
+		.TB_OL {
+			font-family: Gulim, sans-serif;
+			font-size: 9pt;
+			color: #4D4D4D;
+			background-color: #FFFFFF;
+            border: 1px solid #cbcbcb;
+			text-align: left;
+		}
+		.TB_TD{
+			padding-top: 3px;
+			padding-bottom: 3px;
+			padding-left : 8px;
+			padding-right : 4px;
+			text-align: left;
+		}
+		
+		

@@ -7,11 +7,20 @@
 <title> 쪽지함 </title>
     <!-- Bootstrap CSS -->
 	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
-	
-	<style type="text/css">
-	.btn-glyphicon { padding:8px; background:#ffffff; margin-right:4px; }
-.icon-btn { padding: 1px 15px 3px 2px; border-radius:50px;}
-	</style>
+
+<!-- 이웃추가버튼 스타일 -->
+<style type="text/css">
+.btn-glyphicon {
+	padding: 8px;
+	background: #ffffff;
+	margin-right: 4px;
+}
+
+.icon-btn {
+	padding: 1px 15px 3px 2px;
+	border-radius: 50px;
+}
+</style>
 </head>
 <body>
 
@@ -69,6 +78,8 @@
 			</div>
 	<div class="col-xs-1"></div>
 </div>
+
+이건 블로그에 넣으라고 찾아놓은것 
 <a class="btn icon-btn btn-info" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-info"></span>이웃추가</a>
 <br><br><br><br><br>
 </div>

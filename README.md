@@ -168,7 +168,7 @@ Spring Web MVC 개발 전반에 걸쳐 주요 기술을 숙달하는 것을 목�
 |2017-04-09|[2017-04-10][21]|[2017-04-11][22]|[2017-04-12][23]|[2017-04-13][24]|[2017-04-14][25]|2017-04-15|
 |-|디버그|디버그|디버그|발표준비|발표|-|
 
-![Plan](http://sistfers.github.io/hiStory/docs/plan.png)
+![Plan](http://sistfers.github.io/hiStory/docs/plan/plan.png)
 
 [01]: http://sistfers.github.io/hiStory/2017/03/13/planning.html "2017-03-13 기획"
 [02]: http://sistfers.github.io/hiStory/2017/03/14/analysis.html "2017-03-14 분석"

@@ -23,25 +23,40 @@
 
 <!--내용 START -->
 <div class="col-xs-10">
+<center><h2> :: 쪽지쓰기 ::</h2></center><br>
 	<div class="col-xs-1"></div>
 	<div class="col-xs-8">
 	<form class="form-horizontal">
-				<div class="form-group" id="divEmail">
-					<label for="inputEmail" class="col-lg-2 control-label">받는사람</label>
-					<div class="col-lg-8">
-						<input type="text" class="form-control" id="email" name="email"
-							placeholder="이메일" maxlength="30">
+				<div class="form-group">
+					<label class="col-lg-2 control-label">받는사람</label>
+					<div class="col-lg-7">
+						<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
+							placeholder="받는사람" maxlength="30">
 					</div>
-					<div class="col-lg-2">
-						<button class="btn btn-success btn-block" id="emailCk"
-							name="emailCk">인증</button>
+					<div class="col-lg-3">
+						<button class="btn btn-info btn-block" id="TAKE_ID_CK"
+							name="TAKE_ID_CK">이웃목록보기</button>
 					</div>
 				</div>
+				
+				<div class="form-group">
+					<label class="col-lg-2 control-label">내용</label>
+					<div class="col-lg-10">
+						<textarea rows="10" class="form-control"></textarea>
+					</div>
 				</div>
-</form>
+				
+		<div class="form-group">		
+		<button class="btn btn-primary col-lg-3 col-md-offset-3" type="submit">보내기</button>
+        <button class="btn btn-default col-lg-3 col-md-offset-1" type="reset">Cancel</button>
+		</div>  
+		
+	</form>
+  
+	</div>
 <div class="col-xs-3"></div>
 </div>
-
+<br><br><br><br><br>
 </div>
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>	

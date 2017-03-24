@@ -41,3 +41,16 @@ margin-top: 10px;
 	</div>
 </nav>
 
+<!--페이지이동  -->
+<script type="text/javascript">
+function do_logout(){
+	var frm = document.frmWrite;	
+	frm.submit();
+}
+function do_login(){
+	location.href = "/views/main/login.jsp";
+}
+function do_join(){
+	location.href = "/views/user/join.jsp";
+}
+</script>

@@ -20,13 +20,14 @@
 <h1 align="center">회원가입</h1>
 <br>
 <div class="col-xs-2"></div>	<!--여백용  -->
-	<div class="col-xs-8">
+	<div class="col-xs-8" >
 	
 		<!-- form명 바꾸면 안되요 : id, name꼭 다시 확인하세요.. 중복된 이름이 있을수도 있음  -->
 			<form class="form-horizontal">
-<div class="form-group" id="divbirthday">
-<span class="label label-danger">필수입력사항</span>
-</div>
+			
+				<div class="form-group" >
+				<span class="label label-danger">필수입력사항</span>
+				</div>
 
 				<div class="form-group" id="divId">
 					<label for="inputName" class="col-lg-2 control-label">ID</label>

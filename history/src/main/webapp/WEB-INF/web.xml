@@ -13,15 +13,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
-<!--css&image  -->
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.css</url-pattern>
-		<url-pattern>*.js</url-pattern>
-		<url-pattern>*.png</url-pattern>
-		<url-pattern>*.jpg</url-pattern>
-	</servlet-mapping>
-		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.hi</url-pattern>

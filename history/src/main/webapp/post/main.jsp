@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
-<link href='<c:url value="/resources/css/bootstrap.css" />' rel="stylesheet" type="text/css"/>
+<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -27,7 +26,7 @@ border-radius: 15px;
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/main/header.jsp"/>
 <!--헤더 END-->
 
 <!-- 
@@ -79,7 +78,7 @@ border-radius: 15px;
 						<th></th>
 					</tr>
 					<tr>
-						<td><img src="../img/1.png" width="50px" height="50px"></td>
+						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
 						<td style="text-align: left;">
 							<a href="">haengtion93</a> 2017-03-23 23:11:24<br>
 							UI짜기 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
@@ -91,7 +90,7 @@ border-radius: 15px;
 						</td>
 					</tr>	
 					<tr>
-						<td><img src="../img/1.png" width="50px" height="50px"></td>
+						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
 						<td style="text-align: left;">
 							<a href="">근혜공주</a> 2017-03-23 23:11:24<br>
 							재취업 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
@@ -103,7 +102,7 @@ border-radius: 15px;
 						</td>
 					</tr>
 					<tr>
-						<td><img src="../img/1.png" width="50px" height="50px"></td>
+						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
 						<td style="text-align: left;">
 							<a href="">우정관</a> 2017-03-23 23:11:24<br>
 							요리하기 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
@@ -115,7 +114,7 @@ border-radius: 15px;
 						</td>
 					</tr>
 					<tr>
-						<td><img src="../img/1.png" width="50px" height="50px"></td>
+						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
 						<td>
 							<textarea rows="3" class="form-control" style="resize: none"></textarea>
 						</td>
@@ -160,7 +159,7 @@ border-radius: 15px;
 <!--중간 END -->
 
 <!--푸터 START -->
-<jsp:include page="../main/footer.jsp"/>	
+<jsp:include page="/main/footer.jsp"/>
 <!--푸터 START -->
 </body>
 </html>

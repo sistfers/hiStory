@@ -15,7 +15,7 @@ margin-top: 10px;
 		<div class="navbar-header" style="vertical-align: center">
 		
 		<!-- 왼쪽로고. 클릭시 첫화면으로 이동함 -->
-		<a href="/"><img src="../image/logo_sm.png" width="150" id="logo"></a> 
+		<a href="/"><img src="/resources/image/logo_sm.png" width="150" id="logo"></a>
 		<!-- 검정로고 -->
 		</div>
 		

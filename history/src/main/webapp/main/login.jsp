@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
 	<!-- Bootstrap CSS -->
-	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 	
 </head>
 <body>
@@ -45,7 +45,7 @@
 <!--내용 END -->
 
 <!--푸터 START -->
-<jsp:include page="../main/footer.jsp"/>	
+<jsp:include page="/main/footer.jsp"/>
 <!--푸터 START -->
 
 </body>

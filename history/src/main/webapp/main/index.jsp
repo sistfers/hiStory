@@ -6,10 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
-	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 	
 	<!-- Custom CSS  (이미지 동그란 모양으로 보이기)-->
-    <link href="css/round-about.css" rel="stylesheet">
+    <link href="/resources/css/round-about.css" rel="stylesheet">
     
 	  <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
@@ -386,7 +386,7 @@ $(document).ready(function () {
 <!--내용 END -->
 
 <!--푸터 START -->
-<jsp:include page="../main/footer.jsp"/>	
+<jsp:include page="/main/footer.jsp"/>
 <!--푸터 START -->
 </body>
 </html>

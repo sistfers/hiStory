@@ -69,7 +69,7 @@
   position: relative;
   font-size: 17px;
   padding: 10px;
-  font-family: 'Hanna', sans-serif;
+  /* font-family: 'Hanna', sans-serif; */
   /*background: rgba(0, 0, 0, 0.8);*/
   margin: 20px 0 0 0
 }
@@ -89,7 +89,7 @@
   padding: 7px 14px;
   background: #000;
   color: #fff;
-  font-family: 'Hanna', sans-serif;
+  /* font-family: 'Hanna', sans-serif; */
   text-transform: uppercase;
   box-shadow: 0 0 1px #000
 }
@@ -108,14 +108,15 @@
 
 .view-first .mask {
   opacity: 0;
-  background-color: rgba(58, 1, 132, 0.44);
+  /* background-color: rgba(58, 1, 132, 0.44); */
+  background-color: rgba(243, 97, 166, 0.44);
   transition: all 0.4s ease-in-out;
 }
 
 .view-first h2 {
   transform: translateY(-100px);
   opacity: 0;
-font-family: 'Hanna', sans-serif;
+/* font-family: 'Hanna', sans-serif; */
   transition: all 0.2s ease-in-out;
 }
 
@@ -164,7 +165,7 @@ font-family: 'Hanna', sans-serif;
 <jsp:include page="/views/main/header.jsp"/>
 <!--헤더 END-->
 <div class="container" >
-<br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
+<br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
 
 <!--내용 START -->
 
@@ -287,19 +288,18 @@ $(document).ready(function () {
 </script>
 <div class="bubbleChart"></div>
 <!-- 해시태그 END -->
-<hr>
 <!-- 테마별보기 START -->
-<div class="row">
+<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
 <center>
-<h3> :: 테마별보기 :: </h3>
+<h3> <span class="glyphicon-circle-arrow-down"></span> 테마별보기</h3>
 <a href="#">일상</a> | 기타 | 게임 | 영화 | 여행 | 스포츠 | 자동차 | 맛집 | 뷰티 | IT
 </center>
 <br>
 
 
 <div class="view view-first col-xs-4">
-    <img src="/image/main.jpg" />
+    <img src="/resources/image/main.jpg" />
     <div class="mask">
       <h2>블로그타이틀</h2>
       <p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
@@ -329,7 +329,7 @@ $(document).ready(function () {
     </div>
 </div>
   
-  
+<div class="clearfix"></div><br>
   
 </div>
 </div>
@@ -351,34 +351,34 @@ $(document).ready(function () {
 
 <!-- BEST 블로거 START -->
 <br><br>
-<div class="row">
+<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
             <div class="col-xs-12">
                 <h3 class="page-header">:: BEST 블로거 :: </h3>
             </div>
             <div class="col-xs-4 text-center">
-                <center><img class="img-circle img-responsive img-center" src="/resources/image/aa.jpg" width="200" ></center>
-                <h3>Mihyun Kim
+                <center><img class="img-circle img-responsive img-center" src="/resources/image/aa.jpg" width="150" ></center>
+                <h4>Mihyun Kim
                     <small>블로그타이틀</small>
-                </h3>
+                </h4>
                 <p>블로그 소개글 - 안녕하세요 </p>
             </div>
             
             <div class="col-xs-4 text-center">
-                <center><img class="img-circle img-responsive img-center" src="/resources/image/bb.jpg" width="200"></center>
-                <h3>조윤행
+                <center><img class="img-circle img-responsive img-center" src="/resources/image/bb.jpg" width="150"></center>
+                <h4>조윤행
                     <small>하하하하하</small>
-                </h3>
+                </h4>
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
             
             <div class="col-xs-4 text-center">
-                <center><img class="img-circle img-responsive img-center" src="/resources/image/cc.jpg" width="200"></center>
-                <h3>배한주
+                <center><img class="img-circle img-responsive img-center" src="/resources/image/cc.jpg" width="150"></center>
+                <h4>배한주
                     <small>한주바보</small>
-                </h3>
+                </h4>
                 <p>영어폰트가 예뻐서... 한글은 예쁘지 않아.. ㅠㅠ</p>
             </div>
-        </div>
+</div>
 
 <!-- BEST 블로거 END -->
 

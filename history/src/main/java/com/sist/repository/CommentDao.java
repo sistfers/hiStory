@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
  * Created by Admin on 2017-03-24.
  */
 @Repository
-public class CommentDao implements Dao {
+public class CommentDao implements iDao {
 }

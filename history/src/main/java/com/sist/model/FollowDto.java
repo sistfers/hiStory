@@ -5,5 +5,5 @@ import java.io.Serializable;
 /**
  * Created by Admin on 2017-03-24.
  */
-public class FollowDto implements Dto, Serializable {
+public class FollowDto implements iDto, Serializable {
 }

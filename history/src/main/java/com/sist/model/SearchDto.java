@@ -5,5 +5,5 @@ import java.io.Serializable;
 /**
  * Created by Admin on 2017-03-24.
  */
-public class SearchDto implements Dto, Serializable {
+public class SearchDto implements iDto, Serializable {
 }

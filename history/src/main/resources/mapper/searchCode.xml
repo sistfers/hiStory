@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.repository.mapper.searchCode">
+
+	<sql id="BaseCondition">
+		<where>
+			<choose>
+				<when test="SEARCH_DIV == 10 ">
+					CD_ID LIKE #{SEARCH_WORD}
+				</when>
+				<when test="SEARCH_DIV == 20 ">
+					CD_NM LIKE #{SEARCH_WORD}
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+	</sql>
+
+	<resultMap id="CodeMap" type="java.util.HashMap">
+		<result javaType="java.lang.String" column="CD_ID" property="CD_ID"/>
+		<result javaType="java.lang.String" column="CD_NM" property="CD_NM"/>
+		<result javaType="java.lang.String" column="REG_ID" property="REG_ID"/>
+		<result javaType="java.lang.String" column="REG_DT" property="REG_DT"/>
+		<result javaType="java.lang.String" column="MOD_ID" property="MOD_ID"/>
+		<result javaType="java.lang.String" column="MOD_DT" property="MOD_DT"/>
+		<result javaType="java.lang.String" column="RNUM" property="RNUM"/>
+		<result javaType="java.lang.String" column="TOT_CNT" property="TOT_CNT"/>
+		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+	</resultMap>
+
+	<select id="do_selectCodeMList" parameterType="hashmap" resultMap="CodeMap">
+		SELECT TT2.*
+		FROM(
+			SELECT ROWNUM RNUM,T1.*,T2.*
+			FROM(
+				SELECT CD_ID
+				,CD_NM
+				,REG_ID
+				,REG_DT
+				,MOD_ID
+				,TO_CHAR(MOD_DT,'YYYY-MM-DD') MOD_DT
+				FROM CODE_M
+				<include refid="BaseCondition"/>
+				ORDER BY MOD_DT DESC,CD_ID DESC
+				)T1
+			NATURAL JOIN
+			(
+				SELECT COUNT(*) TOT_CNT
+				FROM CODE_M
+				<include refid="BaseCondition"/>
+			)T2
+		)TT2
+		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
+		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+
+	</select>
+
+	<select id="sqlTest" resultType="com.sist.model.CodeMDto" >
+		select '888888Hello mybatis88888' as msg from dual
+	</select>
+
+
+     <select id="selectCode" parameterType="int" resultType="com.sist.model.CodeMDto" >
+	     SELECT CD_ID
+		      ,CD_NM
+		      ,REG_ID
+		      ,REG_DT
+		      ,MOD_ID
+		      ,MOD_DT
+	     FROM CODE_M
+	     WHERE CD_ID =#{cdId}
+     </select>
+
+	<select id="do_selectCodeDList" parameterType="hashmap" resultType="com.sist.model.CodeDDto">
+		SELECT  T2.CD_ID
+			  	,T2.CD_D_ID
+				,T2.CD_D_NM
+		  FROM CODE_M T1
+		 INNER JOIN CODE_D T2
+			ON T1.CD_ID = T2.CD_ID
+		 WHERE T1.CD_ID IN
+		<foreach collection="code_list" item="item"
+		         index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+
+		AND T2.USE_YN = 'Y'
+		ORDER BY T1.CD_ID,TO_NUMBER(T2.CD_D_ID)
+	</select>
+
+	<select id="do_selectCodeM" parameterType="int"
+	        resultType="com.sist.model.CodeMDto">
+		SELECT CD_ID
+		,CD_NM
+		,REG_ID
+		,to_char(REG_DT,'yyyy-mm-dd') as REG_DT
+		,MOD_ID
+		,to_char(MOD_DT,'yyyy-mm-dd') as MOD_DT
+		FROM CODE_M
+		WHERE CD_ID =#{cdId}
+	</select>
+
+	<!-- 등록 수정 -->
+	<update id="do_upsertCodeM" parameterType="com.sist.model.CodeMDto">
+		MERGE INTO CODE_M T1
+		USING ( SELECT #{cd_id} AS CD_ID
+		,#{cd_nm} AS CD_NM
+		,#{reg_id} AS REG_ID
+		,#{mod_id} AS MOD_ID
+		FROM DUAL
+		)T2
+		ON (T1.CD_ID =T2.CD_ID)
+		WHEN MATCHED THEN
+		UPDATE SET T1.CD_NM = T2.CD_NM,
+		T1.MOD_ID = T2.MOD_ID,
+		T1.MOD_DT = SYSDATE
+		WHEN NOT MATCHED THEN
+		INSERT (CD_ID,CD_NM,REG_ID,REG_DT,MOD_ID,MOD_DT)
+		VALUES (#{cd_id},#{cd_nm},#{reg_id},SYSDATE,#{mod_id},SYSDATE)
+	</update>
+
+	<update id="do_insertCodeM" parameterType="com.sist.model.CodeMDto">
+		INSERT INTO CODE_M (CD_ID, CD_NM, REG_ID, REG_DT, MOD_ID, MOD_DT)
+		VALUES (#{cd_id},#{cd_nm},#{reg_id},SYSDATE,#{mod_id},SYSDATE)
+	</update>
+
+</mapper>

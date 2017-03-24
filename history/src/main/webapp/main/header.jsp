@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <style type="text/css">
-img{		/* 로고 윗부분 마진 */
+img#logo{		/* 로고 윗부분 마진 */
 margin-top: 10px;
 }
 </style>
@@ -15,7 +15,7 @@ margin-top: 10px;
 		<div class="navbar-header" style="vertical-align: center">
 		
 		<!-- 왼쪽로고. 클릭시 첫화면으로 이동함 -->
-		<a href="/"><img src="../image/logo_sm.png" width="150"></a> 
+		<a href="/"><img src="../image/logo_sm.png" width="150" id="logo"></a> 
 		<!-- 검정로고 -->
 		</div>
 		

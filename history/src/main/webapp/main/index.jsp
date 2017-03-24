@@ -22,8 +22,8 @@
 	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
 
-<!-- 해시태그 스타일 -->
-  <style>
+ <!-- 해시태그 스타일 --> 
+  <style type="text/css">
     .bubbleChart {
       min-width: 100px;
       max-width: 700px;
@@ -34,6 +34,130 @@
       background: #ffffff;
     }
   </style>
+  
+  <!-- 블로그 주제별 보기 스타일 -->
+  <style type="text/css">
+/* generic css */
+
+.view {
+  float: left; 
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  cursor: default;
+}
+
+.view .mask,
+.view .content {
+  width: 100%;
+  height: 100%; 
+  position: absolute;
+  overflow: hidden;
+  top: 0; 
+  left: 0;
+}
+
+.view img {
+  display: block; 
+  position: relative
+}
+
+.view h2 {
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  font-size: 17px;
+  padding: 10px;
+  font-family: 'Hanna', sans-serif;
+  /*background: rgba(0, 0, 0, 0.8);*/
+  margin: 20px 0 0 0
+}
+
+.view p {
+  font-style: italic;
+  font-size: 14px;
+  position: relative;
+  color: #fff;
+  padding: 0px 20px 0px;
+  text-align: center
+}
+
+.view a.info {
+  display: inline-block;
+  text-decoration: none;
+  padding: 7px 14px;
+  background: #000;
+  color: #fff;
+  font-family: 'Hanna', sans-serif;
+  text-transform: uppercase;
+  box-shadow: 0 0 1px #000
+}
+
+.view a.info:hover {
+  box-shadow: 0 0 5px #000
+}
+  
+
+.view-first img {
+  /*1*/
+  transition: all 0.2s linear;
+  width: 100%; 
+  height: 70%;
+}
+
+.view-first .mask {
+  opacity: 0;
+  background-color: rgba(58, 1, 132, 0.44);
+  transition: all 0.4s ease-in-out;
+}
+
+.view-first h2 {
+  transform: translateY(-100px);
+  opacity: 0;
+font-family: 'Hanna', sans-serif;
+  transition: all 0.2s ease-in-out;
+}
+
+.view-first p {
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.2s linear;
+}
+
+.view-first a.info {
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+
+/* */
+
+.view-first:hover img {
+  transform: scale(1.4);
+}
+
+.view-first:hover .mask {
+  opacity: 1;
+}
+
+.view-first:hover h2,
+.view-first:hover p,
+.view-first:hover a.info {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.view-first:hover p {
+  transition-delay: 0.1s;
+}
+
+.view-first:hover a.info {
+  transition-delay: 0.2s;
+}
+
+</style>
+
 </head>
 <body>
 <!--헤더 START-->
@@ -100,7 +224,7 @@ $(document).ready(function () {
              style: {
                "font-size": "12px",
                "font-style": "italic",
-               "font-family": "Source Sans Pro, sans-serif",
+//                "font-family": "Source Sans Pro, sans-serif",
                //"font-weight": "700",
                "text-anchor": "middle",
                "fill": "white"
@@ -120,7 +244,7 @@ $(document).ready(function () {
                  classed: {count: true},
                  style: {
                    "font-size": "28px",
-                   "font-family": "Source Sans Pro, sans-serif",
+//                    "font-family": "Source Sans Pro, sans-serif",
                    "text-anchor": "middle",
                    fill: "white"
                  },
@@ -135,7 +259,7 @@ $(document).ready(function () {
                  classed: {text: true},
                  style: {
                    "font-size": "14px",
-                   "font-family": "Source Sans Pro, sans-serif",
+//                    "font-family": "Source Sans Pro, sans-serif",
                    "text-anchor": "middle",
                    fill: "white"
                  },
@@ -166,13 +290,47 @@ $(document).ready(function () {
 <hr>
 <!-- 테마별보기 START -->
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12">
 <center>
 <h3> :: 테마별보기 :: </h3>
 <a href="#">일상</a> | 기타 | 게임 | 영화 | 여행 | 스포츠 | 자동차 | 맛집 | 뷰티 | IT
 </center>
-<br><br>
-<p>내용</p>
+<br>
+
+
+<div class="view view-first col-xs-4">
+    <img src="/image/main.jpg" />
+    <div class="mask">
+      <h2>블로그타이틀</h2>
+      <p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      <p>mihyun</p>
+      <a href="#" class="info">글보러가기</a>
+    </div>
+</div>
+
+<a href="http://naver.com" ><div class="view view-first col-xs-4" style="cursor:pointer;">
+   <img src="/image/main.jpg"  />
+    <div class="mask">
+      <h2>Empire State</h2>
+      <p>어떤게 더 이쁜지 모르겠구나...<br>
+      이쪽껀 버튼 없는 스타일...<br>
+      <br>
+      작성자 <br>
+       </p>
+    </div>
+</div></a>
+
+<div class="view view-first col-xs-4">
+    <img src="/image/main.jpg" />
+    <div class="mask">
+      <h2>Empire State</h2>
+      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+      <a href="#" class="info">Read More</a>
+    </div>
+</div>
+  
+  
+  
 </div>
 </div>
 <!-- 테마별보기 END -->
@@ -181,7 +339,7 @@ $(document).ready(function () {
 <!-- 이웃새글 START -->
 <br><br>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12">
 <h3 class="page-header">:: 이웃새글 :: </h3>
 
 <p>내용</p>
@@ -194,10 +352,10 @@ $(document).ready(function () {
 <!-- BEST 블로거 START -->
 <br><br>
 <div class="row">
-            <div class="col-lg-12">
+            <div class="col-xs-12">
                 <h3 class="page-header">:: BEST 블로거 :: </h3>
             </div>
-            <div class="col-lg-4 col-sm-6 text-center">
+            <div class="col-xs-4 text-center">
                 <center><img class="img-circle img-responsive img-center" src="../image/aa.jpg" width="200" ></center>
                 <h3>Mihyun Kim
                     <small>블로그타이틀</small>
@@ -205,7 +363,7 @@ $(document).ready(function () {
                 <p>블로그 소개글 - 안녕하세요 </p>
             </div>
             
-            <div class="col-lg-4 col-sm-6 text-center">
+            <div class="col-xs-4 text-center">
                 <center><img class="img-circle img-responsive img-center" src="../image/bb.jpg" width="200"></center>
                 <h3>조윤행
                     <small>하하하하하</small>
@@ -213,7 +371,7 @@ $(document).ready(function () {
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
             
-            <div class="col-lg-4 col-sm-6 text-center">
+            <div class="col-xs-4 text-center">
                 <center><img class="img-circle img-responsive img-center" src="../image/cc.jpg" width="200"></center>
                 <h3>배한주
                     <small>한주바보</small>

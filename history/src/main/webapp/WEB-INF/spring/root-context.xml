@@ -14,7 +14,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 스프링이 관리하는 패키지에 org.zerock.persistence 를 추가한다. -->
     <context:annotation-config/>
-    <context:component-scan base-package="com.sist.*"/>
+    <context:component-scan base-package="com.hifive.history.*"/>
 	<!-- 어노테이션에 기반한 트랜잭션 활성화 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<!-- JDBC의 연결을 처리하는 기능을 가진 DataSource -->

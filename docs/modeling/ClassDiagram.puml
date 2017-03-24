@@ -1,9 +1,11 @@
 @startuml
 
+
+interface Dto
 interface Dao
 
 class MessageDao {
-search_one
+Object[] elementData
 }
 
 class MessageDto {

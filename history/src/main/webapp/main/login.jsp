@@ -6,13 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
 	<!-- Bootstrap CSS -->
-	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 	
 </head>
 <body>
 
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/main/header.jsp"/>
 <!--헤더 END-->
 <div class="container" >
 <br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->

@@ -6,13 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Bootstrap CSS -->
 <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
-<title>:::::::::::포스트쓰기::::::::::</title>
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<title>:::::::::::포스트수정::::::::::</title>
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/views/main/header.jsp"/>
 <!--헤더 END-->
 <br><br><br><br>
 <!-- 중간 START -->
@@ -40,12 +40,12 @@
 		<textarea name="contents" rows="500"></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'contents',{
-				filebrowserUploadUrl: '../ckeditor/upload.jsp' 
+				filebrowserUploadUrl: '/ckeditor/upload.jsp'
 			}); 
 		</script>
 		</div>
 		
-		<div class="form-group col-xs-4" style="margin-left: 10px; padding-top: 10px;">
+		<div class="form-group col-xs-5" style="margin-left: 10px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="field">
 			       <option>주제선택</option>
@@ -57,17 +57,10 @@
 			       <option>영화</option>
 		    </select>
 	    </div>
-	    <div class="form-group col-xs-4" style="padding-top: 10px;">
-	    	<label for="field"> 댓글허용</label>
-			<select class="form-control" id="state_reply">
-			       <option>댓글허용 여부</option>
-			       <option>허용</option>
-			       <option>비허용</option>
-		    </select>
-	    </div>
-	    <div class="form-group col-xs-4" style="padding-top: 10px;">
+	    <div class="form-group col-xs-2" style="padding-top: 10px;"></div>
+	    <div class="form-group col-xs-5" style="padding-top: 10px;">
 	    	<label for="field"> 공개범위</label>
-			<select class="form-control" id="state_open">
+			<select class="form-control" id="state">
 			       <option>공개범위설정</option>
 			       <option>전체공개</option>
 			       <option>비공개</option>
@@ -159,7 +152,7 @@
 <!--중간 END -->
 
 <!--푸터 START -->
-<jsp:include page="../main/footer.jsp"/>	
+<jsp:include page="/views/main/footer.jsp"/>
 <!--푸터 START -->
 
 </body>

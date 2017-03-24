@@ -10,7 +10,7 @@
 <center>
 <br>
 <!-- 이용자의 프로필사진을 넣습니다 -->
-<img src="../resources/image/1.png" width="150" height="150"><br>
+<img src="/resources/image/1.png" width="150" height="150"><br>
 <!-- 이용자의 닉네임을 넣습니다 -->
 <h3><a href="">Haengtion.93</a></h3>
 <!-- 이용자의 블로그소개를 넣습니다 -->

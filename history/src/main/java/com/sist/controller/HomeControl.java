@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeControl {
 
-	@RequestMapping("index.hi")
-	public String home() {
-		return "/post/main";
-	}
-	@RequestMapping("header.hi")
-	public String header() {
-		return "main/header";
-	}
+//	@RequestMapping("index.hi")
+//	public String home() {
+//		return "/views/post/main";
+//	}
+
+
+
 }

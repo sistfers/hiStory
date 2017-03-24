@@ -14,3 +14,4 @@
   <a class="list-group-item" href="#">받은쪽지확인 </a>
   <a class="list-group-item" href="#">보낸쪽지확인 </a>
 </div>
+

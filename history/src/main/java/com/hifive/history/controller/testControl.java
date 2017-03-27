@@ -14,11 +14,6 @@ public class testControl {
 		return "/main/index";
 	}
 
-	@RequestMapping("post/main.hi")
-	public String main() {
-		return "/post/main";
-	}
-
 	@RequestMapping("user/join.hi")
 	public String join() {
 		return "/user/join";
@@ -39,8 +34,4 @@ public class testControl {
 		return "/message/write";
 	}
 
-	@RequestMapping("post/write.hi")
-	public String postWrite() {
-		return "/post/write";
-	}
 }

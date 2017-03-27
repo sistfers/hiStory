@@ -17,7 +17,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class PostDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.PostCode";
+	private final String namespace="com.hifive.history.repository.mappers.postCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -55,10 +55,10 @@ public class PostDao implements iDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectList(statement,dto);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
 	}
 }

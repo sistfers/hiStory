@@ -4,6 +4,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.postCode">
 
+<!-- 결과 리턴을 MAP으로 할때 스타일 지정해주기 -->  
+<resultMap id = "PostMap" type="java.util.HashMap">
+   <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
+</resultMap>
+
 <!--포스트쓰기  -->
 <insert id="hi_insert"  parameterType="com.hifive.history.model.PostDto">
 	INSERT
@@ -46,7 +51,7 @@
 	WHERE SEQ     = #{SEQ}
 </update>
 
-<!--포스트 1건 읽기  -->
+<!--최신 포스트 1건 읽기  -->
 <select id="hi_detail" parameterType="com.hifive.history.model.PostDto" resultType="com.hifive.history.model.PostDto">
 	SELECT SEQ,
 	      CT_SEQ,
@@ -59,14 +64,17 @@
 	      STATE,
 	      CO_STATE
 	FROM POST_H
-	WHERE SEQ = (SELECT MAX(SEQ) MAXSEQ
+	WHERE SEQ = 
+	(SELECT MAX(SEQ) MAXSEQ
 	      FROM POST_H P
 	      WHERE NOT STATE = '2' 
-	AND CT_SEQ = #{CT_SEQ} )
+	      AND ID = #{id})
 </select>
 
+
+<!-- 일반 데이터 타입에 대해서는 resultType으로 사용하면 기본 데이터형의 값은 출력된다와 LOB은 null로 처리됨 -->
 <!-- 페이징 -->
-<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
+<select id="hi_selectList" parameterType="hashmap" resultMap="PostMap">
 	SELECT TT1.*                                           
 	FROM                                                   
 	  (SELECT ROWNUM RNUM,                                 
@@ -88,7 +96,7 @@
 	        order by SEQ DESC                               
 	    )T1 NATURAL JOIN                                   
 	    (                                                  
-	      SELECT COUNT(*)                                  
+	      SELECT COUNT(*) as TOT_CNT                              
 	      FROM POST_H                        
 	      WHERE ID = #{ID}                           
 	    )T2                                                

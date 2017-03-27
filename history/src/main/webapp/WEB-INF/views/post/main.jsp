@@ -1,28 +1,74 @@
+<%@page import="com.hifive.history.model.PostDto"%>
+<%@page import="com.hifive.history.util.PagingUtil"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.List"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String PAGE_NUM 	= "1";	// 선택된 페이지
+PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
+out.print("PAGE_NUM="+PAGE_NUM);
+int page_num 		= 1;	// 선택된 페이지
+if(PAGE_NUM != null)  page_num  = Integer.parseInt(PAGE_NUM);
+
+int intTotalCount 	= 0;	// 총글수
+
+	List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+	data 	   = (ArrayList<HashMap<String, Object>>)request.getAttribute("lists");
+	HashMap<String, Object> dataCnt = null;
+	
+	if(data != null && data.size()>0){
+		dataCnt = data.get(0);
+		intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
+	}	
+	
+	// 페이지수 구하기
+	int pageCount = intTotalCount/5;
+	if(intTotalCount%5 != 0) pageCount++;
+	
+	PostDto DTO = (PostDto)request.getAttribute("DTO");
+%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>:::::::::::post_main:::::::::::::::</title>
+<title>여기에 블로그 타이틀이 들어가면 좋겠음</title>
+
 <style type="text/css">
-.mydiv{
-width:20%;
-margin-right:0.5%;
-border-radius: 15px;
-}
-.mydiv2{
-width:78%;
-margin-left:0.5%;
-border-radius: 15px;
-}
+	.mydiv{
+	width:20%;
+	margin-right:0.5%;
+	border-radius: 15px;
+	}
+	.mydiv2{
+	width:78%;
+	margin-left:0.5%;
+	border-radius: 15px;
+	}
+	table,th,.tbList{
+	text-align: center;
+	font-size: 12px;
+	}
 </style>
+<script type="text/javascript">
+// 페이징
+function do_search_page(url, page_num)
+{
+	  console.log(url+"\t"+page_num);
+	 
+	  var frm = document.searchForm;
+	  frm.PAGE_NUM.value = page_num;
+	  frm.action = url;
+	  frm.submit();
+}
+</script>	
 </head>
 <body>
 <!--헤더 START-->
@@ -36,9 +82,13 @@ border-radius: 15px;
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
+   
+   <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
          <jsp:include page="menu.jsp"/>
       </div>
+   <!--좌측 메뉴 END  -->
+   
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
 	        <div class="col-xs-1"></div>
@@ -46,15 +96,11 @@ border-radius: 15px;
 		        <!-- 포스트-->
 		        <div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-top:20px; padding-top: 20px">
 		        <!-- 포스트 제목 -->
-		        <h2>알고리즘_10한수</h2>
+		        <h2><%=DTO.getTitle() %></h2>
 		        <!-- 포스트 작성일 -->
-		        <h5>2017-03-22 18:22:05</h5><hr>
+		        <h5><%=DTO.getWdate() %></h5><hr>
 		        <!-- 포스트 내용 -->
-				이거슨 아주 귀여운 문제로 123이라는 수 이면 각 자리수가 1씩증가한다.
-				 즉, 등차가 1인 등차수열이라고 할수있다
-				이러한 수를 문제에서는 한수라고 정의한다.<br>
-				 따라서, 각자리수를 저장하고 n의자리수-(n-1)의 자리수의 차가 모두 일정하다면 한수라는 말이다.<br>
-				이와 같이 접근하여, 다음과 같이 나왔다!!!<br>
+				<%=DTO.getContent() %>
 				</div>
 				
 				<!-- 태그 부분 -->
@@ -63,10 +109,12 @@ border-radius: 15px;
 				<button type="button" class="btn btn-default btn-sm">
 				 <span class="glyphicon glyphicon-tags"></span> 태그
         		</button>&nbsp&nbsp&nbsp&nbsp
-        		<a href="">#백준</a>&nbsp&nbsp
-        		<a href="">#알고리즘</a>&nbsp&nbsp
-        		<a href="">#문제풀기</a>&nbsp&nbsp
-        		<a href="">#한수</a>&nbsp&nbsp
+        		
+<!-- 태그 # 별로 어떻게 자르지????? =============================================================================-->
+        		
+        		<a href=""><%=DTO.getHashtag() %></a>
+       		
+        		
 				</div>
 				
 				<div class="col-xs-12" style="background-color: rgb(255, 230, 230)">
@@ -125,32 +173,44 @@ border-radius: 15px;
 				</table>
 				</div>
 				
+				
+<!--글 목록 보여주기  -->
 				<div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-bottom: 20px">
-					<table class="table">
-					<tr class="active">
+					<table class="table table-hover tbList">
+					<tr class="warning">
 						<th>글번호</th>
 						<th>제목</th>
 						<th>작성일</th>
 					</tr>
+
+					<%
+						if (data.size() > 0) {
+					
+							for (int i = 0; i < data.size(); i++) {
+					
+								HashMap<String, Object> mapdatas = (HashMap<String, Object>) (data.get(i));
+								String wdate = ((mapdatas.get("WDATE")).toString()).substring(0, 10);
+					%>
+
 					<tr>
-						<td>1</td>
-						<td>코딩이 제일 쉬웠어요!</td>
-						<td>2017.03.22</td>
+						<td><%=i+1 %></td>
+						<td><%=mapdatas.get("TITLE") %></td>
+						<td><%=wdate %></td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td>푸딩이 제일 쉬웠어요!</td>
-						<td>2017.03.21</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>초딩이 제일 쉬웠어요!</td>
-						<td>2017.03.21</td>
-					</tr>		
+					
+					<%} //FOR END
+					} // IF END%>					
+	
+
 					</table>
-					<h6 align="center"> << < 1 2 3 4 5 > >></h6>
-				</div>
+					
+				<center>
+					<!-- Paging Area Start -->
+					<%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
+					<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+				</center>
 				
+				</div>
 	  		</div>
 	  		<div class="col-xs-1"></div>
   		</div>

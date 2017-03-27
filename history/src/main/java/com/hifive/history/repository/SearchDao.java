@@ -17,7 +17,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class SearchDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.SearchCode";
+	private final String namespace="com.hifive.history.repository.mappers.searchCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 

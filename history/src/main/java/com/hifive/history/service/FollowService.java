@@ -38,7 +38,7 @@ public class FollowService implements iService {
 	}
 
 	@Override
-	public List<Map<String, Object>> hi_selectPage(Map<String, Object> condition) throws Exception {
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return followDao.hi_selectList(condition);
 	}
 }

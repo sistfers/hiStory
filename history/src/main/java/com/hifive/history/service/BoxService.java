@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BoxIService implements iService {
+public class BoxService implements iService {
 
 	@Autowired
 	private BoxDao boxDao;
@@ -36,11 +36,7 @@ public class BoxIService implements iService {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-=======
-	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
->>>>>>> origin/master
-		return boxDao.hi_selectList(dto);
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
+		return boxDao.hi_selectList(condition);
 	}
 }

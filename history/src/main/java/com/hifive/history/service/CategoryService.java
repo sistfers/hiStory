@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Created by Admin on 2017-03-24.
  */
 @Service
-public class CategoryIService implements iService {
+public class CategoryService implements iService {
 
 	@Autowired
 	private CategoryDao categoryDao;

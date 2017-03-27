@@ -30,8 +30,14 @@ INTO LOVE_H
 SELECT POST_SEQ, ID, LDATE, SEX, AREA, BIRTH FROM LOVE_H WHERE POST_SEQ=#{POST_SEQ}
 </select>
 
-<!-- 글 공감 높은 순위 (날짜별) -->
+<!-- 내가 공감한 글 목록 확인 -->
 <select id="hi_selectListMy" parameterType="hashmap" resultType="hashmap">
+SELECT POST_SEQ, ID, LDATE, SEX, AREA, BIRTH FROM LOVE_H WHERE id=#{ID}
+</select>
+
+<!-- 글 공감 높은 순위 (날짜별) -->
+<select id="hi_selectListRank" parameterType="hashmap" resultType="hashmap">
+<![CDATA[ 
 SELECT *
 FROM
 (SELECT *
@@ -39,11 +45,7 @@ FROM
   (SELECT POST_SEQ,
           COUNT(*) AS TOTAL_CNT
   FROM LOVE_H A
-  WHERE LDATE >= #{START_DAY} AND LDATE
-<![CDATA[ 
-<
-]]> 
-#{END_DAY}
+  WHERE LDATE >= #{START_DAY} AND LDATE < #{END_DAY} 
   GROUP BY A.POST_SEQ
   ORDER BY TOTAL_CNT DESC
   ) T1
@@ -60,6 +62,7 @@ NATURAL JOIN
     WHERE LDATE >=  #{START_DAY} AND LDATE < #{END_DAY}
           AND NOT B.STATE = '2' AND B.ID = #{ID}
   )L2
+]]>
 </select>
 
 

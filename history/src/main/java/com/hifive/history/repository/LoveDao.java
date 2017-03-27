@@ -38,18 +38,28 @@ public class LoveDao implements iDao {
 		return sqlSession.update(statement,dto);
 	}
 
+	//공감한 사람 목록 보기(글별)
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+condition.toString());
+		logger.debug("condition.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
 	}
 	
+	//내가 공감한 글 목록 확인
 	public List<Map<String, Object>> hi_selectListMy(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectListMy";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+condition.toString());
+		logger.debug("condition.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+	}
+	
+	//글 공감 높은 순위 (날짜별)
+	public List<Map<String, Object>> hi_selectListRank(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectListRank";
+		logger.debug("statement"+statement);
+		logger.debug("condition.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
 	}
 	

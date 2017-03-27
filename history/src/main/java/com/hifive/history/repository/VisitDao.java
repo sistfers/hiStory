@@ -61,4 +61,18 @@ public class VisitDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
+	
+	public int hi_getToday(String id){
+		String statement = namespace +".hi_getToday";
+		logger.debug("statement"+statement);
+		logger.debug("id = " + id);
+		return sqlSession.selectOne(statement,id);
+	}
+	
+	public int hi_getTotal(String id){
+		String statement = namespace +".hi_getTotal";
+		logger.debug("statement"+statement);
+		logger.debug("id = " + id);
+		return sqlSession.selectOne(statement,id);
+	}
 }

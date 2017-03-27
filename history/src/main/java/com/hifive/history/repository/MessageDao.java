@@ -17,7 +17,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class MessageDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.MessageCode";
+	private final String namespace="com.hifive.history.repository.mappers.messageCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -61,4 +61,16 @@ public class MessageDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
+	
+	// 보낸 쪽지함
+	public List<Map<String, Object>> hi_select_sendlist(String sendId) {
+				
+		String statement = namespace +".hi_select_sendlist";
+		logger.debug("statement"+statement);
+		logger.debug("sendId "+sendId);
+			
+		return sqlSession.selectList(statement, sendId);
+	}
 }
+
+

@@ -3,10 +3,28 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.categoryCode">
+	<sql id="BaseCondition">
+      <where>
+         <choose>
+            <when test="isAll == 'true' ">
+            </when>
+            <when test="isAll == 'false' ">
+               AND STATE = '0'
+            </when>
+            <otherwise></otherwise>
+         </choose>
+      </where>
+   </sql>
+
 	<select id="hi_selectCategory" parameterType="String" resultType="com.hifive.history.model.iDto">
-	SELECT SEQ, ID, NAME, STATE 
-	FROM CATEGORY_H 
-	WHERE ID = #{id} AND STATE = '0'
-	ORDER BY SEQ;
+		SELECT SEQ, ID, NAME, STATE 
+		FROM CATEGORY_H 
+		WHERE ID = #{id} <include refid="BaseCondition"/>
+		ORDER BY SEQ;
 	</select>
+	<insert id="hi_insert" parameterType="com.hifive.history.model.iDto">
+		INSERT 
+		INTO CATEGORY_H(SEQ, ID, NAME, STATE)
+		VALUES(SEQ_CATEGORY.NEXTVAL, #{id}, #{name}, #{state})
+	</insert>
 </mapper>

@@ -56,11 +56,7 @@ public class MessageDao implements iDao {
 
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
-<<<<<<< HEAD
 		String statement = namespace +".hi_selectList";
-=======
-		String statement = namespace +".hi_selectPage";
->>>>>>> origin/master
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);

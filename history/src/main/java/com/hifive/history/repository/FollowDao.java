@@ -17,7 +17,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class FollowDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.FollowCode";
+	private final String namespace="com.hifive.history.repository.mappers.followCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -59,6 +59,6 @@ public class FollowDao implements iDao {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+condition.toString());
-		return sqlSession.selectList(statement,condition);
+		return sqlSession.selectList(statement, condition);
 	}
 }

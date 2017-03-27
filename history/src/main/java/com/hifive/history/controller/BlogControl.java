@@ -24,7 +24,7 @@ import com.hifive.history.service.PostService;
 @Controller
 public class BlogControl {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	 
 	@Autowired
 	private PostService postSvc;
 	

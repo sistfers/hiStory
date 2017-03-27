@@ -3,7 +3,13 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.visitCode">
-
-
-
+	<select id="" parameterType="" resultType="">
+	SELECT COUNT(*) AS TOTAL_CNT
+ 	 FROM(
+  			SELECT SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH 
+ 			FROM VISIT_H 
+  			WHERE ID = 'Y4366' 
+  	AND VDATE = to_char(sysdate, 'yy/mm/dd')
+ 	); 
+	</select>
 </mapper>

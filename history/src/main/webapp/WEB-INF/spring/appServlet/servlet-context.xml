@@ -29,7 +29,7 @@
 	<!-- base-package -->
 	<context:component-scan base-package="com.hifive.history.controller" />
 	
-    <!-- Exception Resolver -->
+<!--     Exception Resolver
     <beans:bean id="exceptionMapping"         
             class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
             <beans:property name="exceptionMappings">
@@ -40,7 +40,7 @@
             </beans:property>
             
             <beans:property name="defaultErrorView" value="notiles/error/error" />
-    </beans:bean>
+    </beans:bean> -->
 
 	<!-- ckediter upload -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />

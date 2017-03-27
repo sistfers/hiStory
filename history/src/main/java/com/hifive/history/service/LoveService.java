@@ -17,27 +17,26 @@ public class LoveService implements iService{
 
 	@Override
 	public int hi_insert(iDto dto) {
-		return 0;
+		return loveDao.hi_insert(dto);
 	}
 
 	@Override
 	public int hi_update(iDto dto) {
-		return 0;
+		return loveDao.hi_update(dto);
 	}
 
 	@Override
 	public iDto hi_detail(iDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return loveDao.hi_detail(dto);
 	}
 
 	@Override
 	public int hi_delete(int cnt) {
-		return 0;
+		return loveDao.hi_delete(cnt);
 	}
 
 	@Override
-	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-		return null;
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
+		return loveDao.hi_selectList(condition);
 	}
 }

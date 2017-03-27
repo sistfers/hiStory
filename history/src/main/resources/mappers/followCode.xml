@@ -38,6 +38,4 @@
 		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE});
 	</sql>
 
-	<select id="hi_selectList"
-
 </mapper>

@@ -3,7 +3,50 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.searchCode">
-
-
+	
+	<resultMap id="CodMap" type="java.util.HashMap">
+		<result javaType="java.lang.String" column="CD_ID" property="CD_ID" />
+		<result javaType="java.lang.String" column="CD_NM" property="CD_NM" />
+		<result javaType="java.lang.String" column="REG_ID" property="REG_ID" />
+		<result javaType="java.lang.String" column="REG_DT" property="REG_DT" />
+		<result javaType="java.lang.String" column="MOD_ID" property="MOD_ID" />
+		<result javaType="java.lang.String" column="MOD_DT" property="MOD_DT" />
+		<result javaType="java.lang.String" column="RNUM" property="RNUM" />
+		<result javaType="java.lang.String" column="TOT_CNT" property="TOT_CNT" />
+		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+	</resultMap>
+	<!-- 등록 -->
+	<update id="hi_insert" parameterType="com.hifive.history.model.iDto">
+		INSERT INTO SEARCH_H
+  			(
+    			SEQ,
+    			SEARCH_WORD,
+    			S_ID,
+    			SDATE,
+    			SEX,
+    			AREA,
+    			BIRTH
+  			)
+  		VALUES
+  			(
+    			SEQ_SEARCH.NEXTVAL,
+    			#{SEARCH_WORD},
+    			#{SEARCH_WORD},
+    			SYSDATE,
+    			#{SEX},
+    			#{AREA}
+    			to_date(#{BIRTH}, 'YYYYMMDD')
+  		)
+	</update>
+	
+	SELECT *
+FROM
+(SELECT ROWNUM RNUM, A.CNT, A.SEARCH_WORD
+FROM
+  (SELECT COUNT(*) AS CNT, SEARCH_WORD FROM SEARCH_H
+  GROUP BY SEARCH_WORD
+  ORDER BY COUNT(*) DESC)A)
+WHERE RNUM BETWEEN 1 AND 5;
+	
 
 </mapper>

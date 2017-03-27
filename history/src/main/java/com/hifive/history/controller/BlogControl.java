@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hifive.history.service.PostIService;
+import com.hifive.history.service.PostService;
+
+
 
 /**
  * Created by Admin on 2017-03-24.
@@ -24,7 +26,7 @@ public class BlogControl {
 	Logger loger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private PostIService postSvc;
+	private PostService postSvc;
 	
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)

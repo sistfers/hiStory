@@ -24,7 +24,6 @@ public class BlogControl {
 	@Autowired
 	private PostService postSvc;
 	
-	@Autowired
 	private PostDto postDto;
 	
 	
@@ -58,15 +57,15 @@ public class BlogControl {
 
 	//블로그 글 쓰기
 	@RequestMapping("post/write.hi")
-	public String postWrite(HttpServletRequest request) {
+	public String postWrite() {
 		// view에서 넘어온값 받기
 		
 		// 아래는 임시
 //		int seq, int ct_seq, String id, String field, String title, String content, String wdate,
 //		String hashtag, String state, String co_state
-		postDto = new PostDto(0,0,"1","field","title","content",null,"hashtag","0","0");
-		
-		postSvc.hi_insert(postDto);
+//		postDto = new PostDto(0,0,"1","field","title","content",null,"hashtag","0","0");
+//		
+//		postSvc.hi_insert(postDto);
 		return "/post/write";
 	}
 	

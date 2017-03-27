@@ -4,38 +4,87 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.followCode">
 
+	<resultMap id="followMap" type="java.util.HashMap">
+		<result javaType="java.lang.String" column="ID" property="ID"/>
+		<result javaType="java.lang.String" column="NAME" property="NAME"/>
+		<result javaType="java.lang.String" column="TITLE" property="TITLE"/>
+		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+	</resultMap>
+
+	<sql id="BaseCondition">
+		<choose>
+			<when test="SEARCH_CON == 'ifollow' ">
+				<include refid="ifollow"></include>
+			</when>
+			<when test="SEARCH_CON == 'youfollow' ">
+				<include refid="youfollow"></include>
+			</when>
+			<otherwise></otherwise>
+		</choose>
+	</sql>
+
 	<sql id="ifollow">
+        SELECT followtable.YOU_ID as ID, usertable.NAME, blogtable.TITLE
+          FROM (
+                 SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
+                 FROM FOLLOW_H
+                 WHERE MY_ID = #{id}
+                 GROUP BY MY_ID, YOU_ID
+               )followtable
+          INNER JOIN USER_H usertable
+            ON followtable.YOU_ID = usertable.ID
+          INNER JOIN BLOG_H blogtable
+            ON usertable.ID = blogtable.ID
+        WHERE MOD(followtable.cnt, 2) = 1
+        ORDER BY followtable.YOU_ID
+      	)T1
+    	NATURAL JOIN
+    	(
+	      SELECT COUNT(*) TOT_CNT
+	      FROM (
+	            SELECT 1
+	            FROM FOLLOW_H
+	            WHERE MY_ID = #{id}
+	            GROUP BY MY_ID, YOU_ID
+	            )
+	</sql>
+
+	<sql id="youfollow">
+        SELECT followtable.MY_ID as ID, usertable.NAME, blogtable.TITLE
+          FROM (
+                 SELECT count(YOU_ID) as cnt, MY_ID, YOU_ID
+                 FROM FOLLOW_H
+                 WHERE YOU_ID = #{id}
+                 GROUP BY MY_ID, YOU_ID
+               )followtable
+          INNER JOIN USER_H usertable
+            ON followtable.MY_ID = usertable.ID
+          INNER JOIN BLOG_H blogtable
+            ON usertable.ID = blogtable.ID
+        WHERE MOD(followtable.cnt, 2) = 1
+        ORDER BY followtable.MY_ID
+      	)T1
+	    NATURAL JOIN
+	    (
+	      SELECT COUNT(*) TOT_CNT
+	      FROM (
+	      		SELECT 1
+                FROM FOLLOW_H
+                WHERE YOU_ID = #{id}
+                GROUP BY MY_ID, YOU_ID
+	            )
+	</sql>
+
+	<select id="hi_selectList" parameterType="hashmap" resultMap="followMap">
 		SELECT TT2.*
 		FROM(
 	      SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
 	      FROM(
-	            SELECT followtable.YOU_ID, usertable.NAME, blogtable.TITLE
-	              FROM (
-	                     SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
-	                     FROM FOLLOW_H
-	                     WHERE MY_ID = #{id}
-	                     GROUP BY MY_ID, YOU_ID
-	                   )followtable
-	              INNER JOIN USER_H usertable
-	                ON followtable.YOU_ID = usertable.ID
-	              INNER JOIN BLOG_H blogtable
-	                ON usertable.ID = blogtable.ID
-	             WHERE MOD(followtable.cnt, 2) = 1
-	             ORDER BY followtable.YOU_ID
-	          )T1
-	        NATURAL JOIN
-	        (
-	          SELECT COUNT(*) TOT_CNT
-	          FROM (
-	                SELECT 1
-	                FROM FOLLOW_H
-	                WHERE MY_ID = #{id}
-	                GROUP BY MY_ID, YOU_ID
-	                )
+	      <include refid="BaseCondition"></include>
 	        )T2
 	    )TT2
 		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
-		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE});
-	</sql>
+		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+	</select>
 
 </mapper>

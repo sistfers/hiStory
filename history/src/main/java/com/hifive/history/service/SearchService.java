@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Created by Admin on 2017-03-24.
  */
 @Service
-public class SearchIService implements iService {
+public class SearchService implements iService {
 
 	@Autowired
 	private SearchDao searchDao;

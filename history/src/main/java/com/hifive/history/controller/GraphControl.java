@@ -13,6 +13,10 @@ public class GraphControl {
 	public String visit() {
 		return "/chart/visit";
 	}
+	@RequestMapping("chart/age.hi")
+	public String age() {
+		return "/chart/age";
+	}
 	@RequestMapping("chart/menu.hi")
 	public String menu() {
 		return "/chart/menu";

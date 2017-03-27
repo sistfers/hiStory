@@ -21,16 +21,16 @@ google.charts.setOnLoadCallback(drawVisualization);
 function drawVisualization() {
   // Some raw data (not necessarily accurate)
   var data = google.visualization.arrayToDataTable([
-   ['Month', '방문자'],
-   ['17/03/23',  5],
-   ['17/03/24',  15],
-   ['17/03/25',  1],
-   ['17/03/26',  13],
-   ['17/03/27',  26]
+   ['Month', '남자' , '여자'],
+   ['17/03/23',  5, 15],
+   ['17/03/24',  15, 7],
+   ['17/03/25',  1, 25],
+   ['17/03/26',  13, 20],
+   ['17/03/27',  26, 40]
 ]);
 
 var options = {
-title : 'haengtion님의 방문자 분석',
+title : 'haengtion님의 성별 분석',
 vAxis: {title: '방문수'},
 hAxis: {title: '일별 조회'},
 seriesType: 'bars',
@@ -41,6 +41,28 @@ var chart = new google.visualization.ComboChart(document.getElementById('chart_d
 chart.draw(data, options);
 }
 </script>
+<script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['ages', 'Hours per Day'],
+          ['10대', 10],
+          ['20대', 25],
+          ['30대', 35],
+          ['40대', 10],
+          ['50대', 5]
+        ]);
+
+        var options = {
+          title: 'haengtion님의 연령별 분석',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>:::::::::::블로그 관리:::::::::::::::</title>
 <style type="text/css">
@@ -74,6 +96,7 @@ border-radius: 15px;
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
 		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p>
 		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
+		       	<div class="col-xs-12" id="donutchart" style="height: 500px;"></div>
 			<div class="col-xs-1"></div>
   		</div>
 </div>

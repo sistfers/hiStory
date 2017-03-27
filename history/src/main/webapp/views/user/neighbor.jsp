@@ -11,13 +11,19 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <style type="text/css">
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Montserrat);
+body {
+	font-size: 18px;
+	font-family: "Open Sans";
+	
+}
 .side-menu {
 	float: right;
 	position: fixed;
 	z-index: 1;
 	width: 50px;
 	height: 100vh;
-	top: 0;
+	top: 0.5;
 	right: 0;
 	background: white;
 	overflow-x: hidden;
@@ -27,26 +33,33 @@
 }
 
 .side-menu.open {
-	width: 300px;
+	width: 200px;
 }
 
 .side-menu .icon {
 	display: inline-block;
+	
 	width: 100%;
 	height: 50px;
+	
 	padding-top: 15px;
 	padding-bottom: 15px;
+	
 	font-family: "Montserrat";
 	color: white;
+	
 	background: #8100A6;
+	
 	cursor: pointer;
 	text-align: center;
 	box-shadow: inset 0 -1px #8100A6;
+	
 	transition: all 0.2s ease-out;
 }
 
 .side-menu.open .icon:after {
-	content: "내 이웃목록"";
+	content: "내이웃목록";
+	
 	margin-left: 15px;
 }
 
@@ -54,10 +67,13 @@
 	transform: rotate(90deg);
 }
 
-.side-menu:not (.open ) .text:before {
-	content: '내 이웃목록';
-	margin-left: 30px;
-}
+/* .side-menu:not(.open) .text:before { */
+/* 	content: '이웃목록';; */
+	
+/* 	margin-left: 20px; */
+	
+/* 	font-family: "Montserrat"; */
+/* } */
 
 .side-menu .content {
 	display: none;
@@ -73,7 +89,6 @@
 	width: 100%;
 	padding: 0.8ex;
 	margin-bottom: 15px;
-	font-family: "Open Sans";
 	font-size: 16px;
 	border: 1px solid #d2d2d2;
 	border-radius: 3px;
@@ -105,20 +120,10 @@
 
 <div style="float : right">
 <div class="side-menu">
-	<div class="icon"><span class="glyphicon-list">=</span></div>
-	<div class="text"></div>
+	<div class="icon"><span class="fa fa-bars"></span></div>
+	<div class="text">이웃목록</div>
 	<div class="content">
-	<h3>김미현</h3>
-	<h3>김미현</h3>
-	<h3>김미현</h3>
-	<h3>김미현</h3>
-<!-- 		<select name='options'>
-			<option value='option-1'>Option 1</option>
-			<option value='option-2'>Option 2</option>
-			<option value='option-3'>Option 3</option>
-		</select>
-		<input type="text" placeholder="Description" />
-		<button type="button">내 이웃목록</button> -->
+	<h4>김미현</h4> <button>aa</button>
 	</div>
 </div>
 </div>

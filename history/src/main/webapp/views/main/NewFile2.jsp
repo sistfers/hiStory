@@ -6,6 +6,10 @@
 
     <!-- Bootstrap CSS -->
 	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="https://s.pstatic.net/pm2/css/main_v170324_2.css"/>
+<link rel="stylesheet" type="text/css" href="https://ssl.pstatic.net/sstatic/search/pc/css/api_atcmp_170323.css"/>
+<script type="text/javascript" src="https://s.pstatic.net/pm2/js/lib/nlog/lcslog.js"></script>
+	
 
   
 <style type="text/css">
@@ -345,6 +349,69 @@
 <!--       <a href="#" class="info">Read More</a> -->
 <!--     </div> -->
 <!--   </div> -->
+
+
+
+<div class="section_themecast" id="themecast">
+		<h2 class="blind">주제형 캐스트</h2>
+		<div class="themecast_category" id="PM_ID_themecastNavi">
+			<div class="area_category">
+				<h3 class="blind">관심 주제 선택</h3>
+				<div class="ac_scroll" role="tablist">
+					<div class="scroll-area" role="presentation">
+						<!-- style="width:xxxxPX" -->
+						<div class="rolling-container" id="PM_ID_themelist" role="presentation" style="overflow: hidden;">
+							<ul class="PM_CL_beforeMove" style="width: 1280px;" queryid="C1490578881956518708">
+								<li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_livinghome" role="tab" aria-selected="false" href="#LIVINGHOME" data-clk="tct.lif" data-id="LIVINGHOME"><span class="blind">리빙</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_living" role="tab" aria-selected="false" href="#LIVING" data-clk="tct.fod" data-id="LIVING"><span class="blind">푸드</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_sports" role="tab" aria-selected="false" href="#SPORTS" data-clk="tct.spo" data-id="SPORTS"><span class="blind">스포츠</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_cargame" role="tab" aria-selected="false" href="#CARGAME" data-clk="tct.aut" data-id="CARGAME"><span class="blind">차·테크</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_beauty" role="tab" aria-selected="false" href="#BEAUTY" data-clk="tct.bty" data-id="BEAUTY"><span class="blind">패션뷰티</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_momkids" role="tab" aria-selected="false" href="#MOMKIDS" data-clk="tct.mom" data-id="MOMKIDS"><span class="blind">맘·키즈</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_health" role="tab" aria-selected="false" href="#HEALTH" data-clk="tct.hea" data-id="HEALTH"><span class="blind">건강</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_bboom" role="tab" aria-selected="false" href="#BBOOM" data-clk="tct.web" data-id="BBOOM"><span class="blind">웹툰</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_gameapp" role="tab" aria-selected="false" href="#GAMEAPP" data-clk="tct.gam" data-id="GAMEAPP"><span class="blind">게임</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_video" role="tab" aria-selected="false" href="#VIDEO" data-clk="tct.tvc" data-id="VIDEO"><span class="blind">TV연예</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_music" role="tab" aria-selected="false" href="#MUSIC" data-clk="tct.muc" data-id="MUSIC"><span class="blind">뮤직</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_movie" role="tab" aria-selected="false" href="#MOVIE" data-clk="tct.mov" data-id="MOVIE"><span class="blind">영화</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_culture" role="tab" aria-selected="false" href="#CULTURE" data-clk="tct.bok" data-id="CULTURE"><span class="blind">책·문화</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_with" role="tab" aria-selected="false" href="#WITH" data-clk="tct.pub" data-id="WITH"><span class="blind">함께N</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_travel" role="tab" aria-selected="false" href="#TRAVEL" data-clk="tct.tra" data-id="TRAVEL"><span class="blind">여행+</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_design" role="tab" aria-selected="false" href="#DESIGN" data-clk="tct.des" data-id="DESIGN"><span class="blind">디자인</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_finance" role="tab" aria-selected="false" href="#FINANCE" data-clk="tct.fin" data-id="FINANCE"><span class="blind">경제M</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_job" role="tab" aria-selected="false" href="#JOB" data-clk="tct.job" data-id="JOB"><span class="blind">JOB&amp;</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_science" role="tab" aria-selected="false" href="#SCIENCE" data-clk="tct.sci" data-id="SCIENCE"><span class="blind">과학</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_knowledge tcc_on" role="tab" aria-selected="true" href="#KNOWLEDGE" data-clk="tct.ncc" data-id="KNOWLEDGE"><span class="blind">지식·교양</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_china" role="tab" aria-selected="false" href="#CHINA" data-clk="tct.chn" data-id="CHINA"><span class="blind">중국</span><span class="ac_icon"></span></a>
+</li><li class="rolling-panel" role="presentation">
+	<a class="PM_CL_themeItem ac_a tcc_business" role="tab" aria-selected="false" href="#BUSINESS" data-clk="tct.bus" data-id="BUSINESS"><span class="blind">비즈니스</span><span class="ac_icon"></span></a>
+</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 
 </div>
 

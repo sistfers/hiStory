@@ -39,14 +39,25 @@
   		)
 	</update>
 	
-	SELECT *
-FROM
-(SELECT ROWNUM RNUM, A.CNT, A.SEARCH_WORD
-FROM
-  (SELECT COUNT(*) AS CNT, SEARCH_WORD FROM SEARCH_H
-  GROUP BY SEARCH_WORD
-  ORDER BY COUNT(*) DESC)A)
-WHERE RNUM BETWEEN 1 AND 5;
+	<select id="hi_selectList" parameterType="hashmap"
+		resultMap="CodMap">
+		SELECT *
+		FROM
+		(
+			SELECT ROWNUM RNUM, A.CNT, A.SEARCH_WORD
+			FROM
+  			(
+  				SELECT COUNT(*) AS CNT, SEARCH_WORD 
+  				FROM SEARCH_H
+  				GROUP BY SEARCH_WORD
+  				ORDER BY COUNT(*) DESC
+  			)A
+  		)
+		WHERE RNUM BETWEEN 1 AND 9;
+
+	</select>
 	
+	
+
 
 </mapper>

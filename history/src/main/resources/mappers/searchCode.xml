@@ -5,9 +5,9 @@
 <mapper namespace="com.hifive.history.repository.mappers.searchCode">
 	
 	<resultMap id="CodMap" type="java.util.HashMap">
-		<result javaType="java.lang.String" column="CD_ID" property="CD_ID" />
-		<result javaType="java.lang.String" column="CD_NM" property="CD_NM" />
-		<result javaType="java.lang.String" column="REG_ID" property="REG_ID" />
+		<result javaType="java.lang.String" column="RNUM" property="RNUM" />
+		<result javaType="java.lang.String" column="CNT" property="CNT" />
+		<result javaType="java.lang.String" column="SEARCH_WORD" property="SEARCH_WORD" />
 		<result javaType="java.lang.String" column="REG_DT" property="REG_DT" />
 		<result javaType="java.lang.String" column="MOD_ID" property="MOD_ID" />
 		<result javaType="java.lang.String" column="MOD_DT" property="MOD_DT" />

@@ -11,7 +11,7 @@
 <body>
 
 <!--헤더 START-->
-<jsp:include page="/views/main/header.jsp"/>
+<jsp:include page="../main/header.jsp"/>
 <!--헤더 END-->
 <div class="container" >
 <br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
@@ -187,7 +187,7 @@
 <!--내용 END -->
 
 <!--푸터 START -->
-<jsp:include page="/views/main/footer.jsp"/>
+<jsp:include page="../main/footer.jsp"/>
 <!--푸터 START -->
 
 </body>

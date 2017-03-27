@@ -26,7 +26,7 @@ border-radius: 15px;
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="/views/main/header.jsp"/>
+<jsp:include page="../main/header.jsp"/>
 <!--헤더 END-->
 
 <!-- 
@@ -159,7 +159,7 @@ border-radius: 15px;
 <!--중간 END -->
 
 <!--푸터 START -->
-<jsp:include page="/views/main/footer.jsp"/>
+<jsp:include page="../main/footer.jsp"/>
 <!--푸터 START -->
 </body>
 </html>

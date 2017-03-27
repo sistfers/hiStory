@@ -25,7 +25,7 @@ public class PostIService implements iService {
 	private PostDao postDao;
 	
 	static String FILE_URL = "";	//저장할 경로
-	static final String SAVE_URL = "http://localhost:8080/resources/uploadImages";	// 불러올 경로
+	static final String SAVE_URL = "http://localhost:8190/resources/uploadImages";	// 불러올 경로
 	
 	@SuppressWarnings("resource")
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {

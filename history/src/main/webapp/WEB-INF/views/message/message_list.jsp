@@ -25,14 +25,14 @@
 <body>
 
 <!--헤더 START-->
-<jsp:include page="/views/main/header.jsp"/>
+<jsp:include page="../main/header.jsp"/>
 <!--헤더 END-->
 <div class="container" >
 <br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
 
 <!-- 좌측메뉴 -->
 <div class="col-xs-2">
-	<jsp:include page="/views/message/menu.jsp"/>
+	<jsp:include page="menu.jsp"/>
 </div>
 
 <!--내용 START -->
@@ -84,7 +84,7 @@
 <br><br><br><br><br>
 </div>
 <!--푸터 START -->
-<jsp:include page="/views/main/footer.jsp"/>
+<jsp:include page="../main/footer.jsp"/>
 <!--푸터 START -->
 </body>
 </html>

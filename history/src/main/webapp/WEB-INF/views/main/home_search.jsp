@@ -89,7 +89,7 @@
 
 </div>
 <!--푸터 START -->
-<jsp:include page="/views/main/footer.jsp"/>
+<jsp:include page="footer.jsp"/>
 <!--푸터 START -->
 </body>
 </html>

@@ -11,36 +11,36 @@ public class testControl {
 
 	@RequestMapping("main/index.hi")
 	public String home() {
-		return "/views/main/index";
+		return "/main/index";
 	}
 
 	@RequestMapping("post/main.hi")
 	public String main() {
-		return "/views/post/main";
+		return "/post/main";
 	}
 
 	@RequestMapping("user/join.hi")
 	public String join() {
-		return "/views/user/join";
+		return "/user/join";
 	}
 
 	@RequestMapping("main/login.hi")
 	public String login() {
-		return "/views/main/login";
+		return "/main/login";
 	}
 
 	@RequestMapping("message/message_list.hi")
 	public String messageList() {
-		return "/views/message/message_list";
+		return "/message/message_list";
 	}
 
 	@RequestMapping("message/write.hi")
 	public String messageWrite() {
-		return "/views/message/write";
+		return "/message/write";
 	}
 
 	@RequestMapping("post/write.hi")
 	public String postWrite() {
-		return "/views/post/write";
+		return "/post/write";
 	}
 }

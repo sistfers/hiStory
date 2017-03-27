@@ -24,7 +24,7 @@
       <div class="panel-heading">통계</div>
       <div class="panel-body">
       	<h4>방문분석</h4><hr>
-      	<a href="visit.jsp">방문자수</a> <br>
+      	<a href="visit.hi">방문자수</a> <br>
       	<a href="">성별 / 연령별</a> <br>
       	<a href="">이웃증감수</a> <br>
       	<br>

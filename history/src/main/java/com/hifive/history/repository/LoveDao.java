@@ -39,26 +39,29 @@ public class LoveDao implements iDao {
 	}
 
 	@Override
-	public iDto hi_detail(iDto dto) {
-		String statement = namespace +".hi_detail";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectOne(statement,dto);
-	}
-
-	@Override
-	public int hi_delete(int cnt) {
-		String statement = namespace +".hi_delete";
-		logger.debug("statement"+statement);
-		logger.debug("cnt = "+cnt);
-		return sqlSession.update(statement,cnt);
-	}
-
-	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
+	}
+	
+	public List<Map<String, Object>> hi_selectListMy(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectListMy";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+	}
+	
+	
+//= 사용안함 =========================================	
+	@Override
+	public iDto hi_detail(iDto dto) {
+		return null;
+	}
+
+	@Override
+	public int hi_delete(int cnt) {
+		return 0;
 	}
 }

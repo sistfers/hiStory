@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Admin on 2017-03-24.
  */
 @Service
-public class VisitIService implements iService {
+public class VisitService implements iService {
 
 	@Autowired
 	private VisitDao visitDao;

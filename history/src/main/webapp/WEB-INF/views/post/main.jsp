@@ -6,6 +6,32 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%!
+	public String[] split(String str){
+		int count = 0;
+		for(int i = 0; i < str.length(); ++i){
+			if(str.charAt(i)=='#'){
+				++count;
+			}
+		}
+		if(count!=0){
+			count = count-1;
+		}
+		String hashString[] = new String[count];
+		for(int i = 0; i < hashString.length; ++i){
+			hashString[i]="";
+		}
+		int start = 0;
+		for(int i = 1; i < str.length(); ++i){
+			if(str.charAt(i)!='#'){
+				hashString[start]+=str.charAt(i);
+			}else{
+				++start;
+			}
+		}
+		return hashString;
+	}
+%>
 <%
 String PAGE_NUM 	= "1";	// 선택된 페이지
 PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
@@ -112,7 +138,14 @@ function do_search_page(url, page_num)
         		
 <!-- 태그 # 별로 어떻게 자르지????? =============================================================================-->
         		
-        		<a href=""><%=DTO.getHashtag() %></a>
+        		<%
+        			String str[] = split(DTO.getHashtag());
+        			for(int i = 0; i < str.length; ++i){
+        		%>
+        		<a href=""><%="#" + str[i] %></a>
+        		<%
+        			}
+        		%>
        		
         		
 				</div>

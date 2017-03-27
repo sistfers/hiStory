@@ -4,6 +4,40 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.followCode">
 
+	<sql id="ifollow">
+		SELECT TT2.*
+		FROM(
+	      SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
+	      FROM(
+	            SELECT followtable.YOU_ID, usertable.NAME, blogtable.TITLE
+	              FROM (
+	                     SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
+	                     FROM FOLLOW_H
+	                     WHERE MY_ID = #{id}
+	                     GROUP BY MY_ID, YOU_ID
+	                   )followtable
+	              INNER JOIN USER_H usertable
+	                ON followtable.YOU_ID = usertable.ID
+	              INNER JOIN BLOG_H blogtable
+	                ON usertable.ID = blogtable.ID
+	             WHERE MOD(followtable.cnt, 2) = 1
+	             ORDER BY followtable.YOU_ID
+	          )T1
+	        NATURAL JOIN
+	        (
+	          SELECT COUNT(*) TOT_CNT
+	          FROM (
+	                SELECT 1
+	                FROM FOLLOW_H
+	                WHERE MY_ID = #{id}
+	                GROUP BY MY_ID, YOU_ID
+	                )
+	        )T2
+	    )TT2
+		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
+		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE});
+	</sql>
 
+	<select id="hi_selectList"
 
 </mapper>

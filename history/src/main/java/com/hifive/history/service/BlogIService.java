@@ -38,6 +38,6 @@ public class BlogIService implements iService {
 
 	@Override
 	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-		return blogDao.hi_selectPage(dto);
+		return blogDao.hi_selectList(dto);
 	}
 }

@@ -83,6 +83,6 @@ public class PostService implements iService {
 
 	@Override
 	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-		return postDao.hi_selectPage(dto);
+		return postDao.hi_selectList(dto);
 	}
 }

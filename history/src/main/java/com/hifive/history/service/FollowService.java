@@ -1,7 +1,7 @@
 package com.hifive.history.service;
 
 import com.hifive.history.model.iDto;
-import com.hifive.history.repository.UserDao;
+import com.hifive.history.repository.FollowDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,10 @@ import java.util.Map;
  * Created by Admin on 2017-03-24.
  */
 @Service
-public class UserService implements iService {
+public class FollowService implements iService {
 
 	@Autowired
-	private UserDao userDao;
+	private FollowDao followDao;
 
 	@Override
 	public int hi_insert(iDto dto) {
@@ -38,7 +38,7 @@ public class UserService implements iService {
 	}
 
 	@Override
-	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-		return null;
+	public List<Map<String, Object>> hi_selectPage(Map<String, Object> condition) throws Exception {
+		return followDao.hi_selectList(condition);
 	}
 }

@@ -34,7 +34,7 @@ public class CommentService implements iService {
 
 	@Override
 	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-		return commentDao.hi_selectPage(dto);
+		return commentDao.hi_selectList(dto);
 	}
 	
 	

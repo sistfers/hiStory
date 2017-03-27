@@ -48,8 +48,8 @@ public class CommentDao implements iDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
-		String statement = namespace +".hi_selectPage";
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
+		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);

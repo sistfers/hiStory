@@ -36,7 +36,11 @@ public class BoxIService implements iService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
+=======
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
+>>>>>>> origin/master
 		return boxDao.hi_selectList(dto);
 	}
 }

@@ -55,8 +55,13 @@ public class FollowDao implements iDao {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectList";
+=======
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
+		String statement = namespace +".hi_selectPage";
+>>>>>>> origin/master
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);

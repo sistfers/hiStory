@@ -1,22 +1,21 @@
 package com.hifive.history.service;
 
 import com.hifive.history.model.iDto;
-import com.hifive.history.repository.CategoryDao;
+import com.hifive.history.repository.FollowDao;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 /**
  * Created by Admin on 2017-03-24.
  */
 @Service
-public class CategoryIService implements iService {
+public class FollowIService implements iService {
 
 	@Autowired
-	private CategoryDao categoryDao;
+	private FollowDao followDao;
 
 	@Override
 	public int hi_insert(iDto dto) {
@@ -47,5 +46,6 @@ public class CategoryIService implements iService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	
 }

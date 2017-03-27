@@ -38,21 +38,23 @@ public class LoveDao implements iDao {
 		return sqlSession.update(statement,dto);
 	}
 
+	//공감한 사람 목록 보기(글별)
 	@Override
-	public iDto hi_detail(iDto dto) {
-		String statement = namespace +".hi_detail";
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectOne(statement,dto);
+		logger.debug("condition.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
 	}
-
-	@Override
-	public int hi_delete(int cnt) {
-		String statement = namespace +".hi_delete";
+	
+	//내가 공감한 글 목록 확인
+	public List<Map<String, Object>> hi_selectListMy(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectListMy";
 		logger.debug("statement"+statement);
-		logger.debug("cnt = "+cnt);
-		return sqlSession.update(statement,cnt);
+		logger.debug("condition.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
 	}
+<<<<<<< HEAD
 
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
@@ -60,5 +62,26 @@ public class LoveDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
+=======
+	
+	//글 공감 높은 순위 (날짜별)
+	public List<Map<String, Object>> hi_selectListRank(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectListRank";
+		logger.debug("statement"+statement);
+		logger.debug("condition.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+>>>>>>> origin/master
+	}
+	
+	
+//= 사용안함 =========================================	
+	@Override
+	public iDto hi_detail(iDto dto) {
+		return null;
+	}
+
+	@Override
+	public int hi_delete(int cnt) {
+		return 0;
 	}
 }

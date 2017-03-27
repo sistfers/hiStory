@@ -51,8 +51,13 @@ public class CommentDao implements iDao {
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
+<<<<<<< HEAD
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
+=======
+		logger.debug("condition.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+>>>>>>> origin/master
 	}
 	
 	//대댓글 입력

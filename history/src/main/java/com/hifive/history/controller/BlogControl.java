@@ -14,17 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hifive.history.service.PostIService;
+import com.hifive.history.model.PostDto;
+import com.hifive.history.service.PostService;
 
-/**
- * Created by Admin on 2017-03-24.
- */
 @Controller
 public class BlogControl {
 	Logger loger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private PostIService postSvc;
+	private PostService postSvc;
+	
+	@Autowired
+	private PostDto postDto;
 	
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
@@ -43,4 +44,31 @@ public class BlogControl {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	//블로그 메인(글 보여주기)
+	@RequestMapping("post/main.hi")
+	public String main() {
+		
+		
+		
+		//postSvc.hi_selectList(condition);
+		return "/post/main";
+	}
+
+	//블로그 글 쓰기
+	@RequestMapping("post/write.hi")
+	public String postWrite(HttpServletRequest request) {
+		// view에서 넘어온값 받기
+		
+		// 아래는 임시
+//		int seq, int ct_seq, String id, String field, String title, String content, String wdate,
+//		String hashtag, String state, String co_state
+		postDto = new PostDto(0,0,"1","field","title","content",null,"hashtag","0","0");
+		
+		postSvc.hi_insert(postDto);
+		return "/post/write";
+	}
+	
+	
 }

@@ -171,18 +171,21 @@
 
 
 <!-- 검색하기 -->
-<div class="form-group">
+
+<div class="col-xs-2"></div>
+<div class="col-xs-8">
+	<div class="form-group">
+	  <div class="input-group">
+	    <span class="input-group-addon input-lg">$</span>
+	     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
+	    <span class="input-group-btn">
+	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:do_search()">
+	    </span>
+	  </div>
+	</div>  
+</div> 
 <div class="col-xs-2"></div>
 
-	 <!-- 검색박스 -->
-	 <div class="col-xs-6">
-	 <input type="text" class="form-control" placeholder="검색어를 입력하세요" max="20" name="search_word" ></div>
-		
-	 <!-- 조회 버튼 -->
-	 <div class="col-xs-1">
- 	 <input type="button" class="btn btn-primary" value="조 회" onclick="javascript:do_search()">
-	 </div>
-</div>
 <br>
 
 <!-- 사이즈 조절해서 사용하세요  -->
@@ -288,6 +291,11 @@ $(document).ready(function () {
 </script>
 <div class="bubbleChart"></div>
 <!-- 해시태그 END -->
+
+
+
+
+<br><br><br><br>
 <!-- 테마별보기 START -->
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
@@ -338,11 +346,28 @@ $(document).ready(function () {
 
 <!-- 이웃새글 START -->
 <br><br>
-<div class="row">
+<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
 <h3 class="page-header">:: 이웃새글 :: </h3>
 
-<p>내용</p>
+<table class="table table-striped">
+	<tr><td rowspan="2" align="center"> <img src="/resources/image/main.jpg" width="100" ></td>
+	<td> 작성자 | 작성일</td></tr>
+	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
+	
+	<tr><td rowspan="2" align="center"> <img src="/resources/image/main.jpg" width="100" ></td>
+	<td> 작성자 | 작성일</td></tr>
+	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
+	
+	<tr><td rowspan="2" align="center"> <img src="/resources/image/main.jpg" width="100" ></td>
+	<td> 작성자 | 작성일</td></tr>
+	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
+
+</table>
+
+
+
+
 </div>
 </div>
 

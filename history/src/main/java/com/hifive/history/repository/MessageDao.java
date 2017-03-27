@@ -16,17 +16,21 @@ import com.hifive.history.model.iDto;
  */
 @Repository
 public class MessageDao implements iDao {
+	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final String namespace="com.hifive.history.repository.mappers.messageCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
 
+	// 쪽지 쓰기
 	@Override
 	public int hi_insert(iDto dto) {
+		
 		String statement = namespace +".hi_insert";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
+		
 		return sqlSession.insert(statement,dto);
 	}
 
@@ -38,22 +42,29 @@ public class MessageDao implements iDao {
 		return sqlSession.update(statement,dto);
 	}
 
+	// 쪽지 읽기
 	@Override
 	public iDto hi_detail(iDto dto) {
+		
 		String statement = namespace +".hi_detail";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectOne(statement,dto);
+		
+		return sqlSession.selectOne(statement, dto);
 	}
 
+	// 쪽지 삭제
 	@Override
 	public int hi_delete(int cnt) {
+		
 		String statement = namespace +".hi_delete";
 		logger.debug("statement"+statement);
 		logger.debug("cnt = "+cnt);
-		return sqlSession.update(statement,cnt);
+		
+		return sqlSession.delete(statement, cnt);
 	}
 
+	// 즐겨찾기 : 내가 추가한
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
 		String statement = namespace +".hi_selectList";
@@ -71,6 +82,16 @@ public class MessageDao implements iDao {
 			
 		return sqlSession.selectList(statement, sendId);
 	}
+	
+	// 받은 쪽지함
+	public List<Map<String, Object>> hi_select_getlist(String takeId) {
+					
+		String statement = namespace +".hi_select_getlist";
+		logger.debug("statement"+statement);
+		logger.debug("takeId "+takeId);
+				
+		return sqlSession.selectList(statement, takeId);
+	}	
 }
 
 

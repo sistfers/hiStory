@@ -72,4 +72,11 @@ public class MessageDto implements iDto, Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	@Override
+	public String toString() {
+		return "MessageDto [seq=" + seq + ", send_id=" + send_id + ", take_id=" + take_id + ", contents=" + contents
+				+ ", wdate=" + wdate + ", rdate=" + rdate + ", state=" + state + "]";
+	}
+	
 }

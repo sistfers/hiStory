@@ -30,7 +30,7 @@ INTO COMMENT_H
 </insert>
 
 <!--대댓글쓰기  -->
-<insert id="hi_insert"  parameterType="com.hifive.history.model.CommentDto">
+<insert id="hi_insertRe"  parameterType="com.hifive.history.model.CommentDto">
 INSERT
 INTO COMMENT_H
   (
@@ -63,7 +63,7 @@ WHERE SEQ     = #{SEQ}
 </update>
 
 <!-- 페이징 -->
-<select id="hi_selectPage" parameterType="hashmap" resultType="hashmap">
+<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
 SELECT TT1.*                                           
 FROM                                                   
   (SELECT ROWNUM RNUM,                                 

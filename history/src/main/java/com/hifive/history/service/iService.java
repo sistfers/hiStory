@@ -15,5 +15,5 @@ public interface iService {
 	
 	public int hi_delete(int cnt);			// 삭제(3으로 상태변경)
 	
-	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception;		// 목록 리스트 보기
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception;		// 목록 리스트 보기
 }

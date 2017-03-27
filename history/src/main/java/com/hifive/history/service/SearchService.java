@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by Admin on 2017-03-24.
@@ -43,5 +44,7 @@ public class SearchService implements iService {
 		return searchDao.hi_selectList(condition);
 	}
 	
-	
+	public List<Map<String, Object>> hi_selectRankList(){
+		return searchDao.hi_selectRankList();
+	}
 }

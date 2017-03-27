@@ -11,7 +11,7 @@
 		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 	</resultMap>
 	<!-- 등록 -->
-	<update id="hi_insert" parameterType="com.hifive.history.model.iDto">
+	<insert id="hi_insert" parameterType="com.hifive.history.model.iDto">
 		INSERT
 		INTO SEARCH_H
 		  (
@@ -26,32 +26,31 @@
 		  VALUES
 		  (
 		    SEQ_SEARCH.NEXTVAL,
-		    #{SEARCH_WORD},
-		    #{S_ID},
+		    #{search_word},
+		    #{s_id},
 		    SYSDATE,
 		    (
 		      select NULL SEX from dual
-		      where not exists (SELECT SEX FROM USER_H WHERE ID=#{S_ID})
+		      where not exists (SELECT SEX FROM USER_H WHERE ID=#{s_id})
 		      union
-		      SELECT SEX FROM USER_H WHERE ID=#{S_ID}
+		      SELECT SEX FROM USER_H WHERE ID=#{s_id}
 		    ),
 		    (
 		      select NULL AREA from dual
-		      where not exists (SELECT AREA FROM USER_H WHERE ID=#{S_ID})
+		      where not exists (SELECT AREA FROM USER_H WHERE ID=#{s_id})
 		      union
-		      SELECT AREA FROM USER_H WHERE ID=#{S_ID}
+		      SELECT AREA FROM USER_H WHERE ID=#{s_id}
 		    ),
 		    (
 		      select NULL BIRTH from dual
-		      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{S_ID})
+		      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{s_id})
 		      union
-		      SELECT BIRTH FROM USER_H WHERE ID=#{S_ID}
+		      SELECT BIRTH FROM USER_H WHERE ID=#{s_id}
 		    )
 		  )
-	</update>
+	</insert>
 	
-	<select id="hi_selectList" parameterType="hashmap"
-		resultMap="SearchRankMap">
+	<select id="hi_selectRankList" resultMap="SearchRankMap">
 		SELECT *
 		FROM
 		(
@@ -64,7 +63,7 @@
   				ORDER BY COUNT(*) DESC
   			)A
   		)
-		WHERE RNUM BETWEEN 1 AND 9;
+		WHERE RNUM BETWEEN 1 AND 9
 
 	</select>
 	

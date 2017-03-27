@@ -26,10 +26,12 @@ public class MessageControl {
 	public ModelAndView do_search(HttpServletRequest res) {
 				
 		loger.debug("<<<<<<<<<< sned_message_list.hi");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("empty");
 		
 		loger.debug("sned_message_list.hi >>>>>>>>>>");
 		
-		return null;		
+		return mav;		
 	}
 	
 }

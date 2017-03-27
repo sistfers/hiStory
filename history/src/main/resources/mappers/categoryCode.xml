@@ -3,7 +3,10 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.categoryCode">
-
-
-
+	<select id="hi_selectCategory" parameterType="String" resultType="com.hifive.history.model.iDto">
+	SELECT SEQ, ID, NAME, STATE 
+	FROM CATEGORY_H 
+	WHERE ID = #{id} AND STATE = '0'
+	ORDER BY SEQ;
+	</select>
 </mapper>

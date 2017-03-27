@@ -1,5 +1,6 @@
 package com.hifive.history.service;
 
+import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.CategoryDao;
 
@@ -47,5 +48,7 @@ public class CategoryIService implements iService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	public List<CategoryDto> hi_selectCategory(String id){
+		return categoryDao.hi_selectCategory(id);
+	}
 }

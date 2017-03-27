@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.iDto;
 
 /**
@@ -53,7 +54,6 @@ public class CategoryDao implements iDao {
 		logger.debug("cnt = "+cnt);
 		return sqlSession.update(statement,cnt);
 	}
-
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
 <<<<<<< HEAD
@@ -65,5 +65,10 @@ public class CategoryDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
-	
+	public List<CategoryDto> hi_selectCategory(String id){
+		String statement = namespace +".hi_selectCategory";
+		logger.debug("statement"+statement);
+		logger.debug("id = "+id);
+		return sqlSession.selectList(statement,id);
+	}
 }

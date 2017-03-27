@@ -40,14 +40,6 @@ public class CommentDao implements iDao {
 	}
 
 	@Override
-	public iDto hi_detail(iDto dto) {
-		String statement = namespace +".hi_detail";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectOne(statement,dto);
-	}
-
-	@Override
 	public int hi_delete(int cnt) {
 		String statement = namespace +".hi_delete";
 		logger.debug("statement"+statement);
@@ -61,5 +53,19 @@ public class CommentDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
+	}
+	
+	//대댓글 입력
+	public int hi_insertRe(iDto dto) {
+		String statement = namespace +".hi_insertRe";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.insert(statement,dto);
+	}
+
+//= 사용안함=======================================	
+	@Override
+	public iDto hi_detail(iDto dto) {
+		return null;
 	}
 }

@@ -4,6 +4,101 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.commentCode">
 
+<!--댓글쓰기  -->
+<insert id="hi_insert"  parameterType="com.hifive.history.model.CommentDto">
+INSERT
+INTO COMMENT_H
+  (
+    SEQ,
+    POST_SEQ,
+    ID,
+    NAME,
+    CONTENT,
+    PARENT,
+    STATE
+  )
+  VALUES
+  (
+    SEQ_COMMENT.nextval,
+    #{POST_SEQ},
+    #{ID},
+    #{NAME},
+    #{CONTENT},
+    SEQ_COMMENT.currval,
+    #{STATE}
+  ) 
+</insert>
+
+<!--대댓글쓰기  -->
+<insert id="hi_insert"  parameterType="com.hifive.history.model.CommentDto">
+INSERT
+INTO COMMENT_H
+  (
+    SEQ,
+    POST_SEQ,
+    ID,
+    NAME,
+    CONTENT,
+    PARENT,
+    STATE
+  )
+  VALUES
+  (
+    SEQ_COMMENT.nextval,
+    #{POST_SEQ},
+    #{ID},
+    #{NAME},
+    #{CONTENT},
+    #{PARENT},
+    #{STATE}
+  ) 
+</insert>
+
+<!--댓글수정  -->
+<update id="hi_update" parameterType="com.hifive.history.model.CommentDto">
+UPDATE COMMENT_H
+SET   CONTENT = #{CONTENT},
+      STATE   = #{STATE}
+WHERE SEQ     = #{SEQ}
+</update>
+
+<!-- 페이징 -->
+<select id="hi_selectPage" parameterType="hashmap" resultType="hashmap">
+SELECT TT1.*                                           
+FROM                                                   
+  (SELECT ROWNUM RNUM,                                 
+         T1.*,                                 
+         T2.*                                  
+  FROM                                                 
+  ( SELECT SEQ,
+      POST_SEQ, 
+      ID, 
+      NAME, 
+      CONTENT, 
+      PARENT, 
+      STATE, 
+      WDATE 
+  FROM COMMENT_H
+  WHERE POST_SEQ = #{POST_SEQ}                      
+       order by PARENT DESC, SEQ                         
+    )T1 NATURAL JOIN                                   
+    (                                                  
+      SELECT COUNT(*)                                  
+      FROM COMMENT_H                        
+      WHERE POST_SEQ = #{POST_SEQ}                           
+    )T2                                                
+  )TT1                                                 
+WHERE RNUM BETWEEN (5 * (#{PAGE_NUM}-1)+1) AND (( 5 * (#{PAGE_NUM}-1))+5 )
+</select>
+
+
+<!-- 댓글삭제 -->
+<update id="hi_delete" parameterType="int">
+UPDATE COMMENT_H
+SET   STATE   = '2'
+WHERE SEQ     = #{SEQ}
+</update>
+
 
 
 </mapper>

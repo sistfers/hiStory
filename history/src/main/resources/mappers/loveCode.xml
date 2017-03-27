@@ -26,7 +26,7 @@ INTO LOVE_H
 </insert>
 
 <!-- 공감한 사람 목록 보기(글별) -->
-<select id="hi_selectPage" parameterType="hashmap" resultType="hashmap">
+<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
 SELECT POST_SEQ, ID, LDATE, SEX, AREA, BIRTH FROM LOVE_H WHERE POST_SEQ=#{POST_SEQ}
 </select>
 

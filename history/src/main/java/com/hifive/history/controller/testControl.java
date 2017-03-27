@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class testControl {
 
-	@RequestMapping("main/index.hi")
-	public String home() {
-		return "/main/index";
-	}
-
 	@RequestMapping("user/join.hi")
 	public String join() {
 		return "/user/join";

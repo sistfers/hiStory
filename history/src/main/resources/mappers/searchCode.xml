@@ -4,47 +4,57 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.searchCode">
 	
-	<resultMap id="CodMap" type="java.util.HashMap">
-		<result javaType="java.lang.String" column="RNUM" property="RNUM" />
-		<result javaType="java.lang.String" column="CNT" property="CNT" />
+	<resultMap id="SearchRankMap" type="java.util.HashMap">
+		<result javaType="int" column="RNUM" property="RNUM" />
+		<result javaType="int" column="CNT" property="CNT" />
 		<result javaType="java.lang.String" column="SEARCH_WORD" property="SEARCH_WORD" />
-		<result javaType="java.lang.String" column="REG_DT" property="REG_DT" />
-		<result javaType="java.lang.String" column="MOD_ID" property="MOD_ID" />
-		<result javaType="java.lang.String" column="MOD_DT" property="MOD_DT" />
-		<result javaType="java.lang.String" column="RNUM" property="RNUM" />
-		<result javaType="java.lang.String" column="TOT_CNT" property="TOT_CNT" />
 		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 	</resultMap>
 	<!-- 등록 -->
-	<update id="hi_insert" parameterType="com.hifive.history.model.iDto">
-		INSERT INTO SEARCH_H
-  			(
-    			SEQ,
-    			SEARCH_WORD,
-    			S_ID,
-    			SDATE,
-    			SEX,
-    			AREA,
-    			BIRTH
-  			)
-  		VALUES
-  			(
-    			SEQ_SEARCH.NEXTVAL,
-    			#{SEARCH_WORD},
-    			#{SEARCH_WORD},
-    			SYSDATE,
-    			#{SEX},
-    			#{AREA}
-    			to_date(#{BIRTH}, 'YYYYMMDD')
-  		)
-	</update>
+	<insert id="hi_insert" parameterType="com.hifive.history.model.iDto">
+		INSERT
+		INTO SEARCH_H
+		  (
+		    SEQ,
+		    SEARCH_WORD,
+		    S_ID,
+		    SDATE,
+		    SEX,
+		    AREA,
+		    BIRTH
+		  )
+		  VALUES
+		  (
+		    SEQ_SEARCH.NEXTVAL,
+		    #{search_word},
+		    #{s_id},
+		    SYSDATE,
+		    (
+		      select NULL SEX from dual
+		      where not exists (SELECT SEX FROM USER_H WHERE ID=#{s_id})
+		      union
+		      SELECT SEX FROM USER_H WHERE ID=#{s_id}
+		    ),
+		    (
+		      select NULL AREA from dual
+		      where not exists (SELECT AREA FROM USER_H WHERE ID=#{s_id})
+		      union
+		      SELECT AREA FROM USER_H WHERE ID=#{s_id}
+		    ),
+		    (
+		      select NULL BIRTH from dual
+		      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{s_id})
+		      union
+		      SELECT BIRTH FROM USER_H WHERE ID=#{s_id}
+		    )
+		  )
+	</insert>
 	
-	<select id="hi_selectList" parameterType="hashmap"
-		resultMap="CodMap">
+	<select id="hi_selectRankList" resultMap="SearchRankMap">
 		SELECT *
 		FROM
 		(
-			SELECT ROWNUM RNUM, A.CNT, A.SEARCH_WORD
+			SELECT ROWNUM RNUM, A.CNT AS CNT, A.SEARCH_WORD
 			FROM
   			(
   				SELECT COUNT(*) AS CNT, SEARCH_WORD 
@@ -53,7 +63,7 @@
   				ORDER BY COUNT(*) DESC
   			)A
   		)
-		WHERE RNUM BETWEEN 1 AND 9;
+		WHERE RNUM BETWEEN 1 AND 9
 
 	</select>
 	

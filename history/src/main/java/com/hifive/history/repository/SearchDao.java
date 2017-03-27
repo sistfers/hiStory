@@ -17,7 +17,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class SearchDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.SearchCode";
+	private final String namespace="com.hifive.history.repository.mappers.searchCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -27,7 +27,9 @@ public class SearchDao implements iDao {
 		String statement = namespace +".hi_insert";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.insert(statement,dto);
+		int flag = sqlSession.insert(statement, dto); 
+		logger.debug("flag = "+flag);
+		return flag;
 	}
 
 	@Override
@@ -60,5 +62,11 @@ public class SearchDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
+	}
+	
+	public List<Map<String, Object>> hi_selectRankList(){
+		String statement = namespace +".hi_selectRankList";
+		
+		return sqlSession.selectList(statement);
 	}
 }

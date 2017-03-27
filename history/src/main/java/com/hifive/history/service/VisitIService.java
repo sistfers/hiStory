@@ -46,5 +46,10 @@ public class VisitIService implements iService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	public int hi_getToday(String id){
+		return visitDao.hi_getToday(id);
+	}
+	public int hi_getTotal(String id){
+		return visitDao.hi_getTotal(id);
+	}
 }

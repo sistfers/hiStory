@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class PostIService implements iService {
+public class PostService implements iService {
 
 	@Autowired
 	private PostDao postDao;

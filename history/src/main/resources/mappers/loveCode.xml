@@ -4,6 +4,39 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.loveCode">
 
+<!--글 공감 누르기  -->
+<insert id="hi_insert"  parameterType="com.hifive.history.model.LoveDto">
+INSERT
+INTO LOVE_H
+  (
+    POST_SEQ,
+    ID,
+    SEX,
+    AREA,
+    BIRTH
+  )
+  VALUES
+  (
+    #{POST_SEQ},
+    #{ID},
+    #{SEX},
+    #{AREA},
+    #{BIRTH}
+  )
+</insert>
+
+<!-- 공감한 사람 목록 보기(글별) -->
+<select id="hi_selectPage" parameterType="hashmap" resultType="hashmap">
+SELECT POST_SEQ, ID, LDATE, SEX, AREA, BIRTH FROM LOVE_H WHERE POST_SEQ=#{POST_SEQ}
+</select>
+
+
+<!-- 글공감취소 -->
+<update id="hi_delete" parameterType="int">
+DELETE
+FROM LOVE_H
+WHERE POST_SEQ = #{POST_SEQ}
+</update>
 
 
 </mapper>

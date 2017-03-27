@@ -16,7 +16,7 @@
 <!-- 이용자의 블로그소개를 넣습니다 -->
 <h5>초보개발자 블로그</h5>
 <!-- 포스트쓰기 Or 이웃추가-->
-<a href="write.jsp" class="btn btn-info btn-md">
+<a href="write.hi" class="btn btn-info btn-md">
     <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
 </a>
 <br><br>

@@ -42,6 +42,7 @@
             <beans:property name="defaultErrorView" value="notiles/error/error" />
     </beans:bean>
 
-
+	<!-- ckediter upload -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 </beans:beans>

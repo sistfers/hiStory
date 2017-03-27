@@ -40,7 +40,7 @@
 		<textarea name="contents" rows="500"></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'contents',{
-				filebrowserUploadUrl: '/ckeditor/upload.jsp'
+				filebrowserUploadUrl: 'ckeditorImageUpload.hi'
 			}); 
 		</script>
 		</div>

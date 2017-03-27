@@ -4,5 +4,147 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.messageCode">
 
+	<!-- DTO 
+		private int seq; 
+		private String send_id; 
+		private String take_id; 
+		private String contents; 
+		private String wdate; 
+		private String rdate; 
+		private String state; -->
+	
+	<resultMap id="MessageDto" type="java.util.HashMap">
+		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+		<result javaType="java.lang.Integer" column="SEQ" property="SEQ" />
+		<result javaType="java.lang.String" column="SEND_ID" property="SEND_ID" />
+		<result javaType="java.lang.String" column="TAKE_ID" property="TAKE_ID" />
+		<result javaType="java.lang.String" column="CONTENTS" property="CONTENTS" />
+		<result javaType="java.lang.String" column="WDATE" property="WDATE" />
+		<result javaType="java.lang.String" column="RDATE" property="RDATE" />
+		<result javaType="java.lang.String" column="STATE" property="STATE" />
+	</resultMap>
+	
+	<resultMap id="followMap" type="java.util.HashMap">
+		<result javaType="java.lang.String" column="ID" property="ID"/>
+		<result javaType="java.lang.String" column="NAME" property="NAME"/>
+		<result javaType="java.lang.String" column="TITLE" property="TITLE"/>
+	</resultMap>
+	
+	<!-- SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE(sysdate), RDATE(null), STATE(0) -->	
 
+	<!-- 쪽지 쓰기 -->
+	<update id="hi_insert" parameterType="com.hifive.history.model.MessageDto">
+		INSERT INTO MESSAGE_H(SEQ, SEND_ID, TAKE_ID, CONTENTS, RDATE)
+		VALUES(SEQ_MESSAGE.NEXTVAL, #{send_id}, #{take_id}, #{contents}, NULL);
+	</update>
+
+	<!-- 이웃 보기 -->
+	<select id="hi_selectList" parameterType="string" resultType="followMap">
+		SELECT TT2.*
+		FROM(
+		      SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
+		      FROM(
+		            SELECT followtable.YOU_ID, usertable.NAME, blogtable.TITLE
+		              FROM (
+		                     SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
+		                     FROM FOLLOW_H
+		                     WHERE MY_ID = #{id}
+		                     GROUP BY MY_ID, YOU_ID
+		                   )followtable
+		              INNER JOIN USER_H usertable
+		                ON followtable.YOU_ID = usertable.ID
+		              INNER JOIN BLOG_H blogtable
+		                ON usertable.ID = blogtable.ID
+		             WHERE MOD(followtable.cnt, 2) = 1
+		             ORDER BY followtable.YOU_ID
+		      )T1
+		      NATURAL JOIN
+		      (
+		          SELECT COUNT(*) TOT_CNT
+		          FROM (
+		                SELECT 1
+		                FROM FOLLOW_H
+		                WHERE MY_ID = #{id}
+		                GROUP BY MY_ID, YOU_ID
+		               )
+		      )T2
+		    )TT2
+		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
+		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})	
+	</select>
+	
+	<!-- 쪽지 읽기 -->
+	<select id="hi_detail" parameterType="integer" resultType="MessageDto">
+		SELECT *
+		FROM MESSAGE_H
+		WHERE SEQ=#{seq}
+	</select>
+	
+	<!-- 리스트 불러오기(보낸 쪽지) -->
+	<select id="hi_select_sendlist" parameterType="string" resultType="MessageDto">
+		SELECT T1.*, T2.*
+		FROM(
+			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
+		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
+		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
+		           T.STATE							
+		    FROM(							
+		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
+		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE							
+		     	FROM(							
+		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
+		       		FROM MESSAGE_H							
+		        	WHERE SEND_ID=#{sendId}							
+		        ORDER BY WDATE DESC							
+		          	) LST			
+		        <!--[CDATA[ 				
+		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )
+		      	]]-->							
+		        ) T      							
+		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
+			) T1 NATURAL JOIN  
+		    (                                                  
+		      SELECT COUNT(*) TOTAL                                  
+		      FROM MESSAGE_H                        
+		      WHERE SEND_ID=#{sendId} ) T2
+	</select>
+	
+	<!-- 리스트 불러오기(받은 쪽지) -->
+	<select id="hi_select_getlist" parameterType="string" resultType="MessageDto">
+		SELECT T1.*, T2.*
+		FROM(
+			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
+		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
+		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
+		           T.STATE							
+		    FROM(							
+		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
+		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE							
+		     	FROM(							
+		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
+		       		FROM MESSAGE_H							
+		        	WHERE TAKE_ID=#{takeId}							
+		        ORDER BY WDATE DESC							
+		          	) LST			
+		        <!--[CDATA[ 				
+		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )
+		      	]]-->							
+		        ) T      							
+		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
+			) T1 NATURAL JOIN  
+		    (                                                  
+		      SELECT COUNT(*) TOTAL                                  
+		      FROM MESSAGE_H                        
+		      WHERE TAKE_ID=#{takeId} ) T2
+	</select>
+	
+	<!-- 쪽지 삭제 -->
+	<delete id="hi_delete" parameterType="integer">
+		DELETE 	
+		FROM MESSAGE_H			
+		WHERE SEQ=#{}	
+	</delete>
+	
 </mapper>
+
+

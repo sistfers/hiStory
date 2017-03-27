@@ -1,13 +1,15 @@
 package com.hifive.history.service;
 
-import com.hifive.history.model.iDto;
-import com.hifive.history.repository.MessageDao;
-
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hifive.history.model.iDto;
+import com.hifive.history.repository.MessageDao;
 
 /**
  * Created by Admin on 2017-03-24.
@@ -15,38 +17,52 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService implements iService {
 
+	Logger loger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private MessageDao messageDao;
 
 	@Override
 	public int hi_insert(iDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return messageDao.hi_insert(dto);
 	}
 
 	@Override
 	public int hi_update(iDto dto) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public iDto hi_detail(iDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return messageDao.hi_detail(dto);
 	}
 
 	@Override
 	public int hi_delete(int cnt) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return messageDao.hi_delete(cnt);
 	}
 
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
+	// 보낸 쪽지함
+	public List<Map<String, Object>> hi_select_sendlist(String sendId) {
+			
+		return messageDao.hi_select_sendlist(sendId);
+	}
 	
+	// 받은 쪽지함
+	public List<Map<String, Object>> hi_select_getlist(String takeId) {
+		
+		return messageDao.hi_select_getlist(takeId);
+	}
 }
+
+

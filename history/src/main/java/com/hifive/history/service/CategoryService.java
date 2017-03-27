@@ -21,8 +21,7 @@ public class CategoryService implements iService {
 
 	@Override
 	public int hi_insert(iDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return categoryDao.hi_insert(dto);
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class CategoryService implements iService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public List<CategoryDto> hi_selectCategory(String id){
-		return categoryDao.hi_selectCategory(id);
+	public List<CategoryDto> hi_selectCategory(Map<String, String> dto){
+		return categoryDao.hi_selectCategory(dto);
 	}
 }

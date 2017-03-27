@@ -61,10 +61,10 @@ public class CategoryDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
-	public List<CategoryDto> hi_selectCategory(String id){
+	public List<CategoryDto> hi_selectCategory(Map<String, String> dto){
 		String statement = namespace +".hi_selectCategory";
 		logger.debug("statement"+statement);
-		logger.debug("id = "+id);
-		return sqlSession.selectList(statement,id);
+		logger.debug("dto.toSting() = " + dto.toString());
+		return sqlSession.selectList(statement,dto);
 	}
 }

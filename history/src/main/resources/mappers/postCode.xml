@@ -4,6 +4,105 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.postCode">
 
+<!--포스트쓰기  -->
+<insert id="hi_insert"  parameterType="com.hifive.history.model.PostDto">
+	INSERT
+	INTO POST_H
+	  (
+	    SEQ,
+	    CT_SEQ,
+	    ID,
+	    FIELD,
+	    TITLE,
+	    CONTENT,
+	    HASHTAG,
+	    STATE,
+	    CO_STATE
+	  )
+	  VALUES
+	  (
+	    SEQ_POST.nextval,
+	    #{CT_SEQ},
+	    #{ID},
+	    #{FIELD},
+	    #{TITLE},
+	    #{CONTENT},
+	    #{HASHTAG},
+	    #{STATE},
+	    #{CO_STATE}
+	  )
+</insert>
+
+<!--포스트수정  -->
+<update id="hi_update" parameterType="com.hifive.history.model.PostDto">
+	UPDATE POST_H
+	SET   CT_SEQ  = #{CT_SEQ},
+	      FIELD   = #{FIELD},
+	      TITLE   = #{TITLE},
+	      CONTENT = #{CONTENT},
+	      HASHTAG = #{HASHTAG},
+	      STATE   = #{STATE}
+	      CO_STATE = #{CO_STATE}
+	WHERE SEQ     = #{SEQ}
+</update>
+
+<!--포스트 1건 읽기  -->
+<select id="hi_detail" parameterType="com.hifive.history.model.PostDto" resultType="com.hifive.history.model.PostDto">
+	SELECT SEQ,
+	      CT_SEQ,
+	      ID,
+	      FIELD,
+	      TITLE,
+	      CONTENT,
+	      WDATE,
+	      HASHTAG,
+	      STATE,
+	      CO_STATE
+	FROM POST_H
+	WHERE SEQ = (SELECT MAX(SEQ) MAXSEQ
+	      FROM POST_H P
+	      WHERE NOT STATE = '2' 
+	AND CT_SEQ = #{CT_SEQ} )
+</select>
+
+<!-- 페이징 -->
+<select id="hi_selectPage" parameterType="hashmap" resultType="hashmap">
+	SELECT TT1.*                                           
+	FROM                                                   
+	  (SELECT ROWNUM RNUM,                                 
+	         T1.*,                                 
+	         T2.*                                  
+	  FROM                                                 
+	  ( SELECT SEQ,
+	    CT_SEQ,
+	    ID,
+	    FIELD,
+	    TITLE,
+	    CONTENT,
+	    WDATE,
+	    HASHTAG,
+	    STATE,
+	    CO_STATE
+	  FROM POST_H
+	  WHERE ID = #{ID}                       
+	        order by SEQ DESC                               
+	    )T1 NATURAL JOIN                                   
+	    (                                                  
+	      SELECT COUNT(*)                                  
+	      FROM POST_H                        
+	      WHERE ID = #{ID}                           
+	    )T2                                                
+	  )TT1                                                 
+	WHERE RNUM BETWEEN (5 * (#{PAGE_NUM}-1)+1) AND (( 5 * (#{PAGE_NUM}-1))+5 )
+</select>
+
+
+<!-- 글삭제 -->
+<update id="hi_delete" parameterType="int">
+UPDATE POST_H
+SET   STATE   = #{STATE}
+WHERE SEQ     = #{SEQ}
+</update>
 
 
 </mapper>

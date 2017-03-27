@@ -1,11 +1,14 @@
 package com.hifive.history.service;
 
+import com.hifive.history.model.iDto;
 import com.hifive.history.repository.PostDao;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Created by Admin on 2017-03-24.
- */
 @Service
 public class PostIService implements iService {
 
@@ -59,5 +59,30 @@ public class PostIService implements iService {
 	       printWriter.flush();
 	       
 	       
+	}
+
+	@Override
+	public int hi_insert(iDto dto) {
+		return postDao.hi_insert(dto);
+	}
+
+	@Override
+	public int hi_update(iDto dto) {
+		return postDao.hi_update(dto);
+	}
+
+	@Override
+	public iDto hi_detail(iDto dto) {
+		return postDao.hi_detail(dto);
+	}
+
+	@Override
+	public int hi_delete(int cnt) {
+		return postDao.hi_delete(cnt);
+	}
+
+	@Override
+	public List<Map<String, Object>> hi_selectPage(Map<String, Object> dto) throws Exception {
+		return postDao.hi_selectPage(dto);
 	}
 }

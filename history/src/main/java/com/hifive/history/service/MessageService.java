@@ -25,7 +25,7 @@ public class MessageService implements iService {
 	@Override
 	public int hi_insert(iDto dto) {
 		
-		return 0;
+		return messageDao.hi_insert(dto);
 	}
 
 	@Override
@@ -37,13 +37,13 @@ public class MessageService implements iService {
 	@Override
 	public iDto hi_detail(iDto dto) {
 		
-		return null;
+		return messageDao.hi_detail(dto);
 	}
 
 	@Override
 	public int hi_delete(int cnt) {
 		
-		return 0;
+		return messageDao.hi_delete(cnt);
 	}
 
 	@Override
@@ -56,6 +56,12 @@ public class MessageService implements iService {
 	public List<Map<String, Object>> hi_select_sendlist(String sendId) {
 			
 		return messageDao.hi_select_sendlist(sendId);
+	}
+	
+	// 받은 쪽지함
+	public List<Map<String, Object>> hi_select_getlist(String takeId) {
+		
+		return messageDao.hi_select_getlist(takeId);
 	}
 }
 

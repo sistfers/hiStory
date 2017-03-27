@@ -5,9 +5,11 @@
 <mapper namespace="com.hifive.history.repository.mappers.followCode">
 
 	<resultMap id="followMap" type="java.util.HashMap">
+		<result javaType="java.lang.Integer" column="RNUM" property="RNUM"/>
 		<result javaType="java.lang.String" column="ID" property="ID"/>
 		<result javaType="java.lang.String" column="NAME" property="NAME"/>
 		<result javaType="java.lang.String" column="TITLE" property="TITLE"/>
+		<result javaType="java.lang.Integer" column="TOT_CNT" property="TOT_CNT"/>
 		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 	</resultMap>
 

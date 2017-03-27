@@ -14,8 +14,8 @@
 <div class="panel panel-info">
       <div class="panel-heading">관리</div>
       <div class="panel-body">
-      	<a href="control.jsp">블로그관리</a> <br><br>
-      	<a href="neighbor.jsp">나를 추가한 이웃</a>
+      	<a href="control.hi">블로그관리</a> <br><br>
+      	<a href="neighbor.hi">나를 추가한 이웃</a>
       </div>
 </div>
 
@@ -24,8 +24,8 @@
       <div class="panel-heading">통계</div>
       <div class="panel-body">
       	<h4>방문분석</h4><hr>
-      	<a href="visit.jsp">방문자수</a> <br>
-      	<a href="">성별 / 연령별</a> <br>
+      	<a href="visit.hi">방문자수</a> <br>
+      	<a href="age.hi">성별 / 연령별</a> <br>
       	<a href="">이웃증감수</a> <br>
       	<br>
       	<h4>순위</h4><hr>

@@ -66,24 +66,10 @@ public class testControl {
 //		return "/main/index";
 //	}
 
-	@RequestMapping("user/join.hi")
-	public String join() {
-		return "/user/join";
-	}
 
-	@RequestMapping("main/login.hi")
-	public String login() {
-		return "/main/login";
-	}
 
-	@RequestMapping("message/message_list.hi")
-	public String messageList() {
-		return "/message/message_list";
-	}
 
-	@RequestMapping("message/write.hi")
-	public String messageWrite() {
-		return "/message/write";
-	}
+
+
 
 }

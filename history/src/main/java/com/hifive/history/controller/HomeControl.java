@@ -43,6 +43,11 @@ public class HomeControl {
 		
 		return "/main/index";
 	}
+
+	@RequestMapping("main/login.hi")
+	public String login() {
+		return "/main/login";
+	}
 	
 
 }

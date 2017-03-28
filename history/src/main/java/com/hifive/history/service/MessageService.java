@@ -34,6 +34,7 @@ public class MessageService implements iService {
 		return 0;
 	}
 
+	// 쪽지 읽기
 	@Override
 	public iDto hi_detail(iDto dto) {
 		

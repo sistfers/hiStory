@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -101,8 +102,11 @@ public class PostService implements iService {
 	public List<Map<String, Object>> hi_bloggerRankList() {
 		return postDao.hi_bloggerRankList();
 	}
-	public List<PostDto> hi_selectRank(String id){
-		return postDao.hi_selectRank(id);
+	public List<PostDto> hi_selectCommentRank(String id){
+		return postDao.hi_selectCommentRank(id);
+	}
+	public List<HashMap<String, String>> hi_selectLoveRank(HashMap<String, String> map){
+		return postDao.hi_selectLoveRank(map);
 	}
 	
 	public List<Map<String, Object>> hi_selectFollowerList(Map<String, Object> condition) throws Exception {
@@ -119,4 +123,5 @@ public class PostService implements iService {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectSearchList(condition);
 	}
+	
 }

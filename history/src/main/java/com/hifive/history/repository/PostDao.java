@@ -69,8 +69,14 @@ public class PostDao implements iDao {
 		
 		return sqlSession.selectList(statement);
 	}
-	public List<PostDto> hi_selectRank(String id){
-		String statement = namespace +".hi_selectRank";
+	public List<PostDto> hi_selectCommentRank(String id){
+		String statement = namespace +".hi_selectCommentRank";
+		logger.debug("statement"+statement);
+		logger.debug("id"+id);
+		return sqlSession.selectList(statement,id);
+	}
+	public List<PostDto> hi_selectLoveRank(String id){
+		String statement = namespace +".hi_selectLoveRank";
 		logger.debug("statement"+statement);
 		logger.debug("id"+id);
 		return sqlSession.selectList(statement,id);
@@ -96,10 +102,5 @@ public class PostDao implements iDao {
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
 	}
-	public List<PostDto> hi_selectRank(String id){
-		String statement = namespace +".hi_selectRank";
-		logger.debug("statement"+statement);
-		logger.debug("id"+id);
-		return sqlSession.selectList(statement,id);
-	}
+	
 }

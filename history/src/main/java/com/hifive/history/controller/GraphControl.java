@@ -51,8 +51,16 @@ public class GraphControl {
 	@RequestMapping("chart/love.hi")
 	public ModelAndView love() {
 		ModelAndView mav = new ModelAndView();
-		List<PostDto> postList = postService.hi_selectRank("1");
+		List<PostDto> postList = postService.hi_selectCommentRank("1");
 		mav.setViewName("chart/love");
+		mav.addObject("postList", postList);
+		return mav;
+	}
+	@RequestMapping("chart/comment.hi")
+	public ModelAndView comment() {
+		ModelAndView mav = new ModelAndView();
+		List<PostDto> postList = postService.hi_selectCommentRank("1");
+		mav.setViewName("chart/comment");
 		mav.addObject("postList", postList);
 		return mav;
 	}

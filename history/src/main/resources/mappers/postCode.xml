@@ -200,7 +200,7 @@ WHERE SEQ     = #{SEQ}
 	WHERE TT1.RNUM <=4
 	]]>
 </select>
-<select id="hi_selectRank" parameterType="String" resultType="com.hifive.history.model.PostDto">
+<select id="hi_selectCommenttRank" parameterType="String" resultType="com.hifive.history.model.PostDto">
 	SELECT SEQ, CT_SEQ, ID, FIELD, TITLE, CONTENT, WDATE, HASHTAG, STATE, CO_STATE
 	FROM
 	(

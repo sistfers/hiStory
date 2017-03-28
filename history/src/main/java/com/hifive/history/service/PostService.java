@@ -119,7 +119,4 @@ public class PostService implements iService {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectSearchList(condition);
 	}
-	public List<PostDto> hi_selectRank(String id){
-		return postDao.hi_selectRank(id);
-	}
 }

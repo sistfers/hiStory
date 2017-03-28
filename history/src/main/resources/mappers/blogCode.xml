@@ -8,4 +8,9 @@
 		SET TITLE = #{title}, THEME = #{theme} 
 		WHERE ID = #{id}
 	</update>
+
+	<insert id="hi_insert" parameterType="com.hifive.history.model.BlogDto">
+		INSERT INTO SISTSYSTEM.BLOG_H (ID, TITLE)
+		  VALUES (#{id}, #{title})
+	</insert>
 </mapper>

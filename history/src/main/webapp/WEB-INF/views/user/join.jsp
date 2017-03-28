@@ -35,7 +35,7 @@
 	
 		<!-- form명 바꾸면 안되요 : id, name꼭 다시 확인하세요.. 중복된 이름이 있을수도 있음  -->
 			<form class="form-horizontal" action="/user/join.hi" method="post">
-			
+				<input type="hidden" name="do_join" value="do_join">
 				<div class="form-group" >
 					<span class="label label-danger">필수입력사항</span>
 				</div>
@@ -97,17 +97,8 @@
 					<label for="divName" class="col-lg-2 control-label">닉네임</label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control onlyHangul" id="name"
-							name="name" data-rule-required="true" placeholder="한글만 입력 가능합니다."
+							name="name" data-rule-required="true"
 							maxlength="20">
-					</div>
-				</div>
-
-				<div class="form-group" id="divphone">
-					<label for="divphone" class="col-lg-2 control-label">전화번호</label>
-					<div class="col-lg-10">
-						<input type="tel" class="form-control onlyNumber" id="phone"
-							name="phone" data-rule-required="true"
-							placeholder="-를 제외하고 숫자만 입력하세요." maxlength="20">
 					</div>
 				</div>
 
@@ -117,14 +108,14 @@
 						<%--<input type="text" class="form-control" id="birthday"--%>
 							<%--name="birthday" data-rule-required="true"--%>
 							<%--placeholder="YYYY/DD/MM" maxlength="20">--%>
-						<input type="date" class="form-control" id="birthday" name="birthday">
+						<input type="date" class="form-control" id="birthday" name="birth">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-lg-2 control-label" for="select">지역</label>
 					<div class="col-lg-10">
-						<select class="form-control" id="select">
+						<select class="form-control" id="select" name="area">
 							<option>서울</option>
 							<option>서울</option>
 							<option>서울</option>
@@ -169,7 +160,7 @@
 					<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 					<div class="col-lg-10">
 					<img src="/resources/image/girl.png" width="130"><!--사진 첨부터 보여줄건지는 알아서 ㅋㅋ  -->
-						<input type="button" class="btn btn-default" value="사진등록">
+						<input type="button" class="btn btn-default" value="사진등록" name="profileImg">
 					</div>
 				</div>
 
@@ -177,7 +168,7 @@
 					<label for="divProfileCon" class="col-lg-2 control-label" style="color: #A6A6A6">프로필내용</label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="profile"
-							name="profile" data-rule-required="true" placeholder="안녕하세요."
+							name="profileCon" data-rule-required="true" placeholder="안녕하세요."
 							maxlength="20">
 					</div>
 				</div>

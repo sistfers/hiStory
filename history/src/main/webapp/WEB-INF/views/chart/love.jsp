@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.hifive.history.model.PostDto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
@@ -8,8 +10,7 @@
 <html>
 <head>
 <%
-	List<PostDto> postList = new ArrayList<PostDto>();
-	postList = (List<PostDto>)request.getAttribute("postList");
+	List<HashMap<String, String>> loveRank = (List<HashMap<String, String>>)request.getAttribute("loveRank");
 	
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,23 +58,25 @@ border-radius: 15px;
 						<th>순위</th>
 						<th>글제목</th>
 						<th>분야</th>
+						<th>공감수</th>
 						<th>작성일</th>
 		        	</tr>
 		        	<%
-		        		if(postList.size()==0){
+		        		if(loveRank.size()==0){
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="4">공감받은 글이 없습니다.</td>
+		        		<td colspan="5">공감받은 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        		}else{
-		        			for(int i = 0; i < postList.size(); ++i){	
+		        			for(int i = 0; i < loveRank.size(); ++i){	
 		        	%>	
 		        		<tr class="active">
 		        		<td><%=i+1 %>위</td>
-		        		<td><%=postList.get(i).getTitle()%></td>
-		        		<td><%=postList.get(i).getField()%></td>
-		        		<td><%=postList.get(i).getWdate()%></td>
+		        		<td><%=loveRank.get(i).get("TITLE") %></td>
+		        		<td><%=loveRank.get(i).get("FIELD") %></td>
+		        		<td><%=loveRank.get(i).get("COUNT(*)") %></td>
+		        		<td><%=loveRank.get(i).get("WDATE") %></td>
 		        		</tr>
 		        	<%
 		        			}

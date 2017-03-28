@@ -1,5 +1,6 @@
 package com.hifive.history.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,11 +76,11 @@ public class PostDao implements iDao {
 		logger.debug("id"+id);
 		return sqlSession.selectList(statement,id);
 	}
-	public List<PostDto> hi_selectLoveRank(String id){
-		String statement = namespace +".hi_selectLoveRank";
+	public List<HashMap<String, String>> hi_selectLoveRank(HashMap<String, String> map){
+		String statement = namespace +".hi_selectLoveRank";		
 		logger.debug("statement"+statement);
-		logger.debug("id"+id);
-		return sqlSession.selectList(statement,id);
+		logger.debug("map : " + map);
+		return sqlSession.selectList(statement,map);
 	}
 	
 	public List<Map<String, Object>> hi_selectFollowerList(Map<String, Object> condition) throws Exception {

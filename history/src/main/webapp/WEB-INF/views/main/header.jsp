@@ -20,22 +20,31 @@ margin-top: 10px;
 		</div>
 		
 		<!-- 로그인전 =============================================================================== -->
-		<!-- 오른쪽 로그인/회원가입 버튼 -->
-		<ul class="nav navbar-nav navbar-right">
-			<li><button class="btn btn-default navbar-btn" onclick="do_login()">Login</button></li>
-			<li>&nbsp;&nbsp;&nbsp;</li> <!-- 버튼 사이 공백 넣어주려고 --> 
-			<li><button class="btn btn-default navbar-btn" onclick="do_join()">Join</button></li>
-		</ul>
+		<%
+			if (session.getAttribute("user") == null) {
+		%>
+				<!-- 오른쪽 로그인/회원가입 버튼 -->
+				<ul class="nav navbar-nav navbar-right">
+					<li><button class="btn btn-default navbar-btn" onclick="do_login()">Login</button></li>
+					<li>&nbsp;&nbsp;&nbsp;</li> <!-- 버튼 사이 공백 넣어주려고 -->
+					<li><button class="btn btn-default navbar-btn" onclick="do_join()">Join</button></li>
+				</ul>
 		
 		<!-- 로그인후 =============================================================================== -->
-		<ul class="nav navbar-nav navbar-right">
-		<li><a href="#">내블로그</a></li>
-		<li><a href="#">내블로그</a></li>
-<!-- 		<li><a href="#">내블로그</a></li> -->
-<!-- 		<li><a href="#">내블로그</a></li> -->
-<!-- 		<li><a href="#">내블로그</a></li> -->
-		<li><a href="#">로그아웃</a></li>
-		</ul>
+		<%
+			} else {
+		%>
+				<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">내블로그</a></li>
+				<li><a href="#">내블로그</a></li>
+		<!-- 		<li><a href="#">내블로그</a></li> -->
+		<!-- 		<li><a href="#">내블로그</a></li> -->
+		<!-- 		<li><a href="#">내블로그</a></li> -->
+				<li><a href="javascript:do_logout();" >로그아웃</a></li>
+				</ul>
+		<%
+			}
+		%>
 			      
 			      
 	</div>
@@ -44,13 +53,20 @@ margin-top: 10px;
 <!--페이지이동  -->
 <script type="text/javascript">
 function do_logout(){
-	var frm = document.frmWrite;	
+	var frm = document.logoutfrm;
+	frm.action.value="/main/logout.hi";
 	frm.submit();
 }
 function do_login(){
-	location.href = "/main/login.hi";
+    var frm = document.loginfrm;
+    frm.submit();
 }
 function do_join(){
-	location.href = "/user/join.hi";
+    var frm = document.joinfrm;
+    frm.submit();
 }
 </script>
+
+<form name="logoutfrm" action="/main/logout.hi" method="post" ></form>
+<form name="loginfrm" action="/main/login.hi" method="post"></form>
+<form name="joinfrm" action="/user/join.hi"></form>

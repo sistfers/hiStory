@@ -115,3 +115,4 @@ vcs.xml
 
 # End of https://www.gitignore.io/api/intellij+iml,eclipse
 .idea/vcs.xml
+history/src/test/java/history/*.java

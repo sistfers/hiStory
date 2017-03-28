@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hifive.history.model.MessageDto;
 import com.hifive.history.service.MessageService;
 
 /**
@@ -26,7 +28,51 @@ public class MessageControl {
 	@Autowired
 	private MessageService messageService; 
 	
-	@RequestMapping("message/sned_message_list.hi")
+	
+	@RequestMapping("message/read.hi")
+	public ModelAndView do_read(@RequestParam(value = "note") int seq) {
+	
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
+		
+		/*
+		private	int		seq;
+		private	String	send_id;
+		private	String	take_id;
+		private String  contents;
+		private	String	wdate;
+		private	String	rdate;
+		private	String	state;	*/
+		MessageDto dto = new MessageDto();
+		dto.setSeq(seq);
+		dto.setSend_id("");
+		dto.setTake_id("");
+		dto.setContents("");
+		dto.setWdate("");
+		dto.setRdate("");
+		dto.setState("");
+		
+		MessageDto note = new MessageDto();
+		note = (MessageDto) messageService.hi_detail(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/message/read");
+		mav.addObject("note", note);		
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		return mav;
+	}
+
+	@RequestMapping("message/write.hi")
+	public String messageWrite() {
+		
+		return "/message/write";
+	}
+	
+	@RequestMapping("message/send_message_list.hi")
 	public ModelAndView do_search(HttpServletRequest res) {
 			
 		loger.debug("----------------------------------------------------------");
@@ -41,11 +87,12 @@ public class MessageControl {
 		
 		search_info.put("PAGE_NUM", PAGE_NUM);
 		search_info.put("TAKEID", "Patricia");
+//		search_info.put("TAKEID", "Patri2cia");
 		loger.debug("search_info -> " + search_info.toString());
 		
 		// 리스트 가져오기
 		List<Map<String, Object>> getList = messageService.hi_select_getlist(search_info);		
-		
+		loger.debug("getlist size -> " + getList.size());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/message/message_list");
@@ -64,10 +111,6 @@ public class MessageControl {
 		return "/message/message_list";
 	}
 
-	@RequestMapping("message/write.hi")
-	public String messageWrite() {
-		return "/message/write";
-	}
 }
 
 

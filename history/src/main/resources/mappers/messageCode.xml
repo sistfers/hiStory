@@ -43,7 +43,8 @@
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->
-	<select id="hi_select_sendlist" parameterType="String" resultType="com.hifive.history.model.MessageDto">
+	<select id="hi_select_sendlist" parameterType="hashmap" resultType="com.hifive.history.model.MessageDto">
+		<![CDATA[
 		SELECT T1.*, T2.*
 		FROM(
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
@@ -58,10 +59,8 @@
 		       		FROM MESSAGE_H							
 		        	WHERE SEND_ID=#{sendId}							
 		        ORDER BY WDATE DESC							
-		          	) LST			
-		        <!--[CDATA[ 				
-		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )
-		      	]]-->							
+		          	) LST					
+		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )						
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
 			) T1 NATURAL JOIN  
@@ -69,10 +68,12 @@
 		      SELECT COUNT(*) TOTAL                                  
 		      FROM MESSAGE_H                        
 		      WHERE SEND_ID=#{sendId} ) T2
+		]]>
 	</select>
 	
 	<!-- 리스트 불러오기(받은 쪽지) -->
 	<select id="hi_select_getlist" parameterType="String" resultMap="GetNotes">
+		<![CDATA[
 		SELECT T1.*, T2.*
 		FROM(
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
@@ -88,9 +89,9 @@
 		        	WHERE TAKE_ID=#{TAKEID}							
 		        ORDER BY WDATE DESC							
 		          	) LST			
-		        <!--[CDATA[ 				
+		        				
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )
-		      	]]-->							
+		      							
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
 			) T1 NATURAL JOIN  
@@ -98,6 +99,7 @@
 		      SELECT COUNT(*) TOTAL                                  
 		      FROM MESSAGE_H                        
 		      WHERE TAKE_ID=#{TAKEID} ) T2
+		]]>		  
 	</select>
 	
 	<!-- 쪽지 삭제 -->

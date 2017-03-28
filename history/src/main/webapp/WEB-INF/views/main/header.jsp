@@ -35,7 +35,7 @@ margin-top: 10px;
 			} else {
 		%>
 				<ul class="nav navbar-nav navbar-right">
-				<li><a href="post/main.hi">내블로그</a></li>
+				<li><a href="/post/main.hi">내블로그</a></li>
 				<li><a href="#">내블로그</a></li>
 		<!-- 		<li><a href="#">내블로그</a></li> -->
 		<!-- 		<li><a href="#">내블로그</a></li> -->

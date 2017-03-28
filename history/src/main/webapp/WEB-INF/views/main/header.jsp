@@ -35,7 +35,7 @@ margin-top: 10px;
 			} else {
 		%>
 				<ul class="nav navbar-nav navbar-right">
-				<li><a href="post/main.hi">내블로그</a></li>
+				<li><a href="/post/main.hi">내블로그</a></li>
 				<li><a href="#">내블로그</a></li>
 		<!-- 		<li><a href="#">내블로그</a></li> -->
 		<!-- 		<li><a href="#">내블로그</a></li> -->
@@ -67,6 +67,6 @@ function do_join(){
 }
 </script>
 
-<form name="logoutfrm" action="/main/logout.hi" method="post" ></form>
+<form name="logoutfrm" action="/main/logout.hi"></form>
 <form name="loginfrm" action="/main/login.hi" method="post"></form>
-<form name="joinfrm" action="/user/join.hi"></form>
+<form name="joinfrm" action="/user/join.hi" method="post"></form>

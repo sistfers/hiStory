@@ -97,12 +97,24 @@ function do_search_page(url, page_num)
 {
 	  console.log(url+"\t"+page_num);
 	 
-	  var frm = document.searchForm;
+	  var frm = document.postForm;
 	  frm.PAGE_NUM.value = page_num;
 	  frm.action = url;
 	  frm.submit();
 }
 </script>	
+
+<!--  --><script type="text/javascript">
+/* 글 수정으로 이동(글 번호 가져가야함) */
+function go_update(){
+	var frm = document.postupdateForm;
+	frm.submit();
+}
+
+/* 글 삭제 */ /* 어디로 가서 어떻게 처리해야하지? ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ */
+function go_delete(){
+}
+</script>
 </head>
 <body>
 <!--헤더 START-->
@@ -126,6 +138,13 @@ function do_search_page(url, page_num)
 	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px">
 	        
 <!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	         
+<form name="postupdateForm" action="update.hi" method="get">		
+<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+</form> 
+
+<form name="postForm" action="main.hi" method="get">		
+<input type="hidden" name="PAGE_NUM" value="">     
+</form> 
 		        <div class="col-xs-12">
 		        
 		        <table width="100%" >
@@ -137,11 +156,13 @@ function do_search_page(url, page_num)
 		        <td width="20%" rowspan="2" >
 		        
 		        <!--공감하기  -->
-		        <!-- <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감</button> --> 
-
+		        <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감 (1)</button> 
+				
 
 		        <!--글 수정하기 버튼  -->
-		        <button class="btn btn-danger btn-sm">글수정</button> <button class="btn btn-danger btn-sm">글삭제</button>
+		        <br><br>
+		        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();">글수정</button> 
+		        <button class="btn btn-danger btn-sm" onclick="javascript:go_delete();">글삭제</button>
 		        
 		        </td>		        
 		        </tr>
@@ -152,8 +173,8 @@ function do_search_page(url, page_num)
 		        <td></td>
 		        </tr>
 		        </table>
-<hr>
 		        
+				<hr>		        
 		        <!-- 포스트 내용 -->
 				<%=DTO.getContent() %>
 				</div>
@@ -191,9 +212,9 @@ function do_search_page(url, page_num)
 							요리하기 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
 						</td>
 						<td align="left">
-						<a href="#" class="btn btn-default btn-xs" style="font-size: 12px">답글</a>
-						<a href="#" class="btn btn-default btn-xs" style="font-size: 12px">수정</a>
-						<a href="#" class="btn btn-default btn-xs" style="font-size: 12px">삭제</a>
+						<button class="btn btn-default btn-xs" style="font-size: 12px">답글</button>
+						<button class="btn btn-default btn-xs" style="font-size: 12px">수정</button>
+						<button class="btn btn-default btn-xs" style="font-size: 12px">삭제</button>
 						</td>
 					</tr>
 					<tr>
@@ -256,7 +277,12 @@ function do_search_page(url, page_num)
   		</div>
 </div>
 
+
+
 <!--중간 END -->
+
+
+
 
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>

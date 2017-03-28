@@ -55,6 +55,12 @@ int intTotalCount 	= 0;	// 총글수
 	if(intTotalCount%5 != 0) pageCount++;
 	
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
+	
+	//String THEME = "#FFFFDE";		// 노랑
+	//String THEME = "#C6E8FF";		// 하늘
+	//String THEME = "#DAD9FF";		// 보라
+	//String THEME = "#FFD8D8";		// 살구
+	String THEME = "#8C8C8C";		// 회색
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -69,18 +75,20 @@ int intTotalCount 	= 0;	// 총글수
 
 <style type="text/css">
 	.mydiv{
-	width:20%;
-	margin-right:0.5%;
-	border-radius: 15px;
+		width:20%;
+		margin-right:0.5%;
+		border-radius: 15px;
 	}
 	.mydiv2{
-	width:78%;
-	margin-left:0.5%;
-	border-radius: 15px;
+		width:78%;
+		margin-left:0.5%;
+		border-radius: 15px;
 	}
-	table,th,.tbList{
-	text-align: center;
-	font-size: 12px;
+	table,th{
+		text-align: center;
+	}
+	.tbList{
+		font-size: 13px;
 	}
 </style>
 <script type="text/javascript">
@@ -101,26 +109,23 @@ function do_search_page(url, page_num)
 <jsp:include page="../main/header.jsp"/>
 <!--헤더 END-->
 
-<!-- 
-태마 버전
-그린 : rgb(224, 239, 208) / rgb(251, 255, 247)
- -->
+
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
    
    <!--좌측 메뉴 START  -->
-      <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
+      <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">
          <jsp:include page="/post/menu.hi"/>
       </div>
    <!--좌측 메뉴 END  -->
    
       <!--내용 START -->
-        <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
+        <div class="col-xs-10 mydiv2" style="background-color: <%=THEME %>">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10">
+	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px"> 
 		        <!-- 포스트-->
-		        <div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-top:20px; padding-top: 20px">
+		        <div class="col-xs-12">
 		        <!-- 포스트 제목 -->
 		        <h2><%=DTO.getTitle() %></h2>
 		        <!-- 포스트 작성일 -->
@@ -130,13 +135,11 @@ function do_search_page(url, page_num)
 				</div>
 				
 				<!-- 태그 부분 -->
-				<div class="col-xs-12" style="background-color: rgb(255, 230, 230);">
-				<br><br><hr>
-				<button type="button" class="btn btn-default btn-sm">
+				<div class="col-xs-12" >
+				<hr>
+				<button type="button" class="btn btn-default btn-sm disabled">
 				 <span class="glyphicon glyphicon-tags"></span> 태그
         		</button>&nbsp&nbsp&nbsp&nbsp
-        		
-<!-- 태그 # 별로 어떻게 자르지????? =============================================================================-->
         		
         		<%
         			String str[] = split(DTO.getHashtag());
@@ -146,14 +149,13 @@ function do_search_page(url, page_num)
         		<%
         			}
         		%>
-       		
-        		
 				</div>
 				
-				<div class="col-xs-12" style="background-color: rgb(255, 230, 230)">
+<!-- 댓글 -->				
+				<div class="col-xs-12">
 				<br><br>
 				<table class="table">
-					<tr class="active">
+					<tr>
 						<th>댓글 3</th>
 						<th></th>
 						<th></th>
@@ -208,8 +210,8 @@ function do_search_page(url, page_num)
 				
 				
 <!--글 목록 보여주기  -->
-				<div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-bottom: 20px">
-					<table class="table table-hover tbList">
+				<div class="col-xs-12">
+					<table class="table table-hover tbList" >
 					<tr class="warning">
 						<th>글번호</th>
 						<th>제목</th>
@@ -224,17 +226,14 @@ function do_search_page(url, page_num)
 								HashMap<String, Object> mapdatas = (HashMap<String, Object>) (data.get(i));
 								String wdate = ((mapdatas.get("WDATE")).toString()).substring(0, 10);
 					%>
-
 					<tr>
 						<td><%=i+1 %></td>
-						<td><%=mapdatas.get("TITLE") %></td>
+						<td align="left"><%=mapdatas.get("TITLE") %></td>
 						<td><%=wdate %></td>
 					</tr>
 					
 					<%} //FOR END
 					} // IF END%>					
-	
-
 					</table>
 					
 				<center>

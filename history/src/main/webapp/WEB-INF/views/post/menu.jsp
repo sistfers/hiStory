@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,6 +9,10 @@
 <%
 	session.setAttribute("id", "1");
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
+	
+	
+	//UserDto loginuser = (UserDto)session.getAttribute("id");
+	String loginuser = (String)session.getAttribute("id");
 	
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,18 +35,27 @@
 <br>
 <!-- 이용자의 프로필사진을 넣습니다 -->
 <img src="/resources/image/1.png" width="150" height="150"><br>
+
 <!-- 이용자의 닉네임을 넣습니다 -->
-<h3><a href="">Haengtion.93</a></h3>
+<h3>Haengtion.93</h3>
+
 <!-- 이용자의 블로그소개를 넣습니다 -->
 <h5>초보개발자 블로그</h5>
+
 <!-- 포스트쓰기 Or 이웃추가-->
-<a href="write.hi" class="btn btn-info btn-md">
-    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
-</a>
-<br><br>
-	<a class="btn icon-btn btn-primary btn-sm" href="#">
-	<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-primary"></span>
+<%
+if(loginuser.equals(categoryList.get(0).getId())){
+%>
+	<a href="write.hi" class="btn btn-default btn-md">
+	    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
+	</a>
+<%}else{ %>
+	<a class="btn icon-btn btn-warning btn-sm" href="#">
+	<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
 	이웃추가</a>
+<%} %>
+	
+<br>
 <hr>
 
 <!-- 카테고리 -->

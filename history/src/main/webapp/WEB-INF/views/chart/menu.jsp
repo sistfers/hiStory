@@ -29,7 +29,7 @@
       	<a href="">이웃증감수</a> <br>
       	<br>
       	<h4>순위</h4><hr>
-      	<a href="">공감수 순위</a> <br>
+      	<a href="love.hi">공감수 순위</a> <br>
       	<a href="">댓글수 순위</a> <br>   	
       </div>
 </div>

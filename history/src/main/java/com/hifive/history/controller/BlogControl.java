@@ -1,6 +1,7 @@
 package com.hifive.history.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.CategoryDto;
+import com.hifive.history.model.CodeDDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.CategoryService;
+import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.PostService;
 
 @Controller
@@ -32,6 +35,8 @@ public class BlogControl {
 	private CategoryService categoryService;
 	@Autowired
 	private PostService postSvc;
+	@Autowired
+	private CodeDService codeDSvc;
 	
 	private PostDto postDto;
 	
@@ -96,7 +101,37 @@ public class BlogControl {
 
 	//블로그 글 쓰기
 	@RequestMapping("post/write.hi")
-	public ModelAndView postWrite(HttpSession session) {
+	public ModelAndView postWrite(HttpSession session) throws Exception{
+		List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 130 댓글허용 여부
+		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 140 글 공개 여부
+		
+		ModelAndView mav = new ModelAndView();
+		Map<String, String> dto = new HashMap<String, String>();
+		dto.put("isAll", "false");
+		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
+
+		Map<String, Object> codeMap = new HashMap<String, Object>();
+		List<String> codeList = new ArrayList<String>();
+		codeList.add("130");
+		codeList.add("140");
+		codeMap.put("code_list", codeList);
+		
+		List<CategoryDto> categoryList = (List<CategoryDto>)categoryService.hi_selectCategory(dto);
+		List<Map<String, Object>> codes = (List<Map<String, Object>>)codeDSvc.hi_selectList(codeMap);
+		
+		for(int i=0; i<codes.size(); ++i){
+			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
+			
+			if((Integer)(codeData.get("CD_ID")) == 130) reviewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 140) postViewCode.add(codeData);
+		}
+		
+		mav.setViewName("post/write");
+		mav.addObject("categoryList", categoryList);
+		mav.addObject("reviewCode", reviewCode);
+		mav.addObject("postViewCode", postViewCode);
+		
+		return mav;
 		// view에서 넘어온값 받기
 //		CT_SEQ 	= Integer.parseInt(request.getParameter("ct_seq"));
 //		ID		= request.getParameter("ct_seq");      
@@ -116,16 +151,7 @@ public class BlogControl {
 //		logger.debug("BlogControl.postDto.toString() = "+postDto.toString());
 //		
 //		postSvc.hi_insert(postDto);
-		
-		Map<String, String> dto = new HashMap<String, String>();
-		dto.put("isAll", "false");
-		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
-		
-		ModelAndView mav = new ModelAndView();
-		List<CategoryDto> categoryList = (List<CategoryDto>)categoryService.hi_selectCategory(dto);
-		mav.setViewName("post/write");
-		mav.addObject("categoryList", categoryList);
-		return mav;
+			
 	}
 	
 	//블로그 글 수정
@@ -135,21 +161,20 @@ public class BlogControl {
 	}
 	//블로그 카테고리
 	@RequestMapping("post/menu.hi")
-	public ModelAndView postMenu(HttpServletRequest request, HttpSession session){
-
+	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
 		session.setAttribute("id", "1");
-		ModelAndView mav = new ModelAndView();
-		String id = (String)session.getAttribute("id");
-		System.out.println(id);
-		Map<String, String> dto = new HashMap<>();
-		dto.put("id", "1");
-		dto.put("isAll", "false");
-		
-		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
-		mav.setViewName("post/menu");
-		mav.addObject("categoryList", categoryList);
-		
-		return mav;
+	      ModelAndView mav = new ModelAndView();
+	      String id = (String)session.getAttribute("id");
+	      System.out.println(id);
+	      Map<String, String> dto = new HashMap<>();
+	      dto.put("id", "1");
+	      dto.put("isAll", "false");
+	      
+	      List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
+	      mav.setViewName("post/menu");
+	      mav.addObject("categoryList", categoryList);
+	      
+	      return mav;
 	}
 		
 	

@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +7,9 @@
 
 <%
 	List<CategoryDto> categoryList = ((List<CategoryDto>)request.getAttribute("categoryList"));
+	List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 130
+	List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 140
+
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -63,12 +68,13 @@
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="FIELD" name="FIELD">
-			       <option>선택안함</option>
-			       <option>일상</option>
-			       <option>기타</option>
-			       <option>IT</option>
-			       <option>게임</option>
-			       <option>영화</option>
+			       <%if(reviewCode.size() != 0){
+			       		for(int i=0; i<reviewCode.size(); ++i){%>
+			       <option><%=reviewCode.get(i).get("CD_D_NM") %></option>
+			       <%	}
+			       	 } else{ %>
+			       <option>오류:::</option>
+			       <%} %>
 		    </select>
 	    </div>
 	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,7 +127,8 @@ public class BlogControl {
 	//블로그 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session){
-		
+
+		session.setAttribute("id", "1");
 		ModelAndView mav = new ModelAndView();
 		String id = (String)session.getAttribute("id");
 		System.out.println(id);
@@ -135,7 +137,7 @@ public class BlogControl {
 		
 		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
 		mav.setViewName("post/menu");
-		mav.addObject("categoryList", categoryService.hi_selectCategory(dto));
+		mav.addObject("categoryList", categoryList);
 		
 		return mav;
 	}

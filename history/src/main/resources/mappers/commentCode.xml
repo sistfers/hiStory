@@ -70,15 +70,18 @@ FROM
          T1.*,                                 
          T2.*                                  
   FROM                                                 
-  ( SELECT SEQ,
-      POST_SEQ, 
-      ID, 
-      NAME, 
-      CONTENT, 
-      PARENT, 
-      STATE, 
-      WDATE 
-  FROM COMMENT_H
+  ( SELECT A.SEQ,
+      A.POST_SEQ, 
+      A.ID, 
+      A.NAME, 
+      A.CONTENT, 
+      A.PARENT, 
+      A.STATE, 
+      A.WDATE,
+      B.PF_IMAGE
+  FROM COMMENT_H A
+  INNER JOIN USER_H B
+  ON A.ID = B.ID
   WHERE POST_SEQ = #{POST_SEQ}                      
        order by PARENT DESC, SEQ                         
     )T1 NATURAL JOIN                                   

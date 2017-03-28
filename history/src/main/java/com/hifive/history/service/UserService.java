@@ -49,6 +49,10 @@ public class UserService implements iService {
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return userDao.hi_selectList(condition);
 	}
+
+	public iDto hi_login(iDto dto) {
+		return userDao.hi_login(dto);
+	}
 	
 	
 }

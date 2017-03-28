@@ -3,6 +3,8 @@ package com.hifive.history.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.hifive.history.model.UserDto;
+import com.hifive.history.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hifive.history.model.SearchDto;
 import com.hifive.history.service.SearchService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Admin on 2017-03-23.
@@ -21,32 +26,42 @@ public class HomeControl {
 	
 	@Autowired
 	SearchService searchSvc;
+
+	@Autowired
+	UserService userService;
 	
-	//테스트용
 	@RequestMapping("main/index.hi")
 	public String home() {
-		SearchDto search = new SearchDto();
-		search.setS_id("Y4366");
-		search.setSearch_word("대구");
-		loger.debug("=HomeControl============================");
-		int flag = searchSvc.hi_insert(search);
-		loger.debug("=flag============================"+flag);
-		//loger.debug("=============flag : " + flag);
-		
-		List<Map<String, Object>> rankList = searchSvc.hi_selectRankList();
-		
-		for(int i=0; i< rankList.size(); ++i){
-			loger.debug(i+1 + "번째 rank의 RNUM : " +  rankList.get(i).get("RNUM"));
-			loger.debug(i+1 + "번째 rank의 CNT : " +  rankList.get(i).get("CNT"));
-			loger.debug(i+1 + "번째 rank의 검색어 : " +  rankList.get(i).get("SEARCH_WORD"));
-		}
-		
+
 		return "/main/index";
 	}
 
 	@RequestMapping("main/login.hi")
-	public String login() {
+	public String login(HttpServletRequest request, HttpSession session) {
+
+		// 로그인 시
+		if (request.getParameter("do_login") != null) {
+			String id = (String)request.getParameter("id");
+			String password = (String)request.getParameter("password");
+			UserDto loginDto = new UserDto();
+			loginDto.setId(id);
+			loginDto.setPassword(password);
+
+			UserDto userDto = (UserDto)userService.hi_login(loginDto);
+			if (userDto == null) {
+				request.setAttribute("fail", "아이디 혹은 패스워드를 확인해 주세요.");
+				return "/main/login";
+			}
+			session.setAttribute("user", userDto);
+			return "/main/index";
+		}
+
 		return "/main/login";
+	}
+
+	@RequestMapping("header.hi")
+	public String header() {
+		return "/main/header";
 	}
 	
 

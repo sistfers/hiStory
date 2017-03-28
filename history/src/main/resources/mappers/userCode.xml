@@ -27,12 +27,12 @@
 	</insert>
 
 	<select id="hi_detail" parameterType="com.hifive.history.model.UserDto" resultType="com.hifive.history.model.UserDto">
-		SELECT ID, PASSWORD, BIRTH, SEX, NAME, EMAIL, AREA, GRADE, PF_IMAGE, PF_CONTENT
+		SELECT ID, PASSWORD, TO_CHAR(BIRTH, 'YYYY/MM/DD') as BIRTH, SEX, NAME, EMAIL, AREA, GRADE, PF_IMAGE, PF_CONTENT
   		FROM USER_H
 		WHERE ID = #{id}
 	</select>
 
-	<select id="hi_usercheck" parameterType="com.hifive.history.model.UserDto" resultType="int">
+	<select id="hi_usercheck" parameterType="hashmap" resultType="int">
 		SELECT COUNT(*)
 		FROM USER_H
 		<include refid="BaseCondition"></include>
@@ -43,6 +43,12 @@
 		SET PASSWORD = #{password}, NAME = #{name}, BIRTH = #{birth}, AREA = #{area}, EMAIL = #{email}, PF_IMAGE = #{pf_image}, PF_CONTENT = #{pf_content}, GRADE = #{grade}
 		WHERE ID = #{id}
 	</update>
+
+	<select id="hi_login" parameterType="com.hifive.history.model.UserDto" resultType="com.hifive.history.model.UserDto">
+		SELECT ID, PASSWORD, TO_CHAR(BIRTH, 'YYYY/MM/DD') as BIRTH, SEX, NAME, EMAIL, AREA, GRADE, PF_IMAGE, PF_CONTENT
+		FROM  USER_H
+		WHERE ID = #{id} AND PASSWORD = #{password}
+	</select>
 
 
 

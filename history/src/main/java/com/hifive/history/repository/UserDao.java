@@ -68,4 +68,11 @@ public class UserDao implements iDao {
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
 	}
+
+	public iDto hi_login(iDto dto) {
+		String statement = namespace +".hi_login";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.selectOne(statement,dto);
+	}
 }

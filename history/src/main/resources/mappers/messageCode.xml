@@ -31,7 +31,7 @@
 	<!-- 쪽지 쓰기 -->
 	<update id="hi_insert" parameterType="com.hifive.history.model.MessageDto">
 		INSERT INTO MESSAGE_H(SEQ, SEND_ID, TAKE_ID, CONTENTS, RDATE)
-		VALUES(SEQ_MESSAGE.NEXTVAL, #{send_id}, #{take_id}, #{contents}, NULL);
+		VALUES(SEQ_MESSAGE.NEXTVAL, #{send_id}, #{take_id}, #{contents}, NULL)
 	</update>
 
 	
@@ -104,7 +104,7 @@
 	<delete id="hi_delete" parameterType="int">
 		DELETE 	
 		FROM MESSAGE_H			
-		WHERE SEQ=#{}	
+		WHERE SEQ=#{id}	
 	</delete>
 	
 </mapper>

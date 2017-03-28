@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Bootstrap CSS -->
-<link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
 <title>:::::::::::포스트수정::::::::::</title>
-<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	
+	<!-- ckeditor -->
+	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 <!--헤더 START-->

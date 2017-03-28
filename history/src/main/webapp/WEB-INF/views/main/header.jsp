@@ -48,9 +48,9 @@ function do_logout(){
 	frm.submit();
 }
 function do_login(){
-	location.href = "../main/login.jsp";
+	location.href = "/main/login.hi";
 }
 function do_join(){
-	location.href = "../user/join.jsp";
+	location.href = "/user/join.hi";
 }
 </script>

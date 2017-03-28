@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.PostDto;
+import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.PostService;
 
 @Controller
 public class BlogControl {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	 
+	@Autowired
+	private CategoryService categoryService;
 	@Autowired
 	private PostService postSvc;
 	
@@ -119,8 +123,25 @@ public class BlogControl {
 	public String postUpdate() {
 		return "post/update";
 	}
-	
-	
+	//블로그 카테고리
+	@RequestMapping("post/menu.hi")
+	public ModelAndView postMenu(HttpServletRequest request, HttpSession session){
+
+		session.setAttribute("id", "1");
+		ModelAndView mav = new ModelAndView();
+		String id = (String)session.getAttribute("id");
+		System.out.println(id);
+		Map<String, String> dto = new HashMap<>();
+		dto.put("id", "1");
+		dto.put("isAll", "false");
+		
+		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
+		mav.setViewName("post/menu");
+		mav.addObject("categoryList", categoryList);
+		
+		return mav;
+	}
+		
 	
 }
 

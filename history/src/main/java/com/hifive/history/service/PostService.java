@@ -100,4 +100,19 @@ public class PostService implements iService {
 	public List<Map<String, Object>> hi_bloggerRankList() {
 		return postDao.hi_bloggerRankList();
 	}
+	
+	public List<Map<String, Object>> hi_selectFollowerList(Map<String, Object> condition) throws Exception {
+		logger.debug("dto.toString() = "+condition.toString());
+		return postDao.hi_selectFollowerList(condition);
+	}
+	
+	public List<Map<String, Object>> hi_selectThemeList(Map<String, Object> condition) throws Exception {
+		logger.debug("dto.toString() = "+condition.toString());
+		return postDao.hi_selectThemeList(condition);
+	}
+	
+	public List<Map<String, Object>> hi_selectSearchList(Map<String, Object> condition) throws Exception {
+		logger.debug("dto.toString() = "+condition.toString());
+		return postDao.hi_selectSearchList(condition);
+	}
 }

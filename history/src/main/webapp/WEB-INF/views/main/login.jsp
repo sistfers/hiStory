@@ -21,16 +21,26 @@
 <br><br>
 <div class="jumbotron">
 <h1 align="center">LOGIN</h1>
+<%
+	if (request.getAttribute("fail") != null) {
+%>
+		<h6 align="center"><%=request.getAttribute("fail")%></h6>
+<%
+	}
+%>
 <br><br>
 <div class="col-xs-2"></div>	<!--여백용  -->
 	<div class="col-xs-8">
-	<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*">
-	<br>
-	<input type="password" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*">
-	<br><center>
-	<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN" />
-	<div class="clearfix"></div><br>	<!-- 줄 띄기  -->
-	<a href='join.jsp'>회원가입</a>
+		<form action="/main/login.hi">
+			<input type="hidden" name="do_login" value="do_login">
+			<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*">
+			<br>
+			<input type="password" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*">
+			<br><center>
+			<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN" />
+			<div class="clearfix"></div><br>	<!-- 줄 띄기  -->
+			<a href='/user/join.hi'>회원가입</a>
+		</form>
 </center>
 </div>
 <div class="col-xs-2"></div><!--여백용  -->

@@ -44,6 +44,10 @@ public class GraphControl {
 	public String neighbor() {
 		return "/chart/neighbor";
 	}
+	@RequestMapping("chart/love.hi")
+	public String love() {
+		return "/chart/love";
+	}
 	@RequestMapping("chart/control.hi")
 	public ModelAndView chartMenu(HttpServletRequest request, HttpSession session){
 		

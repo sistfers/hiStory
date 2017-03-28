@@ -123,13 +123,37 @@ function do_search_page(url, page_num)
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: <%=THEME %>">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px"> 
-		        <!-- 포스트-->
+	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px">
+	        
+<!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	         
 		        <div class="col-xs-12">
+		        
+		        <table width="100%" >
+		        <tr>
 		        <!-- 포스트 제목 -->
-		        <h2><%=DTO.getTitle() %></h2>
+		        <td width="80%" align="left" ><h2><%=DTO.getTitle() %></h2> 
+		        
+		        </td>
+		        <td width="20%" rowspan="2" >
+		        
+		        <!--공감하기  -->
+		        <!-- <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감</button> --> 
+
+
+		        <!--글 수정하기 버튼  -->
+		        <button class="btn btn-danger btn-sm">글수정</button> <button class="btn btn-danger btn-sm">글삭제</button>
+		        
+		        </td>		        
+		        </tr>
+		        
 		        <!-- 포스트 작성일 -->
-		        <h5><%=DTO.getWdate() %></h5><hr>
+		        <tr>
+		        <td align="left"><h6>&nbsp;&nbsp;<%=DTO.getWdate() %></h6></td>
+		        <td></td>
+		        </tr>
+		        </table>
+<hr>
+		        
 		        <!-- 포스트 내용 -->
 				<%=DTO.getContent() %>
 				</div>
@@ -151,38 +175,14 @@ function do_search_page(url, page_num)
         		%>
 				</div>
 				
-<!-- 댓글 -->				
+<!-- 댓글 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->				
 				<div class="col-xs-12">
 				<br><br>
-				<table class="table">
+				<table class="table table-striped" id="commentTable">
 					<tr>
-						<th>댓글 3</th>
-						<th></th>
-						<th></th>
-					</tr>
-					<tr>
-						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
-						<td style="text-align: left;">
-							<a href="">haengtion93</a> 2017-03-23 23:11:24<br>
-							UI짜기 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
-						</td>
-						<td>
-						<a href="">답글</a>
-						<a href="">수정</a>
-						<a href="">삭제</a>
-						</td>
-					</tr>	
-					<tr>
-						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
-						<td style="text-align: left;">
-							<a href="">근혜공주</a> 2017-03-23 23:11:24<br>
-							재취업 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
-						</td>
-						<td>
-						<a href="">답글</a>
-						<a href="">수정</a>
-						<a href="">삭제</a>
-						</td>
+						<th width="10%">댓글 3</th>
+						<th width="70%"></th>
+						<th width="20%"></th>
 					</tr>
 					<tr>
 						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
@@ -190,32 +190,40 @@ function do_search_page(url, page_num)
 							<a href="">우정관</a> 2017-03-23 23:11:24<br>
 							요리하기 넘나 어려워요,,,,ㅎㅎ도와줘요 한조!
 						</td>
-						<td>
-						<a href="">답글</a>
-						<a href="">수정</a>
-						<a href="">삭제</a>
+						<td align="left">
+						<a href="#" class="btn btn-default btn-xs" style="font-size: 12px">답글</a>
+						<a href="#" class="btn btn-default btn-xs" style="font-size: 12px">수정</a>
+						<a href="#" class="btn btn-default btn-xs" style="font-size: 12px">삭제</a>
 						</td>
 					</tr>
 					<tr>
 						<td><img src="/resources/image/1.png" width="50px" height="50px"></td>
 						<td>
-							<textarea rows="3" class="form-control" style="resize: none"></textarea>
+							<textarea rows="2" class="form-control" style="resize: none"></textarea>
 						</td>
-						<td>
-						<button type="button" class="btn btn-default">comment</button>
+						<td align="left">
+						<input type="checkbox"> 비밀글<br>
+						<button type="button" class="btn btn-danger">댓글입력</button>
 						</td>
 					</tr>			
 				</table>
 				</div>
 				
 				
-<!--글 목록 보여주기  -->
+				
+				
+				
+				
+				
+				
+				
+<!--글 목록 보여주기 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
 				<div class="col-xs-12">
 					<table class="table table-hover tbList" >
 					<tr class="warning">
-						<th>글번호</th>
-						<th>제목</th>
-						<th>작성일</th>
+						<th width="10%">글번호</th>
+						<th width="70%">제목</th>
+						<th width="20%">작성일</th>
 					</tr>
 
 					<%

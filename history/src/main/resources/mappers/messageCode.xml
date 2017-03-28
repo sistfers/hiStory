@@ -24,12 +24,6 @@
 		<result javaType="java.lang.String" column="STATE" property="STATE" />
 	</resultMap>
 	
-	<resultMap id="followMap" type="java.util.HashMap">
-		<result javaType="java.lang.String" column="ID" property="ID"/>
-		<result javaType="java.lang.String" column="NAME" property="NAME"/>
-		<result javaType="java.lang.String" column="TITLE" property="TITLE"/>
-	</resultMap>
-	
 	<!-- SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE(sysdate), RDATE(null), STATE(0) -->	
 
 	<!-- 쪽지 쓰기 -->
@@ -38,40 +32,6 @@
 		VALUES(SEQ_MESSAGE.NEXTVAL, #{send_id}, #{take_id}, #{contents}, NULL);
 	</update>
 
-	<!-- 이웃 보기 -->
-	<select id="hi_selectList" parameterType="string" resultType="followMap">
-		SELECT TT2.*
-		FROM(
-		      SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
-		      FROM(
-		            SELECT followtable.YOU_ID, usertable.NAME, blogtable.TITLE
-		              FROM (
-		                     SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
-		                     FROM FOLLOW_H
-		                     WHERE MY_ID = #{id}
-		                     GROUP BY MY_ID, YOU_ID
-		                   )followtable
-		              INNER JOIN USER_H usertable
-		                ON followtable.YOU_ID = usertable.ID
-		              INNER JOIN BLOG_H blogtable
-		                ON usertable.ID = blogtable.ID
-		             WHERE MOD(followtable.cnt, 2) = 1
-		             ORDER BY followtable.YOU_ID
-		      )T1
-		      NATURAL JOIN
-		      (
-		          SELECT COUNT(*) TOT_CNT
-		          FROM (
-		                SELECT 1
-		                FROM FOLLOW_H
-		                WHERE MY_ID = #{id}
-		                GROUP BY MY_ID, YOU_ID
-		               )
-		      )T2
-		    )TT2
-		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
-		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})	
-	</select>
 	
 	<!-- 쪽지 읽기 -->
 	<select id="hi_detail" parameterType="integer" resultType="MessageDto">

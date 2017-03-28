@@ -4,17 +4,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Bootstrap CSS -->
-<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-<title>:::::::::::포스트쓰기::::::::::</title>
-<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<title> 포스트쓰기 </title>
+
+	<!-- Bootstrap CSS -->
+	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	
+	<!-- ckeditor -->
+	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
 </head>
 <body>
 <!--헤더 START-->
 <jsp:include page="../main/header.jsp"/>
 <!--헤더 END-->
 <br><br><br><br>
+
 <!-- 중간 START -->
 <div class="container" >
 	<form class="form-horizontal" action="" method="post">
@@ -31,8 +37,8 @@
 			<input type="text" class="form-control" name="title" placeholder="제목을 입력해 주세요">
 		</div>
 		<div class="col-xs-2">
-			<button type="submit" class="btn btn-info btn-md">
-          		<span class="glyphicon glyphicon-envelope"></span> POSTING
+			<button type="submit" class="btn btn-info btn-md btn-block">
+          		<span class="glyphicon glyphicon-envelope"></span> 확인
         	</button>
 		</div>
 		

@@ -84,7 +84,7 @@ public class BlogControl {
 		
 		mav.addObject("lists",lists);
 		mav.addObject("PAGE_NUM"   ,PAGE_NUM);
-		mav.setViewName("/post/main");
+		mav.setViewName("post/main");
 		
 		return mav;
 	}
@@ -111,8 +111,15 @@ public class BlogControl {
 //		logger.debug("BlogControl.postDto.toString() = "+postDto.toString());
 //		
 //		postSvc.hi_insert(postDto);
-		return "/post/write";
+		return "post/write";
 	}
+	
+	//블로그 글 수정
+	@RequestMapping("post/update.hi")
+	public String postUpdate() {
+		return "post/update";
+	}
+	
 	
 	
 }

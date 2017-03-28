@@ -4,8 +4,8 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	MessageDto data = new MessageDto();
-	data = (MessageDto) request.getAttribute("note");
+MessageDto data = new MessageDto();
+data = (MessageDto) request.getAttribute("note");
 %>
 
 
@@ -44,18 +44,29 @@
 			<div class="col-xs-1"></div>
 			<div class="col-xs-8">
 				<form action="write.hi" method="post" class="form-horizontal">
+					<input type="hidden" name="fromNote" value="sung" />
+					<input type="hidden" name="toNote" value="<%=data.getSend_id() %>" />
+					
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸사람</label>
-						<div class="col-lg-7">
+						<div class="col-lg-10">
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
-								placeholder="<%=data.getSend_id() %>" maxlength="30">
+								placeholder="<%=data.getSend_id() %>(<%=data.getname() %>)" maxlength="30">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-lg-2 control-label">보낸날짜</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
+								placeholder="<%=data.getWdate() %>" maxlength="30">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">내용</label>
 						<div class="col-lg-10">
-							<textarea rows="10" class="form-control" style="resize: none"><%=data.getContents()%></textarea>
+							<textarea name="contents" rows="10" class="form-control" style="resize: none"><%=data.getContents()%></textarea>
 						</div>
 					</div>
 

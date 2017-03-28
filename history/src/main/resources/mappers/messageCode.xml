@@ -38,9 +38,12 @@
 	
 	<!-- 쪽지 읽기 -->
 	<select id="hi_detail" parameterType="int" resultType="com.hifive.history.model.MessageDto">
+		SELECT A.*, B.NAME
+		FROM(
 		SELECT *
 		FROM MESSAGE_H
-		WHERE SEQ=#{seq}
+		WHERE SEQ=#{seq}) A JOIN USER_H B 
+		              	 ON (A.SEND_ID=B.ID)
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->

@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%
+String from = (String) request.getAttribute("from");
+String to = (String) request.getAttribute("to");
+%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,7 +38,7 @@
 					<label class="col-lg-2 control-label">받는사람</label>
 					<div class="col-lg-7">
 						<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
-							placeholder="받는사람" maxlength="30">
+							placeholder="<%=to %>" maxlength="30">
 					</div>
 					<div class="col-lg-3">
 						<button class="btn btn-info btn-block" id="TAKE_ID_CK"

@@ -43,7 +43,8 @@ public class MessageControl {
 		private String  contents;
 		private	String	wdate;
 		private	String	rdate;
-		private	String	state;	*/
+		private	String	state;
+		private String  nick;	*/
 		MessageDto dto = new MessageDto();
 		dto.setSeq(seq);
 		dto.setSend_id("");
@@ -52,7 +53,6 @@ public class MessageControl {
 		dto.setWdate("");
 		dto.setRdate("");
 		dto.setState("");
-		dto.setNick(nick);
 		
 		MessageDto note = new MessageDto();
 		note = (MessageDto) messageService.hi_detail(dto);
@@ -69,16 +69,30 @@ public class MessageControl {
 	}
 
 	@RequestMapping("message/write.hi")
-	public String messageWrite() {
+	public ModelAndView messageWrite(HttpServletRequest res) {
 		
-		return "/message/write";
+		String from ="";
+		String to	="";
+		String contents ="";
+		
+		from = res.getParameter("fromNote");
+		to	 = res.getParameter("toNote");
+		contents = res.getParameter("toNote");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/message/write");
+		mav.addObject("from", from);
+		mav.addObject("to", to);
+		mav.addObject("contents", contents);
+		
+		return mav;
 	}
 	
-	@RequestMapping("message/send_message_list.hi")
+	@RequestMapping("message/get_message_list.hi")
 	public ModelAndView do_search(HttpServletRequest res) {
 			
 		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: sned_message_list.hi");		
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: get_message_list.hi");		
 		
 		
 		Map<String, Object> search_info = new HashMap<String, Object>();
@@ -102,7 +116,7 @@ public class MessageControl {
 		mav.addObject("PAGE_NUM", PAGE_NUM);
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: sned_message_list.hi");
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: get_message_list.hi");
 		loger.debug("----------------------------------------------------------");
 		
 		return mav;		

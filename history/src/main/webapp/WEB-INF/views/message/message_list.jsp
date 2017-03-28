@@ -28,7 +28,8 @@ if((String) request.getAttribute("PAGE_NUM") != null) {
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<!-- http://aramk.tistory.com/21 -->
 <script type="text/javascript">
 // 페이징
 function do_search_page(url, page_num) 
@@ -39,6 +40,25 @@ function do_search_page(url, page_num)
 	  frm.PAGE_NUM.value = page_num;
 	  frm.action = url;
 	  frm.submit();
+}
+
+/* 체크박스 전체선택, 전체해제 */
+function checkAll(){
+	alert("good");
+      /* if( $("#th_checkAll").is(':checked') ){
+        $("input[name=checkRow]").prop("checked", true);
+      }else{
+        $("input[name=checkRow]").prop("checked", false);
+      } */
+}
+
+function hello() { 
+	if( $("#th_checkAll").is(':checked') ){
+        $("input[name=checkRow]").prop("checked", true);
+      }else{
+        $("input[name=checkRow]").prop("checked", false);
+      }
+
 }
 </script>	
 </head>
@@ -70,7 +90,8 @@ function do_search_page(url, page_num)
     	</div>
 		<table class="table">
 			<tr class="warning" >
-				<th width="10%" style="text-align: center;">삭제</th>
+				<th width="10%" style="text-align: center;">
+				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="hello();" /></th>
 				<th width="20%" style="text-align: center;">보낸사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
 				<th width="20%" style="text-align: center;">날짜</th>
@@ -86,7 +107,7 @@ function do_search_page(url, page_num)
 					Map<String, Object> item = datas.get(i);
 			%>
 				<tr>
-				<td align="center"><input type="checkbox"></td>
+				<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
 				<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
 				<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
 				<td><%=item.get("WDATE") %></td>

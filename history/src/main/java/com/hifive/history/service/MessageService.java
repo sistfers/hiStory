@@ -59,9 +59,9 @@ public class MessageService implements iService {
 	}
 	
 	// 받은 쪽지함
-	public List<Map<String, Object>> hi_select_getlist(String takeId) {
+	public List<Map<String, Object>> hi_select_getlist(Map<String, Object> search_info) {
 		
-		return messageDao.hi_select_getlist(takeId);
+		return messageDao.hi_select_getlist(search_info);
 	}
 }
 

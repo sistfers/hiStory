@@ -13,8 +13,9 @@
 		private String rdate; 
 		private String state; -->
 	
-	<resultMap id="MessageDto" type="java.util.HashMap">
+	<resultMap id="GetNotes" type="java.util.HashMap">
 		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+		<result javaType="java.lang.Integer" column="IDX" property="IDX" />
 		<result javaType="java.lang.Integer" column="SEQ" property="SEQ" />
 		<result javaType="java.lang.String" column="SEND_ID" property="SEND_ID" />
 		<result javaType="java.lang.String" column="TAKE_ID" property="TAKE_ID" />
@@ -22,6 +23,7 @@
 		<result javaType="java.lang.String" column="WDATE" property="WDATE" />
 		<result javaType="java.lang.String" column="RDATE" property="RDATE" />
 		<result javaType="java.lang.String" column="STATE" property="STATE" />
+		<result javaType="java.lang.Integer" column="TOTAL" property="TOTAL" />
 	</resultMap>
 	
 	<!-- SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE(sysdate), RDATE(null), STATE(0) -->	
@@ -70,7 +72,7 @@
 	</select>
 	
 	<!-- 리스트 불러오기(받은 쪽지) -->
-	<select id="hi_select_getlist" parameterType="String" resultType="com.hifive.history.model.MessageDto">
+	<select id="hi_select_getlist" parameterType="String" resultMap="GetNotes">
 		SELECT T1.*, T2.*
 		FROM(
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
@@ -83,7 +85,7 @@
 		     	FROM(							
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
-		        	WHERE TAKE_ID=#{takeId}							
+		        	WHERE TAKE_ID=#{TAKEID}							
 		        ORDER BY WDATE DESC							
 		          	) LST			
 		        <!--[CDATA[ 				
@@ -95,7 +97,7 @@
 		    (                                                  
 		      SELECT COUNT(*) TOTAL                                  
 		      FROM MESSAGE_H                        
-		      WHERE TAKE_ID=#{takeId} ) T2
+		      WHERE TAKE_ID=#{TAKEID} ) T2
 	</select>
 	
 	<!-- 쪽지 삭제 -->

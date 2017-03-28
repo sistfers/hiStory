@@ -84,13 +84,14 @@ public class MessageDao implements iDao {
 	}
 	
 	// 받은 쪽지함
-	public List<Map<String, Object>> hi_select_getlist(String takeId) {
+	public List<Map<String, Object>> hi_select_getlist(Map<String, Object> search_info) {
 					
 		String statement = namespace +".hi_select_getlist";
-		logger.debug("statement"+statement);
-		logger.debug("takeId "+takeId);
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement  ]]] "+statement);
+		logger.debug("[[[search_info]]] "+search_info.toString());
 				
-		return sqlSession.selectList(statement, takeId);
+		return sqlSession.selectList(statement, search_info);
 	}	
 }
 

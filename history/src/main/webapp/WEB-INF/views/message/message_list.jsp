@@ -1,5 +1,17 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%
+List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
+datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
+
+%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,26 +65,28 @@
 						<th width="50%" style="text-align: center;">내용</th>
 						<th width="20%" style="text-align: center;">날짜</th>
 					</tr>
-					<tr>
+					
+					<%
+					if(datas != null && datas.size() > 0) {
+						for(int i = 0; i < datas.size(); i++) {
+							Map<String, Object> item = datas.get(i);
+					%>
+						<tr>
 						<td align="center"><input type="checkbox"></td>
-						<td>김미현</td>
-						<td>아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아 몇글자까지 넣을수 있는거냐~~~</td>
-						<td>2017-03-23</td>
+						<td><%=item.get("SEND_ID") %></td>
+						<td><%=item.get("CONTENTS") %></td>
+						<td><%=item.get("WDATE") %></td>
 					</tr>
-
-					<tr>
-						<td align="center"><input type="checkbox"></td>
-						<td>xxx</td>
-						<td>xxx</td>
-						<td>xxx</td>
-					</tr>
-
-					<tr>
-						<td align="center"><input type="checkbox"></td>
-						<td>xxx</td>
-						<td>xxx</td>
-						<td>xxx</td>
-					</tr>
+					<%
+						}
+					} else {
+					%>
+						<tr>
+						<td align="center" colspan="4">쪽지가 없습니다.</td>
+						</tr>
+					<%	
+					}
+					%>
 
 				</table>
 			</div>

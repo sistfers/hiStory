@@ -31,7 +31,7 @@
 <br><br>
 <div class="col-xs-2"></div>	<!--여백용  -->
 	<div class="col-xs-8">
-		<form action="/main/login.hi">
+		<form action="/main/login.hi" method="post">
 			<input type="hidden" name="do_login" value="do_login">
 			<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*">
 			<br>

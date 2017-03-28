@@ -9,6 +9,15 @@
    <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
 </resultMap>
 
+<resultMap id="BloggerRankMap" type="java.util.HashMap">
+	<result javaType="int" column="RNUM" property="RNUM" />
+	<result javaType="java.lang.String" column="ID" property="ID" />
+	<result javaType="java.lang.String" column="TITLE" property="TITLE" />
+	<result javaType="java.lang.String" column="NAME" property="NAME" />
+	<result javaType="java.lang.String" column="PF_IMAGE" property="PF_IMAGE" />
+	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+</resultMap>
+
 <!--포스트쓰기  -->
 <insert id="hi_insert"  parameterType="com.hifive.history.model.PostDto">
 	INSERT
@@ -112,5 +121,30 @@ SET   STATE   = #{STATE}
 WHERE SEQ     = #{SEQ}
 </update>
 
+<!-- 베스트 블로거(4명) -->
+<select id="hi_bloggerRankList" parameterType="hashmap" resultMap="BloggerRankMap">
+	SELECT TT1.*
+	FROM
+	(
+	    SELECT T3.RNUM AS RNUM, T3.ID AS ID, T3.TITLE AS TITLE, T4.NAME AS NAME, T4.PF_IMAGE AS PF_IMAGE
+	    FROM
+	    (
+	      SELECT ROWNUM RNUM, T1.ID AS ID, T2.TITLE
+	      FROM
+	      (
+	        SELECT COUNT(*) TOTAL_CNT, A.ID
+	        FROM POST_H A INNER JOIN LOVE_H B
+	        ON A.SEQ = B.POST_SEQ
+	        GROUP BY A.ID
+	        ORDER BY TOTAL_CNT DESC
+	       )T1 INNER JOIN BLOG_H T2
+	      ON T1.ID = T2.ID
+	    )T3 INNER JOIN USER_H T4
+	    ON T3.ID = T4.ID
+	)TT1
+	<![CDATA[
+	WHERE TT1.RNUM <=4
+	]]>
+</select>
 
 </mapper>

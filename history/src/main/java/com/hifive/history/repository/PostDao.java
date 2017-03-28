@@ -61,4 +61,11 @@ public class PostDao implements iDao {
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
 	}
+	
+	public List<Map<String, Object>> hi_bloggerRankList() {
+		String statement = namespace +".hi_selectList";
+		logger.debug("statement"+statement);
+		
+		return sqlSession.selectList(statement);
+	}
 }

@@ -96,4 +96,8 @@ public class PostService implements iService {
 		logger.debug("PostService.condition.toString() = "+condition.toString());
 		return postDao.hi_selectList(condition);
 	}
+	
+	public List<Map<String, Object>> hi_bloggerRankList() {
+		return postDao.hi_bloggerRankList();
+	}
 }

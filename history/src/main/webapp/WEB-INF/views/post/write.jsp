@@ -23,38 +23,35 @@
 
 <!-- 중간 START -->
 <div class="container" >
-	<form class="form-horizontal" action="" method="post">
-		<!-- 카테고리 뿌려 주세요 -->
-		<div class="form-group col-xs-3" style="margin-left: 10px">
+	<form class="form-horizontal postForm" action="write.hi" method="post">
+	
+<!-- 카테고리 -->
+		<div class="form-group col-xs-3" style="margin-left: 7px">
 			<select class="form-control" id="category">
-			       <option>카테고리선택</option>
 			       <option>여행</option>
 			       <option>요리</option>
 			       <option>축구</option>
 		    </select>
 	    </div>
-		<div class="col-xs-7">
-			<input type="text" class="form-control" name="title" placeholder="제목을 입력해 주세요">
-		</div>
-		<div class="col-xs-2">
-			<button type="submit" class="btn btn-info btn-md btn-block">
-          		<span class="glyphicon glyphicon-envelope"></span> 확인
-        	</button>
+	    
+<!--제목  -->	    
+		<div class="col-xs-9">
+			<input type="text" name="TITLE" id="TITLE" class="form-control" placeholder="제목을 입력해 주세요">
 		</div>
 		
+<!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="contents" rows="500"></textarea>
+		<textarea name="CONTENT" rows="500"></textarea>
 		<script type="text/javascript">
-			CKEDITOR.replace( 'contents',{
+			CKEDITOR.replace( 'CONTENT',{
 				filebrowserUploadUrl: 'ckeditorImageUpload.hi'
 			}); 
 		</script>
 		</div>
 		
-		<div class="form-group col-xs-4" style="margin-left: 10px; padding-top: 10px;">
+		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
-			<select class="form-control" id="field">
-			       <option>주제선택</option>
+			<select class="form-control" id="FIELD" name="FIELD">
 			       <option>선택안함</option>
 			       <option>일상</option>
 			       <option>기타</option>
@@ -63,43 +60,43 @@
 			       <option>영화</option>
 		    </select>
 	    </div>
-	    <div class="form-group col-xs-4" style="padding-top: 10px;">
+	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 댓글허용</label>
-			<select class="form-control" id="state_reply">
-			       <option>댓글허용 여부</option>
+			<select class="form-control" id="CO_STATE" name="CO_STATE">
 			       <option>허용</option>
 			       <option>비허용</option>
 		    </select>
 	    </div>
-	    <div class="form-group col-xs-4" style="padding-top: 10px;">
+	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 공개범위</label>
-			<select class="form-control" id="state_open">
-			       <option>공개범위설정</option>
+			<select class="form-control" id="STATE" name="STATE">
 			       <option>전체공개</option>
 			       <option>비공개</option>
 			       <option>이웃공개</option>
 		    </select>
 	    </div>
-	</form>
 	
-	<div class="col-xs-12" style="margin-top: 20px;">
-	<div class="col-xs-4">
-			<input type="text" name="tag_w" id="tag_w" class="form-control" size="30" placeholder="태그입력"/>
-	     	&nbsp; <span> *태그를 입력하고 스페이스바를 눌러주세요.</span>
-	</div>
-	<div id="after_tag" class="col-xs-8"></div>
-	    	<div>
-	    	<input type="hidden" name="tag" id="tag"/>
-	    	</div>
-	</div>
-	<script>
-	/* 태그 달기 js입니다 */
+	
+	<div class="col-xs-8" style="margin-left: 7px;">
+		<input type="text" name="tag_w" id="tag_w" class="form-control" size="30" placeholder="태그입력"/></div>
+	<div class="col-xs-3"><span style="color: #4374D9; font-size: 14px;"> *태그를 입력하고 스페이스바를 눌러주세요.</span></div>
+	<div class="col-xs-1"></div>
+	
+	<!-- 태그 뿌려지는 부분 -->
+	<div id="after_tag" class="col-xs-12"></div>
+	<input type="hidden" name="tag" id="tag"/>	<!--연결된 태그값 넘기기  -->
+</form>
+
+
+<script>
+/* 태그 달기 js입니다 */       
 	$(document).ready(function(){
 	 
 	    $("#tag_w").on('keyup',function(e){
 	
 	        var children = $("#after_tag").children('span').length;
-	        var special = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+	        var special =  /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+
 	        var check = $(this).val();
 	        
 	        if(special.test(check) == true){
@@ -110,7 +107,7 @@
 	        }
 	        
 	        if(e.which == 32 || e.which == 188){
-	        
+	            
 	            var tag = $("#tag_w").val();
 	            tag = tag.trim();
 	            
@@ -119,8 +116,11 @@
 	                if(tag.match(',')){
 	                    tag = tag.substring(0 , tag.length-1);
 	                }
-	                
-	            var resister_tag = "<span class='before_tag' id='tag_"+children+"'>#"+tag+"<a href='javascript:deltag("+children+")' style='margin-left:7px' >x</a></span>";
+
+	            var resister_tag = "<span class='before_tag' id='tag_"+children+"' style='margin-left:7px;'>#<b>"+tag+"</b>"+
+	        					    "<a href='javascript:deltag("+children+")' style='margin-left:7px; color:red;'>"+
+	        					    "<b>x</b></a></span>";
+	            
 	            $("#after_tag").append(resister_tag);
 	            
 	            //초기화
@@ -153,16 +153,49 @@
 	    t.each(function(){
 	            var v = $(this).html();
 	            var rt = v.split('<a');
-	            ts += rt[0] +"/";
+	            ts += rt[0] +"#";
 	    });
-	    $("#tag").val(ts);
+	    $("#tag").val(ts);			/* 태그들 다 연결되어 붙은 값 */
+	    
+	    console.log("해시태그 ="+$("#tag").val(ts));
 	}
 	 
 	 
 	</script>
-	
+<div class="clearfix"></div><br><br>	 <!--줄띄기  -->
+<!-- 버튼 -->
+		<button class="btn btn-danger col-xs-2 col-xs-offset-4" id="save">
+			<span class="glyphicon glyphicon-pencil"></span>
+			&nbsp;&nbsp; <b>확&nbsp;&nbsp;인</b>&nbsp;
+		</button>
+		<button class="btn btn-default col-xs-2 col-xs-offset-1" id="cancle"> &nbsp;&nbsp; 취&nbsp;&nbsp;소&nbsp;</button>
+
 </div>
-<!--중간 END -->
+
+
+<script type="text/javascript">
+/* 글쓰기 눌렀을때 액션 */
+$("#save").click(function(){
+	
+	var frm = document.searchForm;
+
+	tag_post();
+	
+   if(!$("#TITLE").val()){
+       alert('제목을 입력해주세요.');
+       $("#TITLE").focus();
+       return false;
+   }
+   frm.submit();
+});
+
+/* 취소버튼 */
+$("#cancle").click(function(){
+	location.href = history.go(-1);
+});
+
+</script>
+	<!--중간 END -->
 
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>

@@ -90,8 +90,10 @@ public class MessageDao implements iDao {
 		logger.debug("----------------------------------------------------------");
 		logger.debug("[[[statement  ]]] "+statement);
 		logger.debug("[[[search_info]]] "+search_info.toString());
+		
+		List<Map<String, Object>> size = sqlSession.selectList(statement, search_info);
 				
-		return sqlSession.selectList(statement, search_info);
+		return size;
 	}	
 }
 

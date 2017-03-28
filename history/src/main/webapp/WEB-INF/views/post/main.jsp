@@ -111,7 +111,7 @@ function do_search_page(url, page_num)
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
-         <jsp:include page="menu.jsp"/>
+         <jsp:include page="/post/menu.hi"/>
       </div>
    <!--좌측 메뉴 END  -->
    

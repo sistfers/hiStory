@@ -18,6 +18,60 @@
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
 
+<resultMap id="FollowerPostMap" type="java.util.HashMap">
+	<result javaType="int" column="RNUM" property="RNUM" />
+	<result javaType="int" column="SEQ" property="SEQ" />
+	<result javaType="int" column="CT_SEQ" property="CT_SEQ" />
+	<result javaType="java.lang.String" column="ID" property="ID" />
+	<result javaType="java.lang.String" column="FIELD" property="FIELD" />
+	<result javaType="java.lang.String" column="TITLE" property="TITLE" />
+	<result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
+	<result javaType="java.lang.String" column="WDATE" property="WDATE" />
+	<result javaType="java.lang.String" column="HASHTAG" property="HASHTAG" />
+	<result javaType="java.lang.String" column="STATE" property="STATE" />
+	<result javaType="java.lang.String" column="CO_STATE" property="CO_STATE" />
+	<result javaType="java.lang.String" column="POST_SEQ" property="POST_SEQ" />
+	<result javaType="java.lang.String" column="ORI_NAME" property="ORI_NAME" />
+	<result javaType="java.lang.String" column="SAVE_NAME" property="SAVE_NAME" />
+	<result javaType="int" column="TOT_CNT" property="TOT_CNT" />
+	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+</resultMap>
+
+<resultMap id="ThemePostMap" type="java.util.HashMap">
+	<result javaType="int" column="RNUM" property="RNUM" />
+	<result javaType="int" column="SEQ" property="SEQ" />
+	<result javaType="int" column="CT_SEQ" property="CT_SEQ" />
+	<result javaType="java.lang.String" column="ID" property="ID" />
+	<result javaType="java.lang.String" column="FIELD" property="FIELD" />
+	<result javaType="java.lang.String" column="TITLE" property="TITLE" />
+	<result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
+	<result javaType="java.lang.String" column="WDATE" property="WDATE" />
+	<result javaType="java.lang.String" column="HASHTAG" property="HASHTAG" />
+	<result javaType="java.lang.String" column="STATE" property="STATE" />
+	<result javaType="java.lang.String" column="CO_STATE" property="CO_STATE" />
+	<result javaType="java.lang.String" column="ORI_NAME" property="ORI_NAME" />
+	<result javaType="java.lang.String" column="SAVE_NAME" property="SAVE_NAME" />
+	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+</resultMap>
+
+<resultMap id="SearchPostMap" type="java.util.HashMap">
+	<result javaType="int" column="RNUM" property="RNUM" />
+	<result javaType="int" column="SEQ" property="SEQ" />
+	<result javaType="int" column="CT_SEQ" property="CT_SEQ" />
+	<result javaType="java.lang.String" column="ID" property="ID" />
+	<result javaType="java.lang.String" column="FIELD" property="FIELD" />
+	<result javaType="java.lang.String" column="TITLE" property="TITLE" />
+	<result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
+	<result javaType="java.lang.String" column="WDATE" property="WDATE" />
+	<result javaType="java.lang.String" column="HASHTAG" property="HASHTAG" />
+	<result javaType="java.lang.String" column="STATE" property="STATE" />
+	<result javaType="java.lang.String" column="CO_STATE" property="CO_STATE" />
+	<result javaType="java.lang.String" column="POST_SEQ" property="POST_SEQ" />
+	<result javaType="java.lang.String" column="ORI_NAME" property="ORI_NAME" />
+	<result javaType="java.lang.String" column="SAVE_NAME" property="SAVE_NAME" />
+	<result javaType="int" column="TOT_CNT" property="TOT_CNT" />
+	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
+</resultMap>
 <!--포스트쓰기  -->
 <insert id="hi_insert"  parameterType="com.hifive.history.model.PostDto">
 	INSERT
@@ -123,6 +177,7 @@ WHERE SEQ     = #{SEQ}
 
 <!-- 베스트 블로거(4명) -->
 <select id="hi_bloggerRankList" parameterType="hashmap" resultMap="BloggerRankMap">
+	<![CDATA[
 	SELECT TT1.*
 	FROM
 	(
@@ -142,7 +197,6 @@ WHERE SEQ     = #{SEQ}
 	    )T3 INNER JOIN USER_H T4
 	    ON T3.ID = T4.ID
 	)TT1
-	<![CDATA[
 	WHERE TT1.RNUM <=4
 	]]>
 </select>
@@ -160,4 +214,323 @@ WHERE SEQ     = #{SEQ}
 	WHERE NOT STATE = '2' AND T2.ID = #{id}
 </select>
 
+<select id="hi_selectFollowerList" parameterType="hashmap" resultMap="FollowerPostMap">
+SELECT TT2.*
+FROM
+  (SELECT ROWNUM RNUM, T3.*, T4.*
+  FROM
+    (SELECT T1.*, T2.POST_SEQ, T2.LOCATION, T2.ORI_NAME, T2.SAVE_NAME
+    FROM
+      (SELECT *
+      FROM POST_H B1
+      WHERE EXISTS (SELECT 1
+                      FROM
+                      (
+                        SELECT YOU_ID, COUNT(*) CNT
+                        FROM FOLLOW_H
+                        WHERE MY_ID=#{id}
+                        GROUP BY YOU_ID
+                      )A
+                      WHERE B1.ID = A.YOU_ID
+                      AND MOD(A.CNT,2)=1) 
+      AND STATE IN (0,3)
+      )T1
+    LEFT OUTER JOIN
+      ( SELECT *
+         FROM BOX_H B
+         WHERE B.LOCATION = 0
+      )T2
+    ON T1.SEQ = T2.POST_SEQ
+    WHERE T2.SEQ = (SELECT MIN(SEQ) 
+    FROM BOX_H 
+    GROUP BY POST_SEQ 
+    HAVING POST_SEQ = T1.SEQ)
+    OR T2.POST_SEQ IS NULL
+    ) T3 NATURAL JOIN
+    (SELECT COUNT(*) TOT_CNT
+    FROM POST_H B1
+    WHERE EXISTS
+      (SELECT 1 
+      FROM FOLLOW_H B2 
+      WHERE B1.ID = B2.YOU_ID 
+      AND B2.MY_ID=#{id}
+      )
+    AND STATE IN (0,3)
+    )T4
+  )TT2
+	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
+	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+</select>
+
+<select id="hi_selectThemeList" parameterType="hashmap" resultMap="ThemePostMap">
+
+SELECT TT21.*
+  FROM
+      (SELECT ROWNUM RNUM, A11.*, A21.ORI_NAME, A21.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A1
+        WHERE STATE = 0
+        AND A1.FIELD = #{THEME1}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A11
+        LEFT OUTER JOIN
+        ( SELECT B1.SEQ AS BOX_SEQ, B1.ORI_NAME, B1.SAVE_NAME, B1.POST_SEQ
+          FROM BOX_H B1
+          WHERE B1.LOCATION = 0
+        )A21
+      ON A11.SEQ = A21.POST_SEQ
+      WHERE A21.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A11.SEQ)
+      OR A21.POST_SEQ IS NULL) TT21
+  WHERE TT21.RNUM BETWEEN 1 AND 3
+UNION ALL
+  SELECT TT2.*
+  FROM
+      (SELECT ROWNUM RNUM, A1.*, A2.ORI_NAME, A2.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A
+        WHERE STATE = 0
+        AND A.FIELD = #{THEME2}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A1
+        LEFT OUTER JOIN
+        ( SELECT B.SEQ AS BOX_SEQ, B.ORI_NAME, B.SAVE_NAME, B.POST_SEQ
+          FROM BOX_H B
+          WHERE B.LOCATION = 0
+        )A2
+      ON A1.SEQ = A2.POST_SEQ
+      WHERE A2.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A1.SEQ)
+      OR A2.POST_SEQ IS NULL) TT2
+  WHERE TT2.RNUM BETWEEN 1 AND 3
+  UNION ALL
+  SELECT TT23.*
+  FROM
+      (SELECT ROWNUM RNUM, A13.*, A23.ORI_NAME, A23.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A3
+        WHERE STATE = 0
+        AND A3.FIELD = #{THEME3}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A13
+        LEFT OUTER JOIN
+        ( SELECT B3.SEQ AS BOX_SEQ, B3.ORI_NAME, B3.SAVE_NAME, B3.POST_SEQ
+          FROM BOX_H B3
+          WHERE B3.LOCATION = 0
+        )A23
+      ON A13.SEQ = A23.POST_SEQ
+      WHERE A23.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A13.SEQ)
+      OR A23.POST_SEQ IS NULL) TT23
+  WHERE TT23.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT24.*
+  FROM
+      (SELECT ROWNUM RNUM, A14.*, A24.ORI_NAME, A24.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A4
+        WHERE STATE = 0
+        AND A4.FIELD = #{THEME4}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A14
+        LEFT OUTER JOIN
+        ( SELECT B4.SEQ AS BOX_SEQ, B4.ORI_NAME, B4.SAVE_NAME, B4.POST_SEQ
+          FROM BOX_H B4
+          WHERE B4.LOCATION = 0
+        )A24
+      ON A14.SEQ = A24.POST_SEQ
+      WHERE A24.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A14.SEQ)
+      OR A24.POST_SEQ IS NULL) TT24
+  WHERE TT24.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT25.*
+  FROM
+      (SELECT ROWNUM RNUM, A15.*, A25.ORI_NAME, A25.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A5
+        WHERE STATE = 0
+        AND A5.FIELD = #{THEME5}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A15
+        LEFT OUTER JOIN
+        ( SELECT B5.SEQ AS BOX_SEQ, B5.ORI_NAME, B5.SAVE_NAME, B5.POST_SEQ
+          FROM BOX_H B5
+          WHERE B5.LOCATION = 0
+        )A25
+      ON A15.SEQ = A25.POST_SEQ
+      WHERE A25.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A15.SEQ)
+      OR A25.POST_SEQ IS NULL) TT25
+  WHERE TT25.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT26.*
+  FROM
+      (SELECT ROWNUM RNUM, A16.*, A26.ORI_NAME, A26.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A6
+        WHERE STATE = 0
+        AND A6.FIELD = #{THEME6}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A16
+        LEFT OUTER JOIN
+        ( SELECT B6.SEQ AS BOX_SEQ, B6.ORI_NAME, B6.SAVE_NAME, B6.POST_SEQ
+          FROM BOX_H B6
+          WHERE B6.LOCATION = 0
+        )A26
+      ON A16.SEQ = A26.POST_SEQ
+      WHERE A26.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A16.SEQ)
+      OR A26.POST_SEQ IS NULL) TT26
+  WHERE TT26.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT27.*
+  FROM
+      (SELECT ROWNUM RNUM, A17.*, A27.ORI_NAME, A27.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A7
+        WHERE STATE = 0
+        AND A7.FIELD = #{THEME7}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A17
+        LEFT OUTER JOIN
+        ( SELECT B7.SEQ AS BOX_SEQ, B7.ORI_NAME, B7.SAVE_NAME, B7.POST_SEQ
+          FROM BOX_H B7
+          WHERE B7.LOCATION = 0
+        )A27
+      ON A17.SEQ = A27.POST_SEQ
+      WHERE A27.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A17.SEQ)
+      OR A27.POST_SEQ IS NULL) TT27
+  WHERE TT27.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT28.*
+  FROM
+      (SELECT ROWNUM RNUM, A18.*, A28.ORI_NAME, A28.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A8
+        WHERE STATE = 0
+        AND A8.FIELD = #{THEME8}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A18
+        LEFT OUTER JOIN
+        ( SELECT B8.SEQ AS BOX_SEQ, B8.ORI_NAME, B8.SAVE_NAME, B8.POST_SEQ
+          FROM BOX_H B8
+          WHERE B8.LOCATION = 0
+        )A28
+      ON A18.SEQ = A28.POST_SEQ
+      WHERE A28.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A18.SEQ)
+      OR A28.POST_SEQ IS NULL) TT28
+  WHERE TT28.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT29.*
+  FROM
+      (SELECT ROWNUM RNUM, A19.*, A29.ORI_NAME, A29.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A9
+        WHERE STATE = 0
+        AND A9.FIELD = #{THEME9}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A19
+        LEFT OUTER JOIN
+        ( SELECT B9.SEQ AS BOX_SEQ, B9.ORI_NAME, B9.SAVE_NAME, B9.POST_SEQ
+          FROM BOX_H B9
+          WHERE B9.LOCATION = 0
+        )A29
+      ON A19.SEQ = A29.POST_SEQ
+      WHERE A29.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A19.SEQ)
+      OR A29.POST_SEQ IS NULL) TT29
+  WHERE TT29.RNUM BETWEEN 1 AND 3
+  UNION ALL
+   SELECT TT210.*
+  FROM
+      (SELECT ROWNUM RNUM, A110.*, A210.ORI_NAME, A210.SAVE_NAME
+      FROM
+        (SELECT *
+        FROM POST_H A10
+        WHERE STATE = 0
+        AND A10.FIELD = #{THEME10}
+        ORDER BY WDATE DESC, SEQ DESC
+        )A110
+        LEFT OUTER JOIN
+        ( SELECT B10.SEQ AS BOX_SEQ, B10.ORI_NAME, B10.SAVE_NAME, B10.POST_SEQ
+          FROM BOX_H B10
+          WHERE B10.LOCATION = 0
+        )A210
+      ON A110.SEQ = A210.POST_SEQ
+      WHERE A210.BOX_SEQ = (SELECT MIN(SEQ) 
+                    FROM BOX_H 
+                    GROUP BY POST_SEQ 
+                    HAVING POST_SEQ = A110.SEQ)
+      OR A210.POST_SEQ IS NULL) TT210
+  WHERE TT210.RNUM BETWEEN 1 AND 3
+</select>
+
+<select id="hi_selectSearchList" parameterType="hashmap" resultMap="SearchPostMap">
+SELECT TT2.*
+   FROM(
+     SELECT ROWNUM RNUM,T1.*, T2.*
+       FROM(
+                SELECT A1.*, A2.POST_SEQ, A2.ORI_NAME, A2.SAVE_NAME
+                FROM
+                  (SELECT A.SEQ, A.CT_SEQ, A.ID, A.FIELD, A.TITLE, A.CONTENT, A.WDATE, A.HASHTAG, A.STATE, A.CO_STATE 
+                  FROM POST_H A
+                  WHERE STATE = 0
+                  AND A.TITLE LIKE #{SEARCH_WORD}
+                  OR A.CONTENT LIKE #{SEARCH_WORD}
+                  ORDER BY WDATE DESC,SEQ DESC
+                  )A1
+                LEFT OUTER JOIN
+                  ( SELECT B.SEQ, B.POST_SEQ, B.ORI_NAME, B.SAVE_NAME
+                    FROM BOX_H B
+                    WHERE B.LOCATION = 0
+                  )A2
+                ON A1.SEQ = A2.POST_SEQ
+                WHERE A2.SEQ = (SELECT MIN(SEQ) 
+                              FROM BOX_H 
+                              GROUP BY POST_SEQ 
+                              HAVING POST_SEQ = A1.SEQ)
+                OR A2.POST_SEQ IS NULL
+       )T1
+       NATURAL JOIN
+       (
+       SELECT COUNT(*) TOT_CNT
+        FROM POST_H
+            WHERE STATE = 0
+            AND TITLE LIKE #{SEARCH_WORD}
+            OR CONTENT LIKE #{SEARCH_WORD}
+       )T2
+)TT2				
+WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
+	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+</select>
 </mapper>

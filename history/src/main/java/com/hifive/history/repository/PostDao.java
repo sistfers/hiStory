@@ -59,15 +59,42 @@ public class PostDao implements iDao {
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
-		
-		return sqlSession.selectList(statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
 	}
 	
 	public List<Map<String, Object>> hi_bloggerRankList() {
-		String statement = namespace +".hi_selectList";
+		String statement = namespace +".hi_bloggerRankList";
 		logger.debug("statement"+statement);
 		
 		return sqlSession.selectList(statement);
+	}
+	public List<PostDto> hi_selectRank(String id){
+		String statement = namespace +".hi_selectRank";
+		logger.debug("statement"+statement);
+		logger.debug("id"+id);
+		return sqlSession.selectList(statement,id);
+	}
+	
+	public List<Map<String, Object>> hi_selectFollowerList(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectFollowerList";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+	}
+	
+	public List<Map<String, Object>> hi_selectThemeList(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectThemeList";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+	}
+	
+	public List<Map<String, Object>> hi_selectSearchList(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_selectSearchList";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
 	}
 	public List<PostDto> hi_selectRank(String id){
 		String statement = namespace +".hi_selectRank";

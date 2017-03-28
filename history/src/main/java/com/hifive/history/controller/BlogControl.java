@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.PostDto;
+import com.hifive.history.model.UserDto;
 import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.PostService;
 
@@ -95,7 +96,7 @@ public class BlogControl {
 
 	//블로그 글 쓰기
 	@RequestMapping("post/write.hi")
-	public String postWrite() {
+	public ModelAndView postWrite(HttpSession session) {
 		// view에서 넘어온값 받기
 //		CT_SEQ 	= Integer.parseInt(request.getParameter("ct_seq"));
 //		ID		= request.getParameter("ct_seq");      
@@ -115,7 +116,16 @@ public class BlogControl {
 //		logger.debug("BlogControl.postDto.toString() = "+postDto.toString());
 //		
 //		postSvc.hi_insert(postDto);
-		return "post/write";
+		
+		Map<String, String> dto = new HashMap<String, String>();
+		dto.put("isAll", "false");
+		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
+		
+		ModelAndView mav = new ModelAndView();
+		List<CategoryDto> categoryList = (List<CategoryDto>)categoryService.hi_selectCategory(dto);
+		mav.setViewName("post/write");
+		mav.addObject("categoryList", categoryList);
+		return mav;
 	}
 	
 	//블로그 글 수정

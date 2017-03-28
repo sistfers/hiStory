@@ -1,5 +1,12 @@
+<%@page import="com.hifive.history.model.CategoryDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%
+	List<CategoryDto> categoryList = ((List<CategoryDto>)request.getAttribute("categoryList"));
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,9 +35,13 @@
 <!-- 카테고리 -->
 		<div class="form-group col-xs-3" style="margin-left: 7px">
 			<select class="form-control" id="category">
-			       <option>여행</option>
-			       <option>요리</option>
-			       <option>축구</option>
+			       <%if(categoryList.size() != 0){
+			       		for(int i=0; i<categoryList.size(); ++i){%>
+			       <option><%=categoryList.get(i).getName() %></option>
+			       <%	}
+			       	 } else{ %>
+			       <option>전체</option>
+			       <%} %>
 		    </select>
 	    </div>
 	    

@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
@@ -9,6 +10,13 @@
 List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
 datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
 
+int intTotalCount = 0;
+int page_num = 1;
+
+
+if((String) request.getAttribute("PAGE_NUM") != null) {
+	page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM"));
+} 
 %>
 
 
@@ -20,19 +28,19 @@ datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-<!-- 이웃추가버튼 스타일 -->
-<style type="text/css">
-.btn-glyphicon {
-	padding: 8px;
-	background: #ffffff;
-	margin-right: 4px;
-}
 
-.icon-btn {
-	padding: 1px 15px 3px 2px;
-	border-radius: 50px;
+<script type="text/javascript">
+// 페이징
+function do_search_page(url, page_num) 
+{
+	  console.log(url+"\t"+page_num);
+	 
+	  var frm = document.searchForm;
+	  frm.PAGE_NUM.value = page_num;
+	  frm.action = url;
+	  frm.submit();
 }
-</style>
+</script>	
 </head>
 <body>
 
@@ -51,50 +59,78 @@ datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
 <div class="col-xs-10">
 <center><h2> :: 받은쪽지함 ::</h2></center><br>
 	<div class="col-xs-1"></div>
+	<form name="searchForm" action="do_search.do" method="POST">
+		<input type="hidden" name="PAGE_NUM" value="">
 	<div class="col-xs-10">
 		<!-- 버튼 -->	
 		<div class="form-group">			
-	<button class="btn btn-warning">삭제</button>
-    <button class="btn btn-warning">답장</button>
+		<button class="btn btn-warning">삭제</button>
+	    <button class="btn btn-warning">답장</button>
     
-    </div>
-				<table class="table">
-					<tr class="warning" >
-						<th width="10%"  style="text-align: center;">삭제</th>
-						<th width="20%" style="text-align: center;">보낸사람</th>
-						<th width="50%" style="text-align: center;">내용</th>
-						<th width="20%" style="text-align: center;">날짜</th>
-					</tr>
-					
-					<%
-					if(datas != null && datas.size() > 0) {
-						for(int i = 0; i < datas.size(); i++) {
-							Map<String, Object> item = datas.get(i);
-					%>
-						<tr>
-						<td align="center"><input type="checkbox"></td>
-						<td><%=item.get("SEND_ID") %></td>
-						<td><%=item.get("CONTENTS") %></td>
-						<td><%=item.get("WDATE") %></td>
-					</tr>
-					<%
-						}
-					} else {
-					%>
-						<tr>
-						<td align="center" colspan="4">쪽지가 없습니다.</td>
-						</tr>
-					<%	
-					}
-					%>
-
-				</table>
-			</div>
+    	</div>
+		<table class="table">
+			<tr class="warning" >
+				<th width="10%" style="text-align: center;">삭제</th>
+				<th width="20%" style="text-align: center;">보낸사람</th>
+				<th width="40%" style="text-align: center;">내용</th>
+				<th width="20%" style="text-align: center;">날짜</th>
+				<th width="10%" style="text-align: center;">읽음</th>
+			</tr>
+			
+			<%
+			if(datas != null && datas.size() > 0) {	
+				Map<String, Object> cnt = datas.get(0);
+				intTotalCount = (Integer) cnt.get("TOTAL");
+				
+				for(int i = 0; i < datas.size(); i++) {
+					Map<String, Object> item = datas.get(i);
+			%>
+				<tr>
+				<td align="center"><input type="checkbox"></td>
+				<td><%=item.get("SEND_ID") %></td>
+				<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
+				<td><%=item.get("WDATE") %></td>
+				
+				<% 
+				if(item.get("STATE").equals("0")) {
+				%>
+				<td>읽지 않음</td>
+				<%	
+				} else {
+				%>
+				<td><%=item.get("RDATE") %></td>
+				<%	
+				}
+				%>
+			</tr>
+			<%
+				}
+			} else {
+			%>
+				<tr>
+				<td align="center" colspan="5">쪽지가 없습니다.</td>
+				</tr>
+			<%	
+			}
+			%>
+	
+		</table>
+		<center>
+			<!-- Paging Area Start -->
+			<%
+//			System.out.println("intTotalCount " + intTotalCount);
+			%>
+			<%=PagingUtil.renderPaging(
+					intTotalCount, page_num, 10, 10, "send_message_list.hi", "do_search_page")%>
+			<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+		</center>
+	
+	</div>
+	</form>
 	<div class="col-xs-1"></div>
 </div>
 
-이건 블로그에 넣으라고 찾아놓은것 
-<a class="btn icon-btn btn-info" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-info"></span>이웃추가</a>
+
 <br><br><br><br><br>
 </div>
 <!--푸터 START -->

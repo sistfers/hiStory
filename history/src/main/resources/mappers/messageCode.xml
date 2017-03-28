@@ -34,14 +34,14 @@
 
 	
 	<!-- 쪽지 읽기 -->
-	<select id="hi_detail" parameterType="integer" resultType="MessageDto">
+	<select id="hi_detail" parameterType="int" resultType="com.hifive.history.model.MessageDto">
 		SELECT *
 		FROM MESSAGE_H
 		WHERE SEQ=#{seq}
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->
-	<select id="hi_select_sendlist" parameterType="string" resultType="MessageDto">
+	<select id="hi_select_sendlist" parameterType="String" resultType="com.hifive.history.model.MessageDto">
 		SELECT T1.*, T2.*
 		FROM(
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
@@ -70,7 +70,7 @@
 	</select>
 	
 	<!-- 리스트 불러오기(받은 쪽지) -->
-	<select id="hi_select_getlist" parameterType="string" resultType="MessageDto">
+	<select id="hi_select_getlist" parameterType="String" resultType="com.hifive.history.model.MessageDto">
 		SELECT T1.*, T2.*
 		FROM(
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
@@ -99,7 +99,7 @@
 	</select>
 	
 	<!-- 쪽지 삭제 -->
-	<delete id="hi_delete" parameterType="integer">
+	<delete id="hi_delete" parameterType="int">
 		DELETE 	
 		FROM MESSAGE_H			
 		WHERE SEQ=#{}	

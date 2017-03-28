@@ -3,7 +3,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.blogCode">
-
-
-
+	<update id="hi_update" parameterType="com.hifive.history.model.BlogDto">
+		UPDATE BLOG_H 
+		SET TITLE = #{title}, THEME = #{theme} 
+		WHERE ID = #{id}
+	</update>
 </mapper>

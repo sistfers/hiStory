@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.iDto;
+import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CategoryService;
 
 /**
@@ -23,6 +25,8 @@ import com.hifive.history.service.CategoryService;
 public class GraphControl {
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private BlogService blogService;
 	
 	@RequestMapping("chart/visit.hi")
 	public String visit() {
@@ -48,21 +52,35 @@ public class GraphControl {
 		Map<String, String> dto = new HashMap<>();
 		dto.put("id", "1");
 		dto.put("isAll", "true");
-		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
-		
-		
+		List<CategoryDto> categoryBefore = categoryService.hi_selectCategory(dto);
+		boolean b = true;
 		if(request.getParameter("name")!=null){
 			String name = request.getParameter("name");
 			String state = request.getParameter("state").equals("true")?"0":"1";
-			
-			CategoryDto dto2 = new CategoryDto();
-			dto2.setId("1");
-			dto2.setName(name);
-			dto2.setState(state);
-			
-			if(categoryService.hi_insert(dto2)>0){System.out.println("::::::::::::::::::데이터입력성공");};
-		}
+			for(int i = 0 ; i < categoryBefore.size();++i){
+				if(categoryBefore.get(i).getName().equals(name)){
+					b = false;
+					break;
+				}
+			}
+			if(b){
+				CategoryDto dto2 = new CategoryDto();
+				dto2.setId("1");
+				dto2.setName(name);
+				dto2.setState(state);
 				
+				if(categoryService.hi_insert(dto2)>0){System.out.println("::::::::::::::::::데이터입력성공");};
+			}			
+		}
+		//블로그 타이틀 바꾸기
+		if(request.getParameter("title")!=null){
+			String title = request.getParameter("title");
+			String theme = request.getParameter("theme");
+			BlogDto bdto = new BlogDto("Q328", title, theme);
+			if(blogService.hi_update(bdto)>0){System.out.println("::::::::::::::::::블로그테마 변경 성공");};
+		}
+		//카테고리 목록 뿌리기
+		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);		
 		mav.setViewName("chart/control");
 		mav.addObject("categoryList", categoryList);
 		

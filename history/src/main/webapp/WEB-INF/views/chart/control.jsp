@@ -69,7 +69,7 @@ border-radius: 15px;
 		        </table>
 				<br><br><br>
 				
-				<form class="form-horizontal" method="get" action="chart/control.hi">
+				<form class="form-horizontal" method="post" action="control.hi">
 					<fieldset>
 						<legend>카테고리 등록</legend>
 						<div class="form-group">
@@ -104,13 +104,13 @@ border-radius: 15px;
 				</form>
 				<br><br><br>
 				
-				<form class="form-horizontal">
+				<form class="form-horizontal" method="post" action="control.hi">
 					<fieldset>
 						<legend>블로그 설정</legend>
 						<div class="form-group">
 							<label for="inputEmail" class="col-lg-2 control-label">제목</label>
 							<div class="col-lg-9">
-								<input type="text" class="form-control" id="inputEmail"
+								<input type="text" class="form-control" id="title" name="title"
 									placeholder="원래 블로거의 제목 불러와 주세요">
 							</div>
 						</div>
@@ -119,7 +119,8 @@ border-radius: 15px;
 						<div class="form-group">
 							<label for="select" class="col-lg-2 control-label">Selects</label>
 							<div class="col-lg-9">
-								<br> <select multiple="" class="form-control">
+								<br>
+								<select multiple="" class="form-control" name="theme">
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>

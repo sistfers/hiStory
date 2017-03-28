@@ -5,9 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%
-	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
-%>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -54,90 +52,12 @@ border-radius: 15px;
 						<th>카테고리명</th>
 						<th>공개여부</th>
 		        	</tr>
-		        	<%
-		        		for(int i = 0; i < categoryList.size(); ++i){
-		        	%>
-		        	<tr class="active">
-		        		<td><%=categoryList.get(i).getSeq() %></td>
-		        		<td><%=categoryList.get(i).getName() %></td>
-		        		<td><%=categoryList.get(i).getState().equals("0")?"전체공개":"나만보기" %></td>
-		        	</tr>
-		        	<%
-		        		}
-		        	%>
+		        	
 		        	
 		        </table>
 				<br><br><br>
 				
-				<form class="form-horizontal" method="post" action="control.hi">
-					<fieldset>
-						<legend>카테고리 등록</legend>
-						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">카테고리명</label>
-							<div class="col-lg-9">
-								<input type="text" class="form-control" id="name" name="name"
-									placeholder="카테고리명 입력">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-lg-2 control-label">공개 설정</label>
-							<div class="col-lg-9">
-									<label class="radio-inline"> <input type="radio" name="state"
-										id="optionsRadios1" value="true" checked="">공개
-									</label>
-								
-									<label class="radio-inline"> <input type="radio" name="state"
-										id="optionsRadios2" value="false"> 비공개
-									</label>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<div class="col-lg-offset-9 col-lg-3">
-								<button type="reset" class="btn btn-default"> 초기화 </button>
-								<button type="submit" class="btn btn-primary"> 추가 </button>
-							</div>
-						</div>
-						
-					</fieldset>
-				</form>
-				<br><br><br>
 				
-				<form class="form-horizontal" method="post" action="control.hi">
-					<fieldset>
-						<legend>블로그 설정</legend>
-						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">제목</label>
-							<div class="col-lg-9">
-								<input type="text" class="form-control" id="title" name="title"
-									placeholder="원래 블로거의 제목 불러와 주세요">
-							</div>
-						</div>
-						
-						
-						<div class="form-group">
-							<label for="select" class="col-lg-2 control-label">Selects</label>
-							<div class="col-lg-9">
-								<br>
-								<select multiple="" class="form-control" name="theme">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-offset-9 col-lg-3">
-								<button type="reset" class="btn btn-default">취소</button>
-								<button type="submit" class="btn btn-primary">적용</button>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-
 
 				<div class="col-xs-1"></div>
   		</div>

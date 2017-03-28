@@ -1,4 +1,4 @@
-package java.history;
+package history;
 
 import org.junit.Test;
 

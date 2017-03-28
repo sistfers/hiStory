@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 
 /**
@@ -58,8 +59,8 @@ public class PostDao implements iDao {
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+condition.toString());
-		return sqlSession.selectList(statement,condition);
+		
+		return sqlSession.selectList(statement);
 	}
 	
 	public List<Map<String, Object>> hi_bloggerRankList() {
@@ -67,5 +68,11 @@ public class PostDao implements iDao {
 		logger.debug("statement"+statement);
 		
 		return sqlSession.selectList(statement);
+	}
+	public List<PostDto> hi_selectRank(String id){
+		String statement = namespace +".hi_selectRank";
+		logger.debug("statement"+statement);
+		logger.debug("id"+id);
+		return sqlSession.selectList(statement,id);
 	}
 }

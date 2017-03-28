@@ -14,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.CategoryDto;
+import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CategoryService;
+import com.hifive.history.service.PostService;
 
 /**
  * Created by Admin on 2017-03-24.
@@ -27,6 +29,8 @@ public class GraphControl {
 	private CategoryService categoryService;
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	PostService postService;
 	
 	@RequestMapping("chart/visit.hi")
 	public String visit() {
@@ -45,8 +49,12 @@ public class GraphControl {
 		return "/chart/neighbor";
 	}
 	@RequestMapping("chart/love.hi")
-	public String love() {
-		return "/chart/love";
+	public ModelAndView love() {
+		ModelAndView mav = new ModelAndView();
+		List<PostDto> postList = postService.hi_selectRank("1");
+		mav.setViewName("chart/love");
+		mav.addObject("postList", postList);
+		return mav;
 	}
 	@RequestMapping("chart/control.hi")
 	public ModelAndView chartMenu(HttpServletRequest request, HttpSession session){

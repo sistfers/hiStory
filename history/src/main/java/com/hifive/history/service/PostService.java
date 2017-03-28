@@ -1,5 +1,6 @@
 package com.hifive.history.service;
 
+import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.PostDao;
 
@@ -99,5 +100,8 @@ public class PostService implements iService {
 	
 	public List<Map<String, Object>> hi_bloggerRankList() {
 		return postDao.hi_bloggerRankList();
+	}
+	public List<PostDto> hi_selectRank(String id){
+		return postDao.hi_selectRank(id);
 	}
 }

@@ -133,6 +133,7 @@ public class BlogControl {
 		System.out.println(id);
 		Map<String, String> dto = new HashMap<>();
 		dto.put("id", "1");
+		dto.put("isAll", "false");
 		
 		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
 		mav.setViewName("post/menu");
@@ -140,8 +141,7 @@ public class BlogControl {
 		
 		return mav;
 	}
-	
-	
+		
 	
 }
 

@@ -30,7 +30,8 @@ public class MessageControl {
 	
 	
 	@RequestMapping("message/read.hi")
-	public ModelAndView do_read(@RequestParam(value = "note") int seq) {
+	public ModelAndView do_read(@RequestParam(value = "note", required=false) int seq,
+								@RequestParam(value = "nick", required=false) String nick) {
 	
 		loger.debug("----------------------------------------------------------");
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
@@ -51,6 +52,7 @@ public class MessageControl {
 		dto.setWdate("");
 		dto.setRdate("");
 		dto.setState("");
+		dto.setNick(nick);
 		
 		MessageDto note = new MessageDto();
 		note = (MessageDto) messageService.hi_detail(dto);

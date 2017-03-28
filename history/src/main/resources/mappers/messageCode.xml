@@ -24,6 +24,7 @@
 		<result javaType="java.lang.String" column="RDATE" property="RDATE" />
 		<result javaType="java.lang.String" column="STATE" property="STATE" />
 		<result javaType="java.lang.Integer" column="TOTAL" property="TOTAL" />
+		<result javaType="java.lang.String" column="NAME" property="NAME" />
 	</resultMap>
 	
 	<!-- SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE(sysdate), RDATE(null), STATE(0) -->	
@@ -50,16 +51,17 @@
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
 		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-		           T.STATE							
+		           T.STATE, T.NAME							
 		    FROM(							
 		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
-		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE							
+		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,							
+		               B.NAME
 		     	FROM(							
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
 		        	WHERE SEND_ID=#{sendId}							
 		        ORDER BY WDATE DESC							
-		          	) LST					
+		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)						
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )						
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
@@ -79,17 +81,17 @@
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
 		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-		           T.STATE							
+		           T.STATE, T.NAME							
 		    FROM(							
 		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
-		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE							
+		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
+		               B.NAME							
 		     	FROM(							
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
 		        	WHERE TAKE_ID=#{TAKEID}							
 		        ORDER BY WDATE DESC							
-		          	) LST			
-		        				
+		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )
 		      							
 		        ) T      							

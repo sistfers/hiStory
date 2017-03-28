@@ -13,8 +13,23 @@ public class MessageDto implements iDto, Serializable {
 	private	String	wdate;
 	private	String	rdate;
 	private	String	state;
+	private String  nick;
 	
 	public MessageDto() {
+	}
+
+	public MessageDto(int seq, String send_id, String take_id, 
+			String contents, String wdate, String rdate,
+			String state, String nick) {
+		super();
+		this.seq = seq;
+		this.send_id = send_id;
+		this.take_id = take_id;
+		this.contents = contents;
+		this.wdate = wdate;
+		this.rdate = rdate;
+		this.state = state;
+		this.nick = nick;
 	}
 
 	public int getSeq() {
@@ -73,10 +88,18 @@ public class MessageDto implements iDto, Serializable {
 		this.state = state;
 	}
 
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
 	@Override
 	public String toString() {
 		return "MessageDto [seq=" + seq + ", send_id=" + send_id + ", take_id=" + take_id + ", contents=" + contents
-				+ ", wdate=" + wdate + ", rdate=" + rdate + ", state=" + state + "]";
+				+ ", wdate=" + wdate + ", rdate=" + rdate + ", state=" + state + ", nick=" + nick + "]";
 	}
 	
 }

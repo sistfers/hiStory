@@ -43,7 +43,7 @@
 			<br>
 			<div class="col-xs-1"></div>
 			<div class="col-xs-8">
-				<form action="message/write.hi" method="post" class="form-horizontal">
+				<form action="write.hi" method="post" class="form-horizontal">
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸사람</label>
 						<div class="col-lg-7">

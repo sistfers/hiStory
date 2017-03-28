@@ -87,7 +87,7 @@ function do_search_page(url, page_num)
 			%>
 				<tr>
 				<td align="center"><input type="checkbox"></td>
-				<td><%=item.get("SEND_ID") %></td>
+				<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
 				<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
 				<td><%=item.get("WDATE") %></td>
 				

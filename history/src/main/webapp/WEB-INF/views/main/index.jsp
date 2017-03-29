@@ -162,7 +162,7 @@
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 <div class="container" >
 <br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->

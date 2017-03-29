@@ -52,19 +52,19 @@ margin-top: 10px;
 
 <!--페이지이동  -->
 <script type="text/javascript">
-function do_logout(){
-	var frm = document.logoutfrm;
-	frm.action.value="/main/logout.hi";
-	frm.submit();
-}
-function do_login(){
-    var frm = document.loginfrm;
-    frm.submit();
-}
-function do_join(){
-    var frm = document.joinfrm;
-    frm.submit();
-}
+	function do_logout(){
+		var frm = document.logoutfrm;
+		frm.action.value="/main/logout.hi";
+		frm.submit();
+	}
+	function do_login(){
+	    var frm = document.loginfrm;
+	    frm.submit();
+	}
+	function do_join(){
+	    var frm = document.joinfrm;
+	    frm.submit();
+	}
 </script>
 
 <form name="logoutfrm" action="/main/logout.hi"></form>

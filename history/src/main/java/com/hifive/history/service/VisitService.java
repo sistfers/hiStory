@@ -3,6 +3,7 @@ package com.hifive.history.service;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.VisitDao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class VisitService implements iService {
 	public int hi_getTotal(String id){
 		return visitDao.hi_getTotal(id);
 	}
-	public List<Map<String,Object>> hi_getTodayVisit(Map<String, String> map){
-		return visitDao.hi_getTodayVisit(map);
+	public List<Map<String,Object>> hi_getTodayVisit(HashMap<String, String> dto) throws Exception {
+		return visitDao.hi_getTodayVisit(dto);
 	}
 }

@@ -20,4 +20,25 @@
 				WHERE ID = #{id}
 		)
 	</select>
+	<select id="hi_getTodayVisit" parameterType="hashmap" resultType="hashmap">
+	SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 
+	FROM
+	  (
+	  SELECT TO_CHAR((TO_DATE(#{enddate}, 'YYYYMMDD')-LEVEL), 'YYYYMMDD') AS CUR_DATE,
+	  0 AS CNT 
+	  FROM DUAL
+	  CONNECT BY LEVEL <=7
+	  ) A
+	LEFT OUTER JOIN
+	(
+	  SELECT TO_CHAR(VDATE, 'YYYYMMDD') AS CUR_DATE,COUNT(*) AS CNT
+	  FROM VISIT_H
+	  WHERE V_ID = #{id}
+	  AND VDATE BETWEEN TO_DATE(#{enddate}, 'YYYYMMDD')-7 AND TO_DATE(#{enddate}, 'YYYYMMDD')
+	  GROUP BY TO_CHAR(VDATE, 'YYYYMMDD')
+	  
+	)B
+	ON A.CUR_DATE = B.CUR_DATE
+	ORDER BY CUR_DATE ASC
+	</select> 
 </mapper>

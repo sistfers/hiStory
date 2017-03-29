@@ -30,7 +30,7 @@
       	<br>
       	<h4>순위</h4><hr>
       	<a href="love.hi">공감수 순위</a> <br>
-      	<a href="">댓글수 순위</a> <br>   	
+      	<a href="comment.hi">댓글수 순위</a> <br>   	
       </div>
 </div>
 		

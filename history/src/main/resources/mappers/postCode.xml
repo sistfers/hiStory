@@ -200,8 +200,8 @@ WHERE SEQ     = #{SEQ}
 	WHERE TT1.RNUM <=4
 	]]>
 </select>
-<select id="hi_selectCommenttRank" parameterType="String" resultType="com.hifive.history.model.PostDto">
-	SELECT SEQ, CT_SEQ, ID, FIELD, TITLE, CONTENT, WDATE, HASHTAG, STATE, CO_STATE
+<select id="hi_selectCommentRank" parameterType="String" resultType="hashmap">
+	SELECT *
 	FROM
 	(
 	  SELECT POST_SEQ, COUNT(*) AS TOTAL_CNT
@@ -212,6 +212,23 @@ WHERE SEQ     = #{SEQ}
   	INNER JOIN POST_H T2
 	ON T1.POST_SEQ = T2.SEQ
 	WHERE NOT STATE = '2' AND T2.ID = #{id}
+</select>
+<select id="hi_selectTodayCommentRank" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	SELECT *
+	  FROM
+		(
+		  SELECT POST_SEQ, COUNT(*) AS TOTAL_CNT
+		  FROM COMMENT_H A
+		  WHERE A.WDATE >= TO_DATE(#{startdate},'YY/MM/DD')
+		  AND A.WDATE <= TO_DATE(#{enddate},'YY/MM/DD')
+		  GROUP BY A.POST_SEQ
+		  ORDER BY TOTAL_CNT DESC
+		) T1 
+	  INNER JOIN POST_H T2
+	  ON T1.POST_SEQ = T2.SEQ
+	WHERE NOT STATE = '2' AND T2.ID = #{id}
+	]]>
 </select>
 <select id="hi_selectLoveRank" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[ 

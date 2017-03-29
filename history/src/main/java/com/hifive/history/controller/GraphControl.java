@@ -86,11 +86,35 @@ public class GraphControl {
 		return mav;
 	}
 	@RequestMapping("chart/comment.hi")
-	public ModelAndView comment() {
+	public ModelAndView comment(HttpServletRequest request, HttpSession session) {
+		
+		Date date = new Date();
+		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		date.setDate(date.getDate()+1);
+		
+		String startdate = "17/03/01";
+		String enddate = sd.format(date);
+		
 		ModelAndView mav = new ModelAndView();
+		// 전체 조회
 		List<HashMap<String, Object>> postList = postService.hi_selectCommentRank("1");
 		mav.setViewName("chart/comment");
 		mav.addObject("postList", postList);
+		
+		// 부분 조회
+		
+		if(request.getParameter("startdate")!=null){
+			startdate = request.getParameter("startdate");
+			enddate = request.getParameter("enddate");			
+		}
+		HashMap<String,String> map = new HashMap<>();
+		map.put("id", "1");
+		map.put("startdate", startdate);
+		map.put("enddate", enddate);
+		
+		List<HashMap<String, Object>> postTodayList = postService.hi_selectTodayCommentRank(map);
+		mav.addObject("postTodayList", postTodayList);
+		
 		return mav;
 	}
 	@RequestMapping("chart/control.hi")

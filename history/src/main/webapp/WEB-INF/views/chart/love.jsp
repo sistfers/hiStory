@@ -80,7 +80,7 @@ border-radius: 15px;
 		        		<td><%=i+1 %>위</td>
 		        		<td><%=loveRank.get(i).get("TITLE") %></td>
 		        		<td><%=loveRank.get(i).get("FIELD") %></td>
-		        		<td><%=loveRank.get(i).get("COUNT(*)") %></td>
+		        		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
 		        		<td><%=loveRank.get(i).get("WDATE") %></td>
 		        		</tr>
 		        	<%
@@ -136,7 +136,7 @@ border-radius: 15px;
 		        		<td><%=i+1 %>위</td>
 		        		<td><%=loveRank.get(i).get("TITLE") %></td>
 		        		<td><%=loveRank.get(i).get("FIELD") %></td>
-		        		<td><%=loveRank.get(i).get("COUNT(*)") %></td>
+		        		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
 		        		<td><%=loveRank.get(i).get("WDATE") %></td>
 		        		</tr>
 		        	<%

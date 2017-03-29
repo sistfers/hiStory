@@ -12,8 +12,8 @@
 	List<HashMap<String, Object>> postList = new ArrayList<HashMap<String, Object>>();
 	postList = (List<HashMap<String, Object>>)request.getAttribute("postList");
 	
-	List<HashMap<String, Object>> postListToday = new ArrayList<HashMap<String, Object>>();
-	postListToday = (List<HashMap<String, Object>>)request.getAttribute("postListToday");
+	List<HashMap<String, Object>> postTodayList = new ArrayList<HashMap<String, Object>>();
+	postTodayList = (List<HashMap<String, Object>>)request.getAttribute("postTodayList");
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
@@ -89,40 +89,57 @@ border-radius: 15px;
 		        	
 		        	
 		        </table>
-		        <p style="font-size: 25px; margin-top: 20px">이번주</p>
+		        <form class="form-horizontal" method="post" action="comment.hi">
+		       	
+		       	<div class="form-group" id="startdate">
+					<div class="col-lg-4">
+						<input type="date" class="form-control" id="startdate" name="startdate">
+					</div>
+					<div class="col-lg-1">
+						<h4>~</h4>
+					</div>
+					<div class="col-lg-4">
+						<input type="date" class="form-control" id="enddate" name="enddate">
+					</div>
+					<div class="col-lg-3">
+						<button type="submit" class="btn btn-primary"> 조회 </button>
+					</div>
+				</div>
 		        <table class="table" style="margin-top: 10px">
 		        	<tr class="info">
 						<th>순위</th>
-						<th>글제목</th>
 						<th>분야</th>
+						<th>글제목</th>
 						<th>댓글수</th>
 						<th>작성일</th>
 		        	</tr>
 		        	<%
-		        		if(postListToday.size()==0){
-		        	%>
-		        		<tr class="active">
-		        		<td colspan="4">댓글이 달린 글이 없습니다.</td>
-		        		</tr>
-		        	<%
-		        		}else{
-		        			for(int i = 0; i < postListToday.size(); ++i){	
+		        		if(postTodayList!=null){
+		        			for(int i = 0; i < postTodayList.size(); ++i){
 		        	%>	
+				       		<tr class="active">
+				       		<td><%=i+1 %>위</td>		        		
+				       		<td><%=postTodayList.get(i).get("FIELD") %></td>
+				       		<td><%=postTodayList.get(i).get("TITLE") %></td>
+				       		<td><%=postTodayList.get(i).get("TOTAL_CNT") %></td>
+				       		<td><%=postTodayList.get(i).get("WDATE") %></td>
+				       		</tr>
+				     <%
+				        	if(i==4)break;
+		        			}
+		        		}else{
+		        	%>		
 		        		<tr class="active">
-		        		<td><%=i+1 %>위</td>
-		        		<td><%=postListToday.get(i).get("TITLE") %></td>
-		        		<td><%=postListToday.get(i).get("FIELD") %></td>
-		        		<td><%=postListToday.get(i).get("TOTAL_CNT") %></td>
-		        		<td><%=postListToday.get(i).get("WDATE") %></td>
+		        		<td colspan="5">댓글이 달린 글이 없습니다.</td>
 		        		</tr>
 		        	<%
-		        			if(i==4)break;
-		        			}
+		        			
 		        		}
 		        	%>
 		        	
 		        	
 		        </table>
+		        </form>
 				<br><br><br>
 				
 				

@@ -36,7 +36,7 @@
 %>
 
 <%
-	//UserDto userDto = (UserDto) session.getAttribute("user");
+	UserDto userDto = (UserDto) session.getAttribute("user");
 
 	String PAGE_NUM 	= "1";	// 선택된 페이지
 	PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
@@ -240,7 +240,7 @@ function go_delete(){
 		  		  		<c:set var='login' value="${sessionScope.user}"/>
 		  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
 			  				<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-			  				<%if (commentdata.get("ID").equals("${sessionScope.user.id}")) {%>
+			  				<%if (userDto.getId().equals(commentdata.get("NAME"))) {%>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 			  				<%} %>

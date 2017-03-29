@@ -13,14 +13,15 @@
 	List<HashMap<String, Object>> loveRank = new ArrayList();
 	loveRank = (List<HashMap<String, Object>>)request.getAttribute("loveRank");
 	
+	List<HashMap<String, Object>> loveSelectRank = new ArrayList();
+	loveSelectRank = (List<HashMap<String, Object>>)request.getAttribute("loveSelectRank");
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<script src="/post_inc/datetimepicker/bootstrap-datepicker.js"></script>
 
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>:::::::::::블로그 관리:::::::::::::::</title>
 <style type="text/css">
@@ -35,11 +36,7 @@ margin-left:0.5%;
 border-radius: 15px;
 }
 </style>
-<script>
-$(function(){
-	$('#dd').datepicker({format:"yyyy-mm-dd"}).datepicker("setDate", new Date(2017,03,01) );
-});
-</script>
+
 </head>
 <body>
 <!--헤더 START-->
@@ -93,15 +90,30 @@ $(function(){
 		        	
 		        	
 		        </table>
-		        <div class="row">
-					<div class='col-sm-6'>
-						datepicker 
-						<input type="text" class="form-control" id="dd"><br>
+		       
+		        <form class="form-horizontal" method="post" action="love.hi">
+		       	
+		       	<div class="form-group" id="startdate">
+					<div class="col-lg-4">
+						<%--<input type="text" class="form-control" id="birthday"--%>
+							<%--name="birthday" data-rule-required="true"--%>
+							
+						<input type="date" class="form-control" id="startdate" name="startdate">
+					</div>
+					<div class="col-lg-1">
+						<h4>~</h4>
+					</div>
+					<div class="col-lg-4">
+						<%--<input type="text" class="form-control" id="birthday"--%>
+							<%--name="birthday" data-rule-required="true"--%>
+							
+						<input type="date" class="form-control" id="enddate" name="enddate">
+					</div>
+					<div class="col-lg-3">
+						<button type="submit" class="btn btn-primary"> 조회 </button>
 					</div>
 				</div>
-		        <form class="form-horizontal" method="post" action="control.hi">
-		        
-				
+			
 		        <table class="table" style="margin-top: 10px">
 		        	<tr class="info">
 						<th>순위</th>
@@ -111,14 +123,14 @@ $(function(){
 						<th>작성일</th>
 		        	</tr>
 		        	<%
-		        		if(loveRank.size()==0){
+		        		if(loveSelectRank.size()==0){
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="5">공감받은 글이 없습니다.</td>
+		        		<td colspan="5">선택하신 기간에 공감받은 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        		}else{
-		        			for(int i = 0; i < loveRank.size(); ++i){	
+		        			for(int i = 0; i < loveSelectRank.size(); ++i){	
 		        	%>	
 		        		<tr class="active">
 		        		<td><%=i+1 %>위</td>

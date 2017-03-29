@@ -1,5 +1,7 @@
 package com.hifive.history.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,22 +51,44 @@ public class GraphControl {
 		return "/chart/neighbor";
 	}
 	@RequestMapping("chart/love.hi")
-	public ModelAndView love() {
+	public ModelAndView love(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		
+		Date date = new Date();
+		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		String startdate = "17/03/01";
+		String enddate = sd.format(date);
+		
+		// 전체조회
 		HashMap<String,String> map = new HashMap<>();
 		map.put("ID", "1");
-		map.put("START_DAY", "01/01/01");
-		map.put("END_DAY", "16/03/28");
+		map.put("START_DAY", startdate);
+		map.put("END_DAY", enddate);
 		
-		List<HashMap<String, String>> loveRank = postService.hi_selectLoveRank(map);
+		List<HashMap<String, Object>> loveRank = postService.hi_selectLoveRank(map);
 		mav.setViewName("chart/love");
 		mav.addObject("loveRank", loveRank);
+		
+		// 기간조회
+		HashMap<String,String> map2 = new HashMap<>();
+		
+		if(request.getParameter("startdate")!=null){
+			startdate = request.getParameter("startdate");
+			enddate = request.getParameter("enddate");			
+		}
+		map2.put("ID", "1");
+		map2.put("START_DAY", startdate );
+		map2.put("END_DAY", enddate );
+		List<HashMap<String, Object>> loveSelectRank = postService.hi_selectLoveRank(map2);
+				
+		mav.addObject("loveSelectRank", loveSelectRank);
+		
 		return mav;
 	}
 	@RequestMapping("chart/comment.hi")
 	public ModelAndView comment() {
 		ModelAndView mav = new ModelAndView();
-		List<PostDto> postList = postService.hi_selectCommentRank("1");
+		List<HashMap<String, Object>> postList = postService.hi_selectCommentRank("1");
 		mav.setViewName("chart/comment");
 		mav.addObject("postList", postList);
 		return mav;

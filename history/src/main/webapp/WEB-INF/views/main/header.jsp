@@ -35,8 +35,7 @@ margin-top: 10px;
 			} else {
 		%>
 				<ul class="nav navbar-nav navbar-right">
-				<li><a href="/post/main.hi">내블로그</a></li>
-				<li><a href="#">내블로그</a></li>
+				<li><a href="javascript:go_myblog();">내블로그</a></li>
 		<!-- 		<li><a href="#">내블로그</a></li> -->
 		<!-- 		<li><a href="#">내블로그</a></li> -->
 		<!-- 		<li><a href="#">내블로그</a></li> -->
@@ -52,9 +51,12 @@ margin-top: 10px;
 
 <!--페이지이동  -->
 <script type="text/javascript">
+	function go_myblog() {
+		var frm = document.myblogfrm;
+		frm.submit();
+	}
 	function do_logout(){
 		var frm = document.logoutfrm;
-		frm.action.value="/main/logout.hi";
 		frm.submit();
 	}
 	function do_login(){
@@ -67,6 +69,9 @@ margin-top: 10px;
 	}
 </script>
 
+<form name="myblogfrm" action="/post/main.hi">
+	<input type="hidden" name="id" value="${sessionScope.user.id}">
+</form>
 <form name="logoutfrm" action="/main/logout.hi"></form>
 <form name="loginfrm" action="/main/login.hi" method="post"></form>
 <form name="joinfrm" action="/user/join.hi" method="post"></form>

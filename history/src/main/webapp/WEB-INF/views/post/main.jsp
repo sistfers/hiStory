@@ -196,11 +196,13 @@ function go_delete(){
         		</button>&nbsp;&nbsp;&nbsp;&nbsp;
         		
         		<%
-        			String str[] = split(DTO.getHashtag());
-        			for(int i = 0; i < str.length; ++i){
+        			if (DTO.getHashtag() != null) {
+        				String str[] = split(DTO.getHashtag());
+        				for(int i = 0; i < str.length; ++i){
         		%>
-        		<a href="#"><%="#" + str[i] %></a>
+        					<a href="#"><%="#" + str[i] %></a>
         		<%
+        				}
         			}
         		%>
 				</div>

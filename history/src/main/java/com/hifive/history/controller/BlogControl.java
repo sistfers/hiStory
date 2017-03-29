@@ -82,10 +82,19 @@ public class BlogControl {
 		ModelAndView mav = new ModelAndView();
 		
 		
-		String ID = "1";
+//		String ID = "1";
+		String ID = request.getParameter("id");
+		String ct_seqString = request.getParameter("ct_seq");
+		Integer ct_seq;
 		
 		// 최신 글 내용 보여주기
-		postDto = new PostDto(0,2,"1",null,null,null,null,null,null,null);
+		postDto = new PostDto();
+		postDto.setId(ID);
+		if (ct_seqString == null)
+			ct_seq = 0;
+		else
+			ct_seq = Integer.parseInt(ct_seqString);
+		postDto.setCt_seq(ct_seq);
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 		mav.addObject("DTO"   ,DTO);		
 		
@@ -102,9 +111,9 @@ public class BlogControl {
 		// 아래 5개 목록 리스트 보여주기
 		Map<String, Object> condition = new HashMap<String, Object>();
 		String PAGE_NUM = request.getParameter("PAGE_NUM")==null||request.getParameter("PAGE_NUM").equals("")?"1":request.getParameter("PAGE_NUM");         //페이지NUM
-		
 		condition.put("ID", ID);
 		condition.put("PAGE_NUM", PAGE_NUM);
+		condition.put("ct_seq", ct_seq);
 		
 		List<Map<String, Object>> lists = postSvc.hi_selectList(condition);
 		logger.debug("BlogControl.lists.toString() = "+lists.toString());
@@ -183,12 +192,11 @@ public class BlogControl {
 	//블로그 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
-		session.setAttribute("id", "1");
 	      ModelAndView mav = new ModelAndView();
-	      String id = (String)session.getAttribute("id");
+	      String id = request.getParameter("id");
 	      System.out.println(id);
 	      Map<String, String> dto = new HashMap<>();
-	      dto.put("id", "1");
+	      dto.put("id", id);
 	      dto.put("isAll", "false");
 	      
 	      List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);

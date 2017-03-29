@@ -36,10 +36,7 @@ margin-top: 10px;
 		%>
 				<ul class="nav navbar-nav navbar-right">
 				<li><a href="javascript:go_myblog();">내블로그</a></li>
-		<!-- 		<li><a href="#">내블로그</a></li> -->
-		<!-- 		<li><a href="#">내블로그</a></li> -->
-		<!-- 		<li><a href="#">내블로그</a></li> -->
-				<li><a href="javascript:do_logout();" >로그아웃</a></li>
+				<li><a href="javascript:do_logout();" > [${sessionScope.user.id}님] 로그아웃</a></li>
 				</ul>
 		<%
 			}

@@ -22,7 +22,7 @@
 
 		<downloadJavadocs>true</downloadJavadocs>
 
-		<m2eclipse.wtp.contextRoot>UTF-8</m2eclipse.wtp.contextRoot>
+		<!-- <m2eclipse.wtp.contextRoot>UTF-8</m2eclipse.wtp.contextRoot> -->
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

@@ -11,9 +11,40 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
+
 		$(document).ready(function () {
-			$("#id").blur(function () {
-				alert("AAAAA");
+
+            $("#id").on({
+				focus: function () {
+                    $("#idCheckSuccess").hide();
+                    $("#idCheckFail").hide();
+                },
+
+	            blur: function () {
+                    var id = $("#id").val();
+                    $.ajax({
+                        type:"POST",
+                        url:"/user/idCheck.hi",
+                        dataType:"html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+                        data:{
+                            "id": id
+                        },
+                        success : function(data) {
+                            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                            var flag = $.parseJSON(data);
+                            if(flag.msg=="true"){$("#idCheckSuccess").show();}
+                            else {$("#idCheckFail").show();}
+
+                        },
+                        complete : function(data) {
+                            // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                            // TODO
+                        },
+                        error : function(xhr, status, error) {
+                            alert("에러발생");
+                        }
+                    });
+                }
             });
         });
 	</script>
@@ -46,7 +77,8 @@
 						<input type="text" class="form-control onlyHangul" id="id"
 							name="id" data-rule-required="true" placeholder="원하는ID를 입력하세요"
 							maxlength="20">
-<!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: red" hidden="hidden" id="idCheck"> ID가 이미 존재합니다. 다른ID를 선택하세요 </p>
+<!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: green" hidden="hidden" id="idCheckSuccess"> 사용하실 수 있는 ID입니다. </p>
+<!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: red" hidden="hidden" id="idCheckFail"> ID가 이미 존재합니다. 다른 ID를 선택하세요. </p>
 					</div>
 				</div>
 

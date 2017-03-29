@@ -57,9 +57,9 @@ function do_search_page(url, page_num)
 
 <!--내용 START -->
 <div class="col-xs-10">
-<center><h2> :: 받은쪽지함 ::</h2></center><br>
+<center><h2> :: 보낸쪽지함 ::</h2></center><br>
 	<div class="col-xs-1"></div>
-	<form name="searchForm" action="do_search.do" method="POST">
+	<form name="searchForm" action="" method="POST">
 		<input type="hidden" name="PAGE_NUM" value="">
 	<div class="col-xs-10">
 		<!-- 버튼 -->	
@@ -71,7 +71,7 @@ function do_search_page(url, page_num)
 		<table class="table">
 			<tr class="warning" >
 				<th width="10%" style="text-align: center;">삭제</th>
-				<th width="20%" style="text-align: center;">보낸사람</th>
+				<th width="20%" style="text-align: center;">받는사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
 				<th width="20%" style="text-align: center;">날짜</th>
 				<th width="10%" style="text-align: center;">읽음</th>
@@ -87,7 +87,7 @@ function do_search_page(url, page_num)
 			%>
 				<tr>
 				<td align="center"><input type="checkbox"></td>
-				<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
+				<td><%=item.get("TAKE_ID") %>(<%=item.get("NAME") %>)</td>
 				<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
 				<td><%=item.get("WDATE") %></td>
 				
@@ -138,3 +138,5 @@ function do_search_page(url, page_num)
 <!--푸터 START -->
 </body>
 </html>
+
+

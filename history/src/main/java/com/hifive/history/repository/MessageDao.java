@@ -28,18 +28,20 @@ public class MessageDao implements iDao {
 	public int hi_insert(iDto dto) {
 		
 		String statement = namespace +".hi_insert";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[dto.toString() ]]] "+dto.toString());
 		
 		return sqlSession.insert(statement,dto);
 	}
 
 	@Override
 	public int hi_update(iDto dto) {
+		
 		String statement = namespace +".hi_update";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.update(statement,dto);
+		logger.debug("----------------------------------------------------------");
+		
+		return 0;
 	}
 
 	// 쪽지 읽기
@@ -47,8 +49,9 @@ public class MessageDao implements iDao {
 	public iDto hi_detail(iDto dto) {
 		
 		String statement = namespace +".hi_detail";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[dto.toString() ]]] "+dto.toString());
 		
 		return sqlSession.selectOne(statement, dto);
 	}
@@ -56,10 +59,11 @@ public class MessageDao implements iDao {
 	// 쪽지 삭제
 	@Override
 	public int hi_delete(int cnt) {
-		
+				
 		String statement = namespace +".hi_delete";
-		logger.debug("statement"+statement);
-		logger.debug("cnt = "+cnt);
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement  ]]] "+statement);
+		logger.debug("[[[cnt		]]] "+cnt);		
 		
 		return sqlSession.delete(statement, cnt);
 	}
@@ -73,28 +77,31 @@ public class MessageDao implements iDao {
 		return sqlSession.selectList(statement,dto);
 	}
 	
-	// 보낸 쪽지함
-	public List<Map<String, Object>> hi_select_sendlist(String sendId) {
-				
-		String statement = namespace +".hi_select_sendlist";
-		logger.debug("statement"+statement);
-		logger.debug("sendId "+sendId);
-			
-		return sqlSession.selectList(statement, sendId);
-	}
-	
 	// 받은 쪽지함
 	public List<Map<String, Object>> hi_select_getlist(Map<String, Object> search_info) {
 					
-		String statement = namespace +".hi_select_getlist";
+		String statement = namespace +".hi_select_GETlist";
 		logger.debug("----------------------------------------------------------");
-		logger.debug("[[[statement  ]]] "+statement);
-		logger.debug("[[[search_info]]] "+search_info.toString());
+		logger.debug("[[[statement    ]]] "+statement);
+		logger.debug("[[[search_info  ]]] "+search_info.toString());
 		
-		List<Map<String, Object>> size = sqlSession.selectList(statement, search_info);
+		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
 				
-		return size;
+		return list;
 	}	
+	
+	// 보낸 쪽지함
+	public List<Map<String, Object>> hi_select_sendlist(Map<String, Object> search_info) {
+				
+		String statement = namespace +".hi_select_SENDlist";
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement    ]]] "+statement);
+		logger.debug("[[[search_info  ]]] "+search_info.toString());
+			
+		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
+		
+		return list;
+	}
 }
 
 

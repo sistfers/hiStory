@@ -53,34 +53,25 @@ function checkAl() {
 
 /* 삭제(체크박스된 것 전부) */
 function deleteAction(){
-  var checkRow = "";
-  $( "input[name='checkRow']:checked" ).each (function (){
-    checkRow = checkRow + $(this).val()+"," ;
-  });
-  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-  alert(checkRow);
-  
-  var frm = document.searchForm;
-  frm.action = 'delete.hi';  
-  
-  if(checkRow == ''){
-    alert("삭제할 대상을 선택하세요.");
-    return false;
-  }
-  console.log("### checkRow => {}"+checkRow);
- 
-  
-  
-  if(confirm("정보를 삭제 하시겠습니까?")){
-      
-      //삭제처리 후 다시 불러올 리스트 url   
-      //location.href='delete.hi?idx='+checkRow;
-      //var idx = checkRow;
-      frm.idx.value= checkRow;
-      frm.method.value="get";
-      frm.submit();
-      //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
-  }
+	var checkRow = "";
+	$( "input[name='checkRow']:checked" ).each (function (){
+	  checkRow = checkRow + $(this).val()+"," ;
+	});
+	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+	alert(checkRow);
+	
+	
+	if(checkRow == ''){
+		alert("삭제할 대상을 선택하세요.");
+		return false;
+	}
+	console.log("### checkRow => {}"+checkRow);
+	
+	if(confirm("정보를 삭제 하시겠습니까?")){
+	    
+		location.href='delete.hi?idx='+checkRow;
+	    //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
+	}
 }
 </script>	
 </head>
@@ -106,7 +97,6 @@ function deleteAction(){
 	</div>
 	<form name="searchForm" action="" method="POST">
 		<input type="hidden" name="PAGE_NUM" value="">
-		<input type="hidden" name="idx" value="">
 	<div class="col-xs-10">
  		<!-- 버튼 -->	
  		<div class="form-group">			

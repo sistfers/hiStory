@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.model.PostDto"%>
 <%@page import="com.hifive.history.util.PagingUtil"%>
@@ -37,6 +39,8 @@
 
 <%
 	UserDto userDto = (UserDto) session.getAttribute("user");
+
+	Date today = new Date();
 
 	String PAGE_NUM 	= "1";	// 선택된 페이지
 	PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
@@ -219,7 +223,7 @@ function go_delete(){
  				<tr id="r1" name="commentParentCode"> 
 					<%if(!commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {%>
 		 				<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td> 
-					  	<td width=10% colspan=2 id="<%=commentdata.get("SEQ")%>">
+					  	<td width=10% id="<%=commentdata.get("SEQ")%>">
 					  	
 			  		<%} else{%>
 			  			<td width=13% colspan=2 id="<%=commentdata.get("SEQ")%>">
@@ -229,7 +233,6 @@ function go_delete(){
 			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
 		
 	 				<%if(commentdata.get("STATE").toString().equals("0") || userDto.getId().equals(commentdata.get("ID")) ) {%>
-	 				<%-- commentdata.get("STATE").toString().equals("0") --%>
 		 				<!-- 작성자/작성일 -->
 				  		<td width="67%" style="text-align: left;">
 						<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
@@ -253,11 +256,11 @@ function go_delete(){
 					  
 				  <%} //for end %>  
 					</table>
-<center>
+<%-- <center> 우선 페이징 없이 20개씩 보여주기 했는데... 댓글 페이징은 천천히 합시다 
 <!-- Paging Area Start -->
 <%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
 <!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-</center>
+</center> --%>
 
 
 			
@@ -345,14 +348,21 @@ $(function(){
             pText.focus();
             return;
         }
-        
+		var d = new Date();
+		var today =    d.getFullYear() + "-" +
+					("00" + (d.getMonth() + 1)).slice(-2) + "-" +
+					("00" + d.getDate()).slice(-2) +
+	 				("00" + d.getHours()).slice(-2) + ":" +
+					("00" + d.getMinutes()).slice(-2) + ":" +
+					("00" + d.getSeconds()).slice(-2)					
+					
         // 댓글로 들어갈 내용
         var commentParentText = '<tr id="r1" name="commentParentCode">'+
                                 '<td colspan=2 width=13% >'+
                                 '<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+
                                 '</td>'+
                                 '<td width="67%" style="text-align: left;">'+
-                                '</span> <a href="#">${sessionScope.user.name}</a> 2017-03-23 23:11:24 <br> '+
+                                '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
                                 pText.val().replace(/\n/g, "<br>")+'</td>'+
                                 '<td width="20%" align="left">'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+
@@ -399,8 +409,6 @@ $(function(){
 //댓글의 댓글을 다는 이벤트 ====================================================================================
     $(document).on("click","#commentChildSubmit", function(){
            
-        var cName = $("#commentChildName");
-        var cPassword = $("#commentChildPassword");
         var cText = $("#commentChildText");
            
         if($.trim(cText.val())==""){
@@ -448,7 +456,8 @@ $(function(){
            
     });
        
-    //답글링크를 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
+       
+    //답글 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
     $(document).on("click","table#commentTable button", function(){//동적으로 버튼이 생긴 경우 처리 방식
            
    	
@@ -492,11 +501,11 @@ $(function(){
                                 '<td style="width:10%">'+
                                 '<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+
                                 '<td width="67%">'+
-                                '<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>'+
+                                '<textarea rows="2" class="form-control" style="resize: none" id="commentChildText"></textarea>'+
                                 '</td>'+
                                 '<td width="20%" align="left">'+
                                 '<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+
-                                '<button type="button" id="commentParentSubmit" name="commentParentSubmit" class="btn btn-warning">답글입력</button>'+
+                                '<button type="button" id="commentChildSubmit" name="commentChildSubmit" class="btn btn-warning">답글입력</button>'+
                                 '</td>'+
                                 '</tr>';
                                    

@@ -83,7 +83,7 @@ FROM
   INNER JOIN USER_H B
   ON A.ID = B.ID
   WHERE POST_SEQ = #{POST_SEQ}                      
-       order by PARENT DESC, SEQ                         
+       order by PARENT, SEQ                         
     )T1 NATURAL JOIN                                   
     (                                                  
       SELECT COUNT(*)                                  
@@ -91,7 +91,7 @@ FROM
       WHERE POST_SEQ = #{POST_SEQ}                           
     )T2                                                
   )TT1                                                 
-WHERE RNUM BETWEEN (5 * (#{PAGE_NUM}-1)+1) AND (( 5 * (#{PAGE_NUM}-1))+5 )
+WHERE RNUM BETWEEN (20 * (#{PAGE_NUM}-1)+1) AND ((20 * (#{PAGE_NUM}-1))+20)
 </select>
 
 

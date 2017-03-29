@@ -10,18 +10,23 @@ d3.svg.BubbleChart.define("central-click", function (options) {
       var fn = original.apply(this, arguments);
       self.event.on("click", function(node) {
         if (node.selectAll("text.central-click")[0].length === 1) {
-        	//alert(node.data()[0].item.text);
+        	alert(node.data()[0].item.text);
         	$.ajax({
 				type : "POST",
-				url : "do_search.hi",
+				url : "/main/do_search.hi",
 				dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
 				data : {
 					"search_word" : node.data()[0].item.text,
 				},
 				success : function(data) {
 					// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-					var searchList = $.parseJSON(searchList);
-					alert("성공  !! TOT_CNT: " +searchList.get(0).get("TOT_CNT"));
+					console.log(data);
+					var searchList = $.parseJSON(data);
+					for (var i = 0; i < searchList.length; i++) {
+					    var counter = searchList[i];
+					    console.log(counter.WDATE);
+					}
+//					alert("성공  !! TOT_CNT: " + aaa);
 
 				},
 				complete : function(data) {

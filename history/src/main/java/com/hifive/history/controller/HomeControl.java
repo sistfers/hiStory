@@ -1,9 +1,13 @@
 package com.hifive.history.controller;
 
 
-import com.google.gson.Gson;
-import com.hifive.history.model.UserDto;
-import com.hifive.history.service.UserService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.hifive.history.service.PostService;
-import com.hifive.history.service.SearchService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.hifive.history.model.UserDto;
+import com.hifive.history.service.PostService;
+import com.hifive.history.service.SearchService;
+import com.hifive.history.service.UserService;
 
 /**
  * Created by Admin on 2017-03-23.
@@ -100,12 +102,19 @@ public class HomeControl {
 	@RequestMapping(value="main/do_search.hi",method=RequestMethod.POST)
 	@ResponseBody
 	public String do_search(HttpServletRequest res)throws Exception{
-		String search_word = res.getParameter("search_word").trim();
+		
+		
+		String search_word = "%"+res.getParameter("search_word").trim()+"%";
+		String PAGE_SIZE 	= "10";	//페이지사이즈
+		String PAGE_NUM		= "1";	//페이지NUM
+		
 		loger.debug("들어왔다!!!!!!! 단어는 ::"+ search_word);
 		Map<String, Object> condition = new HashMap();
+		
+		condition.put("PAGE_SIZE", PAGE_SIZE);
+		condition.put("PAGE_NUM", PAGE_NUM);
 		condition.put("SEARCH_WORD", search_word);
 		List<Map<String, Object>> searchList = postSvc.hi_selectSearchList(condition);
-		
 		Gson gson = new Gson();
 		return gson.toJson(searchList);
 	}

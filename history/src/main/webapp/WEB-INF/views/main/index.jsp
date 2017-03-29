@@ -1,5 +1,10 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	List<Map<String, Object>> searchRank = (List<Map<String, Object>>)request.getAttribute("searchRank");
+%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +15,7 @@
 	
 	<!-- Custom CSS  (이미지 동그란 모양으로 보이기)-->
     <link href="/resources/css/round-about.css" rel="stylesheet">
-    
+ 	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>   	
 	  <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
@@ -19,15 +24,15 @@
 	  <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
-	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
+	  <script src="/resources/js/central-click.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
-
+	
  <!-- 해시태그 스타일 --> 
   <style type="text/css">
     .bubbleChart {
       min-width: 100px;
-      max-width: 700px;
-      height: 700px;
+      max-width: 500px;
+      height: 500px;
       margin: 0 auto;
     }
     .bubbleChart svg{
@@ -171,12 +176,11 @@
 
 
 <!-- 검색하기 -->
-
 <div class="col-xs-2"></div>
 <div class="col-xs-8">
 	<div class="form-group">
 	  <div class="input-group">
-	    <span class="input-group-addon input-lg">$</span>
+	    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
 	     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
 	    <span class="input-group-btn">
 	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:do_search()">
@@ -207,15 +211,13 @@ $(document).ready(function () {
        data: {
          items: [
             //데이터 받아오기
-           {text: "#신촌", count: "236"},
-           {text: "#홍대", count: "382"},
-           {text: "#합정", count: "170"},
-           {text: "#탄핵", count: "123"},
-           {text: "#파워블로거", count: "12"},
-           {text: "#벚꽃", count: "170"},
-           {text: "#쌍용", count: "382"},
-           {text: "#한주", count: "10"},
-           {text: "#윤행", count: "170"},
+        	<%
+          	for(int i=0; i<searchRank.size(); ++i){
+          	%>
+ 		   		{text: '<%=searchRank.get(i).get("SEARCH_WORD") %>', count: '<%=searchRank.get(i).get("CNT") %>'}, 		   		
+ 		   	<%
+          	}
+ 		   	%>
          ],
          eval: function (item) {return item.count;},
          classed: function (item) {return item.text.split(" ").join("");}
@@ -235,7 +237,7 @@ $(document).ready(function () {
              },
              attr: {dy: "65px"},
              centralClick: function() {
-               alert("Here is more details!!");
+               alert("한주뽕뽕");
              }
            }
          },
@@ -293,8 +295,6 @@ $(document).ready(function () {
 <!-- 해시태그 END -->
 
 
-
-
 <br><br><br><br>
 <!-- 테마별보기 START -->
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
@@ -345,6 +345,17 @@ $(document).ready(function () {
 
 
 <!-- 이웃새글 START -->
+<!-- 로그인전 =============================================================================== -->
+<%
+	if (session.getAttribute("user") == null) {
+%>
+<br><br>
+<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
+<div class="col-xs-12">
+<!-- 로그인후 =============================================================================== -->
+<%
+	} else {
+%>
 <br><br>
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
@@ -364,7 +375,9 @@ $(document).ready(function () {
 	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
 
 </table>
-
+<%
+	}
+%> 
 
 
 

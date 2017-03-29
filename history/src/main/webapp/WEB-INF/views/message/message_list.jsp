@@ -43,22 +43,44 @@ function do_search_page(url, page_num)
 }
 
 /* 체크박스 전체선택, 전체해제 */
-function checkAll(){
-	alert("good");
-      /* if( $("#th_checkAll").is(':checked') ){
-        $("input[name=checkRow]").prop("checked", true);
-      }else{
-        $("input[name=checkRow]").prop("checked", false);
-      } */
-}
-
-function hello() { 
+function checkAl() { 
 	if( $("#th_checkAll").is(':checked') ){
         $("input[name=checkRow]").prop("checked", true);
       }else{
         $("input[name=checkRow]").prop("checked", false);
       }
+}
 
+/* 삭제(체크박스된 것 전부) */
+function deleteAction(){
+  var checkRow = "";
+  $( "input[name='checkRow']:checked" ).each (function (){
+    checkRow = checkRow + $(this).val()+"," ;
+  });
+  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+  alert(checkRow);
+  
+  var frm = document.searchForm;
+  frm.action = 'delete.hi';  
+  
+  if(checkRow == ''){
+    alert("삭제할 대상을 선택하세요.");
+    return false;
+  }
+  console.log("### checkRow => {}"+checkRow);
+ 
+  
+  
+  if(confirm("정보를 삭제 하시겠습니까?")){
+      
+      //삭제처리 후 다시 불러올 리스트 url   
+      //location.href='delete.hi?idx='+checkRow;
+      //var idx = checkRow;
+      frm.idx.value= checkRow;
+      frm.method.value="get";
+      frm.submit();
+      //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
+  }
 }
 </script>	
 </head>
@@ -78,20 +100,22 @@ function hello() {
 <!--내용 START -->
 <div class="col-xs-10">
 <center><h2> :: 받은쪽지함 ::</h2></center><br>
-	<div class="col-xs-1"></div>
-	<form name="searchForm" action="do_search.do" method="POST">
+	<div class="col-xs-1">
+	<button class="btn btn-warning" onclick="deleteAction();">삭제</button>
+	    <button class="btn btn-warning">답장</button>    
+	</div>
+	<form name="searchForm" action="" method="POST">
 		<input type="hidden" name="PAGE_NUM" value="">
+		<input type="hidden" name="idx" value="">
 	<div class="col-xs-10">
-		<!-- 버튼 -->	
-		<div class="form-group">			
-		<button class="btn btn-warning">삭제</button>
-	    <button class="btn btn-warning">답장</button>
-    
-    	</div>
+ 		<!-- 버튼 -->	
+ 		<div class="form-group">			
+		
+    	</div>  
 		<table class="table">
 			<tr class="warning" >
 				<th width="10%" style="text-align: center;">
-				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="hello();" /></th>
+				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>
 				<th width="20%" style="text-align: center;">보낸사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
 				<th width="20%" style="text-align: center;">날짜</th>
@@ -159,3 +183,5 @@ function hello() {
 <!--푸터 START -->
 </body>
 </html>
+
+

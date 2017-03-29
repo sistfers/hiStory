@@ -52,17 +52,17 @@ public class MessageService implements iService {
 		
 		return null;
 	}
-
-	// 보낸 쪽지함
-	public List<Map<String, Object>> hi_select_sendlist(String sendId) {
-			
-		return messageDao.hi_select_sendlist(sendId);
-	}
 	
 	// 받은 쪽지함
 	public List<Map<String, Object>> hi_select_getlist(Map<String, Object> search_info) {
 		
 		return messageDao.hi_select_getlist(search_info);
+	}
+
+	// 보낸 쪽지함
+	public List<Map<String, Object>> hi_select_sendlist(Map<String, Object> search_info) {
+			
+		return messageDao.hi_select_sendlist(search_info);
 	}
 }
 

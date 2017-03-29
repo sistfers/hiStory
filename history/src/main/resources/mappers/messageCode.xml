@@ -4,27 +4,28 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.messageCode">
 
-	<!-- DTO 
+	<!--	 MessageDTO 
 		private int seq; 
 		private String send_id; 
 		private String take_id; 
 		private String contents; 
 		private String wdate; 
 		private String rdate; 
-		private String state; -->
+		private String state;
+		private String  nick; -->
 	
 	<resultMap id="GetNotes" type="java.util.HashMap">
 		<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
-		<result javaType="java.lang.Integer" column="IDX" property="IDX" />
-		<result javaType="java.lang.Integer" column="SEQ" property="SEQ" />
-		<result javaType="java.lang.String" column="SEND_ID" property="SEND_ID" />
-		<result javaType="java.lang.String" column="TAKE_ID" property="TAKE_ID" />
-		<result javaType="java.lang.String" column="CONTENTS" property="CONTENTS" />
-		<result javaType="java.lang.String" column="WDATE" property="WDATE" />
-		<result javaType="java.lang.String" column="RDATE" property="RDATE" />
-		<result javaType="java.lang.String" column="STATE" property="STATE" />
-		<result javaType="java.lang.Integer" column="TOTAL" property="TOTAL" />
-		<result javaType="java.lang.String" column="NAME" property="NAME" />
+		<result javaType="java.lang.Integer"  column="IDX" 		property="IDX" />
+		<result javaType="java.lang.Integer"  column="SEQ" 		property="SEQ" />
+		<result javaType="java.lang.String"   column="SEND_ID" 	property="SEND_ID" />
+		<result javaType="java.lang.String"   column="TAKE_ID" 	property="TAKE_ID" />
+		<result javaType="java.lang.String"   column="CONTENTS"	property="CONTENTS" />
+		<result javaType="java.lang.String"   column="WDATE" 	property="WDATE" />
+		<result javaType="java.lang.String"   column="RDATE" 	property="RDATE" />
+		<result javaType="java.lang.String"   column="STATE" 	property="STATE" />		
+		<result javaType="java.lang.String"   column="NAME" 	property="NAME" />
+		<result javaType="java.lang.Integer"  column="TOTAL" 	property="TOTAL" />
 	</resultMap>
 	
 	<!-- SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE(sysdate), RDATE(null), STATE(0) -->	
@@ -47,7 +48,7 @@
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->
-	<select id="hi_select_sendlist" parameterType="hashmap" resultType="com.hifive.history.model.MessageDto">
+	<select id="hi_select_SENDlist" parameterType="String" resultMap="GetNotes">
 		<![CDATA[
 		SELECT T1.*, T2.*
 		FROM(
@@ -57,27 +58,27 @@
 		           T.STATE, T.NAME							
 		    FROM(							
 		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
-		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,							
-		               B.NAME
+		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
+		               B.NAME							
 		     	FROM(							
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
-		        	WHERE SEND_ID=#{sendId}							
+		        	WHERE SEND_ID=#{SENDID}							
 		        ORDER BY WDATE DESC							
-		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)						
-		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )						
+		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
+		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
 			) T1 NATURAL JOIN  
 		    (                                                  
 		      SELECT COUNT(*) TOTAL                                  
 		      FROM MESSAGE_H                        
-		      WHERE SEND_ID=#{sendId} ) T2
-		]]>
+		      WHERE SEND_ID=#{SENDID} ) T2
+		]]>	
 	</select>
 	
 	<!-- 리스트 불러오기(받은 쪽지) -->
-	<select id="hi_select_getlist" parameterType="String" resultMap="GetNotes">
+	<select id="hi_select_GETlist" parameterType="String" resultMap="GetNotes">
 		<![CDATA[
 		SELECT T1.*, T2.*
 		FROM(
@@ -95,8 +96,7 @@
 		        	WHERE TAKE_ID=#{TAKEID}							
 		        ORDER BY WDATE DESC							
 		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
-		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )
-		      							
+		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
 			) T1 NATURAL JOIN  

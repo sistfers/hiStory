@@ -30,38 +30,51 @@ public class MessageControl {
 	private MessageService messageService; 
 	
 	
-	@RequestMapping("message/delete.hi")
-	public ModelAndView do_delete(
-			@RequestParam(value = "idx", required=true) 
-						Map<String, String> paramMap/* HttpServletRequest res*/) {
+	@RequestMapping("message/writeForm.hi")
+	public ModelAndView do_write_ready(HttpServletRequest res) {
 		
 		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/delete.hi");	
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/writeForm.hi");	
 		
-//		String paramMap = res.getParameter("idx");
-		loger.debug("paramMap="+paramMap.toString());
-		String[] arrIdx = paramMap.get("idx").split(",");
-		for (int i = 0; i < arrIdx.length; i++) {
-			System.out.println(Integer.parseInt(arrIdx[i]));
-		}
+		
+		String SENDID ="";
+		String TAKEID ="";
+		String NAME	  ="";
+		
+		SENDID = res.getParameter("SENDID");
+		TAKEID = res.getParameter("TAKEID");	
+		NAME   = res.getParameter("NAME");
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(("get_message_list.hi")));
+		mav.setViewName("/message/writeForm");
+		mav.addObject("SENDID", SENDID);
+		mav.addObject("TAKEID", TAKEID);
+		mav.addObject("NAME", NAME);
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/delete.hi");
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/writeForm.hi");
 		loger.debug("----------------------------------------------------------");
 		
 		return mav;
 	}
 	
-	
-	@RequestMapping("message/read.hi")
-	public ModelAndView do_read(@RequestParam(value = "note", required=false) int seq) {
-//								@RequestParam(value = "nick", required=false) String nick) {
-	
+	@RequestMapping("message/write.hi")
+	public ModelAndView do_write(HttpServletRequest res) {
+		
 		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/write.hi");
+		
+		
+		String SENDID ="";
+		String TAKEID ="";
+		String note ="";
+		
+		SENDID = res.getParameter("SEND_ID");
+		TAKEID	 = res.getParameter("TAKE_ID");		
+		note = res.getParameter("NOTE");
+		loger.debug("SENDID -> " + SENDID);
+		loger.debug("TAKEID -> " + TAKEID);
+		loger.debug("note -> " + note);
 		
 		/*
 		private	int		seq;
@@ -72,6 +85,38 @@ public class MessageControl {
 		private	String	rdate;
 		private	String	state;
 		private String  nick;	*/
+		MessageDto dto = new MessageDto();
+		dto.setSeq(0);
+		dto.setSend_id(SENDID);
+		dto.setTake_id(TAKEID);
+		dto.setContents(note);
+		dto.setWdate("");
+		dto.setRdate("");
+		dto.setState("");
+		dto.setname("");
+		
+		int result = messageService.hi_insert(dto);
+		ModelAndView mav = new ModelAndView();
+		
+		if(result == 1) {
+			mav.setView(new RedirectView(("send_message_list.hi")));
+		}				
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/write.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		
+		return mav;
+	}
+	
+	@RequestMapping("message/read.hi")
+	public ModelAndView do_read(
+			@RequestParam(value = "note", required=true) int seq) {
+	
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
+		
+		
 		MessageDto dto = new MessageDto();
 		dto.setSeq(seq);
 		dto.setSend_id("");
@@ -95,23 +140,28 @@ public class MessageControl {
 		
 		return mav;
 	}
-
-	@RequestMapping("message/write.hi")
-	public ModelAndView messageWrite(HttpServletRequest res) {
+	
+	@RequestMapping("message/delete.hi")
+	public ModelAndView do_delete(
+			@RequestParam(value = "idx", required=true) 
+						String paramMap) {
 		
-		String from ="";
-		String to	="";
-		String contents ="";
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/delete.hi");	
 		
-		from = res.getParameter("fromNote");
-		to	 = res.getParameter("toNote");
-		contents = res.getParameter("toNote");
+		
+		loger.debug("paramMap -> "+paramMap.toString());
+		String[] arrIdx = paramMap.split(",");
+		for (int i = 0; i < arrIdx.length; i++) {
+			int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
+		}
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/message/write");
-		mav.addObject("from", from);
-		mav.addObject("to", to);
-		mav.addObject("contents", contents);
+		mav.setView(new RedirectView(("get_message_list.hi")));
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/delete.hi");
+		loger.debug("----------------------------------------------------------");
 		
 		return mav;
 	}
@@ -150,9 +200,38 @@ public class MessageControl {
 		return mav;		
 	}
 
-	@RequestMapping("message/message_list.hi")
-	public String messageList() {
-		return "/message/message_list";
+	@RequestMapping("message/send_message_list.hi")
+	public ModelAndView messageList(HttpServletRequest res) {
+		
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: send_message_list.hi");		
+		
+		
+		Map<String, Object> search_info = new HashMap<String, Object>();
+		
+		String PAGE_NUM = 
+				(res.getParameter("PAGE_NUM") == null || res.getParameter("PAGE_NUM").equals(""))
+				?"1":res.getParameter("PAGE_NUM");
+		
+		search_info.put("PAGE_NUM", PAGE_NUM);
+		search_info.put("SENDID", "Patricia");
+//		search_info.put("SENDID", "Patri2cia");
+		loger.debug("search_info -> " + search_info.toString());
+		
+		// 리스트 가져오기
+		List<Map<String, Object>> getList = messageService.hi_select_sendlist(search_info);
+		loger.debug("sendlist size -> " + getList.size());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/message/message_list2");
+		mav.addObject("getList", getList);
+		mav.addObject("PAGE_NUM", PAGE_NUM);
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: send_message_list.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		return mav;	
 	}
 
 }

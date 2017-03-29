@@ -20,12 +20,12 @@ INTO COMMENT_H
   VALUES
   (
     SEQ_COMMENT.nextval,
-    #{POST_SEQ},
-    #{ID},
-    #{NAME},
-    #{CONTENT},
+    #{post_seq},
+    #{id},
+    #{name},
+    #{content},
     SEQ_COMMENT.currval,
-    #{STATE}
+    #{state}
   ) 
 </insert>
 

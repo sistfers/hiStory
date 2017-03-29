@@ -18,7 +18,7 @@ import com.hifive.history.model.iDto;
 public class CommentDao implements iDao {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.CommentCode";
+	private final String namespace="com.hifive.history.repository.mappers.commentCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 

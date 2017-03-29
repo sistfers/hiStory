@@ -1,5 +1,8 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,46 +14,92 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
+		var idCheck = false;
+		var emailCheck = true;
 
 		$(document).ready(function () {
 
             $("#id").on({
 				focus: function () {
+				    idCheck = false;
                     $("#idCheckSuccess").hide();
                     $("#idCheckFail").hide();
                 },
 
 	            blur: function () {
                     var id = $("#id").val();
-                    $.ajax({
-                        type:"POST",
-                        url:"/user/idCheck.hi",
-                        dataType:"html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-                        data:{
-                            "id": id
-                        },
-                        success : function(data) {
-                            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-                            var flag = $.parseJSON(data);
-                            if(flag.msg=="true"){$("#idCheckSuccess").show();}
-                            else {$("#idCheckFail").show();}
+                    if (id != "") {
+                        $.ajax({
+                            type: "POST",
+                            url: "/user/idCheck.hi",
+                            dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+                            data: {
+                                "id": id
+                            },
+                            success: function (data) {
+                                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                                var flag = $.parseJSON(data);
+                                if (flag.msg == "true") {
+                                    $("#idCheckSuccess").show();
+                                    idCheck = true;
+                                }
+                                else {
+                                    $("#idCheckFail").show();
+                                    idCheck = false;
+                                }
 
-                        },
-                        complete : function(data) {
-                            // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-                            // TODO
-                        },
-                        error : function(xhr, status, error) {
-                            alert("에러발생");
-                        }
-                    });
+                            },
+                            complete: function (data) {
+                                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                            },
+                            error: function (xhr, status, error) {
+                                alert("에러발생");
+                            }
+                        });
+                    }
                 }
             });
+
+			$("#emailCkaf").on("click", function () {
+				alert("aaa");
+            });
+
+            $("#join").on("click", function () {
+                if (joinCheck()) {
+                    $("#joinForm").submit();
+                }
+            });
+
         });
+
+		function joinCheck() {
+		    if ($("#id").val()=="" || $("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
+			    || $("#name").val()=="" || $("#birthday").val()=="") {
+		        alert("필수 입력 사항을 모두 입력해 주세요.");
+		        return false;
+		    }
+		    if ($("#password").val() != $("#passwordCheck").val()) {
+                alert("패스워드가 일치하지 않습니다.");
+                return false;
+		    }
+		    if (idCheck == false) {
+		        alert("사용할 수 없는 ID입니다.");
+			    return false;
+		    }
+		    if (emailCheck == false) {
+		        alert("이메일이 인증되지 않았습니다.");
+			    return false;
+		    }
+			return true;
+        }
 	</script>
 
 </head>
 <body>
+
+<%
+	List<String> areaList = (ArrayList<String>)request.getAttribute("areaList");
+%>
 
 <!--헤더 START-->
 <jsp:include page="/header.hi"/>
@@ -65,7 +114,7 @@
 	<div class="col-xs-8" >
 	
 		<!-- form명 바꾸면 안되요 : id, name꼭 다시 확인하세요.. 중복된 이름이 있을수도 있음  -->
-			<form class="form-horizontal" action="/user/join.hi" method="post">
+			<form class="form-horizontal" action="/user/join.hi" method="post" id="joinForm">
 				<input type="hidden" name="do_join" value="do_join">
 				<div class="form-group" >
 					<span class="label label-danger">필수입력사항</span>
@@ -89,8 +138,8 @@
 							placeholder="이메일" maxlength="30">
 					</div>
 					<div class="col-lg-2">
-						<button class="btn btn-success btn-block" id="emailCk"
-							name="emailCk">인증</button>
+						<button type="button" class="btn btn-success btn-block" id="emailCk"
+						        name="emailCk">인증</button>
 					</div>
 				</div>
 
@@ -99,11 +148,12 @@
 					<div class="col-lg-8">
 						<input type="text" class="form-control" id="cknum" name="cknum"
 							placeholder="메일확인후 인증번호를 입력하세요" maxlength="30">
-					<p style="color: green" hidden="hidden" id="emailCheck"> 인증완료 되었습니다 </p>
+						<p style="color: green" hidden="hidden" id="emailCheckSuccess"> 인증이 완료되었습니다. </p>
+						<p style="color: red" hidden="hidden" id="emailCheckFail"> 인증번호가 틀렸습니다. </p>
 					</div>
 					<div class="col-lg-2">
-						<button class="btn btn-success btn-block" id="emailCkaf"
-							name="emailCkaf">확인</button>
+						<button type="button" class="btn btn-success btn-block" id="emailCkaf"
+						        name="emailCkaf">확인</button>
 					</div>
 				</div>
 
@@ -129,7 +179,7 @@
 					<label for="divName" class="col-lg-2 control-label">닉네임</label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control onlyHangul" id="name"
-							name="name" data-rule-required="true"
+							name="name" data-rule-required="true" placeholder="사용할 닉네임을 입력하세요"
 							maxlength="20">
 					</div>
 				</div>
@@ -148,9 +198,13 @@
 					<label class="col-lg-2 control-label" for="select">지역</label>
 					<div class="col-lg-10">
 						<select class="form-control" id="select" name="area">
-							<option>서울</option>
-							<option>서울</option>
-							<option>서울</option>
+							<%
+								for (String area : areaList) {
+							%>
+									<option><%=area%></option>
+							<%
+								}
+							%>
 						</select>
 					</div>
 				</div>
@@ -158,9 +212,15 @@
 				<div class="form-group">
 					<label class="col-lg-2 control-label" for="select">성별</label>
 					<div class="col-lg-10">
-						<div class="btn-group btn-group-justified">
-							<button class="btn btn-default">남</button> 
-							<button class="btn btn-default">여</button>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default active">
+								<input type="radio" name="sex" id="male" autocomplete="off" value="0" checked>
+								남
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="sex" id="femail" autocomplete="off" value="1">
+								여
+							</label>
 						</div>
 					</div>
 				</div>
@@ -210,7 +270,7 @@
 
 				<!-- 회원가입/취소 버튼 -->
 				<div class="form-group" align="center">
-						<button type="submit" class="btn btn-info">회원가입</button>
+						<button type="button" class="btn btn-info" id="join">회원가입</button>
 						<button type="reset" class="btn btn-default">취소</button>
 				</div>
 			</form>

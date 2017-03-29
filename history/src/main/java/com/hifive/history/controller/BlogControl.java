@@ -45,19 +45,6 @@ public class BlogControl {
 	@Autowired
 	private CommentService commentSve;
 	
-	private PostDto postDto;
-	
-	private	int		CT_SEQ;
-	private	String	ID;
-	private	String	FIELD;
-	private	String	TITLE;
-	private	String	CONTENT;
-	private	String	WDATE;
-	private	String	HASHTAG;
-	private	String	STATE;
-	private String	CO_STATE;	
-	
-	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
 			
@@ -88,7 +75,7 @@ public class BlogControl {
 		Integer ct_seq;
 		
 		// 최신 글 내용 보여주기
-		postDto = new PostDto();
+		PostDto postDto = new PostDto();
 		postDto.setId(ID);
 		if (ct_seqString == null)
 			ct_seq = 0;
@@ -96,6 +83,7 @@ public class BlogControl {
 			ct_seq = Integer.parseInt(ct_seqString);
 		postDto.setCt_seq(ct_seq);
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
+
 		mav.addObject("DTO"   ,DTO);		
 		
 		// 해당글의 댓글 보여주기

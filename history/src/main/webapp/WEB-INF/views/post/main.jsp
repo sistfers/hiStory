@@ -36,7 +36,7 @@
 %>
 
 <%
-	UserDto userDto = (UserDto) session.getAttribute("user");
+	//UserDto userDto = (UserDto) session.getAttribute("user");
 
 	String PAGE_NUM 	= "1";	// 선택된 페이지
 	PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
@@ -145,6 +145,7 @@ function go_delete(){
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px">
 	        
+	        
 <!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	         
 <form name="postupdateForm" action="update.hi" method="get">		
 <input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
@@ -158,8 +159,7 @@ function go_delete(){
 		        <table width="100%" >
 		        <tr>
 		        <!-- 포스트 제목 -->
-		        <td width="80%" align="left" ><h2><%=DTO.getTitle() %></h2> 
-		        
+		        <td width="80%" align="left" ><h2>${DTO.title}</h2> 
 		        </td>
 		        <td width="20%" rowspan="2" >
 		        
@@ -240,7 +240,7 @@ function go_delete(){
 		  		  		<c:set var='login' value="${sessionScope.user}"/>
 		  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
 			  				<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-			  				<%if (userDto.getId().equals(commentdata.get("ID"))) {%>
+			  				<%if (commentdata.get("ID").equals("${sessionScope.user.id}")) {%>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 			  				<%} %>
@@ -262,7 +262,8 @@ function go_delete(){
 
 			
 					<!-- 로그인 정보 없으면 댓글창 안보여줌 -->
-	  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		
+					<c:set var='login' value="${sessionScope.user}"/>
+	  		  		<c:if test="${!empty login}"> 		
 					<table class="table table-condensed">
 					<!-- 기본 댓글 입력창(맨아래) -->
 					<tr>
@@ -320,6 +321,8 @@ function go_delete(){
 	  		</div>
 	  		<div class="col-xs-1"></div>
   		</div>
+
+
 </div>
 
 

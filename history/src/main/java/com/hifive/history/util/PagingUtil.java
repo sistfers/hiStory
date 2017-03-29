@@ -31,7 +31,7 @@ public class PagingUtil {
 		html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">   \n");
 		html.append("<tr> 																						\n");
 		html.append("<td class=\"list_num\">                                                                    \n");
-		html.append("<ul class=\"pagination\">	\n");
+		html.append("<ul class=\"pagination pagination-sm\"> 	\n");
 		// <<
 		if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
 			html.append("<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  \n");

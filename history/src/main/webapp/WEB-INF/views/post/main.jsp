@@ -229,7 +229,7 @@ function go_delete(){
 			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
 		
 	 				<%if(commentdata.get("STATE").toString().equals("0") || userDto.getId().equals(commentdata.get("ID")) ) {%>
-	 				<%-- <%if(commentdata.get("STATE").toString().equals("0") || userDto.getName().equals(commentdata.get("ID"))) {%> --%>
+	 				<%-- commentdata.get("STATE").toString().equals("0") --%>
 		 				<!-- 작성자/작성일 -->
 				  		<td width="67%" style="text-align: left;">
 						<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
@@ -348,16 +348,16 @@ $(function(){
         
         // 댓글로 들어갈 내용
         var commentParentText = '<tr id="r1" name="commentParentCode">'+
-                                '<td colspan=2>'+
+                                '<td colspan=2 width=13% >'+
                                 '<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+
                                 '</td>'+
                                 '<td width="67%" style="text-align: left;">'+
                                 '</span> <a href="#">${sessionScope.user.name}</a> 2017-03-23 23:11:24 <br> '+
                                 pText.val().replace(/\n/g, "<br>")+'</td>'+
                                 '<td width="20%" align="left">'+
-                                '<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>'+
-                                '<button class="btn btn-default btn-xs" style="font-size: 12px">수정</button>'+
-                                '<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;">수정</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+
                                 '</td>'+
                                 '</tr>';
            

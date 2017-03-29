@@ -35,8 +35,9 @@ public class GraphControl {
 	PostService postService;
 	
 	@RequestMapping("chart/visit.hi")
-	public String visit() {
-		return "/chart/visit";
+	public ModelAndView visit(HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView("chart/visit");
+		return mav;
 	}
 	@RequestMapping("chart/age.hi")
 	public String age() {

@@ -1,5 +1,6 @@
 package com.hifive.history.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,5 +75,12 @@ public class VisitDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("id = " + id);
 		return sqlSession.selectOne(statement,id);
+	}
+	
+	public List<Map<String,Object>> hi_getTodayVisit(HashMap<String, String> dto) throws Exception {
+		String statement = namespace +".hi_getTodayVisit";
+		logger.debug("statement"+statement);
+		logger.debug("dto = " + dto);
+		return sqlSession.selectList(statement,dto);
 	}
 }

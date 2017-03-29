@@ -70,9 +70,32 @@ border-radius: 15px;
       </div>
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
-	        <div class="col-xs-1"></div>
+        	<div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
 		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p>
+		       	<form class="form-horizontal" method="post" action="visit.hi">
+		       	
+		       	<div class="form-group" id="startdate">
+					<div class="col-lg-4">
+						<%--<input type="text" class="form-control" id="birthday"--%>
+							<%--name="birthday" data-rule-required="true"--%>
+							
+						<input type="date" class="form-control" id="startdate" name="startdate">
+					</div>
+					<div class="col-lg-1">
+						<h4>~</h4>
+					</div>
+					<div class="col-lg-4">
+						<%--<input type="text" class="form-control" id="birthday"--%>
+							<%--name="birthday" data-rule-required="true"--%>
+							
+						<input type="date" class="form-control" id="enddate" name="enddate">
+					</div>
+					<div class="col-lg-3">
+						<button type="submit" class="btn btn-primary"> 조회 </button>
+					</div>
+				</div>
+			</form>
 		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
 			<div class="col-xs-1"></div>
   		</div>

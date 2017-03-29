@@ -52,4 +52,7 @@ public class VisitService implements iService {
 	public int hi_getTotal(String id){
 		return visitDao.hi_getTotal(id);
 	}
+	public List<Map<String,Object>> hi_getTodayVisit(Map<String, String> map){
+		return visitDao.hi_getTodayVisit(map);
+	}
 }

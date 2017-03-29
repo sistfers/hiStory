@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="com.hifive.history.model.PostDto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
@@ -8,9 +9,11 @@
 <html>
 <head>
 <%
-	List<PostDto> postList = new ArrayList<PostDto>();
-	postList = (List<PostDto>)request.getAttribute("postList");
+	List<HashMap<String, Object>> postList = new ArrayList<HashMap<String, Object>>();
+	postList = (List<HashMap<String, Object>>)request.getAttribute("postList");
 	
+	List<HashMap<String, Object>> postListToday = new ArrayList<HashMap<String, Object>>();
+	postListToday = (List<HashMap<String, Object>>)request.getAttribute("postListToday");
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
@@ -51,12 +54,14 @@ border-radius: 15px;
         <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
-		       	<p style="font-size: 25px; margin-top: 20px">등록된 카테고리</p>
+		       	
+		       	<p style="font-size: 25px; margin-top: 20px">전체</p>
 		        <table class="table" style="margin-top: 10px">
 		        	<tr class="info">
 						<th>순위</th>
-						<th>글제목</th>
 						<th>분야</th>
+						<th>글제목</th>
+						<th>댓글수</th>
 						<th>작성일</th>
 		        	</tr>
 		        	<%
@@ -71,11 +76,47 @@ border-radius: 15px;
 		        	%>	
 		        		<tr class="active">
 		        		<td><%=i+1 %>위</td>
-		        		<td><%=postList.get(i).getTitle()%></td>
-		        		<td><%=postList.get(i).getField()%></td>
-		        		<td><%=postList.get(i).getWdate()%></td>
+		        		<td><%=postList.get(i).get("FIELD")%></td>
+		        		<td><%=postList.get(i).get("TITLE")%></td>
+		        		<td><%=postList.get(i).get("TOTAL_CNT")%></td>
+		        		<td><%=postList.get(i).get("WDATE")%></td>
 		        		</tr>
 		        	<%
+		        			if(i==4)break;
+		        			}
+		        		}
+		        	%>
+		        	
+		        	
+		        </table>
+		        <p style="font-size: 25px; margin-top: 20px">이번주</p>
+		        <table class="table" style="margin-top: 10px">
+		        	<tr class="info">
+						<th>순위</th>
+						<th>글제목</th>
+						<th>분야</th>
+						<th>댓글수</th>
+						<th>작성일</th>
+		        	</tr>
+		        	<%
+		        		if(postListToday.size()==0){
+		        	%>
+		        		<tr class="active">
+		        		<td colspan="4">댓글이 달린 글이 없습니다.</td>
+		        		</tr>
+		        	<%
+		        		}else{
+		        			for(int i = 0; i < postListToday.size(); ++i){	
+		        	%>	
+		        		<tr class="active">
+		        		<td><%=i+1 %>위</td>
+		        		<td><%=postListToday.get(i).get("TITLE") %></td>
+		        		<td><%=postListToday.get(i).get("FIELD") %></td>
+		        		<td><%=postListToday.get(i).get("TOTAL_CNT") %></td>
+		        		<td><%=postListToday.get(i).get("WDATE") %></td>
+		        		</tr>
+		        	<%
+		        			if(i==4)break;
 		        			}
 		        		}
 		        	%>

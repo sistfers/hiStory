@@ -17,7 +17,7 @@
 <style type="text/css">
 .mydiv{
 width:20%;
-margin-right:0.5%;
+margin-right:0.5%;http://localhost:8190/chart/comment.hi
 border-radius: 15px;
 }
 .mydiv2{

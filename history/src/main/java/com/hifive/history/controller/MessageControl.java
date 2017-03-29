@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.jasper.tagplugins.jstl.core.Redirect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.hifive.history.model.MessageDto;
 import com.hifive.history.service.MessageService;
@@ -29,9 +31,35 @@ public class MessageControl {
 	private MessageService messageService; 
 	
 	
+	@RequestMapping("message/delete.hi")
+	public ModelAndView do_delete(
+			@RequestParam(value = "idx", required=true) 
+						Map<String, String> paramMap/* HttpServletRequest res*/) {
+		
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/delete.hi");	
+		
+//		String paramMap = res.getParameter("idx");
+		loger.debug("paramMap="+paramMap.toString());
+		String[] arrIdx = paramMap.get("idx").split(",");
+		for (int i = 0; i < arrIdx.length; i++) {
+			System.out.println(Integer.parseInt(arrIdx[i]));
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(("get_message_list.hi")));
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/delete.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		return mav;
+	}
+	
+	
 	@RequestMapping("message/read.hi")
-	public ModelAndView do_read(@RequestParam(value = "note", required=false) int seq,
-								@RequestParam(value = "nick", required=false) String nick) {
+	public ModelAndView do_read(@RequestParam(value = "note", required=false) int seq) {
+//								@RequestParam(value = "nick", required=false) String nick) {
 	
 		loger.debug("----------------------------------------------------------");
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
@@ -53,6 +81,7 @@ public class MessageControl {
 		dto.setWdate("");
 		dto.setRdate("");
 		dto.setState("");
+		dto.setname("");
 		
 		MessageDto note = new MessageDto();
 		note = (MessageDto) messageService.hi_detail(dto);

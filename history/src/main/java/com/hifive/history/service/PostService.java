@@ -102,10 +102,13 @@ public class PostService implements iService {
 	public List<Map<String, Object>> hi_bloggerRankList() {
 		return postDao.hi_bloggerRankList();
 	}
-	public List<PostDto> hi_selectCommentRank(String id){
+	public List<HashMap<String, Object>> hi_selectCommentRank(String id){
 		return postDao.hi_selectCommentRank(id);
 	}
-	public List<HashMap<String, String>> hi_selectLoveRank(HashMap<String, String> map){
+	public List<HashMap<String, Object>> hi_selectTodayCommentRank(HashMap<String, String> map){
+		return postDao.hi_selectTodayCommentRank(map);
+	}
+	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map){
 		return postDao.hi_selectLoveRank(map);
 	}
 	

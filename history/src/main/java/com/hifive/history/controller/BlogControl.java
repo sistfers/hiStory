@@ -17,15 +17,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hifive.history.model.CategoryDto;
-import com.hifive.history.model.CodeDDto;
+import com.hifive.history.model.CommentDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.CodeDService;
+import com.hifive.history.service.CommentService;
 import com.hifive.history.service.PostService;
 
 @Controller
@@ -37,6 +42,8 @@ public class BlogControl {
 	private PostService postSvc;
 	@Autowired
 	private CodeDService codeDSvc;
+	@Autowired
+	private CommentService commentSve;
 	
 	private PostDto postDto;
 	
@@ -181,6 +188,35 @@ public class BlogControl {
 	      return mav;
 	}
 		
+	
+	
+	@RequestMapping(value="post/replyInsert.hi",method=RequestMethod.POST)
+	@ResponseBody
+	public String replyInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+		
+		int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID  		= userDto.getId();
+		String NAME  	= userDto.getName();
+		String CONTENT 	= res.getParameter("CONTENT");
+		String STATE 	= res.getParameter("STATE").equals("false") ? "0" : "1";
+		
+		/*int seq, int post_seq, String id, String name, String content, int parent, String state*/
+		CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
+		int flag = commentSve.hi_insert(commentDto);
+		
+		JsonObject jsonObject = new JsonObject();
+	      if(flag > 0){
+	    	  jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+	       }else{
+	    	   jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+	       }
+		Gson gson = new Gson();
+		
+		return gson.toJson(jsonObject);
+	}
+	
+	
 	
 }
 

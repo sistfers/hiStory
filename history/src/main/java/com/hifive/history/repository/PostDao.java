@@ -70,13 +70,19 @@ public class PostDao implements iDao {
 		
 		return sqlSession.selectList(statement);
 	}
-	public List<PostDto> hi_selectCommentRank(String id){
+	public List<HashMap<String, Object>> hi_selectCommentRank(String id){
 		String statement = namespace +".hi_selectCommentRank";
 		logger.debug("statement"+statement);
 		logger.debug("id"+id);
 		return sqlSession.selectList(statement,id);
 	}
-	public List<HashMap<String, String>> hi_selectLoveRank(HashMap<String, String> map){
+	public List<HashMap<String, Object>> hi_selectTodayCommentRank(HashMap<String, String> map){
+		String statement = namespace +".hi_selectTodayCommentRank";
+		logger.debug("statement"+statement);
+		logger.debug("map : "+map);
+		return sqlSession.selectList(statement,map);
+	}
+	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map){
 		String statement = namespace +".hi_selectLoveRank";		
 		logger.debug("statement"+statement);
 		logger.debug("map : " + map);

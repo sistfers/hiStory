@@ -1,5 +1,6 @@
 package com.hifive.history.service;
 
+import com.hifive.history.model.CommentDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.CommentDao;
 

@@ -240,7 +240,7 @@ function go_delete(){
 		  		  		<c:set var='login' value="${sessionScope.user}"/>
 		  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
 			  				<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-			  				<%if (userDto.getId().equals(commentdata.get("NAME"))) {%>
+			  				<%if (userDto.getId().equals(commentdata.get("ID"))) {%>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 			  				<%} %>

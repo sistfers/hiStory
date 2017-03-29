@@ -228,7 +228,7 @@ function go_delete(){
 			  		<!-- <img src="http://localhost:8190/resources/image/aa.jpg" width="50px" height="50px"></td> -->
 			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
 		
-	 				<%if(commentdata.get("STATE").toString().equals("0")) {%>
+	 				<%if(commentdata.get("STATE").toString().equals("0") || userDto.getId().equals(commentdata.get("ID")) ) {%>
 	 				<%-- <%if(commentdata.get("STATE").toString().equals("0") || userDto.getName().equals(commentdata.get("ID"))) {%> --%>
 		 				<!-- 작성자/작성일 -->
 				  		<td width="67%" style="text-align: left;">

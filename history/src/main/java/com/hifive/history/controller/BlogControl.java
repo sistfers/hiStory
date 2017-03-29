@@ -102,6 +102,7 @@ public class BlogControl {
 	//블로그 글 쓰기
 	@RequestMapping("post/write.hi")
 	public ModelAndView postWrite(HttpSession session) throws Exception{
+		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); //Page코드 : 100 글 주제
 		List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 130 댓글허용 여부
 		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 140 글 공개 여부
 		
@@ -112,6 +113,7 @@ public class BlogControl {
 
 		Map<String, Object> codeMap = new HashMap<String, Object>();
 		List<String> codeList = new ArrayList<String>();
+		codeList.add("100");
 		codeList.add("130");
 		codeList.add("140");
 		codeMap.put("code_list", codeList);
@@ -124,12 +126,14 @@ public class BlogControl {
 			
 			if((Integer)(codeData.get("CD_ID")) == 130) reviewCode.add(codeData);
 			else if((Integer)(codeData.get("CD_ID")) == 140) postViewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
 		}
 		
 		mav.setViewName("post/write");
 		mav.addObject("categoryList", categoryList);
 		mav.addObject("reviewCode", reviewCode);
 		mav.addObject("postViewCode", postViewCode);
+		mav.addObject("themeCode", themeCode);
 		
 		return mav;
 		// view에서 넘어온값 받기

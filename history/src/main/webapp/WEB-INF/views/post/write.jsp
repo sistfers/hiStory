@@ -7,8 +7,13 @@
 
 <%
 	List<CategoryDto> categoryList = ((List<CategoryDto>)request.getAttribute("categoryList"));
+	List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); //Page코드 : 100
 	List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 130
 	List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 140
+	
+	themeCode = (List<Map<String, Object>>)request.getAttribute("themeCode");
+	reviewCode = (List<Map<String, Object>>)request.getAttribute("reviewCode");
+	postViewCode = (List<Map<String, Object>>)request.getAttribute("postViewCode");
 
 
 %>
@@ -68,6 +73,18 @@
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="FIELD" name="FIELD">
+			       <%if(themeCode.size() != 0){
+			       		for(int i=0; i<themeCode.size(); ++i){%>
+			       <option><%=themeCode.get(i).get("CD_D_NM") %></option>
+			       <%	}
+			       	 } else{ %>
+			       <option>오류:::</option>
+			       <%} %>
+		    </select>
+	    </div>
+	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
+	    	<label for="field"> 댓글허용</label>
+			<select class="form-control" id="CO_STATE" name="CO_STATE">
 			       <%if(reviewCode.size() != 0){
 			       		for(int i=0; i<reviewCode.size(); ++i){%>
 			       <option><%=reviewCode.get(i).get("CD_D_NM") %></option>
@@ -78,18 +95,15 @@
 		    </select>
 	    </div>
 	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
-	    	<label for="field"> 댓글허용</label>
-			<select class="form-control" id="CO_STATE" name="CO_STATE">
-			       <option>허용</option>
-			       <option>비허용</option>
-		    </select>
-	    </div>
-	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 공개범위</label>
 			<select class="form-control" id="STATE" name="STATE">
-			       <option>전체공개</option>
-			       <option>비공개</option>
-			       <option>이웃공개</option>
+			       <%if(postViewCode.size() != 0){
+			       		for(int i=0; i<postViewCode.size(); ++i){%>
+			       <option><%=postViewCode.get(i).get("CD_D_NM") %></option>
+			       <%	}
+			       	 } else{ %>
+			       <option>오류:::</option>
+			       <%} %>
 		    </select>
 	    </div>
 	

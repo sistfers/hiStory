@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.model.PostDto"%>
 <%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.ArrayList"%>
@@ -35,6 +36,8 @@
 %>
 
 <%
+	UserDto userDto = (UserDto) session.getAttribute("user");
+
 	String PAGE_NUM 	= "1";	// 선택된 페이지
 	PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
 	out.print("PAGE_NUM="+PAGE_NUM);
@@ -55,8 +58,9 @@
 	// 포스트 내용 1건 보여주기
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
 	
-	
-	
+	// 해당글의 댓글 보여주기
+	ArrayList commentList = (ArrayList)request.getAttribute("commentList");
+	System.out.println("commentList"+commentList.toString());
 	
 	
 	
@@ -91,7 +95,7 @@
 	table,th{		/* 테이블 내 가운데 정렬 */
 		text-align: center;
 	}
-	.tbList{		/* 글 목록의 글자크기 */
+	.tbList,#commentTable{		/* 글 목록의 글자크기 */
 		font-size: 13px;
 	}
 </style>
@@ -183,18 +187,19 @@ function go_delete(){
 				<%=DTO.getContent() %>
 				</div>
 				
+				
 				<!-- 태그 부분 -->
-				<div class="col-xs-12" >
+				<div class="col-xs-12" style="margin-bottom: 10px" >
 				<hr>
 				<button type="button" class="btn btn-default btn-sm disabled">
 				 <span class="glyphicon glyphicon-tags"></span> 태그
-        		</button>&nbsp&nbsp&nbsp&nbsp
+        		</button>&nbsp;&nbsp;&nbsp;&nbsp;
         		
         		<%
         			String str[] = split(DTO.getHashtag());
         			for(int i = 0; i < str.length; ++i){
         		%>
-        		<a href=""><%="#" + str[i] %></a>
+        		<a href="#"><%="#" + str[i] %></a>
         		<%
         			}
         		%>
@@ -205,31 +210,64 @@ function go_delete(){
 				<h5>댓글</h5>
 				
 				<!-- 댓글이 나올 테이블 -->
-				<table class="table table-condensed" id="commentTable"></table>
-					
-					<!-- <tr id="r1" name="commentParentCode"> -->
-					<!-- <td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td> -->
-					
-					
-<!-- 					<tr> -->
-<!-- 						<td><img src="/resources/image/1.png" width="50px" height="50px"></td> -->
-<!-- 						<td style="text-align: left;"> -->
-<!-- 							<a href="">우정관</a> 2017-03-23 23:11:24<br> -->
-<!-- 							요리하기 넘나 어려워요,,,,ㅎㅎ도와줘요 한조! -->
-<!-- 						</td> -->
-<!-- 						<td align="left"> -->
-<!-- 						<button class="btn btn-default btn-xs" style="font-size: 12px">답글</button> -->
-<!-- 						<button class="btn btn-default btn-xs" style="font-size: 12px">수정</button> -->
-<!-- 						<button class="btn btn-default btn-xs" style="font-size: 12px">삭제</button> -->
-<!-- 						</td> -->
-<!-- 					</tr> -->
+				<table class="table table-condensed" id="commentTable">
+				<%for(int i = 0; i < commentList.size(); i++){ 
+  	  				HashMap<String, Object> commentdata = (HashMap<String, Object>)(commentList.get(i)); 
+  				%>
+ 				<tr id="r1" name="commentParentCode"> 
+					<%if(!commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {%>
+		 				<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td> 
+					  	<td width=10% colspan=2 id="<%=commentdata.get("SEQ")%>">
+					  	
+			  		<%} else{%>
+			  			<td width=13% colspan=2 id="<%=commentdata.get("SEQ")%>">
+			  		<%} %>
+			  		<!-- 사진  -->
+			  		<!-- <img src="http://localhost:8190/resources/image/aa.jpg" width="50px" height="50px"></td> -->
+			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
+		
+	 				<%if(commentdata.get("STATE").toString().equals("0")) {%>
+	 				<%-- <%if(commentdata.get("STATE").toString().equals("0") || userDto.getName().equals(commentdata.get("ID"))) {%> --%>
+		 				<!-- 작성자/작성일 -->
+				  		<td width="67%" style="text-align: left;">
+						<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
+						<!-- 댓글내용 -->
+		  				<%=commentdata.get("CONTENT") %>
+		  				</td>
+		  		  		<td width="20%" align="left">
+		  		  		<c:set var='login' value="${sessionScope.user}"/>
+		  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+			  				<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
+			  				<%if (userDto.getId().equals(commentdata.get("ID"))) {%>
+			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+			  				<%} %>
+		  				</c:if>
+		  				</td>
+					 <%}else{ %>
+					   <td colspan="2" align="left"><span class="glyphicon glyphicon-lock"></span> 비밀글입니다</td>
+					  <%} //if end %>
+					  </tr>
+					  
+				  <%} //for end %>  
+					</table>
+<center>
+<!-- Paging Area Start -->
+<%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
+<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+</center>
 
- 
+
+			
+					<!-- 로그인 정보 없으면 댓글창 안보여줌 -->
+	  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		
 					<table class="table table-condensed">
 					<!-- 기본 댓글 입력창(맨아래) -->
 					<tr>
-						<td width="10%"><img src="/resources/image/1.png" width="50px" height="50px"></td>
-						<td width="70%">
+						<td width="13%"> 
+						<img src="${sessionScope.user.pf_image}" width="40px" height="40px">
+						</td>
+						<td width="67%">
 							<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>
 						</td>
 						<td width="20%" align="left">
@@ -238,7 +276,9 @@ function go_delete(){
 						</td>
 					</tr>			
 				</table>
+				</c:if>
 				</div>
+				
 				
 				
 <!--글 목록 보여주기 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
@@ -303,9 +343,11 @@ $(function(){
         
         // 댓글로 들어갈 내용
         var commentParentText = '<tr id="r1" name="commentParentCode">'+
-                                '<td width="10%"><img src="/resources/image/1.png" width="50px" height="50px"></td>'+
-                                '<td width="70%" style="text-align: left;">'+
-                                '<span class="glyphicon glyphicon-lock"></span> <a href="#">댓글작성자</a> 작성일 2017-03-23 23:11:24 <br> '+
+                                '<td colspan=2>'+
+                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+
+                                '</td>'+
+                                '<td width="67%" style="text-align: left;">'+
+                                '</span> <a href="#">${sessionScope.user.name}</a> 2017-03-23 23:11:24 <br> '+
                                 pText.val().replace(/\n/g, "<br>")+'</td>'+
                                 '<td width="20%" align="left">'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>'+
@@ -356,15 +398,7 @@ $(function(){
         var cPassword = $("#commentChildPassword");
         var cText = $("#commentChildText");
            
-        if($.trim(cName.val())==""){
-            alert("이름을 입력하세요.");
-            cName.focus();
-            return;
-        }else if($.trim(cPassword.val())==""){
-            alert("패스워드를 입력하세요.");
-            cPassword.focus();
-            return;
-        }else if($.trim(cText.val())==""){
+        if($.trim(cText.val())==""){
             alert("내용을 입력하세요.");
             cText.focus();
             return;
@@ -410,8 +444,9 @@ $(function(){
     });
        
     //답글링크를 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
-    $(document).on("click","table#commentTable a", function(){//동적으로 버튼이 생긴 경우 처리 방식
+    $(document).on("click","table#commentTable button", function(){//동적으로 버튼이 생긴 경우 처리 방식
            
+   	
         if($(this).attr("name")=="pDel"){
             if (confirm("정말 삭제하시겠습니까?") == true){    //확인
                    
@@ -448,22 +483,15 @@ $(function(){
             	
             //부모의 하단에 댓글달기 창을 삽입
             var commentEditor = '<tr id="commentEditor">'+
-                                '<td style="width:1%"> </td>'+
-                                '<td>'+
-                                '<span class="form-inline" role="form">'+
-                                '<p>'+
-                                '<div class="form-group">'+
-                                '<input type="text" id="commentChildName" name="commentChildName" class="form-control col-lg-2" data-rule-required="true" placeholder="이름" maxlength="10">'+
-                                '</div>'+
-                                '<div class="form-group">'+
-                                ' <input type="password" id="commentChildPassword" name="commentChildPassword" class="form-control col-lg-2" data-rule-required="true" placeholder="패스워드" maxlength="10">'+
-                                '</div>'+
-                                '<div class="form-group">'+
-                                '<button type="button" id="commentChildSubmit" class="btn btn-default">확인</button>'+
-                                '</div>'+
-                                '</p>'+
-                                '<textarea id="commentChildText" name="commentChildText" class="form-control" style="width:98%" rows="4"></textarea>'+
-                                '</span>'+
+                                '<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+
+                                '<td style="width:10%">'+
+                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+
+                                '<td width="67%">'+
+                                '<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>'+
+                                '</td>'+
+                                '<td width="20%" align="left">'+
+                                '<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+
+                                '<button type="button" id="commentParentSubmit" name="commentParentSubmit" class="btn btn-warning">답글입력</button>'+
                                 '</td>'+
                                 '</tr>';
                                    
@@ -473,7 +501,6 @@ $(function(){
     });
        
 });
-
 
 </script>
 

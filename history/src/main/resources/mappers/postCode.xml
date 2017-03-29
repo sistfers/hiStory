@@ -131,7 +131,14 @@
 	(SELECT MAX(SEQ) MAXSEQ
 	      FROM POST_H P
 	      WHERE NOT STATE = '2' 
-	      AND ID = #{id})
+	      AND ID = #{id}
+		<choose>
+			<when test="ct_seq != null ">
+				AND CT_SEQ = #{ct_seq}
+			</when>
+			<otherwise></otherwise>
+		</choose>
+		)
 </select>
 
 

@@ -81,21 +81,31 @@ public class BlogControl {
 	public ModelAndView main(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		Map<String, Object> condition = new HashMap<String, Object>();
+		
 		String ID = "1";
 		
 		// 최신 글 내용 보여주기
-		postDto = new PostDto(0,0,"1",null,null,null,null,null,null,null);
+		postDto = new PostDto(0,2,"1",null,null,null,null,null,null,null);
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 		mav.addObject("DTO"   ,DTO);		
 		
+		// 해당글의 댓글 보여주기
+		Map<String, Object> comment_con = new HashMap<String, Object>();
+		String  co_PAGE_NUM = request.getParameter("co_PAGE_NUM")==null||request.getParameter("co_PAGE_NUM").equals("")?"1":request.getParameter("co_PAGE_NUM");         //페이지NUM
+		comment_con.put("POST_SEQ",DTO.getSeq());
+		comment_con.put("PAGE_NUM",co_PAGE_NUM);
 		
+		ArrayList commentList = (ArrayList)commentSve.hi_selectList(comment_con);
+		mav.addObject("commentList",commentList);
+		
+		
+		// 아래 5개 목록 리스트 보여주기
+		Map<String, Object> condition = new HashMap<String, Object>();
 		String PAGE_NUM = request.getParameter("PAGE_NUM")==null||request.getParameter("PAGE_NUM").equals("")?"1":request.getParameter("PAGE_NUM");         //페이지NUM
 		
 		condition.put("ID", ID);
 		condition.put("PAGE_NUM", PAGE_NUM);
 		
-		// 아래 5개 목록 리스트 보여주기
 		List<Map<String, Object>> lists = postSvc.hi_selectList(condition);
 		logger.debug("BlogControl.lists.toString() = "+lists.toString());
 		
@@ -189,7 +199,7 @@ public class BlogControl {
 	}
 		
 	
-	
+	// 댓글 등록 (ajax)
 	@RequestMapping(value="post/replyInsert.hi",method=RequestMethod.POST)
 	@ResponseBody
 	public String replyInsert(HttpServletRequest res, HttpSession session) {

@@ -10,8 +10,8 @@
 <!-- </ul> -->
 
 <div class="list-group">
-  <a class="list-group-item" href="#">쪽지쓰기 </a>
-  <a class="list-group-item" href="#">받은쪽지확인 </a>
-  <a class="list-group-item" href="#">보낸쪽지확인 </a>
+  <a class="list-group-item" href="writeForm.hi">쪽지쓰기 </a>
+  <a class="list-group-item" href="receive.hi">받은쪽지확인 </a>
+  <a class="list-group-item" href="send.hi">보낸쪽지확인 </a>
 </div>
 

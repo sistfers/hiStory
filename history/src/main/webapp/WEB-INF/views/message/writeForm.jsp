@@ -1,10 +1,23 @@
+<%@page import="com.hifive.history.model.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-	String SENDID = (String) request.getAttribute("SENDID");
-	String TAKEID = (String) request.getAttribute("TAKEID");
-	String NAME   = (String) request.getAttribute("NAME");
+	String SENDID = "";
+	String TAKEID = "";
+	String NAME   = "";
+
+	HttpSession sesson =request.getSession(false);
+	UserDto dto = (UserDto) sesson.getAttribute("user");
+	
+	if(dto != null) {
+		SENDID = dto.getId();
+		TAKEID = (String) request.getAttribute("TAKEID");
+		NAME   = (String) request.getAttribute("NAME");
+		
+	} else {
+		
+	}	
 %>
 
 
@@ -44,8 +57,19 @@
 					<div class="form-group">
 						<label class="col-lg-2 control-label">받는사람</label>
 						<div class="col-lg-7">
+						<%
+						if(TAKEID != null) {
+						%>
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
-								placeholder="<%=TAKEID %>(<%=NAME %>)" value="<%=TAKEID %>" maxlength="30">
+									placeholder="<%=TAKEID %>(<%=NAME %>)" value="<%=TAKEID %>" maxlength="30">
+						<%	
+						} else {
+						%>	
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
+									placeholder="hifive" maxlength="30">
+						<% 
+						}
+						%>
 						</div>
 						<div class="col-lg-3">
 							<button class="btn btn-info btn-block" id="TAKE_ID_CK"

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.hifive.history.model.MessageDto;
+import com.hifive.history.model.UserDto;
 import com.hifive.history.service.MessageService;
 
 /**
@@ -99,7 +101,7 @@ public class MessageControl {
 		ModelAndView mav = new ModelAndView();
 		
 		if(result == 1) {
-			mav.setView(new RedirectView(("send_message_list.hi")));
+			mav.setView(new RedirectView(("send.hi")));
 		}				
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/write.hi");
@@ -144,7 +146,9 @@ public class MessageControl {
 	@RequestMapping("message/delete.hi")
 	public ModelAndView do_delete(
 			@RequestParam(value = "idx", required=true) 
-						String paramMap) {
+						String paramMap,
+			@RequestParam(value = "to", required=true) 
+			String to) {
 		
 		loger.debug("----------------------------------------------------------");
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/delete.hi");	
@@ -157,7 +161,7 @@ public class MessageControl {
 		}
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(("get_message_list.hi")));
+		mav.setView(new RedirectView((to+".hi")));
 		
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/delete.hi");
@@ -166,69 +170,90 @@ public class MessageControl {
 		return mav;
 	}
 	
-	@RequestMapping("message/get_message_list.hi")
+	@RequestMapping("message/receive.hi")
 	public ModelAndView do_search(HttpServletRequest res) {
 			
 		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: get_message_list.hi");		
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: receive.hi");		
 		
+					
+		HttpSession session = res.getSession(false); 
 		
-		Map<String, Object> search_info = new HashMap<String, Object>();
-		
+		ModelAndView mav = new ModelAndView();
 		String PAGE_NUM = 
 				(res.getParameter("PAGE_NUM") == null || res.getParameter("PAGE_NUM").equals(""))
 				?"1":res.getParameter("PAGE_NUM");
 		
-		search_info.put("PAGE_NUM", PAGE_NUM);
-		search_info.put("TAKEID", "Patricia");
-//		search_info.put("TAKEID", "Patri2cia");
-		loger.debug("search_info -> " + search_info.toString());
+		if(session.getAttribute("user") != null) {
+			loger.debug("session info -> " + session.toString());
+			UserDto dto = (UserDto) session.getAttribute("user");
+			
+			Map<String, Object> search_info = new HashMap<String, Object>();			
+			
+			search_info.put("PAGE_NUM", PAGE_NUM);
+			search_info.put("TAKEID", dto.getId());
+			loger.debug("session.getId() -> " + dto.getId());
+			loger.debug("search_info 	 -> " + search_info.toString());
+			
+			// 리스트 가져오기
+			List<Map<String, Object>> getList = messageService.hi_select_getlist(search_info);		
+			loger.debug("getlist size -> " + getList.size());			
+			
+			mav.setViewName("/message/message_list1");
+			mav.addObject("getList", getList);
+			mav.addObject("PAGE_NUM", PAGE_NUM);
+			
+		} else {
+			loger.debug("session.getAttribute(user) -> null");
+			mav.setViewName("/main/login");
+		}	
 		
-		// 리스트 가져오기
-		List<Map<String, Object>> getList = messageService.hi_select_getlist(search_info);		
-		loger.debug("getlist size -> " + getList.size());
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/message/message_list");
-		mav.addObject("getList", getList);
-		mav.addObject("PAGE_NUM", PAGE_NUM);
-		
-		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: get_message_list.hi");
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: receive.hi");
 		loger.debug("----------------------------------------------------------");
 		
 		return mav;		
 	}
 
-	@RequestMapping("message/send_message_list.hi")
+	@RequestMapping("message/send.hi")
 	public ModelAndView messageList(HttpServletRequest res) {
 		
 		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: send_message_list.hi");		
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: send.hi");		
 		
 		
-		Map<String, Object> search_info = new HashMap<String, Object>();
-		
+		HttpSession session = res.getSession(false); 
+				
+		ModelAndView mav = new ModelAndView();
 		String PAGE_NUM = 
 				(res.getParameter("PAGE_NUM") == null || res.getParameter("PAGE_NUM").equals(""))
 				?"1":res.getParameter("PAGE_NUM");
 		
-		search_info.put("PAGE_NUM", PAGE_NUM);
-		search_info.put("SENDID", "Patricia");
-//		search_info.put("SENDID", "Patri2cia");
-		loger.debug("search_info -> " + search_info.toString());
+		if(session.getAttribute("user") != null) {
+			loger.debug("session info -> " + session.toString());
+			UserDto dto = (UserDto) session.getAttribute("user");
+			
+			Map<String, Object> search_info = new HashMap<String, Object>();	
+			
+			search_info.put("PAGE_NUM", PAGE_NUM);
+			search_info.put("SENDID", dto.getId());
+			loger.debug("session.getId() -> " + dto.getId());
+			loger.debug("search_info -> " + search_info.toString());
+			
+			// 리스트 가져오기
+			List<Map<String, Object>> getList = messageService.hi_select_sendlist(search_info);
+			loger.debug("sendlist size -> " + getList.size());
+			
+			mav.setViewName("/message/message_list2");
+			mav.addObject("getList", getList);
+			mav.addObject("PAGE_NUM", PAGE_NUM);
+			
+		} else {
+			loger.debug("session.getAttribute(user) -> null");
+			mav.setViewName("/main/login");
+		}		
 		
-		// 리스트 가져오기
-		List<Map<String, Object>> getList = messageService.hi_select_sendlist(search_info);
-		loger.debug("sendlist size -> " + getList.size());
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/message/message_list2");
-		mav.addObject("getList", getList);
-		mav.addObject("PAGE_NUM", PAGE_NUM);
-		
-		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: send_message_list.hi");
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: send.hi");
 		loger.debug("----------------------------------------------------------");
 		
 		return mav;	

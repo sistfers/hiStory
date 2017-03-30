@@ -28,7 +28,7 @@ if((String) request.getAttribute("PAGE_NUM") != null) {
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script type="text/javascript">
 // 페이징
 function do_search_page(url, page_num) 
@@ -39,6 +39,42 @@ function do_search_page(url, page_num)
 	  frm.PAGE_NUM.value = page_num;
 	  frm.action = url;
 	  frm.submit();
+}
+
+/* 체크박스 전체선택, 전체해제 */
+function checkAl() { 
+	if( $("#th_checkAll").is(':checked') ){
+        $("input[name=checkRow]").prop("checked", true);
+      }else{
+        $("input[name=checkRow]").prop("checked", false);
+      }
+}
+
+/* 삭제(체크박스된 것 전부) */
+function deleteAction(){
+	var checkRow = "";
+	$( "input[name='checkRow']:checked" ).each (function (){
+	  checkRow = checkRow + $(this).val()+"," ;
+	});
+	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+	alert(checkRow);
+	
+	
+	if(checkRow == ''){
+		alert("삭제할 대상을 선택하세요.");
+		return false;
+	}
+	console.log("### checkRow => {}"+checkRow);
+	
+	if(confirm("정보를 삭제 하시겠습니까?")){
+		
+		/* var frm = document.searchForm;
+		frm.action.value = 'delete.hi?idx='+checkRow;
+		frm.submit(); */
+	    
+		location.href='delete.hi?idx='+checkRow+'&to=send';
+	    //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
+	}
 }
 </script>	
 </head>
@@ -63,14 +99,14 @@ function do_search_page(url, page_num)
 		<input type="hidden" name="PAGE_NUM" value="">
 	<div class="col-xs-10">
 		<!-- 버튼 -->	
-		<div class="form-group">			
-		<button class="btn btn-warning">삭제</button>
-	    <button class="btn btn-warning">답장</button>
-    
+		<div> <!-- class="form-group"> -->			
+			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
+			<button class="btn btn-warning" onclick="">답장</button>    
     	</div>
 		<table class="table">
 			<tr class="warning" >
-				<th width="10%" style="text-align: center;">삭제</th>
+				<th width="10%" style="text-align: center;">
+				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>
 				<th width="20%" style="text-align: center;">받는사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
 				<th width="20%" style="text-align: center;">날짜</th>
@@ -86,19 +122,19 @@ function do_search_page(url, page_num)
 					Map<String, Object> item = datas.get(i);
 			%>
 				<tr>
-				<td align="center"><input type="checkbox"></td>
-				<td><%=item.get("TAKE_ID") %>(<%=item.get("NAME") %>)</td>
-				<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
-				<td><%=item.get("WDATE") %></td>
+					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
+					<td><%=item.get("TAKE_ID") %>(<%=item.get("NAME") %>)</td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
+					<td><%=item.get("WDATE") %></td>
 				
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>
-				<td>읽지 않음</td>
+					<td>읽지 않음</td>
 				<%	
 				} else {
 				%>
-				<td><%=item.get("RDATE") %></td>
+					<td><%=item.get("RDATE") %></td>
 				<%	
 				}
 				%>
@@ -108,7 +144,7 @@ function do_search_page(url, page_num)
 			} else {
 			%>
 				<tr>
-				<td align="center" colspan="5">쪽지가 없습니다.</td>
+					<td align="center" colspan="5">쪽지가 없습니다.</td>
 				</tr>
 			<%	
 			}

@@ -68,9 +68,13 @@ function deleteAction(){
 	console.log("### checkRow => {}"+checkRow);
 	
 	if(confirm("정보를 삭제 하시겠습니까?")){
+		
+	//	var frm = document.searchForm;
+	//	frm.action.value = 'delete.hi?idx='+checkRow+'&to=receive';
+	//	frm.submit();
 	    
-		location.href='delete.hi?idx='+checkRow;
-	    //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
+		location.href='delete.hi?idx='+checkRow+'&to=receive';
+	//  "${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
 	}
 }
 </script>	
@@ -92,15 +96,16 @@ function deleteAction(){
 <div class="col-xs-10">
 <center><h2> :: 받은쪽지함 ::</h2></center><br>
 	<div class="col-xs-1">
-	<button class="btn btn-warning" onclick="deleteAction();">삭제</button>
-	    <button class="btn btn-warning">답장</button>    
+	<!-- <button class="btn btn-warning" onclick="deleteAction();">삭제</button>
+	<button class="btn btn-warning" onclick="">답장</button> -->
 	</div>
 	<form name="searchForm" action="" method="POST">
 		<input type="hidden" name="PAGE_NUM" value="">
 	<div class="col-xs-10">
  		<!-- 버튼 -->	
- 		<div class="form-group">			
-		
+ 		<div>
+			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
+			<button class="btn btn-warning" onclick="">답장</button>
     	</div>  
 		<table class="table">
 			<tr class="warning" >
@@ -121,29 +126,29 @@ function deleteAction(){
 					Map<String, Object> item = datas.get(i);
 			%>
 				<tr>
-				<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
-				<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
-				<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
-				<td><%=item.get("WDATE") %></td>
+					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
+					<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
+					<td><%=item.get("WDATE") %></td>
 				
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>
-				<td>읽지 않음</td>
+					<td>읽지 않음</td>
 				<%	
 				} else {
 				%>
-				<td><%=item.get("RDATE") %></td>
+					<td><%=item.get("RDATE") %></td>
 				<%	
 				}
 				%>
-			</tr>
+				</tr>
 			<%
 				}
 			} else {
 			%>
 				<tr>
-				<td align="center" colspan="5">쪽지가 없습니다.</td>
+					<td align="center" colspan="5">쪽지가 없습니다.</td>
 				</tr>
 			<%	
 			}

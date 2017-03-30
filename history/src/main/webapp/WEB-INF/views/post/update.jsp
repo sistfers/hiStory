@@ -50,6 +50,7 @@
 <!-- 카테고리 -->
 		<div class="form-group col-xs-3" style="margin-left: 7px">
 			<select class="form-control" id="category" name="ct_seq">
+				<%-- <option><%=DTO.getCt_seq() %></option> 카테고리명과 매치 어떻게 하지?--%>
 			       <%if(categoryList.size() != 0){
 			       		for(int i=0; i<categoryList.size(); ++i){%>
 			       <option value="<%=categoryList.get(i).getSeq()%>">
@@ -64,12 +65,12 @@
 	    
 <!--제목  -->	    
 		<div class="col-xs-9">
-			<input type="text" name="title" id="TITLE" class="form-control" placeholder="제목을 입력해 주세요">
+			<input type="text" name="title" id="TITLE" class="form-control" value="<%=DTO.getTitle() %>">
 		</div>
 		
 <!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="content" rows="500"></textarea>
+		<textarea name="content" rows="500"><%=DTO.getContent() %></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
 				filebrowserUploadUrl: 'ckeditorImageUpload.hi'
@@ -114,9 +115,9 @@
 		    </select>
 	    </div>
 	
-	
+<!--해시태그 어떻게 불러오냐.....ㅠㅠㅠㅠㅠ  -->
 	<div class="col-xs-8" style="margin-left: 7px;">
-		<input type="text" name="tag_w" id="tag_w" class="form-control" size="30" placeholder="태그입력"/></div>
+		<input type="text" name="tag_w" id="tag_w" class="form-control" size="30" placeholder="태그입력" value="<%=DTO.getHashtag() %>"/></div>
 	<div class="col-xs-3"><span style="color: #4374D9; font-size: 14px;"> *태그를 입력하고 스페이스바를 눌러주세요.</span></div>
 	<div class="col-xs-1"></div>
 	

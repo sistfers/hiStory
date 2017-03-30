@@ -251,18 +251,18 @@ public class BlogControl {
 		mav.addObject("postViewCode", postViewCode);
 		mav.addObject("themeCode", themeCode);
 		
-		String ID 		= request.getParameter("id");
+		String ID 	= request.getParameter("id");
 		int	   seq 	= Integer.parseInt(request.getParameter("seq"));
 		
-		// 최신 글 내용 보여주기
+		// 선택 글 내용 보여주기
 		PostDto postDto = new PostDto();
 		postDto.setId(ID);
-		postDto.setCt_seq(seq);
+		postDto.setSeq(seq);
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 
 		mav.addObject("DTO"   ,DTO);	
 		mav.setViewName("post/update");
-		
+		System.out.println("넘어오는 데이타 뭐니?"+DTO.toString());
 		return mav;
 	}
 	

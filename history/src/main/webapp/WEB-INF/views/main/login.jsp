@@ -7,7 +7,7 @@
 <title>로그인</title>
 	<!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-	
+
 </head>
 <body>
 
@@ -35,7 +35,7 @@
 			<input type="hidden" name="do_login" value="do_login">
 			<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*">
 			<br>
-			<input type="password" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*">
+			<input type="text" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*" >
 			<br>
 			<center>
 			<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN" />

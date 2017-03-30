@@ -68,8 +68,6 @@ public class BlogControl {
 	public ModelAndView main(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		
-//		String ID = "1";
 		String ID = request.getParameter("id");
 		String ct_seqString = request.getParameter("ct_seq");
 		Integer ct_seq;
@@ -86,28 +84,30 @@ public class BlogControl {
 
 		mav.addObject("DTO"   ,DTO);		
 		
-		// 해당글의 댓글 보여주기
-		Map<String, Object> comment_con = new HashMap<String, Object>();
-		String  co_PAGE_NUM = request.getParameter("co_PAGE_NUM")==null||request.getParameter("co_PAGE_NUM").equals("")?"1":request.getParameter("co_PAGE_NUM");         //페이지NUM
-		comment_con.put("POST_SEQ",DTO.getSeq());
-		comment_con.put("PAGE_NUM",co_PAGE_NUM);
+		if(DTO != null){
+			// 해당글의 댓글 보여주기
+			Map<String, Object> comment_con = new HashMap<String, Object>();
+			String  co_PAGE_NUM = request.getParameter("co_PAGE_NUM")==null||request.getParameter("co_PAGE_NUM").equals("")?"1":request.getParameter("co_PAGE_NUM");         //댓글페이지NUM
+			comment_con.put("POST_SEQ",DTO.getSeq());
+			comment_con.put("PAGE_NUM",co_PAGE_NUM);
+			
+			ArrayList commentList = (ArrayList)commentSve.hi_selectList(comment_con);
+			mav.addObject("commentList",commentList);
+			
+			
+			// 아래 5개 목록 리스트 보여주기
+			Map<String, Object> condition = new HashMap<String, Object>();
+			String PAGE_NUM = request.getParameter("PAGE_NUM")==null||request.getParameter("PAGE_NUM").equals("")?"1":request.getParameter("PAGE_NUM");         //페이지NUM
+			condition.put("ID", ID);
+			condition.put("PAGE_NUM", PAGE_NUM);
+			condition.put("ct_seq", ct_seq);
 		
-		ArrayList commentList = (ArrayList)commentSve.hi_selectList(comment_con);
-		mav.addObject("commentList",commentList);
+			List<Map<String, Object>> lists = postSvc.hi_selectList(condition);
+			logger.debug("BlogControl.lists.toString() = "+lists.toString());
 		
-		
-		// 아래 5개 목록 리스트 보여주기
-		Map<String, Object> condition = new HashMap<String, Object>();
-		String PAGE_NUM = request.getParameter("PAGE_NUM")==null||request.getParameter("PAGE_NUM").equals("")?"1":request.getParameter("PAGE_NUM");         //페이지NUM
-		condition.put("ID", ID);
-		condition.put("PAGE_NUM", PAGE_NUM);
-		condition.put("ct_seq", ct_seq);
-		
-		List<Map<String, Object>> lists = postSvc.hi_selectList(condition);
-		logger.debug("BlogControl.lists.toString() = "+lists.toString());
-		
-		mav.addObject("lists",lists);
-		mav.addObject("PAGE_NUM"   ,PAGE_NUM);
+			mav.addObject("lists",lists);
+			mav.addObject("PAGE_NUM"   ,PAGE_NUM);
+		}
 		mav.setViewName("post/main");
 		
 		return mav;
@@ -177,7 +177,8 @@ public class BlogControl {
 	public String postUpdate() {
 		return "post/update";
 	}
-	//블로그 카테고리
+	
+	//왼쪽menu 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
 	      ModelAndView mav = new ModelAndView();

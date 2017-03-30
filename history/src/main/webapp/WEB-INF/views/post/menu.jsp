@@ -7,8 +7,13 @@
 <html>
 <head>
 <%
-	session.setAttribute("id", "1");
+	//session.setAttribute("id", "1");
+	String id = request.getParameter("id");
+	// 해당 id의 유저정보 받아오기
+	
+	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
+	
 	
 	
 	//UserDto loginuser = (UserDto)session.getAttribute("id");
@@ -33,6 +38,7 @@
 <body>
 <center>
 <br>
+
 <!-- 이용자의 프로필사진을 넣습니다 -->
 <img src="/resources/image/1.png" width="150" height="150"><br>
 
@@ -42,10 +48,12 @@
 <!-- 이용자의 블로그소개를 넣습니다 -->
 <h5>초보개발자 블로그</h5>
 
-<!-- 포스트쓰기 Or 이웃추가-->
 <%
-if(loginuser.equals(categoryList.get(0).getId())){
+if(!id.equals("${sessionScope.user.id}")){
+//if(loginuser.equals(categoryList.get(0).getId())){
 %>
+<!-- 포스트쓰기 Or 이웃추가-->
+
 	<a href="write.hi" class="btn btn-default btn-md">
 	    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
 	</a>
@@ -59,7 +67,6 @@ if(loginuser.equals(categoryList.get(0).getId())){
 <hr>
 
 <!-- 카테고리 -->
-
 <div class="list-group">
 <li class="list-group-item active">카테고리 &nbsp;&nbsp;&nbsp;&nbsp;
 <span class="glyphicon glyphicon-chevron-down"></span></li>
@@ -67,7 +74,7 @@ if(loginuser.equals(categoryList.get(0).getId())){
   <%
   	for(int i = 0 ; i < categoryList.size(); ++i){
   %>
-    <a class="list-group-item" href="main.hi?CT_SEQ=<%=categoryList.get(i).getSeq() %>">
+    <a class="list-group-item" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>">
     <span class="badge"><%=i+2 %></span>		<!-- 카테고리별 글 갯수  -->
     <%=categoryList.get(i).getName() %>
     </a>

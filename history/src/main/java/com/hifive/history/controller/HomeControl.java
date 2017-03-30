@@ -106,6 +106,7 @@ public class HomeControl {
 		String PAGE_SIZE 	= "10";	//페이지사이즈
 		String PAGE_NUM		= "1";	//페이지NUM
 		
+		PAGE_NUM		= (res.getParameter("PAGE_NUM")==null || res.getParameter("PAGE_NUM").equals("")) ? "1" : res.getParameter("PAGE_NUM");	//페이지NUM
 		loger.debug("들어왔다!!!!!!! 단어는 ::"+ search_word);
 		Map<String, Object> condition = new HashMap();
 		
@@ -116,7 +117,7 @@ public class HomeControl {
 		
 		mav.setViewName("/main/home_search");
 		mav.addObject("searchList", searchList);
-		
+		mav.addObject("PAGE_NUM"  , PAGE_NUM  );
 		return mav;
 	}
 }

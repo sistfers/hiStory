@@ -52,7 +52,7 @@
 			</li>
 			<li><a href="/chart/control.hi">블로그관리</a></li>
 			<li><a href="javascript:do_message(); ">쪽지함</a></li>
-			<li><a href="/user/update.hi">내정보</a></li>
+			<li><a href="javascript:do_update()">내정보</a></li>
 			<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
 		</ul>
 		<% } %>
@@ -77,6 +77,10 @@
     }
     function do_join(){
         var frm = document.joinfrm;
+        frm.submit();
+    }
+    function do_update() {
+        var frm = document.updatefrm;
         frm.submit();
     }
     function do_message(){
@@ -123,4 +127,5 @@
 <form name="logoutfrm" action="/main/logout.hi"></form>
 <form name="loginfrm" action="/main/login.hi" method="post"></form>
 <form name="joinfrm" action="/user/join.hi" method="post"></form>
+<form name="updatefrm" action="/user/update.hi" method="post"></form>
 <form name="messagefrm" action="/message/receive.hi" method="post"></form>

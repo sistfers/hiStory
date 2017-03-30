@@ -68,6 +68,9 @@
 			dataCnt = data.get(0);
 			intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
 		}	
+	}else{
+		DTO = new PostDto();
+		DTO.setSeq(0);
 	}
 	
 	// 테마 색깔 정해야함
@@ -166,10 +169,10 @@ function go_delete(){
 <!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	
 		        
 				<%
-				if(DTO == null){	// 글 내용 없을때 
+				if(DTO.getSeq() == 0){	// 글 내용 없을때 
 				%>	
 					<div class="col-xs-12">
-						<br><br><br><br><br><br>
+						<br><br><br><br><br><br><br><br><br><br><br><br>
 						<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
 						<br><br><br><br><br><br><br><br><br><br><br><br>
 					</div>
@@ -246,7 +249,9 @@ function go_delete(){
 				
 				<!-- 댓글이 나올 테이블 -->
 				<table class="table table-condensed" id="commentTable">
-				<%for(int i = 0; i < commentList.size(); i++){ 
+				<%
+				if (commentList != null){
+				for(int i = 0; i < commentList.size(); i++){ 
   	  				HashMap<String, Object> commentdata = (HashMap<String, Object>)(commentList.get(i)); 
   				%>
  				<tr id="r1" name="commentParentCode"> 
@@ -283,7 +288,9 @@ function go_delete(){
 					  <%} //if end %>
 					  </tr>
 					  
-				  <%} //for end %>  
+				  <%
+					  } //for end 
+				  } // if end%>  
 					</table>
 <%-- <center> 우선 페이징 없이 20개씩 보여주기 했는데... 댓글 페이징은 천천히 합시다 
 <!-- Paging Area Start -->
@@ -302,7 +309,7 @@ function go_delete(){
 						<td width="13%"> 
 						<img src="${sessionScope.user.pf_image}" width="40px" height="40px">
 						</td>
-						<td width="67%">
+						<td width="67%" >
 							<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>
 						</td>
 						<td width="20%" align="left">
@@ -326,7 +333,7 @@ function go_delete(){
 					</tr>
 
 					<%
-						if (data.size() > 0) {
+						if (data != null) {
 					
 							for (int i = 0; i < data.size(); i++) {
 					
@@ -398,7 +405,7 @@ $(function(){
            
         var pText = $("#commentParentText");
         // true면 비밀글임(상태 1로 넣어야 함)
-        var stateYN = $("input[name='STATE']").is(":checked")==true;        
+        var stateYN = $("input[name='STATE']").is(":checked")==true;   
            
         console.log("true면 비밀글임 stateYN = " + stateYN);
         

@@ -79,6 +79,10 @@ img#logo{		/* 로고 윗부분 마진 */
 	    var frm = document.joinfrm;
 	    frm.submit();
 	}
+	function do_message(){
+	    var frm = document.messagefrm;
+	    frm.submit();
+	}
 </script>
 
 <form name="myblogfrm" action="/post/main.hi">
@@ -87,3 +91,4 @@ img#logo{		/* 로고 윗부분 마진 */
 <form name="logoutfrm" action="/main/logout.hi"></form>
 <form name="loginfrm" action="/main/login.hi" method="post"></form>
 <form name="joinfrm" action="/user/join.hi" method="post"></form>
+<form name="messagefrm" action="/message/receive.hi" method="post"></form>

@@ -77,6 +77,11 @@ function deleteAction(){
 	//  "${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
 	}
 }
+
+/* 내용 검색 */
+function searchAction() {
+	alert("검색");
+}
 </script>	
 </head>
 <body>
@@ -106,6 +111,8 @@ function deleteAction(){
  		<div>
 			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
 			<button class="btn btn-warning" onclick="">답장</button>
+			<input type="text" name="searchbox" />
+			<input type="button" value="검색" class="btn btn-warning" onclick="searchAction();" />
     	</div>  
 		<table class="table">
 			<tr class="warning" >

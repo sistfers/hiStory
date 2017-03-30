@@ -177,20 +177,22 @@
 
 
 <!-- 검색하기 -->
+<form name="do_search" method="post" action="/main/do_search.hi">
 <div class="col-xs-2"></div>
 <div class="col-xs-8">
 	<div class="form-group">
-	  <div class="input-group">
+	  <div class="input-group"> 	
 	    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
 	     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
 	    <span class="input-group-btn">
-	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:do_search()">
+	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:submit()">
 	    </span>
+	    
 	  </div>
 	</div>  
 </div> 
 <div class="col-xs-2"></div>
-
+</form>
 <br>
 
 <!-- 사이즈 조절해서 사용하세요  -->
@@ -295,7 +297,7 @@ $(document).ready(function () {
    });
 </script>
 <!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 Start -->
-<form name="do_search" method="post" action="">
+<form name="do_searchTag" method="post" action="">
 <input type="hidden" id="search_word" name="search_word" value="">
 </form>
 <!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 End -->

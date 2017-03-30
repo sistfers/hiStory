@@ -1,19 +1,39 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%
 	List<Map<String, Object>> searchList = (List<Map<String, Object>>)request.getAttribute("searchList");
+	String PAGE_NUM = "1"; //페이지NUM	
+	PAGE_NUM = request.getAttribute("PAGE_NUM").toString();
+	int page_num = 1; //선택된 페이지
+	int page_size = 10; //페이지 사이즈
+	int intTotalCount = 0; //총 글수
+	Map<String, Object> dataCnt = null;
+	if (searchList != null && searchList.size() > 0) {
+		dataCnt = searchList.get(0);
+		intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
+	}
+	
+	int pageCount = intTotalCount / page_size; // 페이지수
+	if (intTotalCount % page_size != 0)
+		pageCount++;
+	if (PAGE_NUM != null && PAGE_NUM != "")
+		page_num = Integer.parseInt(PAGE_NUM);
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<style type="text/css">
 	.table-filter {
 	background-color: #fff;
@@ -80,28 +100,33 @@
 <!--내용 START -->
 	
 <!-- 검색하기 -->
-<div class="form-group">
+<form name="do_search" method="post" action="/main/do_search.hi">
+<input type="hidden" name="PAGE_NUM" value="">
 <div class="col-xs-2"></div>
 <div class="col-xs-8">
 	<div class="form-group">
-	  	<div class="input-group">
-		    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
-		     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
-	    	<span class="input-group-btn">
-	     	<input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:do_search()">
-	    	</span>
-	  	</div>
+	  <div class="input-group"> 	
+	    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
+	     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
+	    <span class="input-group-btn">
+	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:submit()">
+	    </span>
+	    
+	  </div>
 	</div>  
 </div> 
 <div class="col-xs-2"></div>
+</form>
 <br>
 
 <!-- HISTORY START -->
 <br><br>
-<div class="row">
-<div class="col-lg-12">
+<div class="row" >
+<div class="col-lg-12" >
 <h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 
+<div class="col-lg-1"></div>
+<div class="col-lg-10">
 <table width="100%" class="table table-hover" >
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
@@ -134,8 +159,18 @@
 <%} %>
 </table>	
 
+<center> 
+<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
+<table><tr><td style="text-align: center;">
+<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "do_search.hi", "do_search_page")%>
+</td></tr>
+</table>
+</center>
+
+
 </div>
 </div>
+
 <!-- 디테일 클릭시 해당 ID, SEQ 들고 폼전송 구간 Start -->
 <form name="do_detail" method="get" action="">
 <input type="hidden" id="id" name="id" value="">
@@ -157,28 +192,27 @@ $(document).ready(function () {
 	});
 
  });
+ 
+ 
+function do_search() {
+	var frm = document.searchForm;
+	frm.submit();
+}
+
+function do_search_page(url, page_num) {
+	console.log(url + "\t" + page_num);
+
+	var frm = document.do_search;
+	frm.PAGE_NUM.value = page_num;
+	console.log("frm.page_num.value=" + frm.PAGE_NUM.value);
+	frm.action = url;
+	frm.submit();
+
+}
 </script>
-
-<br><br><br><br>
-<br><br><br><br>
-
-
 <!--페이징  -->
-<center>
-<ul class="pagination pagination-sm">
-  <li class="disabled"><a href="#">&laquo;</a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
-</center>
-<!-- HISTORY END -->
 
-<br><br><br><br>
-<br><br><br><br>
+<!-- HISTORY END -->
 
 
 <!-- 네이버 검색결과 START -->
@@ -192,16 +226,8 @@ $(document).ready(function () {
 </div>
 
 <!-- 네이버 검색결과 END -->
-
-
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-
-
-
-
+</div>
+<div class="col-lg-1"></div>
 </div>
 <!--푸터 START -->
 <jsp:include page="footer.jsp"/>

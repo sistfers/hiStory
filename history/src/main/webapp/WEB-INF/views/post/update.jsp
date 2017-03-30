@@ -21,6 +21,26 @@
 	
 	// 포스트 내용 1건 보여주기
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
+	String hash = DTO.getHashtag();
+	int count = 0;
+	for(int i = 0; i < hash.length()-1; ++i){
+		if(hash.charAt(i)=='#'){
+			++count;
+		}
+	}
+	String tag[] = new String[count];
+	int start = 0;
+	for(int i = 0; i < count; ++i){
+		tag[i] = "";
+	}
+	for(int i = 1; i < hash.length()-1; ++i){
+		if(hash.charAt(i)!='#'){
+			tag[start]+=hash.charAt(i);
+		}else{
+			++start;
+		}
+	}
+	int init = 0;
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -118,12 +138,15 @@
 	
 <!--해시태그 어떻게 불러오냐.....ㅠㅠㅠㅠㅠ  -->
 	<div class="col-xs-8" style="margin-left: 7px;">
-		<input type="text" name="tag_w" id="tag_w" class="form-control" size="30" placeholder="태그입력" value="<%=DTO.getHashtag() %>"/></div>
+		<input type="text" name="tag_w" id="tag_w" class="form-control" size="30" placeholder="태그입력" 
+		value="" ></div>
 	<div class="col-xs-3"><span style="color: #4374D9; font-size: 14px;"> *태그를 입력하고 스페이스바를 눌러주세요.</span></div>
 	<div class="col-xs-1"></div>
 	
 	<!-- 태그 뿌려지는 부분 -->
-	<div id="after_tag" class="col-xs-12"></div>
+	<div id="after_tag" class="col-xs-12">
+	
+	</div>
     <input type="hidden" name="tag" id="tag"/>
 	<!--연결된 태그값 넘기기  -->
 
@@ -140,7 +163,9 @@
 </div>
 
 <script>
-/* 태그 달기 js입니다 */       
+/* 태그 달기 js입니다 */
+				
+
 	$(document).ready(function(){
 		$("input:text").keydown(function(evt) 
 				{ 
@@ -173,7 +198,7 @@
 	                if(tag.match(',')){
 	                    tag = tag.substring(0 , tag.length-1);
 	                }
-
+				
 	            var resister_tag = "<span class='before_tag' id='tag_"+children+"' style='margin-left:7px;'>#<b>"+tag+"</b>"+
 	        					    "<a href='javascript:deltag("+children+")' style='margin-left:7px; color:red;'>"+
 	        					    "<b>x</b></a></span>";
@@ -182,7 +207,6 @@
 	            
 	            //초기화
 	            $("#tag_w").val("");
-	        
 	            }else{
 	            
 	                if(tag == ""){

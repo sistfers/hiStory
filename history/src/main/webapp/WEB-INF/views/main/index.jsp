@@ -14,7 +14,7 @@
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+
 	<!-- Custom CSS  (이미지 동그란 모양으로 보이기)-->
     <link href="/resources/css/round-about.css" rel="stylesheet">
 	  <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>

@@ -89,6 +89,7 @@
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <!-- jquery -->
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <title>여기에 블로그 타이틀이 들어가면 좋겠음</title>
 

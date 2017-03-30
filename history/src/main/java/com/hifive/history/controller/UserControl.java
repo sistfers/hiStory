@@ -7,6 +7,7 @@ import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CodeDService;
+import com.hifive.history.service.FollowService;
 import com.hifive.history.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +41,9 @@ public class UserControl {
 
 	@Autowired
 	CodeDService codeDService;
+
+	@Autowired
+	FollowService followService;
 
 	@RequestMapping(value = "user/join.hi", method = RequestMethod.POST)
 	public ModelAndView join(HttpServletRequest request, Model model) {
@@ -109,5 +114,29 @@ public class UserControl {
 			jobj = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
 		Gson gson = new Gson();
 		return gson.toJson(jobj);
+	}
+
+	@RequestMapping(value = "user/followSearch.hi", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String followSearch(HttpServletRequest request) {
+		String PAGE_SIZE = (request.getParameter("PAGE_SIZE") == null) ? "10" : request.getParameter("PAGE_SIZE");
+		String PAGE_NUM = (request.getParameter("PAGE_NUM") == null
+				|| request.getParameter("PAGE_NUM").equals("")) ? "1" : request.getParameter("PAGE_NUM");
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("SEARCH_CON", "ifollow");
+		condition.put("id", request.getParameter("id"));
+		condition.put("PAGE_SIZE", PAGE_SIZE);
+		condition.put("PAGE_NUM", PAGE_NUM);
+
+		List<Map<String, Object>> followList = new ArrayList<>();
+		try {
+			followList = followService.hi_selectList(condition);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(followList);
+
+		Gson gson = new Gson();
+		return gson.toJson(followList);
 	}
 }

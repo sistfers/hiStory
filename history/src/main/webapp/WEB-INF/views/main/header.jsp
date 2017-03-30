@@ -3,7 +3,6 @@
          pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-
 <style type="text/css">
 	img#logo{		/* 로고 윗부분 마진 */
 		margin-top: 10px;
@@ -37,12 +36,7 @@
 			<li><a href="javascript:search_follow();">이웃</a></li>
 			<li class="dropdown" id="followDropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃</a>
-				<ul class="dropdown-menu" role="menu" id="followUl">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else here</a></li>
-					<li><a href="#">Separated link</a></li>
-				</ul>
+				<ul class="dropdown-menu" role="menu" id="followUl"></ul>
 			</li>
 			<li><a href="/chart/control.hi">블로그관리</a></li>
 			<li><a href="javascript:do_message(); ">쪽지함</a></li>
@@ -85,36 +79,28 @@
         <c:if test="${!empty sessionScope.user.id }">
 	        id = ${sessionScope.user.id};
         </c:if>
-        alert(id);
         $("#followUl").empty();
-//        $.ajax({
-//            type:"POST",
-//            url:"/user/followSearch.hi",
-//            dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-//            data: {
-//                "id": id
-//            },
-//            success: function (data) {
-//                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-//                var flag = $.parseJSON(data);
-//                if (flag.msg == "true") {
-//                    $("#idCheckSuccess").show();
-//                    idCheck = true;
-//                }
-//                $("#followUl").append("<li><a href=\"#\">Action</a></li>")
-//                else {
-//                    $("#idCheckFail").show();
-//                    idCheck = false;
-//                }
-//
-//            },
-//            complete: function (data) {
-//                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-//            },
-//            error: function (xhr, status, error) {
-//                alert("에러발생");
-//            }
-//        });
+        $.ajax({
+            type:"POST",
+            url:"/user/followSearch.hi",
+            dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+            data: {
+                "id": id
+            },
+            success: function (data) {
+                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                var followList = $.parseJSON(data);
+				for (var i = 0; i < followList.length; i++)
+                    $("#followUl").append("<li><a href=\"/post/main.hi?id=" + followList[i].ID + "\">"+ followList[i].TITLE +"</a></li>")
+
+            },
+            complete: function (data) {
+                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+            },
+            error: function (xhr, status, error) {
+                alert("에러발생");
+            }
+        });
     });
 </script>
 

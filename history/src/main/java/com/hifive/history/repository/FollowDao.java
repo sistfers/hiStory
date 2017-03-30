@@ -67,4 +67,10 @@ public class FollowDao implements iDao {
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement, condition);
 	}
+	public List<Map<String, Object>> hi_getNeighborList(Map<String, String> condition) throws Exception {
+		String statement = namespace +".hi_getNeighborList";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement, condition);
+	}
 }

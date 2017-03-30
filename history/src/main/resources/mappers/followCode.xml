@@ -111,4 +111,37 @@
 		ORDER BY CUR_DATE ASC
 		]]>
 	</select>
+	<select id="hi_getNeighborList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT TT2.*							
+		FROM(							
+     	 	SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT							
+      		FROM(							
+            	SELECT followtable.MY_ID, usertable.NAME, blogtable.TITLE							
+              	FROM (							
+                     SELECT count(YOU_ID) as cnt, MY_ID, YOU_ID							
+                     FROM FOLLOW_H							
+                     WHERE YOU_ID = #{id}							
+                     GROUP BY MY_ID, YOU_ID							
+                )followtable							
+              	INNER JOIN USER_H usertable							
+                ON followtable.MY_ID = usertable.ID							
+             	INNER JOIN BLOG_H blogtable							
+                ON usertable.ID = blogtable.ID							
+              	WHERE MOD(followtable.cnt, 2) = 1							
+             	ORDER BY followtable.MY_ID
+          	)T1							
+        NATURAL JOIN							
+        (							
+          SELECT COUNT(*) TOT_CNT							
+          FROM (SELECT 1							
+                     FROM FOLLOW_H							
+                     WHERE YOU_ID = #{id}						
+                     GROUP BY MY_ID, YOU_ID)
+        		)T2							
+    	)TT2							
+		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
+		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+		]]>
+	</select>
 </mapper>

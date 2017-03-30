@@ -1,9 +1,16 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<%
+	List<Map<String, Object>> neighborList = new ArrayList<>();
+	neighborList = (List<Map<String, Object>>)request.getAttribute("neighborList");
+%>
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -46,30 +53,31 @@ border-radius: 15px;
 		        <div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-top:20px; padding-top: 20px; margin-bottom: 20px">
 		 			<p style="font-size: 25px; margin-top: 20px">등록된 카테고리</p>
 					<table class="table" style="margin-top: 20px">
-					<tr class="active">
+					<tr class="info">
 						<th> <input type="checkbox"> </th>
-						<th>이름</th>
-						<th>추가하기</th>
-						<th>추가일</th>
+						<th>ID [ 닉네임 ]</th>
+						<th>상태</th>
 					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>배한조 | "초급개발자입니다"</td>
-						<td><button type="button" class="btn-xs btn-info">추가</button></td>
-						<td>17.03.23</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>불사조 | "초급시발자입니다"</td>
-						<td><button type="button" class="btn-xs btn-info">추가</button></td>
-						<td>17.03.22</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>밥사조 | "급식충입니다"</td>
-						<td><button type="button" class="btn-xs btn-info">추가</button></td>
-						<td>17.03.22</td>
-					</tr>
+					<%
+						if(neighborList!=null && neighborList.size()!=0){
+							for(int i = 0; i < neighborList.size(); ++i){
+					%>
+						<tr class="Basic">
+							<td><input type="checkbox"></td>
+							<td><a href="/post/main.hi?id=<%=neighborList.get(i).get("MY_ID")%>">
+							<%=neighborList.get(i).get("MY_ID")+" " %> [ <%=neighborList.get(i).get("NAME") %> ]</a>
+							</td>
+							<td><button type="button" class="btn-xs btn-info">추가</button></td>
+						</tr>
+					<%
+							}
+						}else{
+					%>
+						<tr>
+						<td rowspan="3" style="text-align: center;">회원님을 팔로우하는 회원이 없습니다.</td>
+					<%
+						}
+					%>
 					</table>
 				</div>
 				

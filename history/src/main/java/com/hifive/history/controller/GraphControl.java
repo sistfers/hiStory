@@ -141,8 +141,23 @@ public class GraphControl {
 		return "/chart/menu";
 	}
 	@RequestMapping("chart/neighbor.hi")
-	public String neighbor() {
-		return "/chart/neighbor";
+	public ModelAndView neighbor(HttpServletRequest request, HttpSession session) throws Exception {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
+		
+		ModelAndView mav = new ModelAndView("chart/neighbor");
+		
+		HashMap<String,String> map = new HashMap<>();
+		map.put("id", user.getId());
+		map.put("PAGE_SIZE", "10");
+		map.put("PAGE_NUM", "1");
+		
+		List<Map<String, Object>> neighborList = followService.hi_getNeighborList(map);
+		mav.addObject("neighborList", neighborList);
+		return mav;
+		
 	}
 	@RequestMapping("chart/love.hi")
 	public ModelAndView love(HttpServletRequest request, HttpSession session) {

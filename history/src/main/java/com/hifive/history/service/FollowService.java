@@ -44,4 +44,7 @@ public class FollowService implements iService {
 	public List<Map<String, Object>> hi_getFollowList(Map<String, String> condition) throws Exception {
 		return followDao.hi_getFollowList(condition);
 	}
+	public List<Map<String, Object>> hi_getNeighborList(Map<String, String> condition) throws Exception {
+		return followDao.hi_getNeighborList(condition);
+	}
 }

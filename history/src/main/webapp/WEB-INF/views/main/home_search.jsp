@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%
 	List<Map<String, Object>> searchList = (List<Map<String, Object>>)request.getAttribute("searchList");
 	String PAGE_NUM = "1"; //페이지NUM	
@@ -27,11 +28,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<style type="text/css">
 	.table-filter {
 	background-color: #fff;
@@ -119,10 +121,12 @@
 
 <!-- HISTORY START -->
 <br><br>
-<div class="row">
-<div class="col-lg-12">
+<div class="row" >
+<div class="col-lg-12" >
 <h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 
+<div class="col-lg-1"></div>
+<div class="col-lg-10">
 <table width="100%" class="table table-hover" >
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
@@ -155,8 +159,18 @@
 <%} %>
 </table>	
 
+<center> 
+<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
+<table><tr><td style="text-align: center;">
+<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "do_search.hi", "do_search_page")%>
+</td></tr>
+</table>
+</center>
+
+
 </div>
 </div>
+
 <!-- 디테일 클릭시 해당 ID, SEQ 들고 폼전송 구간 Start -->
 <form name="do_detail" method="get" action="">
 <input type="hidden" id="id" name="id" value="">
@@ -196,27 +210,9 @@ function do_search_page(url, page_num) {
 
 }
 </script>
-
-<br><br><br><br>
-<br><br><br><br>
-
-
 <!--페이징  -->
-<center>
-<!-- Paging Area Start -->
-			<table cellpadding="5" cellspacing="0" border="0" width="640">
-				<tr>
-					<td align="center">
-						<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> <%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 10, "do_search.hi", "do_search_page")%>
-					</td>
-				</tr>
-			</table>
-			<!-- Paging Area Start //-->
-</center>
-<!-- HISTORY END -->
 
-<br><br><br><br>
-<br><br><br><br>
+<!-- HISTORY END -->
 
 
 <!-- 네이버 검색결과 START -->
@@ -230,16 +226,8 @@ function do_search_page(url, page_num) {
 </div>
 
 <!-- 네이버 검색결과 END -->
-
-
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-
-
-
-
+</div>
+<div class="col-lg-1"></div>
 </div>
 <!--푸터 START -->
 <jsp:include page="footer.jsp"/>

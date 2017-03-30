@@ -22,6 +22,7 @@ public class MessageService implements iService {
 	@Autowired
 	private MessageDao messageDao;
 
+	// 쪽지 쓰기
 	@Override
 	public int hi_insert(iDto dto) {
 		
@@ -41,6 +42,7 @@ public class MessageService implements iService {
 		return messageDao.hi_detail(dto);
 	}
 
+	// 쪽지 삭제
 	@Override
 	public int hi_delete(int cnt) {
 		

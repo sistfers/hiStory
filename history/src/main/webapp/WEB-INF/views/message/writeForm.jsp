@@ -26,6 +26,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>쪽지함</title>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript">
+/* 글자 수 체크 */
+$(document).ready(function() {
+	$(function() {
+	    $('#realNote').keyup(function (e){
+	        var content = $(this).val();
+	        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
+	        $('#counter').html(content.length + '/300');
+	    });
+	    $('#realNote').keyup();
+	});
+});
+
+</script>
+
+<style type="text/css">
+	#wrap span {
+	    position: absolute;
+	    bottom: 5px;
+	    right: 20px;
+	}
+
+	#counter {
+		/* background:rgba(255,0,0,0.5);
+		border-radius: 0.5em;
+		padding: 0 .5em 0 .5em;
+		font-size: 0.75em; */
+	}	
+}
+
+</style>
+
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet"
 	type="text/css" />
@@ -77,10 +111,13 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div id="wrap" class="form-group">
 						<label class="col-lg-2 control-label">내용</label>
 						<div class="col-lg-10">
-							<textarea name="NOTE" rows="10" class="form-control"></textarea>
+							<textarea id="realNote" name="NOTE" 
+							rows="10" maxlength="300" style="resize: none"
+							class="form-control"></textarea>
+							<span id="counter">###</span>
 						</div>
 					</div>
 

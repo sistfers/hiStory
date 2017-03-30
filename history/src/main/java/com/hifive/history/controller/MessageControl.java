@@ -12,10 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.google.gson.Gson;
 import com.hifive.history.model.MessageDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.MessageService;
@@ -31,6 +34,27 @@ public class MessageControl {
 	@Autowired
 	private MessageService messageService; 
 	
+	
+	@RequestMapping(value="message/filtered.hi", method=RequestMethod.POST,
+			produces = "application/json; charset=utf8")
+	public @ResponseBody String do_filtered(HttpServletRequest res) {
+		
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/filtered.hi");	
+		
+		
+		String words = res.getParameter("words");
+		List<Map<String, Object>> filteredList = null;
+		
+		Gson gson = new Gson();
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		return words;
+//		return gson.toJson(filteredList);
+	}	
 	
 	@RequestMapping("message/writeForm.hi")
 	public ModelAndView do_write_ready(HttpServletRequest res) {

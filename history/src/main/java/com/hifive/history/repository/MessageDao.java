@@ -68,13 +68,11 @@ public class MessageDao implements iDao {
 		return sqlSession.delete(statement, cnt);
 	}
 
-	// 즐겨찾기 : 내가 추가한
+	// 즐겨찾기 : 내가 추가한(미정)
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
-		String statement = namespace +".hi_selectList";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectList(statement,dto);
+		
+		return null;
 	}
 	
 	// 받은 쪽지함

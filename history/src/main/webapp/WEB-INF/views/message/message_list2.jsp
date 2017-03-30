@@ -66,12 +66,7 @@ function deleteAction(){
 	}
 	console.log("### checkRow => {}"+checkRow);
 	
-	if(confirm("정보를 삭제 하시겠습니까?")){
-		
-		/* var frm = document.searchForm;
-		frm.action.value = 'delete.hi?idx='+checkRow;
-		frm.submit(); */
-	    
+	if(confirm("정보를 삭제 하시겠습니까?")){	    
 		location.href='delete.hi?idx='+checkRow+'&to=send';
 	    //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
 	}

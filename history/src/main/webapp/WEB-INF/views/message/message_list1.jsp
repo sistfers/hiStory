@@ -67,21 +67,60 @@ function deleteAction(){
 	}
 	console.log("### checkRow => {}"+checkRow);
 	
-	if(confirm("정보를 삭제 하시겠습니까?")){
-		
-	//	var frm = document.searchForm;
-	//	frm.action.value = 'delete.hi?idx='+checkRow+'&to=receive';
-	//	frm.submit();
-	    
+	if(confirm("정보를 삭제 하시겠습니까?")){	    
 		location.href='delete.hi?idx='+checkRow+'&to=receive';
 	//  "${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
 	}
 }
 
 /* 내용 검색 */
-function searchAction() {
-	alert("검색");
-}
+$(document).ready(function() {
+	$("#words").on("click", function() {
+		var words = $('#searchbox').val();
+		alert("words " + words);
+		
+		/* $.ajax({
+			type : "GET",                     // GET 또는 POST
+			url : 'updatetest.htm',          // 서버측에서 가져올 페이지
+			data : 'a=1&b=2&c=3',       // 서버측에 전달할 parameter
+			timeout : 5000,                  // 응답대기시간 
+			dataType : 'html',               // html , javascript, text, xml, jsonp 등이 있다
+			success : function(data) {     // 정상적으로 완료되었을 경우에 실행된다
+			
+			},
+			error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},
+			complete : function () {   // 정상이든 비정상인든 실행이 완료될 경우 실행될 함수
+			}
+		}); */	
+		$.ajax({
+			type : "POST",
+			url : "filtered.hi",
+			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+			data : {
+				"words" : ddd
+			},
+			success : function(data) {
+				// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+				var flag = $.parseJSON(data);
+				if (flag.msg == "true") {
+					do_search();
+				} else {
+					alert("등록 오류 입니다.");
+				}
+
+			},
+			complete : function(data) {
+				// 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+				// TODO
+			},
+			error : function(xhr, status, error) {
+				alert("에러발생");
+			}
+		});		
+	});	
+});
 </script>	
 </head>
 <body>
@@ -111,8 +150,8 @@ function searchAction() {
  		<div>
 			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
 			<button class="btn btn-warning" onclick="">답장</button>
-			<input type="text" name="searchbox" />
-			<input type="button" value="검색" class="btn btn-warning" onclick="searchAction();" />
+			<input type="text" id="searchbox" />
+			<input type="button" id="words" value="검색" class="btn btn-warning" />
     	</div>  
 		<table class="table">
 			<tr class="warning" >

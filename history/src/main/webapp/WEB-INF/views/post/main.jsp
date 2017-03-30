@@ -41,39 +41,45 @@
 	UserDto userDto = (UserDto) session.getAttribute("user");
 
 	Date today = new Date();
-
-	String PAGE_NUM 	= "1";	// 선택된 페이지
-	PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
-	out.print("PAGE_NUM="+PAGE_NUM);
-	int page_num 		= 1;	// 선택된 페이지
-	if(PAGE_NUM != null)  page_num  = Integer.parseInt(PAGE_NUM);
-	
-	int intTotalCount 	= 0;	// 총글수
-
-	List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-	data 	   = (ArrayList<HashMap<String, Object>>)request.getAttribute("lists");
-	HashMap<String, Object> dataCnt = null;
-	
-	if(data != null && data.size()>0){
-		dataCnt = data.get(0);
-		intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
-	}	
 	
 	// 포스트 내용 1건 보여주기
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
 	
 	// 해당글의 댓글 보여주기
 	ArrayList commentList = (ArrayList)request.getAttribute("commentList");
-	System.out.println("commentList"+commentList.toString());
+	//System.out.println("commentList"+commentList.toString());
 	
+	int intTotalCount 	= 0;	// 총글수
+	int page_num 		= 1;	// 선택된 페이지
 	
+	List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+	data 	   = (ArrayList<HashMap<String, Object>>)request.getAttribute("lists");
+	HashMap<String, Object> dataCnt = null;
 	
+	if(DTO != null){
+		String PAGE_NUM 	= "1";	// 선택된 페이지
+		PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
+		out.print("PAGE_NUM="+PAGE_NUM);
+		
+		if(PAGE_NUM != null)  page_num  = Integer.parseInt(PAGE_NUM);
+		
+		if(data != null && data.size()>0){
+			dataCnt = data.get(0);
+			intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
+		}	
+	}
+	
+	// 테마 색깔 정해야함
 	//String THEME = "#FFFFDE";		// 노랑
 	//String THEME = "#C6E8FF";		// 하늘
 	//String THEME = "#DAD9FF";		// 보라
 	//String THEME = "#FFD8D8";		// 살구
 	String THEME = "#8C8C8C";		// 회색
 %>    
+
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -86,23 +92,24 @@
 <title>여기에 블로그 타이틀이 들어가면 좋겠음</title>
 
 <style type="text/css">
-	.mydiv{
+	.mydiv{						/* 왼쪽 메뉴 영역  */
 		width:20%;
 		margin-right:0.5%;
 		border-radius: 15px;
 	}
-	.mydiv2{
+	.mydiv2{					/* 블로그 내용 영역 */
 		width:78%;
 		margin-left:0.5%;
 		border-radius: 15px;
 	}
-	table,th{		/* 테이블 내 가운데 정렬 */
+	table,th{					/* 테이블 내 가운데 정렬 */
 		text-align: center;
 	}
 	.tbList,#commentTable{		/* 글 목록의 글자크기 */
 		font-size: 13px;
 	}
 </style>
+
 <script type="text/javascript">
 // 페이징
 function do_search_page(url, page_num)
@@ -127,6 +134,8 @@ function go_update(){
 function go_delete(){
 }
 </script>
+
+
 </head>
 <body>
 <!--헤더 START-->
@@ -134,7 +143,9 @@ function go_delete(){
 <!--헤더 END-->
 
 
-<!-- 중간 START -->
+
+
+<!-- 메인내용 START -->
    <br><br>
    <div class="container" >
    
@@ -150,16 +161,27 @@ function go_delete(){
 	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px">
 	        
 	        
-<!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	         
-<form name="postupdateForm" action="update.hi" method="get">		
-<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
-</form> 
-
-<form name="postForm" action="main.hi" method="get">		
-<input type="hidden" name="PAGE_NUM" value="">     
-</form> 
-		        <div class="col-xs-12">
+<!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	
 		        
+				<%
+				if(DTO == null){	// 글 내용 없을때 
+				%>	
+					<div class="col-xs-12">
+					<br><br><br><br><br><br>
+					<center><h4>해당 카테고리에 포스트가 없습니다.</h4></center>
+					<br><br><br><br><br><br><br><br><br><br><br><br>
+					</div>
+				<%}else{  %>
+		
+	
+				<form name="postupdateForm" action="update.hi" method="get">		<!-- 글수정 -->
+				<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+				</form> 
+				<form name="postForm" action="main.hi" method="get">		
+				<input type="hidden" name="PAGE_NUM" value="">     
+				</form> 
+
+		        <div class="col-xs-12">
 		        <table width="100%" >
 		        <tr>
 		        <!-- 포스트 제목 -->
@@ -319,18 +341,41 @@ function go_delete(){
 					<%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
 					<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
 				</center>
-				
 				</div>
+<%} //if end %>	
 	  		</div>
 	  		<div class="col-xs-1"></div>
   		</div>
-
-
 </div>
 
+<!--메인내용 END -->
 
 
-<!-- 댓글/대댓글 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 댓글/대댓글 script -->
 <script type="text/javascript">
 $(function(){
        
@@ -519,7 +564,7 @@ $(function(){
 </script>
 
 
-<!--중간 END -->
+
 
 
 

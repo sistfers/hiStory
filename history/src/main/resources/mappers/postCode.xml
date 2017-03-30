@@ -99,14 +99,14 @@
 	  VALUES
 	  (
 	    SEQ_POST.nextval,
-	    #{CT_SEQ},
-	    #{ID},
-	    #{FIELD},
-	    #{TITLE},
-	    #{CONTENT},
-	    #{HASHTAG},
-	    #{STATE},
-	    #{CO_STATE}
+	    #{ct_seq},
+	    #{id},
+	    #{field},
+	    #{title},
+	    #{content},
+	    #{hashtag},
+	    #{state},
+	    #{co_state}
 	  )
 </insert>
 

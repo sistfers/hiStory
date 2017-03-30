@@ -113,12 +113,12 @@ public class BlogControl {
 		return mav;
 	}
 
-	//블로그 글 쓰기
+	//블로그 글 쓰기창 열기
 	@RequestMapping("post/write.hi")
-	public ModelAndView postWrite(HttpSession session) throws Exception{
-		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); //Page코드 : 100 글 주제
-		List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 130 댓글허용 여부
-		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 140 글 공개 여부
+	public ModelAndView postWrite(HttpServletRequest request, HttpSession session) throws Exception{
+		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
+		List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 130 댓글허용 여부
+		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 140 글 공개 여부
 		
 		ModelAndView mav = new ModelAndView();
 		Map<String, String> dto = new HashMap<String, String>();
@@ -149,28 +149,41 @@ public class BlogControl {
 		mav.addObject("postViewCode", postViewCode);
 		mav.addObject("themeCode", themeCode);
 		
+	
 		return mav;
-		// view에서 넘어온값 받기
-//		CT_SEQ 	= Integer.parseInt(request.getParameter("ct_seq"));
-//		ID		= request.getParameter("ct_seq");      
-//		FIELD	= request.getParameter("ct_seq");   
-//		TITLE	= request.getParameter("ct_seq");   
-//		CONTENT	= request.getParameter("ct_seq"); 
-//		HASHTAG	= request.getParameter("ct_seq"); 
-//		STATE	= request.getParameter("ct_seq");   
-//		CO_STATE= request.getParameter("ct_seq");
-//		postDto = new PostDto(0,CT_SEQ,ID,FIELD,TITLE,CONTENT,null,HASHTAG,STATE,CO_STATE);
-		
-		// 아래는 임시
-//		int seq, int ct_seq, String id, String field, String title, String content, String wdate,
-//		String hashtag, String state, String co_state
-//		postDto = new PostDto(0,0,"1","field","title","content",null,"hashtag","0","0");
-//		
-//		logger.debug("BlogControl.postDto.toString() = "+postDto.toString());
-//		
-//		postSvc.hi_insert(postDto);
 			
 	}
+	
+	
+	//블로그 글 쓰기(insert)
+	@RequestMapping("post/writeInsert.hi")
+	public String postwriteInsert(HttpServletRequest request, HttpSession session) throws Exception{
+		//ModelAndView mav = new ModelAndView();
+		
+		// view에서 넘어온값 받기
+		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
+		String id		= request.getParameter("id");
+		String field	= request.getParameter("field");   
+		String title	= request.getParameter("title");   
+		String content	= request.getParameter("content"); 
+		String hashtag	= request.getParameter("tag"); 
+		String state	= request.getParameter("state");   
+		String co_state= request.getParameter("co_state");
+		
+		PostDto postDto = new PostDto(0,ct_seq,id,field,title,content,null,hashtag,state,co_state);
+		logger.debug("BlogControl.postWrite.postDto.toString() = "+postDto.toString());
+		
+		int flag = postSvc.hi_insert(postDto);
+		if(flag > 0){
+			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
+		}else{
+			// 입력 실패했을때 어떻게 해야할지 모르겠다
+		}
+		
+		return null;
+	}
+	
+	
 	
 	//블로그 글 수정
 	@RequestMapping("post/update.hi")

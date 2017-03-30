@@ -54,7 +54,7 @@ if(!id.equals("${sessionScope.user.id}")){
 %>
 <!-- 포스트쓰기 Or 이웃추가-->
 
-	<a href="write.hi" class="btn btn-default btn-md">
+	<a href="write.hi?id=<%=id %>" class="btn btn-default btn-md">
 	    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
 	</a>
 <%}else{ %>

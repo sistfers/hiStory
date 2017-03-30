@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+
 <style type="text/css">
 img#logo{		/* 로고 윗부분 마진 */
-margin-top: 10px;
+	margin-top: 10px;
 }
 </style>
 
@@ -13,10 +14,8 @@ margin-top: 10px;
 	<div class="container">		<!-- 양 옆에 공백 -->
 	
 		<div class="navbar-header" style="vertical-align: center">
-		
-		<!-- 왼쪽로고. 클릭시 첫화면으로 이동함 -->
-		<a href="/"><img src="/resources/image/logo_sm.png" width="150" id="logo"></a>
-		<!-- 검정로고 -->
+			<!-- 왼쪽로고. 클릭시 첫화면으로 이동함 -->
+			<a href="/"><img src="/resources/image/logo_sm.png" width="150" id="logo"></a>
 		</div>
 		
 		<!-- 로그인전 =============================================================================== -->
@@ -36,7 +35,16 @@ margin-top: 10px;
 		%>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="javascript:go_myblog();">내블로그</a></li>
-					<li><a href="">이웃</a></li>
+					<li><a href="javascript:search_follow();">이웃</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</li>
 					<li><a href="">블로그관리</a></li>
 					<li><a href="">쪽지함</a></li>
 					<li><a href="">내정보</a></li>
@@ -45,17 +53,20 @@ margin-top: 10px;
 		<%
 			}
 		%>
-			      
-			      
+
 	</div>
 </nav>
 
 <!--페이지이동  -->
 <script type="text/javascript">
+
 	function go_myblog() {
 		var frm = document.myblogfrm;
 		frm.submit();
 	}
+    function search_follow() {
+
+    }
 	function do_logout(){
 		var frm = document.logoutfrm;
 		frm.submit();

@@ -166,14 +166,16 @@
 	    STATE,
 	    CO_STATE
 	  FROM POST_H
-	  WHERE ID = #{ID}       
+	  WHERE NOT STATE = '2'
+	  AND ID = #{ID}       
 	      <include refid="categoryCondition"></include> 
 	        order by SEQ DESC                               
 	    )T1 NATURAL JOIN                                   
 	    (                                                  
 	      SELECT COUNT(*) as TOT_CNT                              
-	      FROM POST_H                        
-	      WHERE ID = #{ID}
+	      FROM POST_H  
+	      WHERE NOT STATE = '2'                      
+	      AND ID = #{ID}
 	      <include refid="categoryCondition"></include>                        
 	    )T2                                                
 	  )TT1                                                 
@@ -184,7 +186,7 @@
 <!-- 글삭제 -->
 <update id="hi_delete" parameterType="int">
 UPDATE POST_H
-SET   STATE   = #{STATE}
+SET   STATE   = 2
 WHERE SEQ     = #{SEQ}
 </update>
 

@@ -39,7 +39,8 @@
 
 <%
 	UserDto userDto = (UserDto) session.getAttribute("user");
-
+	String id		= request.getParameter("id");
+	
 	Date today = new Date();
 	
 	// 포스트 내용 1건 보여주기
@@ -124,14 +125,16 @@ function do_search_page(url, page_num)
 </script>	
 
 <script type="text/javascript">
-/* 글 수정으로 이동(글 번호 가져가야함) */
+/* 글 수정 */
 function go_update(){
-	var frm = document.postupdateForm;
+	var frm = document.postUdateForm;
 	frm.submit();
 }
 
-/* 글 삭제 */ /* 어디로 가서 어떻게 처리해야하지? ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ */
+/* 글 삭제 */ 
 function go_delete(){
+	var frm = document.postDeleteForm;
+	frm.submit();
 }
 </script>
 
@@ -168,18 +171,23 @@ function go_delete(){
 				%>	
 					<div class="col-xs-12">
 					<br><br><br><br><br><br>
-					<center><h4>해당 카테고리에 포스트가 없습니다.</h4></center>
+					<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
 					<br><br><br><br><br><br><br><br><br><br><br><br>
 					</div>
 				<%}else{  %>
 		
 	
-				<form name="postupdateForm" action="update.hi" method="get">		<!-- 글수정 -->
-				<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
-				</form> 
-				<form name="postForm" action="main.hi" method="get">		
-				<input type="hidden" name="PAGE_NUM" value="">     
-				</form> 
+<form name="postUdateForm" action="update.hi" method="get">			<!-- 글수정 -->
+	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+	<input type="hidden" name="id" value="<%=id%>">
+</form> 
+<form name="postDeleteForm" action="delete.hi" method="get">		<!-- 글삭제 -->
+	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
+	<input type="hidden" name="id" value="<%=id%>">  
+</form> 
+<form name="postForm" action="main.hi" method="get">		
+	<input type="hidden" name="PAGE_NUM" value="">     
+</form> 
 
 		        <div class="col-xs-12">
 		        <table width="100%" >
@@ -191,7 +199,6 @@ function go_delete(){
 		        
 		        <!--공감하기  -->
 		        <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감 (1)</button> 
-				
 
 		        <!--글 수정하기 버튼  -->
 		        <br><br>
@@ -343,6 +350,7 @@ function go_delete(){
 				</center>
 				</div>
 <%} //if end %>	
+
 	  		</div>
 	  		<div class="col-xs-1"></div>
   		</div>

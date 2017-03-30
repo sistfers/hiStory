@@ -191,6 +191,23 @@ public class BlogControl {
 		return "post/update";
 	}
 	
+	//블로그 글 삭제
+	@RequestMapping("post/delete.hi")
+	public String postDelete(HttpServletRequest request) {
+		int	   seq 	= Integer.parseInt(request.getParameter("seq"));
+		String id		= request.getParameter("id");
+		
+		int flag = postSvc.hi_delete(seq);
+		
+		if(flag > 0){
+			return  "redirect:/post/main.hi?id="+id;
+		}else{
+			// 삭제 실패했을때 어떻게 해야할지 모르겠다
+		}
+		
+		return null;
+	}
+	
 	//왼쪽menu 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{

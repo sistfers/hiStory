@@ -68,8 +68,8 @@ if(!id.equals("${sessionScope.user.id}")){
 
 <!-- 카테고리 -->
 <div class="list-group">
-<li class="list-group-item active">카테고리 &nbsp;&nbsp;&nbsp;&nbsp;
-<span class="glyphicon glyphicon-chevron-down"></span></li>
+<a href="main.hi?id=<%=id%>" class="list-group-item active">카테고리 &nbsp;&nbsp;&nbsp;&nbsp;
+<span class="glyphicon glyphicon-chevron-down"></span></a>
 
   <%
   	for(int i = 0 ; i < categoryList.size(); ++i){

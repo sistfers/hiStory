@@ -1,5 +1,10 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	List<Map<String, Object>> searchList = (List<Map<String, Object>>)request.getAttribute("searchList");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,16 +26,18 @@
 <!-- 검색하기 -->
 <div class="form-group">
 <div class="col-xs-2"></div>
-
-	 <!-- 검색박스 -->
-	 <div class="col-xs-6">
-	 <input type="text" class="form-control" placeholder="검색어를 입력하세요" max="20" name="search_word" ></div>
-		
-	 <!-- 조회 버튼 -->
-	 <div class="col-xs-1">
- 	 <input type="button" class="btn btn-primary" value="조 회" onclick="javascript:do_search()">
-	 </div>
-</div>
+<div class="col-xs-8">
+	<div class="form-group">
+	  	<div class="input-group">
+		    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
+		     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
+	    	<span class="input-group-btn">
+	     	<input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:do_search()">
+	    	</span>
+	  	</div>
+	</div>  
+</div> 
+<div class="col-xs-2"></div>
 <br>
 
 <!-- HISTORY START -->
@@ -39,7 +46,18 @@
 <div class="col-lg-12">
 <h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 
-<p>내용</p>
+<table width="100%" >
+<%for(int i=0; i<searchList.size(); ++i){ %>
+<tr>
+	<td rowspan="2"><img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="40px" height="40px"></td>
+	<td><%=searchList.get(i).get("TITLE") %></td>
+	<td><%=searchList.get(i).get("WDATE") %></td>
+</tr>
+<tr>
+	<td colspan="2"><%=searchList.get(i).get("CONTENT") %></td>
+</tr>
+<%} %>
+</table>
 </div>
 </div>
 

@@ -237,7 +237,6 @@ $(document).ready(function () {
              },
              attr: {dy: "65px"},
              centralClick: function() {
-               alert("한주뽕뽕");
              }
            }
          },
@@ -291,6 +290,11 @@ $(document).ready(function () {
      });
    });
 </script>
+<!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 Start -->
+<form name="do_search" method="post" action="">
+<input type="hidden" id="search_word" name="search_word" value="">
+</form>
+<!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 End -->
 <div class="bubbleChart"></div>
 <!-- 해시태그 END -->
 

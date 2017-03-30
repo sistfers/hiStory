@@ -10,8 +10,13 @@ d3.svg.BubbleChart.define("central-click", function (options) {
       var fn = original.apply(this, arguments);
       self.event.on("click", function(node) {
         if (node.selectAll("text.central-click")[0].length === 1) {
-        	alert(node.data()[0].item.text);
-        	$.ajax({
+        	//alert(node.data()[0].item.text); 제일 큰 동그라미 검색어 들고오는 것
+        	var frm = document.do_search;
+    		frm.search_word.value = node.data()[0].item.text;
+    		console.log("frm.page_num.value=" + frm.search_word.value);
+    		frm.action = "/main/do_search.hi";
+    		frm.submit();
+        	/*$.ajax({	아작스로 리스트 받아올 때 사용
 				type : "POST",
 				url : "/main/do_search.hi",
 				dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
@@ -36,7 +41,7 @@ d3.svg.BubbleChart.define("central-click", function (options) {
 				error : function(xhr, status, error) {
 					alert("에러발생");
 				}
-			});
+			});*/
         }
       });
       return fn;

@@ -13,6 +13,8 @@
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 	
 	UserDto loginuser = (UserDto)session.getAttribute("user");
+
+	
 	
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,20 +46,17 @@
 <h5>초보개발자 블로그</h5>
 
 <%
-if(id.equals(loginuser.getId())){
-//if(loginuser.equals(categoryList.get(0).getId())){
-%>
-<!-- 포스트쓰기 Or 이웃추가-->
-
-	<a href="write.hi?id=<%=id %>" class="btn btn-default btn-md">
-	    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
-	</a>
-<%}else{ %>
-	<a class="btn icon-btn btn-warning btn-sm" href="#">
-	<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
-	이웃추가</a>
-<%} %>
-	
+if(loginuser != null){
+	if(id.equals(loginuser.getId())){ %>
+		<a href="write.hi?id=<%=id %>" class="btn btn-default btn-md">
+		    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
+		</a>
+	<%}else if(!id.equals(loginuser.getId())){ %>
+		<a class="btn icon-btn btn-warning btn-sm" href="#">
+		<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
+		이웃추가</a>
+	<%}
+}%>
 <br>
 <hr>
 

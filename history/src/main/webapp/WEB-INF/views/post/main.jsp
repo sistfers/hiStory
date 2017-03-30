@@ -79,8 +79,6 @@
 %>    
 
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -143,7 +141,7 @@ function go_delete(){
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 
 
@@ -171,9 +169,9 @@ function go_delete(){
 				if(DTO == null){	// 글 내용 없을때 
 				%>	
 					<div class="col-xs-12">
-					<br><br><br><br><br><br>
-					<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
-					<br><br><br><br><br><br><br><br><br><br><br><br>
+						<br><br><br><br><br><br>
+						<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
+						<br><br><br><br><br><br><br><br><br><br><br><br>
 					</div>
 				<%}else{  %>
 	
@@ -194,14 +192,14 @@ function go_delete(){
 		        <table width="100%" >
 		        <tr>
 		        <!-- 포스트 제목 -->
-		        <td width="80%" align="left" ><h2>${DTO.title}</h2> 
+		        <td width="80%" align="left" ><h2><%=DTO.getTitle() %></h2> 
 		        </td>
 		        <td width="20%" rowspan="2" >
 		        
 		        <!--공감하기  -->
 		        <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감 (1)</button> 
 
-<%if (id.equals(userDto.getId())) {%>
+<%if (userDto != null && id.equals(userDto.getId())) {%>
 		        <!--글 수정하기 버튼  -->
 		        <br><br>
 		        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();">글수정</button> 
@@ -263,7 +261,7 @@ function go_delete(){
 			  		<!-- <img src="http://localhost:8190/resources/image/aa.jpg" width="50px" height="50px"></td> -->
 			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
 		
-	 				<%if(commentdata.get("STATE").toString().equals("0") || userDto.getId().equals(commentdata.get("ID")) ) {%>
+	 				<%if(commentdata.get("STATE").toString().equals("0") || (userDto != null && userDto.getId().equals(commentdata.get("ID"))) ) {%>
 		 				<!-- 작성자/작성일 -->
 				  		<td width="67%" style="text-align: left;">
 						<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
@@ -274,7 +272,7 @@ function go_delete(){
 		  		  		<c:set var='login' value="${sessionScope.user}"/>
 		  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
 			  				<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-			  				<%if (userDto.getId().equals(commentdata.get("ID"))) {%>
+			  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 			  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 			  				<%} %>

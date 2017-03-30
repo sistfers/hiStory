@@ -43,8 +43,23 @@ public class MessageControl {
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/filtered.hi");	
 		
 		
+		String id 	 = res.getParameter("id");
 		String words = res.getParameter("words");
-		List<Map<String, Object>> filteredList = null;
+		String condi = res.getParameter("condi");
+		
+		Map<String, Object> search_info = new HashMap<String, Object>();			
+		
+		search_info.put("id", id);
+		search_info.put("words", words);
+		search_info.put("condi", condi);
+		search_info.put("PAGE_NUM", 1);
+		loger.debug("[[[id	   ]]] " + id);
+		loger.debug("[[[words  ]]] " + words);
+		loger.debug("[[[condi  ]]] " + condi);
+//		loger.debug("[[[PAGE_NUM  ]]] " + PAGE_NUM);
+		
+		
+		List<Map<String, Object>> filteredList = messageService.hi_select_filtered(search_info);
 		
 		Gson gson = new Gson();
 		
@@ -52,8 +67,7 @@ public class MessageControl {
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
 		loger.debug("----------------------------------------------------------");
 		
-		return words;
-//		return gson.toJson(filteredList);
+		return gson.toJson(filteredList);
 	}	
 	
 	@RequestMapping("message/writeForm.hi")
@@ -226,6 +240,8 @@ public class MessageControl {
 			mav.setViewName("/message/message_list1");
 			mav.addObject("getList", getList);
 			mav.addObject("PAGE_NUM", PAGE_NUM);
+			///////////////////////////////////////////////////<--////////////////////////////////
+			mav.addObject("My_Id", dto.getId());
 			
 		} else {
 			loger.debug("session.getAttribute(user) -> null");

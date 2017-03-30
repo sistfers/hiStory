@@ -100,6 +100,19 @@ public class MessageDao implements iDao {
 		
 		return list;
 	}
+	
+	// 검색 결과(내용)
+	public List<Map<String, Object>> hi_select_filtered(Map<String, Object> search_info) {
+		
+		String statement = namespace +".hi_select_filtered";
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement    ]]] "+statement);
+		logger.debug("[[[search_info  ]]] "+search_info.toString());
+			
+		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
+		
+		return list;
+	}
 }
 
 

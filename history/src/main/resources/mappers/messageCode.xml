@@ -35,7 +35,6 @@
 		INSERT INTO MESSAGE_H(SEQ, SEND_ID, TAKE_ID, CONTENTS, RDATE)
 		VALUES(SEQ_MESSAGE.NEXTVAL, #{send_id}, #{take_id}, #{contents}, NULL)
 	</update>
-
 	
 	<!-- 쪽지 읽기 -->
 	<select id="hi_detail" parameterType="int" resultType="com.hifive.history.model.MessageDto">
@@ -45,6 +44,60 @@
 		FROM MESSAGE_H
 		WHERE SEQ=#{seq}) A JOIN USER_H B 
 		              	 ON (A.SEND_ID=B.ID)
+	</select>	
+	
+	<!-- 쪽지 삭제 -->
+	<delete id="hi_delete" parameterType="int">
+		DELETE 	
+		FROM MESSAGE_H			
+		WHERE SEQ=#{id}	
+	</delete>
+	
+	<sql id="BaseCondition">
+		<where>
+			<choose>
+				<when test="condi == receiver ">
+					WHERE TAKE_ID=#{id}		
+				</when>
+				<when test="condi == send ">
+					WHERE SEND_ID=#{id}		
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+	</sql>
+	
+	<!-- <include refid="BaseCondition" /> -->
+	
+	<!-- 리스트 불러오기(내용 검색) -->
+	<select id="hi_select_filtered" parameterType="String" resultMap="GetNotes">
+		<![CDATA[
+		SELECT T1.*, T2.*
+		FROM(
+			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
+		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
+		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
+		           T.STATE, T.NAME							
+		    FROM(							
+		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
+		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
+		               B.NAME							
+		     	FROM(							
+		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
+		       		FROM MESSAGE_H							
+		        	WHERE TAKE_ID=#{id}	
+		        	AND CONTENTS LIKE '%' || #{words} || '%'						
+		        	ORDER BY WDATE					
+		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
+		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
+		        ) T      							
+		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
+			) T1 NATURAL JOIN  
+		    (                                                  
+		      SELECT COUNT(*) TOTAL                                  
+		      FROM MESSAGE_H                        
+		      WHERE TAKE_ID=#{id} ) T2
+		]]>	
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->
@@ -64,7 +117,7 @@
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
 		        	WHERE SEND_ID=#{SENDID}							
-		        ORDER BY WDATE					
+		        	ORDER BY WDATE					
 		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							
@@ -106,14 +159,7 @@
 		      WHERE TAKE_ID=#{TAKEID} ) T2
 		]]>		  
 	</select>
-	
-	<!-- 쪽지 삭제 -->
-	<delete id="hi_delete" parameterType="int">
-		DELETE 	
-		FROM MESSAGE_H			
-		WHERE SEQ=#{id}	
-	</delete>
-	
+		
 </mapper>
 
 

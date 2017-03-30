@@ -66,6 +66,12 @@ public class MessageService implements iService {
 			
 		return messageDao.hi_select_sendlist(search_info);
 	}
+	
+	// 검색 결과(내용)
+	public List<Map<String, Object>> hi_select_filtered(Map<String, Object> search_info) {
+		
+		return messageDao.hi_select_filtered(search_info);
+	}
 }
 
 

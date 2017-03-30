@@ -28,7 +28,7 @@ if((String) request.getAttribute("PAGE_NUM") != null) {
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 // 페이징
 function do_search_page(url, page_num) 

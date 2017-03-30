@@ -12,11 +12,18 @@ datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
 
 int intTotalCount = 0;
 int page_num = 1;
+String my_id = "";
 
 
 if((String) request.getAttribute("PAGE_NUM") != null) {
 	page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM"));
 } 
+
+if((String) request.getAttribute("My_Id") != null) {
+	my_id = (String) request.getAttribute("My_Id");
+} else {
+	
+}
 %>
 
 
@@ -28,9 +35,46 @@ if((String) request.getAttribute("PAGE_NUM") != null) {
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- http://aramk.tistory.com/21 -->
 <script type="text/javascript">
+/* 내용 검색 */
+$(document).ready(function() {
+	$("#words").on("click", function() {
+		var words = $('#searchbox').val();
+		var id	  = $('#My_ID').val();
+        
+		$.ajax({
+			type : "POST",
+			url : "filtered.hi",
+			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+			data : {
+				"condi" : 'receiver',
+				"words" : words,
+				"id"	: id
+			},
+			success : function(data) {
+				// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+				
+				alert("success " + data);
+				/* var flag = $.parseJSON(data);
+				if (flag.msg == "true") {
+					do_search();
+				} else {
+					alert("등록 오류 입니다.");
+				} */
+			},
+			complete : function(data) {
+				// 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+			},
+			error : function(xhr, status, error) {
+				alert("에러발생");
+			}
+		});		
+	});	
+});
+
+
 // 페이징
 function do_search_page(url, page_num) 
 {
@@ -73,54 +117,7 @@ function deleteAction(){
 	}
 }
 
-/* 내용 검색 */
-$(document).ready(function() {
-	$("#words").on("click", function() {
-		var words = $('#searchbox').val();
-		alert("words " + words);
-		
-		/* $.ajax({
-			type : "GET",                     // GET 또는 POST
-			url : 'updatetest.htm',          // 서버측에서 가져올 페이지
-			data : 'a=1&b=2&c=3',       // 서버측에 전달할 parameter
-			timeout : 5000,                  // 응답대기시간 
-			dataType : 'html',               // html , javascript, text, xml, jsonp 등이 있다
-			success : function(data) {     // 정상적으로 완료되었을 경우에 실행된다
-			
-			},
-			error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
-				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			},
-			complete : function () {   // 정상이든 비정상인든 실행이 완료될 경우 실행될 함수
-			}
-		}); */	
-		$.ajax({
-			type : "POST",
-			url : "filtered.hi",
-			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-			data : {
-				"words" : ddd
-			},
-			success : function(data) {
-				// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-				var flag = $.parseJSON(data);
-				if (flag.msg == "true") {
-					do_search();
-				} else {
-					alert("등록 오류 입니다.");
-				}
 
-			},
-			complete : function(data) {
-				// 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-				// TODO
-			},
-			error : function(xhr, status, error) {
-				alert("에러발생");
-			}
-		});		
-	});	
-});
 </script>	
 </head>
 <body>
@@ -144,7 +141,8 @@ $(document).ready(function() {
 	<button class="btn btn-warning" onclick="">답장</button> -->
 	</div>
 	<form name="searchForm" action="" method="POST">
-		<input type="hidden" name="PAGE_NUM" value="">
+		<input type="hidden" name="PAGE_NUM" value="" />
+		<input type="hidden" id="My_ID" value="<%=my_id %>" />
 	<div class="col-xs-10">
  		<!-- 버튼 -->	
  		<div>

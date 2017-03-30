@@ -7,6 +7,19 @@
 	img#logo{		/* 로고 윗부분 마진 */
 		margin-top: 10px;
 	}
+	.navbar-login
+	{
+		width: 350px;
+		padding: 10px;
+		padding-bottom: 0px;
+	}
+
+	.navbar-login-session
+	{
+		padding: 10px;
+		padding-bottom: 0px;
+		padding-top: 0px;
+	}
 </style>
 
 
@@ -33,14 +46,13 @@
 		<% } else { %>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="javascript:go_myblog();">내블로그</a></li>
-			<li><a href="javascript:search_follow();">이웃</a></li>
 			<li class="dropdown" id="followDropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃</a>
 				<ul class="dropdown-menu" role="menu" id="followUl"></ul>
 			</li>
 			<li><a href="/chart/control.hi">블로그관리</a></li>
 			<li><a href="javascript:do_message(); ">쪽지함</a></li>
-			<li><a href="">내정보</a></li>
+			<li><a href="/user/update.hi">내정보</a></li>
 			<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
 		</ul>
 		<% } %>
@@ -54,9 +66,6 @@
     function go_myblog() {
         var frm = document.myblogfrm;
         frm.submit();
-    }
-    function search_follow() {
-
     }
     function do_logout(){
         var frm = document.logoutfrm;
@@ -75,9 +84,8 @@
         frm.submit();
     }
     $("#followDropdown").on("click", function () {
-        var id = 0;
         <c:if test="${!empty sessionScope.user.id }">
-	        id = ${sessionScope.user.id};
+            var id = "${sessionScope.user.id}";
         </c:if>
         $("#followUl").empty();
         $.ajax({
@@ -90,9 +98,13 @@
             success: function (data) {
                 // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
                 var followList = $.parseJSON(data);
-				for (var i = 0; i < followList.length; i++)
-                    $("#followUl").append("<li><a href=\"/post/main.hi?id=" + followList[i].ID + "\">"+ followList[i].TITLE +"</a></li>")
-
+                if (followList.length == 0)
+                    $("#followUl").append("<li><a href=\"#\">\"이웃을 추가해보세요!\"</a></li>");
+				for (var i = 0; i < followList.length; i++) {
+                    var followUrl = "/post/main.hi?id=" + followList[i].ID;
+                    $("#followUl").append("<li><a href=\"" + followUrl + "\">" + followList[i].TITLE + "</a></li>");
+                }
+                $("#followUl").append("<li><div class=\"navbar-login\"><div class=\"row\"><div class=\"col-lg-4\"><p class=\"text-center\"><span class=\"glyphicon glyphicon-user icon-size\"></span></p></div><div class=\"col-lg-8\"><p class=\"text-left\"><strong>Mahesh</strong></p><p class=\"text-left small\">justdemo@gmail.com</p><p class=\"text-left\"><a href=\"#\" class=\"btn btn-primary btn-block btn-sm\">Logout</a></p></div></div></div></li>");
             },
             complete: function (data) {
                 // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
@@ -102,6 +114,7 @@
             }
         });
     });
+
 </script>
 
 <form name="myblogfrm" action="/post/main.hi">

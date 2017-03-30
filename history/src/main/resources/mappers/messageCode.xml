@@ -64,7 +64,7 @@
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
 		        	WHERE SEND_ID=#{SENDID}							
-		        ORDER BY WDATE DESC							
+		        ORDER BY WDATE					
 		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							
@@ -94,7 +94,7 @@
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
 		        	WHERE TAKE_ID=#{TAKEID}							
-		        ORDER BY WDATE DESC							
+		        ORDER BY WDATE						
 		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							

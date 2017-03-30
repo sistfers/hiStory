@@ -77,6 +77,11 @@ function deleteAction(){
 	//  "${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
 	}
 }
+
+/* 내용 검색 */
+function searchAction() {
+	alert("검색");
+}
 </script>	
 </head>
 <body>
@@ -106,6 +111,8 @@ function deleteAction(){
  		<div>
 			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
 			<button class="btn btn-warning" onclick="">답장</button>
+			<input type="text" name="searchbox" />
+			<input type="button" value="검색" class="btn btn-warning" onclick="searchAction();" />
     	</div>  
 		<table class="table">
 			<tr class="warning" >
@@ -124,11 +131,19 @@ function deleteAction(){
 				
 				for(int i = 0; i < datas.size(); i++) {
 					Map<String, Object> item = datas.get(i);
+					String subContents = (String) item.get("CONTENTS");
+					
+					if(subContents.length() > 15) {
+						subContents = subContents.substring(0, 15) + "...";
+						
+					} else {
+						
+					}
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
 					<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
-					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=item.get("CONTENTS") %></a></td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
 					<td><%=item.get("WDATE") %></td>
 				
 				<% 
@@ -161,7 +176,7 @@ function deleteAction(){
 //			System.out.println("intTotalCount " + intTotalCount);
 			%>
 			<%=PagingUtil.renderPaging(
-					intTotalCount, page_num, 10, 10, "send_message_list.hi", "do_search_page")%>
+					intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
 			<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
 		</center>
 	

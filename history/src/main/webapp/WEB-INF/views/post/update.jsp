@@ -16,7 +16,8 @@
 	reviewCode = (List<Map<String, Object>>)request.getAttribute("reviewCode");
 	postViewCode = (List<Map<String, Object>>)request.getAttribute("postViewCode");
 	
-	String id = request.getParameter("id");
+	String id 	= request.getParameter("id");
+	int	   seq 	= Integer.parseInt(request.getParameter("seq"));
 	
 	// 포스트 내용 1건 보여주기
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
@@ -44,8 +45,8 @@
 
 <!-- 중간 START -->
 <div class="container" >
-	<form class="form-horizontal postForm" action="writeInsert.hi" method="post">
-	
+	<form class="form-horizontal postForm" action="update.hi" method="post">
+	<input type="hidden" name="seq" value="<%=seq%>"/>
 	<input type="hidden" name="id" value="<%=id%>"/>
 <!-- 카테고리 -->
 		<div class="form-group col-xs-3" style="margin-left: 7px">

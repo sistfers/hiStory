@@ -193,6 +193,7 @@ public class BlogControl {
 	@RequestMapping("post/update.hi")
 	public String postUpdate(HttpServletRequest request) {
 		// view에서 넘어온값 받기
+		int	   seq 		= Integer.parseInt(request.getParameter("seq"));
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
 		String id		= request.getParameter("id");
 		String field	= request.getParameter("field");   
@@ -202,7 +203,7 @@ public class BlogControl {
 		String state	= request.getParameter("state");   
 		String co_state= request.getParameter("co_state");
 		
-		PostDto postDto = new PostDto(0,ct_seq,id,field,title,content,null,hashtag,state,co_state);
+		PostDto postDto = new PostDto(seq,ct_seq,id,field,title,content,null,hashtag,state,co_state);
 		logger.debug("BlogControl.postWrite.postDto.toString() = "+postDto.toString());
 		
 		int flag = postSvc.hi_update(postDto);

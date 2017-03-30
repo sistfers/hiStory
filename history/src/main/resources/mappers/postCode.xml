@@ -124,14 +124,14 @@
 <!--포스트수정  -->
 <update id="hi_update" parameterType="com.hifive.history.model.PostDto">
 	UPDATE POST_H
-	SET   CT_SEQ  = #{CT_SEQ},
-	      FIELD   = #{FIELD},
-	      TITLE   = #{TITLE},
-	      CONTENT = #{CONTENT},
-	      HASHTAG = #{HASHTAG},
-	      STATE   = #{STATE}
-	      CO_STATE = #{CO_STATE}
-	WHERE SEQ     = #{SEQ}
+	SET   CT_SEQ  = #{ct_seq},
+	      FIELD   = #{field},
+	      TITLE   = #{title},
+	      CONTENT = #{content},
+	      HASHTAG = #{hashtag},
+	      STATE   = #{state},
+	      CO_STATE= #{co_state}
+	WHERE SEQ     = #{seq}
 </update>
 
 <!--최신 포스트 1건 읽기  -->

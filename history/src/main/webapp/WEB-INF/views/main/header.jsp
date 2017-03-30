@@ -35,8 +35,12 @@ margin-top: 10px;
 			} else {
 		%>
 				<ul class="nav navbar-nav navbar-right">
-				<li><a href="javascript:go_myblog();">내블로그</a></li>
-				<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
+					<li><a href="javascript:go_myblog();">내블로그</a></li>
+					<li><a href="">이웃</a></li>
+					<li><a href="">블로그관리</a></li>
+					<li><a href="">쪽지함</a></li>
+					<li><a href="">내정보</a></li>
+					<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
 				</ul>
 		<%
 			}

@@ -4,7 +4,19 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<%!
+/**
+ * 모든 HTML 태그를 제거하고 반환한다.
+ * 
+ * @param html
+ * @throws Exception  
+ */
+	public String removeTag(String html) throws Exception {
+		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+	}
+%>
 <%
 	List<Map<String, Object>> searchList = (List<Map<String, Object>>)request.getAttribute("searchList");
 	String PAGE_NUM = "1"; //페이지NUM	
@@ -143,9 +155,21 @@
 		
 		
 		<h4 class="title">
-		<%=searchList.get(i).get("TITLE") %>
+		<%String tempTitle = searchList.get(i).get("TITLE")+"";
+			String title = tempTitle;
+			if(tempTitle.length() >30){
+				title = tempTitle.substring(0,30) + "...";
+			}
+		%>
+		<%= title%>
 		</h4>
-		<p class="summary"><%=searchList.get(i).get("CONTENT") %></p>
+		<%String tempContent = removeTag(searchList.get(i).get("CONTENT")+"");
+			String content = tempContent;
+			if(tempContent.length() >100){
+				content = tempContent.substring(0,100) + "...";
+			}
+		%>
+		<p class="summary"><%= content%></p>
 		</div>
 		<br>
 	</td>
@@ -209,6 +233,7 @@ function do_search_page(url, page_num) {
 	frm.submit();
 
 }
+
 </script>
 <!--페이징  -->
 

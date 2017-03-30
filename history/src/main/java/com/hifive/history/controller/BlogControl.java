@@ -72,13 +72,18 @@ public class BlogControl {
 		String ct_seqString = request.getParameter("ct_seq");
 		Integer ct_seq;
 		
+		int	   seq 	= request.getParameter("seq")==null ? 0 : Integer.parseInt(request.getParameter("seq"));
+		
 		// 최신 글 내용 보여주기
 		PostDto postDto = new PostDto();
 		postDto.setId(ID);
+		
 		if (ct_seqString == null)
 			ct_seq = 0;
 		else
 			ct_seq = Integer.parseInt(ct_seqString);
+		
+		postDto.setSeq(seq);
 		postDto.setCt_seq(ct_seq);
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 
@@ -184,12 +189,84 @@ public class BlogControl {
 	}
 	
 	
-	
 	//블로그 글 수정
 	@RequestMapping("post/update.hi")
-	public String postUpdate() {
-		return "post/update";
+	public String postUpdate(HttpServletRequest request) {
+		// view에서 넘어온값 받기
+		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
+		String id		= request.getParameter("id");
+		String field	= request.getParameter("field");   
+		String title	= request.getParameter("title");   
+		String content	= request.getParameter("content"); 
+		String hashtag	= request.getParameter("tag"); 
+		String state	= request.getParameter("state");   
+		String co_state= request.getParameter("co_state");
+		
+		PostDto postDto = new PostDto(0,ct_seq,id,field,title,content,null,hashtag,state,co_state);
+		logger.debug("BlogControl.postWrite.postDto.toString() = "+postDto.toString());
+		
+		int flag = postSvc.hi_update(postDto);
+		if(flag > 0){
+			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
+		}else{
+			// 실패했을때 어떻게 해야할지 모르겠다
+		}
+		
+		return null;
 	}
+	
+	//블로그 글 수정 내용 보이기
+	@RequestMapping("post/updateDetail.hi")
+	public ModelAndView postUpdateDetail(HttpServletRequest request, HttpSession session) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
+		List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 130 댓글허용 여부
+		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 140 글 공개 여부
+		
+		Map<String, String> dto = new HashMap<String, String>();
+		dto.put("isAll", "false");
+		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
+
+		Map<String, Object> codeMap = new HashMap<String, Object>();
+		List<String> codeList = new ArrayList<String>();
+		codeList.add("100");
+		codeList.add("130");
+		codeList.add("140");
+		codeMap.put("code_list", codeList);
+		
+		List<CategoryDto> categoryList = (List<CategoryDto>)categoryService.hi_selectCategory(dto);
+		List<Map<String, Object>> codes = (List<Map<String, Object>>)codeDSvc.hi_selectList(codeMap);
+		
+		for(int i=0; i<codes.size(); ++i){
+			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
+			
+			if((Integer)(codeData.get("CD_ID")) == 130) reviewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 140) postViewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
+		}
+		
+		mav.addObject("categoryList", categoryList);
+		mav.addObject("reviewCode", reviewCode);
+		mav.addObject("postViewCode", postViewCode);
+		mav.addObject("themeCode", themeCode);
+		
+		String ID 		= request.getParameter("id");
+		int	   seq 	= Integer.parseInt(request.getParameter("seq"));
+		
+		// 최신 글 내용 보여주기
+		PostDto postDto = new PostDto();
+		postDto.setId(ID);
+		postDto.setCt_seq(seq);
+		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
+
+		mav.addObject("DTO"   ,DTO);	
+		mav.setViewName("post/update");
+		
+		return mav;
+	}
+	
+	
 	
 	//블로그 글 삭제
 	@RequestMapping("post/delete.hi")

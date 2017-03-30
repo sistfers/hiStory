@@ -7,17 +7,12 @@
 <html>
 <head>
 <%
-	//session.setAttribute("id", "1");
 	String id = request.getParameter("id");
-	// 해당 id의 유저정보 받아오기
-	
+	// 해당블로그 유저정보 받아오기
 	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 	
-	
-	
-	//UserDto loginuser = (UserDto)session.getAttribute("id");
-	String loginuser = (String)session.getAttribute("id");
+	UserDto loginuser = (UserDto)session.getAttribute("user");
 	
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -49,7 +44,7 @@
 <h5>초보개발자 블로그</h5>
 
 <%
-if(!id.equals("${sessionScope.user.id}")){
+if(id.equals(loginuser.getId())){
 //if(loginuser.equals(categoryList.get(0).getId())){
 %>
 <!-- 포스트쓰기 Or 이웃추가-->

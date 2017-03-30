@@ -36,12 +36,14 @@
 			<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*">
 			<br>
 			<input type="password" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*">
-			<br><center>
+			<br>
+			<center>
 			<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN" />
 			<div class="clearfix"></div><br>	<!-- 줄 띄기  -->
 			<a href='/user/join.hi'>회원가입</a>
+			</center>
 		</form>
-</center>
+
 </div>
 <div class="col-xs-2"></div><!--여백용  -->
 

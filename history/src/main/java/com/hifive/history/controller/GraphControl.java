@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.PostDto;
+import com.hifive.history.model.UserDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CategoryService;
+import com.hifive.history.service.FollowService;
 import com.hifive.history.service.PostService;
 import com.hifive.history.service.VisitService;
 
@@ -36,9 +38,15 @@ public class GraphControl {
 	PostService postService;
 	@Autowired
 	VisitService visitService;
+	@Autowired
+	FollowService followService;
 	
 	@RequestMapping("chart/visit.hi")
 	public ModelAndView visit(HttpServletRequest request, HttpSession session) throws Exception {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
 		ModelAndView mav = new ModelAndView("chart/visit");
 		
 		Date date = new Date();
@@ -51,7 +59,7 @@ public class GraphControl {
 		}
 		
 		HashMap<String,String> dto = new HashMap<>();
-		dto.put("id", "G4374");
+		dto.put("id", user.getId());
 		dto.put("enddate", enddate);
 		
 		List<Map<String,Object>> visitList = visitService.hi_getTodayVisit(dto);
@@ -61,6 +69,11 @@ public class GraphControl {
 	}
 	@RequestMapping("chart/age.hi")
 	public ModelAndView age(HttpServletRequest request, HttpSession session) throws Exception {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
+		
 		ModelAndView mav = new ModelAndView("chart/age");
 		
 		Date date = new Date();
@@ -77,7 +90,7 @@ public class GraphControl {
 		}
 		
 		HashMap<String,String> dto = new HashMap<>();
-		dto.put("id", "G4374");
+		dto.put("id", user.getId());
 		dto.put("startday", startdate);
 		dto.put("endday", enddate);
 		
@@ -85,6 +98,41 @@ public class GraphControl {
 		mav.addObject("visitAgeList", visitAgeList);
 		mav.addObject("comment2", startdate);
 		mav.addObject("comment1", enddate);
+		
+		return mav;
+	}
+	@RequestMapping("chart/follow.hi")
+	public ModelAndView follow(HttpServletRequest request, HttpSession session) throws Exception {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
+		
+		ModelAndView mav = new ModelAndView("chart/follow");
+		
+		Date date = new Date();
+		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		date.setDate(date.getDate()+1);
+		String enddate = sd.format(date);
+		
+		if(request.getParameter("endday")!=null){
+			enddate = request.getParameter("endday");
+		}
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("id", user.getId());
+		map.put("enddate", enddate);
+		map.put("state", "0");
+		List<Map<String, Object>> followIncList = followService.hi_getFollowList(map);
+		
+		HashMap<String,String> map2 = new HashMap<String,String>();
+		map2.put("id", user.getId());
+		map2.put("enddate", enddate);
+		map2.put("state", "1");
+		List<Map<String, Object>> followDecList = followService.hi_getFollowList(map2);
+		
+		mav.addObject("followIncList", followIncList);
+		mav.addObject("followDecList", followDecList);
 		
 		return mav;
 	}
@@ -98,6 +146,11 @@ public class GraphControl {
 	}
 	@RequestMapping("chart/love.hi")
 	public ModelAndView love(HttpServletRequest request, HttpSession session) {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
+		
 		ModelAndView mav = new ModelAndView();
 		
 		Date date = new Date();
@@ -107,7 +160,7 @@ public class GraphControl {
 		
 		// 전체조회
 		HashMap<String,String> map = new HashMap<>();
-		map.put("ID", "1");
+		map.put("ID", user.getId());
 		map.put("START_DAY", startdate);
 		map.put("END_DAY", enddate);
 		
@@ -122,7 +175,7 @@ public class GraphControl {
 			startdate = request.getParameter("startdate");
 			enddate = request.getParameter("enddate");			
 		}
-		map2.put("ID", "1");
+		map2.put("ID", user.getId());
 		map2.put("START_DAY", startdate );
 		map2.put("END_DAY", enddate );
 		List<HashMap<String, Object>> loveSelectRank = postService.hi_selectLoveRank(map2);
@@ -133,6 +186,10 @@ public class GraphControl {
 	}
 	@RequestMapping("chart/comment.hi")
 	public ModelAndView comment(HttpServletRequest request, HttpSession session) {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
 		
 		Date date = new Date();
 		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
@@ -143,7 +200,7 @@ public class GraphControl {
 		
 		ModelAndView mav = new ModelAndView();
 		// 전체 조회
-		List<HashMap<String, Object>> postList = postService.hi_selectCommentRank("1");
+		List<HashMap<String, Object>> postList = postService.hi_selectCommentRank(user.getId());
 		mav.setViewName("chart/comment");
 		mav.addObject("postList", postList);
 		
@@ -165,11 +222,14 @@ public class GraphControl {
 	}
 	@RequestMapping("chart/control.hi")
 	public ModelAndView chartMenu(HttpServletRequest request, HttpSession session){
-		
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}		
 		ModelAndView mav = new ModelAndView();
 		//카테고리 불러오기(전체)
 		Map<String, String> dto = new HashMap<>();
-		dto.put("id", "1");
+		dto.put("id",user.getId());
 		dto.put("isAll", "true");
 		List<CategoryDto> categoryBefore = categoryService.hi_selectCategory(dto);
 		boolean b = true;

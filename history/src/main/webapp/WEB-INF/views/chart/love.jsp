@@ -70,7 +70,7 @@ border-radius: 15px;
 		        		if(loveRank.size()==0){
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="5">공감받은 글이 없습니다.</td>
+		        		<td colspan="5" style="text-align: center;">해당 기간에 공감받은 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        		}else{
@@ -90,9 +90,9 @@ border-radius: 15px;
 		        	
 		        	
 		        </table>
-		       
+		       	<hr>
 		        <form class="form-horizontal" method="post" action="love.hi">
-		       	
+		       	<p style="font-size: 25px; margin-top: 20px">기간별 조회</p>
 		       	<div class="form-group" id="startdate">
 					<div class="col-lg-4">
 						<%--<input type="text" class="form-control" id="birthday"--%>
@@ -126,7 +126,7 @@ border-radius: 15px;
 		        		if(loveSelectRank.size()==0){
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="5">선택하신 기간에 공감받은 글이 없습니다.</td>
+		        		<td colspan="5" style="text-align: center;">선택하신 기간에 공감받은 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        		}else{

@@ -4,6 +4,17 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.postCode">
 
+<sql id="categoryCondition1">
+	<choose>
+		<when test="ct_seq != 0 ">
+			AND CT_SEQ = #{ct_seq}
+		</when>
+		<when test="seq != 0 ">
+			AND SEQ = #{seq}
+		</when>
+		<otherwise></otherwise>
+	</choose>
+</sql>
 <sql id="categoryCondition">
 	<choose>
 		<when test="ct_seq != 0 ">
@@ -141,7 +152,7 @@
 	      FROM POST_H P
 	      WHERE NOT STATE = '2' 
 	      AND ID = #{id}
-		<include refid="categoryCondition"></include>
+		<include refid="categoryCondition1"/>
 		)
 </select>
 
@@ -168,7 +179,7 @@
 	  FROM POST_H
 	  WHERE NOT STATE = '2'
 	  AND ID = #{ID}       
-	      <include refid="categoryCondition"></include> 
+	      <include refid="categoryCondition"/> 
 	        order by SEQ DESC                               
 	    )T1 NATURAL JOIN                                   
 	    (                                                  
@@ -176,7 +187,7 @@
 	      FROM POST_H  
 	      WHERE NOT STATE = '2'                      
 	      AND ID = #{ID}
-	      <include refid="categoryCondition"></include>                        
+	      <include refid="categoryCondition"/>                        
 	    )T2                                                
 	  )TT1                                                 
 	WHERE RNUM BETWEEN (5 * (#{PAGE_NUM}-1)+1) AND (( 5 * (#{PAGE_NUM}-1))+5 )

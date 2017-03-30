@@ -176,11 +176,10 @@ function go_delete(){
 					<br><br><br><br><br><br><br><br><br><br><br><br>
 					</div>
 				<%}else{  %>
-		
 	
-<form name="postUdateForm" action="update.hi" method="get">			<!-- 글수정 -->
-	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
-	<input type="hidden" name="id" value="<%=id%>">
+<form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
+<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+<input type="hidden" name="id" value="<%=id%>">
 </form> 
 <form name="postDeleteForm" action="delete.hi" method="get">		<!-- 글삭제 -->
 	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
@@ -189,6 +188,7 @@ function go_delete(){
 <form name="postForm" action="main.hi" method="get">		
 	<input type="hidden" name="PAGE_NUM" value="">     
 </form> 
+
 
 		        <div class="col-xs-12">
 		        <table width="100%" >
@@ -201,11 +201,12 @@ function go_delete(){
 		        <!--공감하기  -->
 		        <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감 (1)</button> 
 
+<%if (id.equals(userDto.getId())) {%>
 		        <!--글 수정하기 버튼  -->
 		        <br><br>
 		        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();">글수정</button> 
 		        <button class="btn btn-danger btn-sm" onclick="javascript:go_delete();">글삭제</button>
-		        
+<%} %>
 		        </td>		        
 		        </tr>
 		        
@@ -336,7 +337,7 @@ function go_delete(){
 					%>
 					<tr>
 						<td><%=i+1 %></td>
-						<td align="left"><%=mapdatas.get("TITLE") %></td>
+						<td align="left" style="cursor:pointer;"><a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a></td>
 						<td><%=wdate %></td>
 					</tr>
 					
@@ -387,6 +388,12 @@ function go_delete(){
 <!-- 댓글/대댓글 script -->
 <script type="text/javascript">
 $(function(){
+<%-- 	$("td[name=selseq]").click(function(){
+		console.log("/post/main.hi?seq="+<%=DTO.getSeq()%>+"&id="+<%=id%>");
+	
+		location.href = "/post/main.hi?seq="+<%=DTO.getSeq()%>+"&id="+<%=id%>;
+	}); --%>
+
        
 //제일 하단에 있는 depth1의 댓글을 다는 이벤트=========================================================
     $("#commentParentSubmit").click(function( event ) {

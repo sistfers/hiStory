@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,6 +8,9 @@
 <head>
 <%
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
+	if(session.getAttribute("user")!=null){
+		UserDto user = (UserDto)session.getAttribute("user");
+	}
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->

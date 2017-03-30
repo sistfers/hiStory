@@ -89,8 +89,9 @@ border-radius: 15px;
 		        	
 		        	
 		        </table>
+		        <hr>
 		        <form class="form-horizontal" method="post" action="comment.hi">
-		       	
+		       	<p style="font-size: 25px; margin-top: 20px">기간별 조회</p>
 		       	<div class="form-group" id="startdate">
 					<div class="col-lg-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
@@ -114,7 +115,7 @@ border-radius: 15px;
 						<th>작성일</th>
 		        	</tr>
 		        	<%
-		        		if(postTodayList!=null){
+		        		if(postTodayList!=null && postTodayList.size()!=0){
 		        			for(int i = 0; i < postTodayList.size(); ++i){
 		        	%>	
 				       		<tr class="active">
@@ -130,7 +131,7 @@ border-radius: 15px;
 		        		}else{
 		        	%>		
 		        		<tr class="active">
-		        		<td colspan="5">댓글이 달린 글이 없습니다.</td>
+		        		<td colspan="5" style="text-align: center">해당 기간에 댓글이 달린 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        			

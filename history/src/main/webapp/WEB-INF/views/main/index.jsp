@@ -12,10 +12,11 @@
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<!-- Custom CSS  (이미지 동그란 모양으로 보이기)-->
     <link href="/resources/css/round-about.css" rel="stylesheet">
- 	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>   	
 	  <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
@@ -211,13 +212,13 @@ $(document).ready(function () {
        data: {
          items: [
             //데이터 받아오기
-        	<%
-          	for(int i=0; i<searchRank.size(); ++i){
-          	%>
- 		   		{text: '<%=searchRank.get(i).get("SEARCH_WORD") %>', count: '<%=searchRank.get(i).get("CNT") %>'}, 		   		
- 		   	<%
-          	}
- 		   	%>
+            <%
+            for(int i=0; i<searchRank.size(); ++i){
+            %>
+                {text: '<%=searchRank.get(i).get("SEARCH_WORD") %>', count: '<%=searchRank.get(i).get("CNT") %>'},
+            <%
+            }
+            %>
          ],
          eval: function (item) {return item.count;},
          classed: function (item) {return item.text.split(" ").join("");}
@@ -288,6 +289,9 @@ $(document).ready(function () {
            }
          }]
      });
+
+
+
    });
 </script>
 <!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 Start -->
@@ -379,6 +383,7 @@ $(document).ready(function () {
 	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
 
 </table>
+
 <%
 	}
 %> 

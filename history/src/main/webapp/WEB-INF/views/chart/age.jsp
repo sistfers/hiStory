@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
@@ -7,6 +11,19 @@
 <html>
 <%
 	Calendar cal = Calendar.getInstance();
+	List<Map<String,Object>> visitAgeList = new ArrayList<Map<String,Object>>();
+	visitAgeList = (List<Map<String,Object>>)request.getAttribute("visitAgeList");
+	
+	Date date = new Date();
+	SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+	String comment2 = sd.format(date);
+	date.setDate(date.getDate()-7);
+	String comment1 = sd.format(date);
+	
+	if(request.getAttribute("comment1")!=null){
+		comment1 = (String)request.getAttribute("comment1");
+		comment2 = (String)request.getAttribute("comment2");
+	}
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,17 +39,18 @@ function drawVisualization() {
   // Some raw data (not necessarily accurate)
   var data = google.visualization.arrayToDataTable([
    ['Month', '남자' , '여자'],
-   ['17/03/23',  5, 15],
-   ['17/03/24',  15, 7],
-   ['17/03/25',  1, 25],
-   ['17/03/26',  13, 20],
-   ['17/03/27',  26, 40]
+   ['10대',  <%=visitAgeList.get(0).get("MEN10") %>, <%=visitAgeList.get(0).get("WOMEN10") %>],
+   ['20대',  <%=visitAgeList.get(0).get("MEN20") %>, <%=visitAgeList.get(0).get("WOMEN20") %>],
+   ['30대',  <%=visitAgeList.get(0).get("MEN30") %>,  <%=visitAgeList.get(0).get("WOMEN30") %>],
+   ['40대',  <%=visitAgeList.get(0).get("MEN40") %>, <%=visitAgeList.get(0).get("WOMEN40") %>],
+   ['50대',  <%=visitAgeList.get(0).get("MEN50") %>, <%=visitAgeList.get(0).get("WOMEN50") %>]
+
 ]);
 
 var options = {
 title : 'haengtion님의 성별 분석',
 vAxis: {title: '방문수'},
-hAxis: {title: '일별 조회'},
+hAxis: {title: '<%=comment2%> ~ <%=comment1%>'},
 seriesType: 'bars',
 series: {5: {type: 'line'}}
 };
@@ -47,11 +65,11 @@ chart.draw(data, options);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['ages', 'Hours per Day'],
-          ['10대', 10],
-          ['20대', 25],
-          ['30대', 35],
-          ['40대', 10],
-          ['50대', 5]
+          ['10대', <%=Integer.parseInt(visitAgeList.get(0).get("MEN10").toString()) + Integer.parseInt(visitAgeList.get(0).get("WOMEN10").toString()) %>],
+          ['20대', <%=Integer.parseInt(visitAgeList.get(0).get("MEN20").toString()) + Integer.parseInt(visitAgeList.get(0).get("WOMEN20").toString()) %>],
+          ['30대', <%=Integer.parseInt(visitAgeList.get(0).get("MEN30").toString()) + Integer.parseInt(visitAgeList.get(0).get("WOMEN30").toString()) %>],
+          ['40대', <%=Integer.parseInt(visitAgeList.get(0).get("MEN40").toString()) + Integer.parseInt(visitAgeList.get(0).get("WOMEN40").toString()) %>],
+          ['50대', <%=Integer.parseInt(visitAgeList.get(0).get("MEN50").toString()) + Integer.parseInt(visitAgeList.get(0).get("WOMEN50").toString()) %>]
         ]);
 
         var options = {
@@ -95,7 +113,23 @@ border-radius: 15px;
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
 		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p>
-		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
+		       	<form class="form-horizontal" method="post" action="age.hi">
+		       	<div class="form-group" id="startdate" style="margin-top: 10px">
+					<div class="col-lg-1">
+					</div>
+					<div class="col-lg-4">
+						<input type="date" class="form-control" id="startdate" name="startdate">
+					</div>
+					<div class="col-lg-4">
+						<input type="date" class="form-control" id="enddate" name="enddate">
+					</div>
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-primary"> 조회 </button>
+					</div>
+				</div>
+				</form>
+		       	<div class="col-xs-12" id="chart_div" style="height: 500px;">
+		       	</div>
 		       	<div class="col-xs-12" id="donutchart" style="height: 500px;"></div>
 			<div class="col-xs-1"></div>
   		</div>

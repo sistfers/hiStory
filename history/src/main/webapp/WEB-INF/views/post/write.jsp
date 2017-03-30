@@ -7,15 +7,15 @@
 
 <%
 	List<CategoryDto> categoryList = ((List<CategoryDto>)request.getAttribute("categoryList"));
-	List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); //Page코드 : 100
-	List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 130
-	List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); //Page코드 : 140
+	List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100
+	List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 130
+	List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 140
 	
 	themeCode = (List<Map<String, Object>>)request.getAttribute("themeCode");
 	reviewCode = (List<Map<String, Object>>)request.getAttribute("reviewCode");
 	postViewCode = (List<Map<String, Object>>)request.getAttribute("postViewCode");
-
-
+	
+	String id = request.getParameter("id");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -40,31 +40,34 @@
 
 <!-- 중간 START -->
 <div class="container" >
-	<form class="form-horizontal postForm" action="write.hi" method="post">
+	<form class="form-horizontal postForm" action="writeInsert.hi" method="post">
 	
+	<input type="hidden" name="id" value="<%=id%>"/>
 <!-- 카테고리 -->
 		<div class="form-group col-xs-3" style="margin-left: 7px">
-			<select class="form-control" id="category">
+			<select class="form-control" id="category" name="ct_seq">
 			       <%if(categoryList.size() != 0){
 			       		for(int i=0; i<categoryList.size(); ++i){%>
-			       <option><%=categoryList.get(i).getName() %></option>
+			       <option value="<%=categoryList.get(i).getSeq()%>">
+			       <%=categoryList.get(i).getName() %></option>
+			       
 			       <%	}
 			       	 } else{ %>
-			       <option>전체</option>
+			       <option>선택안함</option>
 			       <%} %>
 		    </select>
 	    </div>
 	    
 <!--제목  -->	    
 		<div class="col-xs-9">
-			<input type="text" name="TITLE" id="TITLE" class="form-control" placeholder="제목을 입력해 주세요">
+			<input type="text" name="title" id="TITLE" class="form-control" placeholder="제목을 입력해 주세요">
 		</div>
 		
 <!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="CONTENT" rows="500"></textarea>
+		<textarea name="content" rows="500"></textarea>
 		<script type="text/javascript">
-			CKEDITOR.replace( 'CONTENT',{
+			CKEDITOR.replace( 'content',{
 				filebrowserUploadUrl: 'ckeditorImageUpload.hi'
 			}); 
 		</script>
@@ -72,10 +75,10 @@
 		
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
-			<select class="form-control" id="FIELD" name="FIELD">
+			<select class="form-control" id="FIELD" name="field">
 			       <%if(themeCode.size() != 0){
 			       		for(int i=0; i<themeCode.size(); ++i){%>
-			       <option><%=themeCode.get(i).get("CD_D_NM") %></option>
+			       <option value="<%=themeCode.get(i).get("CD_D_NM") %>"><%=themeCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
 			       <option>오류:::</option>
@@ -84,10 +87,10 @@
 	    </div>
 	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 댓글허용</label>
-			<select class="form-control" id="CO_STATE" name="CO_STATE">
+			<select class="form-control" id="CO_STATE" name="co_state">
 			       <%if(reviewCode.size() != 0){
 			       		for(int i=0; i<reviewCode.size(); ++i){%>
-			       <option><%=reviewCode.get(i).get("CD_D_NM") %></option>
+			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>"><%=reviewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
 			       <option>오류:::</option>
@@ -96,10 +99,10 @@
 	    </div>
 	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 공개범위</label>
-			<select class="form-control" id="STATE" name="STATE">
+			<select class="form-control" id="STATE" name="state">
 			       <%if(postViewCode.size() != 0){
 			       		for(int i=0; i<postViewCode.size(); ++i){%>
-			       <option><%=postViewCode.get(i).get("CD_D_NM") %></option>
+			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
 			       <option>오류:::</option>
@@ -115,14 +118,31 @@
 	
 	<!-- 태그 뿌려지는 부분 -->
 	<div id="after_tag" class="col-xs-12"></div>
-	<input type="hidden" name="tag" id="tag"/>	<!--연결된 태그값 넘기기  -->
-</form>
+    <input type="hidden" name="tag" id="tag"/>
+	<!--연결된 태그값 넘기기  -->
 
+
+<div class="clearfix"></div><br><br>	 <!--줄띄기  -->
+
+<!-- 버튼 -->
+		<button class="btn btn-danger col-xs-2 col-xs-offset-4" id="save">
+			<span class="glyphicon glyphicon-pencil"></span>
+			&nbsp;&nbsp; <b>확&nbsp;&nbsp;인</b>&nbsp;
+		</button>
+		<button class="btn btn-default col-xs-2 col-xs-offset-1" id="cancle"> &nbsp;&nbsp; 취&nbsp;&nbsp;소&nbsp;</button>
+</form>
+</div>
 
 <script>
 /* 태그 달기 js입니다 */       
 	$(document).ready(function(){
-	 
+		$("input:text").keydown(function(evt) 
+				{ 
+			if (evt.keyCode == 13) return false;
+			});
+
+
+		
 	    $("#tag_w").on('keyup',function(e){
 	
 	        var children = $("#after_tag").children('span').length;
@@ -151,7 +171,7 @@
 	            var resister_tag = "<span class='before_tag' id='tag_"+children+"' style='margin-left:7px;'>#<b>"+tag+"</b>"+
 	        					    "<a href='javascript:deltag("+children+")' style='margin-left:7px; color:red;'>"+
 	        					    "<b>x</b></a></span>";
-	            
+	        					    
 	            $("#after_tag").append(resister_tag);
 	            
 	            //초기화
@@ -178,39 +198,25 @@
 	}
 	 
 	function tag_post(){
-	 
-	    var ts = "";
-	    var t = $("#after_tag").children('span');
+	    var ts = "#";
+	    var t = $("#after_tag").children('span').children('b');
 	    t.each(function(){
 	            var v = $(this).html();
 	            var rt = v.split('<a');
 	            ts += rt[0] +"#";
 	    });
-	    $("#tag").val(ts);			/* 태그들 다 연결되어 붙은 값 */
-	    
-	    console.log("해시태그 ="+$("#tag").val(ts));
+	   	$("#tag").val(ts).val();			/* 태그들 다 연결되어 붙은 값 */
+	    console.log("해시태그 ="+$("#tag").val(ts).val());
 	}
-	 
-	 
-	</script>
-<div class="clearfix"></div><br><br>	 <!--줄띄기  -->
-<!-- 버튼 -->
-		<button class="btn btn-danger col-xs-2 col-xs-offset-4" id="save">
-			<span class="glyphicon glyphicon-pencil"></span>
-			&nbsp;&nbsp; <b>확&nbsp;&nbsp;인</b>&nbsp;
-		</button>
-		<button class="btn btn-default col-xs-2 col-xs-offset-1" id="cancle"> &nbsp;&nbsp; 취&nbsp;&nbsp;소&nbsp;</button>
-
-</div>
-
-
+</script>
+	
 <script type="text/javascript">
 /* 글쓰기 눌렀을때 액션 */
 $("#save").click(function(){
 	
-	var frm = document.searchForm;
-
 	tag_post();
+	
+	var frm = document.postForm;
 	
    if(!$("#TITLE").val()){
        alert('제목을 입력해주세요.');
@@ -222,7 +228,9 @@ $("#save").click(function(){
 
 /* 취소버튼 */
 $("#cancle").click(function(){
-	location.href = history.go(-1);
+	if(confirm("글 작성을 취소하시겠습니까?")){
+		location.href = history.go(-1);
+	}
 });
 
 </script>

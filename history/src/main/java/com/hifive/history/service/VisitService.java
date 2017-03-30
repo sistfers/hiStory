@@ -56,4 +56,7 @@ public class VisitService implements iService {
 	public List<Map<String,Object>> hi_getTodayVisit(HashMap<String, String> dto) throws Exception {
 		return visitDao.hi_getTodayVisit(dto);
 	}
+	public List<Map<String,Object>> hi_getAgeVisit(HashMap<String, String> dto) throws Exception {
+		return visitDao.hi_getAgeVisit(dto);
+	}
 }

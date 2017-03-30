@@ -46,7 +46,7 @@ img#logo{		/* 로고 윗부분 마진 */
 						</ul>
 					</li>
 					<li><a href="">블로그관리</a></li>
-					<li><a href="">쪽지함</a></li>
+					<li><a href="javascript:do_message(); ">쪽지함</a></li>
 					<li><a href="">내정보</a></li>
 					<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
 				</ul>
@@ -79,6 +79,10 @@ img#logo{		/* 로고 윗부분 마진 */
 	    var frm = document.joinfrm;
 	    frm.submit();
 	}
+	function do_message(){
+	    var frm = document.messagefrm;
+	    frm.submit();
+	}
 </script>
 
 <form name="myblogfrm" action="/post/main.hi">
@@ -87,3 +91,4 @@ img#logo{		/* 로고 윗부분 마진 */
 <form name="logoutfrm" action="/main/logout.hi"></form>
 <form name="loginfrm" action="/main/login.hi" method="post"></form>
 <form name="joinfrm" action="/user/join.hi" method="post"></form>
+<form name="messagefrm" action="/message/receive.hi" method="post"></form>

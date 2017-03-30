@@ -58,7 +58,7 @@ border-radius: 15px;
 		        		for(int i = 0; i < categoryList.size(); ++i){
 		        	%>
 		        	<tr class="active">
-		        		<td><%=categoryList.get(i).getSeq() %></td>
+		        		<td><%=i+1 %></td>
 		        		<td><%=categoryList.get(i).getName() %></td>
 		        		<td><%=categoryList.get(i).getState().equals("0")?"전체공개":"나만보기" %></td>
 		        	</tr>

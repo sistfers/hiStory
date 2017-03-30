@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.PostService;
 import com.hifive.history.service.SearchService;
@@ -100,8 +98,8 @@ public class HomeControl {
 	}
 	
 	@RequestMapping(value="main/do_search.hi",method=RequestMethod.POST)
-	@ResponseBody
-	public String do_search(HttpServletRequest res)throws Exception{
+	public ModelAndView do_search(HttpServletRequest res)throws Exception{
+		ModelAndView mav = new ModelAndView();
 		
 		
 		String search_word = "%"+res.getParameter("search_word").trim()+"%";
@@ -115,7 +113,10 @@ public class HomeControl {
 		condition.put("PAGE_NUM", PAGE_NUM);
 		condition.put("SEARCH_WORD", search_word);
 		List<Map<String, Object>> searchList = postSvc.hi_selectSearchList(condition);
-		Gson gson = new Gson();
-		return gson.toJson(searchList);
+		
+		mav.setViewName("/main/home_search");
+		mav.addObject("searchList", searchList);
+		
+		return mav;
 	}
 }

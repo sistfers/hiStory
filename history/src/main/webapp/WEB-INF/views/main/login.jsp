@@ -24,7 +24,7 @@
 <%
 	if (request.getAttribute("fail") != null) {
 %>
-		<h6 align="center"><%=request.getAttribute("fail")%></h6>
+		<h6 align="center" style="color: red"><%=request.getAttribute("fail")%></h6>
 <%
 	}
 %>

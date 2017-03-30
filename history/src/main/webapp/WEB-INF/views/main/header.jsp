@@ -46,7 +46,7 @@ img#logo{		/* 로고 윗부분 마진 */
 						</ul>
 					</li>
 					<li><a href="">블로그관리</a></li>
-					<li><a href="">쪽지함</a></li>
+					<li><a href="javascript:do_message">쪽지함</a></li>
 					<li><a href="">내정보</a></li>
 					<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
 				</ul>

@@ -25,22 +25,133 @@
 	SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 
 	FROM
 	  (
-	  SELECT TO_CHAR((TO_DATE(#{enddate}, 'YYYYMMDD')-LEVEL), 'YYYYMMDD') AS CUR_DATE,
+	  SELECT TO_CHAR((TO_DATE(#{enddate}, 'yy/mm/dd')-LEVEL), 'yy/mm/dd') AS CUR_DATE,
 	  0 AS CNT 
 	  FROM DUAL
 	  CONNECT BY LEVEL <=7
 	  ) A
 	LEFT OUTER JOIN
 	(
-	  SELECT TO_CHAR(VDATE, 'YYYYMMDD') AS CUR_DATE,COUNT(*) AS CNT
+	  SELECT TO_CHAR(VDATE, 'yy/mm/dd') AS CUR_DATE,COUNT(*) AS CNT
 	  FROM VISIT_H
 	  WHERE V_ID = #{id}
-	  AND VDATE BETWEEN TO_DATE(#{enddate}, 'YYYYMMDD')-7 AND TO_DATE(#{enddate}, 'YYYYMMDD')
-	  GROUP BY TO_CHAR(VDATE, 'YYYYMMDD')
+	  AND VDATE BETWEEN TO_DATE(#{enddate}, 'yy/mm/dd')-7 AND TO_DATE(#{enddate}, 'yy/mm/dd')
+	  GROUP BY TO_CHAR(VDATE, 'yy/mm/dd')
 	  
 	)B
 	ON A.CUR_DATE = B.CUR_DATE
 	ORDER BY CUR_DATE ASC
 	]]>
-	</select> 
+	</select>
+	<select id="hi_getAgeVisit" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	SELECT T1.*, T2.*, T3.*, T4.*, T5.*, T6.*, T7.*, T8.*, T9.*, T10.*, T11.*											
+  	FROM											
+    (SELECT count(*) men10											
+       FROM (SELECT *											
+              FROM VISIT_H											
+              WHERE BIRTH BETWEEN to_char(add_months(sysdate,-240)-1,'yyyy-mm-dd') AND to_char(sysdate,'yyyy-mm-dd'))											
+       WHERE V_ID = #{id}											
+             AND VDATE >= #{startday} AND VDATE < #{endday}											
+             AND SEX = '0'											
+    )T1											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) women10											
+        FROM (SELECT *											
+              FROM VISIT_H											
+              WHERE BIRTH BETWEEN to_char(add_months(sysdate,-240)-1,'yyyy-mm-dd') AND to_char(sysdate,'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '1'											
+    )T2											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) men20											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-360)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-240),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '0'											
+    )T3											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) women20											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-360)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-240),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '1'											
+    )T4											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) men30											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-480)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-360),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '0'											
+    )T5											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) women30											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-480)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-360),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '1'											
+    )T6											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) men40											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-600)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-480),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '0'											
+    )T7											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) women40											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-600)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-480),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '1'											
+    )T8											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) men50											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-720)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-600),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '0'											
+    )T9											
+    NATURAL JOIN											
+    (											
+      SELECT count(*) women50											
+      FROM (SELECT *											
+            FROM VISIT_H											
+            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-720)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-600),'yyyy-mm-dd'))											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+            AND SEX = '1'											
+    )T10																						
+    NATURAL JOIN											
+    (											
+      SELECT COUNT(*) TOT_CNT											
+      FROM VISIT_H											
+      WHERE V_ID = #{id}											
+            AND VDATE >= #{startday} AND VDATE < #{endday}											
+    )T11											
+	]]>
+	</select>
 </mapper>

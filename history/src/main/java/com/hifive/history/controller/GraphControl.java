@@ -21,6 +21,7 @@ import com.hifive.history.model.iDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.PostService;
+import com.hifive.history.service.VisitService;
 
 /**
  * Created by Admin on 2017-03-24.
@@ -33,15 +34,59 @@ public class GraphControl {
 	private BlogService blogService;
 	@Autowired
 	PostService postService;
+	@Autowired
+	VisitService visitService;
 	
 	@RequestMapping("chart/visit.hi")
-	public ModelAndView visit(HttpServletRequest request, HttpSession session) {
+	public ModelAndView visit(HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("chart/visit");
+		
+		Date date = new Date();
+		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		date.setDate(date.getDate()+1);
+		String enddate = sd.format(date);
+		
+		if(request.getParameter("enddate")!=null){
+			enddate = request.getParameter("enddate");
+		}
+		
+		HashMap<String,String> dto = new HashMap<>();
+		dto.put("id", "G4374");
+		dto.put("enddate", enddate);
+		
+		List<Map<String,Object>> visitList = visitService.hi_getTodayVisit(dto);
+		mav.addObject("visitList", visitList);
+		
 		return mav;
 	}
 	@RequestMapping("chart/age.hi")
-	public String age() {
-		return "/chart/age";
+	public ModelAndView age(HttpServletRequest request, HttpSession session) throws Exception {
+		ModelAndView mav = new ModelAndView("chart/age");
+		
+		Date date = new Date();
+		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		date.setDate(date.getDate()+1);
+		String enddate = sd.format(date);
+		date.setDate(date.getDate()-6);
+		String startdate = sd.format(date);
+		
+		
+		if(request.getParameter("enddate")!=null){
+			startdate = request.getParameter("startdate");
+			enddate = request.getParameter("enddate");
+		}
+		
+		HashMap<String,String> dto = new HashMap<>();
+		dto.put("id", "G4374");
+		dto.put("startday", startdate);
+		dto.put("endday", enddate);
+		
+		List<Map<String,Object>> visitAgeList = visitService.hi_getAgeVisit(dto);
+		mav.addObject("visitAgeList", visitAgeList);
+		mav.addObject("comment2", startdate);
+		mav.addObject("comment1", enddate);
+		
+		return mav;
 	}
 	@RequestMapping("chart/menu.hi")
 	public String menu() {

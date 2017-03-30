@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
@@ -7,6 +11,15 @@
 <html>
 <%
 	Calendar cal = Calendar.getInstance();
+	List<Map<String,Object>> visitList = new ArrayList<Map<String,Object>>();
+	visitList = (List<Map<String,Object>>)request.getAttribute("visitList");
+	
+	Date date = new Date();
+	SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+	String comment2 = sd.format(date);
+	date.setDate(date.getDate()-7);
+	String comment1 = sd.format(date);
+	
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,24 +34,26 @@ google.charts.setOnLoadCallback(drawVisualization);
 function drawVisualization() {
   // Some raw data (not necessarily accurate)
   var data = google.visualization.arrayToDataTable([
-   ['Month', '방문자'],
-   ['17/03/23',  5],
-   ['17/03/24',  15],
-   ['17/03/25',  1],
-   ['17/03/26',  13],
-   ['17/03/27',  26]
+	['Month', '방문자'],
+   	['<%=visitList.get(0).get("CUR_DATE")%>',  <%=visitList.get(0).get("CNT")%>],
+   	['<%=visitList.get(1).get("CUR_DATE")%>',  <%=visitList.get(1).get("CNT")%>],
+   	['<%=visitList.get(2).get("CUR_DATE")%>',  <%=visitList.get(2).get("CNT")%>],
+   	['<%=visitList.get(3).get("CUR_DATE")%>',  <%=visitList.get(3).get("CNT")%>],
+   	['<%=visitList.get(4).get("CUR_DATE")%>',  <%=visitList.get(4).get("CNT")%>],
+   	['<%=visitList.get(5).get("CUR_DATE")%>',  <%=visitList.get(5).get("CNT")%>],
+   	['<%=visitList.get(6).get("CUR_DATE")%>',  <%=visitList.get(6).get("CNT")%>],
 ]);
 
-var options = {
-title : 'haengtion님의 방문자 분석',
-vAxis: {title: '방문수'},
-hAxis: {title: '일별 조회'},
-seriesType: 'bars',
-series: {5: {type: 'line'}}
-};
+	var options = {
+	title : 'haengtion님의 방문자 분석',
+	vAxis: {title: '방문수'},
+	hAxis: {title: '<%=comment1%> ~ <%=comment2%>'},
+	seriesType: 'bars',
+	series: {7: {type: 'line'}}
+	};
 
-var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-chart.draw(data, options);
+	var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+	chart.draw(data, options);
 }
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -72,30 +87,23 @@ border-radius: 15px;
         <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
         	<div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
-		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p>
+		       	<p style="font-size: 25px; margin-top: 20px;"> 방문자수</p><hr>
 		       	<form class="form-horizontal" method="post" action="visit.hi">
 		       	
-		       	<div class="form-group" id="startdate">
-					<div class="col-lg-4">
-						<%--<input type="text" class="form-control" id="birthday"--%>
-							<%--name="birthday" data-rule-required="true"--%>
-							
-						<input type="date" class="form-control" id="startdate" name="startdate">
-					</div>
+		       	<div class="form-group" id="startdate" style="margin-top: 10px">
 					<div class="col-lg-1">
-						<h4>~</h4>
 					</div>
 					<div class="col-lg-4">
-						<%--<input type="text" class="form-control" id="birthday"--%>
-							<%--name="birthday" data-rule-required="true"--%>
-							
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-2">
 						<button type="submit" class="btn btn-primary"> 조회 </button>
 					</div>
+					<div class="col-lg-5">
+						* 7일간의 데이터를 불러옵니다.
+					</div>
 				</div>
-			</form>
+				</form>
 		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
 			<div class="col-xs-1"></div>
   		</div>

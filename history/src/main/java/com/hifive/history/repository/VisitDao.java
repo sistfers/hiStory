@@ -18,7 +18,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class VisitDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.VisitCode";
+	private final String namespace="com.hifive.history.repository.mappers.visitCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -79,6 +79,12 @@ public class VisitDao implements iDao {
 	
 	public List<Map<String,Object>> hi_getTodayVisit(HashMap<String, String> dto) throws Exception {
 		String statement = namespace +".hi_getTodayVisit";
+		logger.debug("statement"+statement);
+		logger.debug("dto = " + dto);
+		return sqlSession.selectList(statement,dto);
+	}
+	public List<Map<String,Object>> hi_getAgeVisit(HashMap<String, String> dto) throws Exception {
+		String statement = namespace +".hi_getAgeVisit";
 		logger.debug("statement"+statement);
 		logger.debug("dto = " + dto);
 		return sqlSession.selectList(statement,dto);

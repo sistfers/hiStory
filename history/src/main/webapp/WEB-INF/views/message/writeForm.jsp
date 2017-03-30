@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.hifive.history.model.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -28,55 +29,59 @@
 <title>쪽지함</title>
 	<!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet"	type="text/css" />
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-/* 글자 수 체크 */
-$(document).ready(function() {
-	$(function() {
-	    $('#realNote').keyup(function (e){
-	        var content = $(this).val();
-	        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
-	        $('#counter').html(content.length + '/300');
+	/* 글자 수 체크 */
+	$(document).ready(function() {
+		$(function() {
+		    $('#realNote').keyup(function (e){
+		        var content = $(this).val();
+		        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
+		        $('#counter').html(content.length + '/300');
+		    });
+		    $('#realNote').keyup();
+		});
+
+	    $("#TAKE_ID_CK").on("click", function () {
+
+	        <c:if test="${!empty sessionScope.user.id }">
+	            var id = "${sessionScope.user.id}";
+	        </c:if>
+	        $("#followDiv").empty();
+	        $.ajax({
+	            type:"POST",
+	            url:"/user/followSearch.hi",
+	            dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+	            data: {
+	                "id": id
+	            },
+	            success: function (data) {
+	                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+	                var followList = $.parseJSON(data);
+	                if (followList.length == 0)
+	                    $("#followDiv").append("<li><a href=\"#\">\"이웃을 추가해보세요!\"</a></li>");
+	                for (var i = 0; i < followList.length; i++) {
+	                    var followUrl = "javascript:in_follow(\'" + followList[i].ID + "\')";
+	                    var followName = followList[i].NAME + "(" + followList[i].ID + ")";
+	                    $("#followDiv").append("<p><a href=\"" + followUrl + "\">" + followName + "</a></p>");
+	                }
+	            },
+	            complete: function (data) {
+	                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+	            },
+	            error: function (xhr, status, error) {
+	                alert("에러발생");
+	            }
+	        });
 	    });
-	    $('#realNote').keyup();
 	});
 
-    $("#TAKE_ID_CK").on("click", function () {
-        $(".modal-body").append("");
-        <%--<c:if test="${!empty sessionScope.user.id }">--%>
-        <%--var id = "${sessionScope.user.id}";--%>
-        <%--</c:if>--%>
-        <%--$("#followUl").empty();--%>
-        <%--$.ajax({--%>
-            <%--type:"POST",--%>
-            <%--url:"/user/followSearch.hi",--%>
-            <%--dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨--%>
-            <%--data: {--%>
-                <%--"id": id--%>
-            <%--},--%>
-            <%--success: function (data) {--%>
-                <%--// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.--%>
-                <%--var followList = $.parseJSON(data);--%>
-                <%--if (followList.length == 0)--%>
-                    <%--$("#followUl").append("<li><a href=\"#\">\"이웃을 추가해보세요!\"</a></li>");--%>
-                <%--for (var i = 0; i < followList.length; i++) {--%>
-                    <%--var followUrl = "/post/main.hi?id=" + followList[i].ID;--%>
-                    <%--$("#followUl").append("<li><a href=\"" + followUrl + "\">" + followList[i].TITLE + "</a></li>");--%>
-                <%--}--%>
-                <%--$("#followUl").append("<li><div class=\"navbar-login\"><div class=\"row\"><div class=\"col-lg-4\"><p class=\"text-center\"><span class=\"glyphicon glyphicon-user icon-size\"></span></p></div><div class=\"col-lg-8\"><p class=\"text-left\"><strong>Mahesh</strong></p><p class=\"text-left small\">justdemo@gmail.com</p><p class=\"text-left\"><a href=\"#\" class=\"btn btn-primary btn-block btn-sm\">Logout</a></p></div></div></div></li>");--%>
-            <%--},--%>
-            <%--complete: function (data) {--%>
-                <%--// 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.--%>
-            <%--},--%>
-            <%--error: function (xhr, status, error) {--%>
-                <%--alert("에러발생");--%>
-            <%--}--%>
-        <%--});--%>
-    });
-});
-
+	function in_follow(followId) {
+		$("#TAKE_ID").val(followId);
+        $("#myModal").modal('toggle');
+    }
 </script>
 
 <style type="text/css">
@@ -92,8 +97,6 @@ $(document).ready(function() {
 		padding: 0 .5em 0 .5em;
 		font-size: 0.75em; */
 	}	
-}
-
 </style>
 
 
@@ -147,14 +150,13 @@ $(document).ready(function() {
 
 							<!-- Modal -->
 							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
+								<div class="modal-dialog modal-sm">
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 											<h4 class="modal-title" id="myModalLabel">이웃 목록</h4>
 										</div>
-										<div class="modal-body">
-											...
+										<div class="modal-body" id="followDiv">
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>

@@ -89,7 +89,6 @@ border-radius: 15px;
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
 		       	<p style="font-size: 25px; margin-top: 20px;"> 방문자수</p><hr>
 		       	<form class="form-horizontal" method="post" action="visit.hi">
-		       	
 		       	<div class="form-group" id="startdate" style="margin-top: 10px">
 					<div class="col-lg-1">
 					</div>

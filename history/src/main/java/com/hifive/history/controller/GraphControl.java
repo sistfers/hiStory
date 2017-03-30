@@ -20,6 +20,7 @@ import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CategoryService;
+import com.hifive.history.service.FollowService;
 import com.hifive.history.service.PostService;
 import com.hifive.history.service.VisitService;
 
@@ -36,6 +37,8 @@ public class GraphControl {
 	PostService postService;
 	@Autowired
 	VisitService visitService;
+	@Autowired
+	FollowService followService;
 	
 	@RequestMapping("chart/visit.hi")
 	public ModelAndView visit(HttpServletRequest request, HttpSession session) throws Exception {
@@ -85,6 +88,36 @@ public class GraphControl {
 		mav.addObject("visitAgeList", visitAgeList);
 		mav.addObject("comment2", startdate);
 		mav.addObject("comment1", enddate);
+		
+		return mav;
+	}
+	@RequestMapping("chart/follow.hi")
+	public ModelAndView follow(HttpServletRequest request, HttpSession session) throws Exception {
+		ModelAndView mav = new ModelAndView("chart/follow");
+		
+		Date date = new Date();
+		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		date.setDate(date.getDate()+1);
+		String enddate = sd.format(date);
+		
+		if(request.getParameter("endday")!=null){
+			enddate = request.getParameter("endday");
+		}
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("id", "1");
+		map.put("enddate", enddate);
+		map.put("state", "0");
+		List<Map<String, Object>> followIncList = followService.hi_getFollowList(map);
+		
+		HashMap<String,String> map2 = new HashMap<String,String>();
+		map2.put("id", "1");
+		map2.put("enddate", enddate);
+		map2.put("state", "1");
+		List<Map<String, Object>> followDecList = followService.hi_getFollowList(map2);
+		
+		mav.addObject("followIncList", followIncList);
+		mav.addObject("followDecList", followDecList);
 		
 		return mav;
 	}

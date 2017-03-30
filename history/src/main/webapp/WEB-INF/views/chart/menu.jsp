@@ -26,7 +26,7 @@
       	<h4>방문분석</h4><hr>
       	<a href="visit.hi">방문자수</a> <br>
       	<a href="age.hi">성별 / 연령별</a> <br>
-      	<a href="">이웃증감수</a> <br>
+      	<a href="follow.hi">이웃증감수</a> <br>
       	<br>
       	<h4>순위</h4><hr>
       	<a href="love.hi">공감수 순위</a> <br>

@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>회원가입</title>
+	<title>회원정보수정</title>
 	<!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -23,16 +23,16 @@
                 alert("aaa");
             });
 
-            $("#join").on("click", function () {
+            $("#update").on("click", function () {
                 if (joinCheck()) {
-                    $("#joinForm").submit();
+                    $("#updateForm").submit();
                 }
             });
 
         });
 
         function joinCheck() {
-            if ($("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
+            /* if ($("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
                 || $("#name").val()=="" || $("#birthday").val()=="") {
                 alert("필수 입력 사항을 모두 입력해 주세요.");
                 return false;
@@ -44,7 +44,7 @@
             if (emailCheck == false) {
                 alert("이메일이 인증되지 않았습니다.");
                 return false;
-            }
+            } */
             return true;
         }
 	</script>
@@ -74,23 +74,23 @@
 	<br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
 
 	<!--내용 START -->
-	<h1 align="center">회원가입</h1>
+	<h1 align="center">회원정보수정</h1>
 	<br>
 	<div class="col-xs-2"></div>	<!--여백용  -->
 	<div class="col-xs-8" >
 
 		<!-- form명 바꾸면 안되요 : id, name꼭 다시 확인하세요.. 중복된 이름이 있을수도 있음  -->
-		<form class="form-horizontal" action="/user/join.hi" method="post" id="joinForm">
-			<input type="hidden" name="do_join" value="do_join">
+		<form class="form-horizontal" action="/user/update.hi" method="post" id="updateForm">
+			<input type="hidden" name="do_update" value="do_update">
 			<div class="form-group" >
-				<span class="label label-danger">필수입력사항</span>
+				<span class="label label-danger">개인정보</span>
 			</div>
 
 			<div class="form-group" id="divId">
 				<label for="divId" class="col-lg-2 control-label">ID</label>
 				<div class="col-lg-10">
 					<input type="text" class="form-control onlyHangul" id="id"
-					       name="id" value=""
+					       name="id" value="<%=user.getId() %>" readonly="readonly"
 					       maxlength="20">
 					<!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: green" hidden="hidden" id="idCheckSuccess"> 사용하실 수 있는 ID입니다. </p>
 					<!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: red" hidden="hidden" id="idCheckFail"> ID가 이미 존재합니다. 다른 ID를 선택하세요. </p>
@@ -99,28 +99,11 @@
 
 			<div class="form-group" id="divEmail">
 				<label for="divEmail" class="col-lg-2 control-label">이메일</label>
-				<div class="col-lg-8">
+				<div class="col-lg-10">
 					<input type="email" class="form-control" id="email" name="email"
-					       placeholder="이메일" maxlength="30">
+					       placeholder="이메일" maxlength="30" value="<%=user.getEmail()%>" readonly="readonly">
 				</div>
-				<div class="col-lg-2">
-					<button type="button" class="btn btn-success btn-block" id="emailCk"
-					        name="emailCk">인증</button>
-				</div>
-			</div>
-
-			<div class="form-group" id="divEmailConfirm">
-				<label for="divEmailConfirm" class="col-lg-2 control-label">인증번호 입력</label>
-				<div class="col-lg-8">
-					<input type="text" class="form-control" id="cknum" name="cknum"
-					       placeholder="메일확인후 인증번호를 입력하세요" maxlength="30">
-					<p style="color: green" hidden="hidden" id="emailCheckSuccess"> 인증이 완료되었습니다. </p>
-					<p style="color: red" hidden="hidden" id="emailCheckFail"> 인증번호가 틀렸습니다. </p>
-				</div>
-				<div class="col-lg-2">
-					<button type="button" class="btn btn-success btn-block" id="emailCkaf"
-					        name="emailCkaf">확인</button>
-				</div>
+				
 			</div>
 
 			<div class="form-group" id="divPassword">
@@ -146,7 +129,7 @@
 				<div class="col-lg-10">
 					<input type="text" class="form-control onlyHangul" id="name"
 					       name="name" data-rule-required="true" placeholder="사용할 닉네임을 입력하세요"
-					       maxlength="20">
+					       maxlength="20" value="<%=user.getName()%>">
 				</div>
 			</div>
 
@@ -156,7 +139,8 @@
 					<%--<input type="text" class="form-control" id="birthday"--%>
 					<%--name="birthday" data-rule-required="true"--%>
 					<%--placeholder="YYYY/DD/MM" maxlength="20">--%>
-					<input type="date" class="form-control" id="birthday" name="birth">
+					<input type="text" class="form-control" id="birthday" name="birth" 
+					value="<%=user.getBirth()%>" readonly="readonly">
 				</div>
 			</div>
 
@@ -211,7 +195,7 @@
 			<hr>
 
 			<div class="form-group" id="choose">
-				<span class="label label-warning" >선택사항</span>
+				<span class="label label-warning" >프로필</span>
 			</div>
 
 			<div class="form-group" id="divProfileImg">
@@ -226,8 +210,8 @@
 				<label for="divProfileCon" class="col-lg-2 control-label" style="color: #A6A6A6">프로필내용</label>
 				<div class="col-lg-10">
 					<input type="text" class="form-control" id="profile"
-					       name="profileCon" data-rule-required="true" placeholder="안녕하세요."
-					       maxlength="20">
+					       name="profileCon" data-rule-required="true"
+					       maxlength="20" value="<%=user.getPf_content()%>">
 				</div>
 			</div>
 			<hr>		<!-- 구분선 -->
@@ -236,7 +220,7 @@
 
 			<!-- 회원가입/취소 버튼 -->
 			<div class="form-group" align="center">
-				<button type="button" class="btn btn-info" id="join">회원가입</button>
+				<button type="button" class="btn btn-info" id="update">수정완료</button>
 				<button type="reset" class="btn btn-default">취소</button>
 			</div>
 		</form>
@@ -247,7 +231,7 @@
 <!--내용 END -->
 
 <!--푸터 START -->
-<jsp:include page="/WEB-INF/views/main/footer.jsp"/>
+<jsp:include page="../main/footer.jsp"/>
 <!--푸터 START -->
 
 

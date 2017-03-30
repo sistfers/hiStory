@@ -139,4 +139,52 @@ public class UserControl {
 		Gson gson = new Gson();
 		return gson.toJson(followList);
 	}
+	@RequestMapping(value = "user/update.hi", method = RequestMethod.POST)
+	public ModelAndView update(HttpServletRequest request, Model model) {
+		ModelAndView mav = new ModelAndView();
+
+		// 회원 가입 버튼 클릭해서 넘어왔을 시
+		if (request.getParameter("do_update") != null) {
+			// 회원 추가
+			UserDto userDto = new UserDto();
+			userDto.setId(request.getParameter("id"));
+			userDto.setName(request.getParameter("name"));
+			userDto.setPassword(request.getParameter("password"));
+			userDto.setEmail(request.getParameter("email"));
+			userDto.setArea(request.getParameter("area"));
+			userDto.setBirth(request.getParameter("birth"));
+			userDto.setSex(request.getParameter("sex"));
+			userDto.setPf_content(request.getParameter("profileCon"));
+			userDto.setPf_image("ddd");
+			userDto.setGrade("몽땅연필");
+//			userDto.setPf_image(request.getParameter("profileImg"));
+			userService.hi_update(userDto);
+
+
+			// 세션에 로그인정보 추가
+			userDto = (UserDto) userService.hi_login(userDto);
+			model.addAttribute("user", userDto);
+			mav.setViewName("redirect:/");
+
+		} else {
+			// 지역 리스트 가져오기
+			List<Map<String, Object>> areaMapList = new ArrayList<Map<String, Object>>();
+			Map<String, Object> condition = new HashMap<>();
+			List<String> code_list = new ArrayList<String>();
+			code_list.add("120");
+			condition.put("code_list", code_list);
+			try {
+				areaMapList = codeDService.hi_selectList(condition);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			List<String> areaList = new ArrayList<String>();
+			for (int i = 0; i < areaMapList.size(); i++)
+				areaList.add((String) areaMapList.get(i).get("CD_D_NM"));
+			mav.addObject("areaList", areaList);
+			mav.setViewName("/user/update");
+		}
+
+		return mav;
+	}
 }

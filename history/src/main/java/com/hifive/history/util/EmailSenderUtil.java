@@ -6,19 +6,25 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.UserDto;
 
-
+@Component
 public class EmailSenderUtil {
 
 	@Autowired
-	private static JavaMailSender mailSender;
+	private JavaMailSender mailSender;	
 
-	public static ModelAndView eamilSender(UserDto dto) {
+	public EmailSenderUtil() {
 		
-		String tmp = IssueAnTokenUtil.tokenMaker(dto);
+	}
+
+	public ModelAndView eamilSender(UserDto dto) {
+		
+		IssueAnTokenUtil issueAnTokenUtil = new IssueAnTokenUtil();
+		String tmp = issueAnTokenUtil.tokenMaker(dto);
 		
 		String sender  = "sisthifive@gmail.com";
 		String title   = "[Hifive] Please verify your email address";		

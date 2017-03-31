@@ -9,6 +9,8 @@ import com.hifive.history.service.BlogService;
 import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.FollowService;
 import com.hifive.history.service.UserService;
+import com.hifive.history.util.EmailSenderUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,9 +70,13 @@ public class UserControl {
 
 			System.out.println("======================================================");
 			System.out.println("udto = " + userDto.toString());
-			mav.setViewName("/user/join");
+//			mav.setViewName("/user/join");
 
 //			userService.hi_insert(userDto);
+//			
+//			// 이메일 발송
+//			EmailSenderUtil emailSenderUtil = new EmailSenderUtil();
+//			emailSenderUtil.eamilSender(userDto);
 //
 //			// 블로그 추가
 //			BlogDto blogDto = new BlogDto();

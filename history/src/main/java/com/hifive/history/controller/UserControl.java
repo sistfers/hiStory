@@ -122,11 +122,14 @@ public class UserControl {
 		String PAGE_SIZE = (request.getParameter("PAGE_SIZE") == null) ? "10" : request.getParameter("PAGE_SIZE");
 		String PAGE_NUM = (request.getParameter("PAGE_NUM") == null
 				|| request.getParameter("PAGE_NUM").equals("")) ? "1" : request.getParameter("PAGE_NUM");
+		String PAGE = (request.getParameter("PAGE") == null
+				|| request.getParameter("PAGE").equals("")) ? "page" : request.getParameter("PAGE");
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("SEARCH_CON", "ifollow");
 		condition.put("id", request.getParameter("id"));
 		condition.put("PAGE_SIZE", PAGE_SIZE);
 		condition.put("PAGE_NUM", PAGE_NUM);
+		condition.put("PAGE", PAGE);
 
 		List<Map<String, Object>> followList = new ArrayList<>();
 		try {

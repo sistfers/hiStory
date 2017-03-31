@@ -77,12 +77,38 @@
 	            )
 	</sql>
 
+	<!--페이징-->
+	<sql id="page">
+		SELECT TT2.*
+		FROM(
+		SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
+		FROM(
+		<include refid="BaseCondition"></include>
+		)T2
+		)TT2
+		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
+		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+		ORDER BY TT2.RNUM DESC
+	</sql>
+
 	<!--페이징 없음-->
+	<sql id="notpage">
+		SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
+		FROM(
+		<include refid="BaseCondition"></include>
+		)T2
+	</sql>
+
 	<select id="hi_selectList" parameterType="hashmap" resultMap="followMap">
-	      SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
-	      FROM(
-	      <include refid="BaseCondition"></include>
-	        )T2
+		<choose>
+			<when test="PAGE == 'page' ">
+				<include refid="page"></include>
+			</when>
+			<when test="PAGE == 'notpage' ">
+				<include refid="notpage"></include>
+			</when>
+			<otherwise></otherwise>
+		</choose>
 	</select>
 
 	<!--페이징-->

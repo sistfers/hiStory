@@ -45,38 +45,123 @@
 		});
 
 	    $("#TAKE_ID_CK").on("click", function () {
-
-	        <c:if test="${!empty sessionScope.user.id }">
-	            var id = "${sessionScope.user.id}";
-	        </c:if>
-	        $("#followDiv").empty();
-	        $.ajax({
-	            type:"POST",
-	            url:"/user/followSearch.hi",
-	            dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-	            data: {
-	                "id": id
-	            },
-	            success: function (data) {
-	                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-	                var followList = $.parseJSON(data);
-	                if (followList.length == 0)
-	                    $("#followDiv").append("<li><a href=\"#\">\"이웃을 추가해보세요!\"</a></li>");
-	                for (var i = 0; i < followList.length; i++) {
-	                    var followUrl = "javascript:in_follow(\'" + followList[i].ID + "\')";
-	                    var followName = followList[i].NAME + "(" + followList[i].ID + ")";
-	                    $("#followDiv").append("<p><a href=\"" + followUrl + "\">" + followName + "</a></p>");
-	                }
-	            },
-	            complete: function (data) {
-	                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-	            },
-	            error: function (xhr, status, error) {
-	                alert("에러발생");
-	            }
-	        });
+	        modalSet(1);
 	    });
 	});
+
+	function modalSet(pagenum) {
+        <c:if test="${!empty sessionScope.user.id }">
+            var id = "${sessionScope.user.id}";
+        </c:if>
+		var PAGE_NUM = pagenum;
+        $("#followDiv").empty();
+        $.ajax({
+            type:"POST",
+            url:"/user/followSearch.hi",
+            dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+            data: {
+                "id": id,
+	            "PAGE_NUM": PAGE_NUM
+            },
+            success: function (data) {
+                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                var followList = $.parseJSON(data);
+                if (followList.length == 0) {
+                    $("#followDiv").append("<li><a href=\"#\">\"이웃이 없습니다.\"</a></li>");
+                } else {
+                    for (var i = 0; i < followList.length; i++) {
+                        var followUrl = "javascript:in_follow(\'" + followList[i].ID + "\')";
+                        var followName = followList[i].NAME + "(" + followList[i].ID + ")";
+                        $("#followDiv").append("<p><a href=\"" + followUrl + "\">" + followName + "</a></p>");
+                    }
+                    // 페이징
+                    var pagingString = paging(followList[0].TOT_CNT, pagenum, 10, 10, "modalSet");
+                    $("#followDiv").append("<center><table><tr><td style='text-align: center;'>" + pagingString + "</td></tr></table></center>");
+                }
+            },
+            complete: function (data) {
+                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+            },
+            error: function (xhr, status, error) {
+                alert("에러발생");
+            }
+        });
+    }
+
+    function paging(maxnum, currpageno, rowperpage, bottomcount, scriptname) {
+        var maxNum = 0; // 총 갯수
+        var currPageNo = 1; // 현재 페이지 번호 : page_num
+        var rowPerPage = 10; // 한페이지에 보여질 행수 : page_size
+        var bottomCount = 10; // 바닥에 보여질 페이지 수: 10
+
+        maxNum = maxnum;
+        currPageNo = currpageno;
+        rowPerPage = rowperpage;
+        bottomCount = bottomcount;
+
+        var scriptName = scriptname; // 호출 자바스크립트
+
+        var maxPageNo = ((maxNum - 1) / rowPerPage) + 1;
+        var startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;//
+        var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
+        var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
+        var maxBlockNo = ((maxNum - 1) / bottomCount) + 1;
+
+        var inx = 0;
+        var html = "";
+        if (currPageNo > maxPageNo) {
+            return "";
+        }
+        html = html + "<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n";
+        html = html + "<tr>\n";
+        html = html + "<td class=\"list_num\">\n";
+        html = html + "<ul class=\"pagination pagination-sm\">\n";
+
+//        // <<
+//        if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
+//            html = html + "<li><a href=\"javascript:" + scriptName + "( 1 );\">\n";
+//            html = html + "&laquo;\n";
+//            html = html + "</a></li>\n";
+//        }
+//
+//        // <
+//        if (startPageNo > bottomCount) {
+//            html = html + "<li><a href=\"javascript:" + scriptName + "( " + (startPageNo - 1)+ ");\"> \n";
+//            html = html + "<        \n";
+//            html = html + "</a></li>     \n";
+//        }
+
+        // 1 2 3 ... 10	(숫자보여주기)
+        for (inx = 1; inx <= maxPageNo && inx <= endPageNo; inx++) {
+
+            if (inx == currPageNo) {
+                html = html + "<li class='active'><a href='#'>" + inx	+ "</a></li>";
+            } else {
+                html = html + "<li><a href=\"javascript:" + scriptName + "(" + inx+ ");\" class=\"num_text\">" + inx + "</a></li> \n";
+            }
+        }
+
+//        // >
+//        if (maxPageNo >= inx) {
+//            html = html + "<li><a href=\"javascript:" + scriptName + "("+ ((nowBlockNo * bottomCount) + 1) + ");\"> \n";
+//            html = html + ">                       \n";
+//            html = html + "</a></li>              \n";
+//        }
+//
+//        // >>
+//        if (maxPageNo >= inx) {
+//            html = html + "<li><a href=\"javascript:" + scriptName + "(" + maxPageNo+ ");\">      \n";
+//            html = html + "&raquo;     \n";
+//            html = html + "</a></li>    \n";
+//        }
+
+        html = html + "</ul>		\n";
+        html = html + "</td>  	\n";
+        html = html + "</tr>  	\n";
+        html = html + "</table>   \n";
+
+        return html;
+    }
 
 	function in_follow(followId) {
 		$("#TAKE_ID").val(followId);

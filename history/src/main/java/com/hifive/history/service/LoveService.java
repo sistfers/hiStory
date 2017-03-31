@@ -29,13 +29,12 @@ public class LoveService implements iService{
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return loveDao.hi_selectList(condition);
 	}
-	
-//= 사용안함 =========================================	
 	@Override
 	public iDto hi_detail(iDto dto) {
-		return null;
+		return loveDao.hi_detail(dto);
 	}
-
+	
+//= 사용안함 =========================================	
 	@Override
 	public int hi_delete(int cnt) {
 		return 0;

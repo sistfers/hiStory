@@ -26,11 +26,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.CommentDto;
+import com.hifive.history.model.LoveDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.CommentService;
+import com.hifive.history.service.LoveService;
 import com.hifive.history.service.PostService;
 import com.hifive.history.service.UserService;
 import com.hifive.history.service.VisitService;
@@ -50,6 +52,8 @@ public class BlogControl {
 	private VisitService visitService;
 	@Autowired
 	private UserService userSvc;
+	@Autowired
+	LoveService loveSvc;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -71,7 +75,7 @@ public class BlogControl {
 	
 	//블로그 메인(글 보여주기)
 	@RequestMapping("post/main.hi")
-	public ModelAndView main(HttpServletRequest request) throws Exception {
+	public ModelAndView main(HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 		String ID = request.getParameter("id");
@@ -118,6 +122,18 @@ public class BlogControl {
 		
 			mav.addObject("lists",lists);
 			mav.addObject("PAGE_NUM"   ,PAGE_NUM);
+			
+			
+			UserDto userDto = (UserDto) session.getAttribute("user");
+			
+			//글 공감 확인하기
+			LoveDto loveDto = new LoveDto();
+			loveDto.setId(userDto.getId());							// 로그인한사람 id
+			loveDto.setPost_seq(DTO.getSeq());						// 공감 누를 글의 번호
+			LoveDto loveCheck = (LoveDto) loveSvc.hi_detail(loveDto);
+			mav.addObject("loveCheck",loveCheck);
+			
+			
 		}
 		mav.setViewName("post/main");
 		
@@ -279,7 +295,7 @@ public class BlogControl {
 	@RequestMapping("post/delete.hi")
 	public String postDelete(HttpServletRequest request) {
 		int	   seq 	= Integer.parseInt(request.getParameter("seq"));
-		String id		= request.getParameter("id");
+		String id	= request.getParameter("id");
 		
 		int flag = postSvc.hi_delete(seq);
 		
@@ -349,8 +365,33 @@ public class BlogControl {
 		
 		return gson.toJson(jsonObject);
 	}
-	
-	
+/*	
+	// 공감 등록 (ajax)
+	@RequestMapping(value="post/loveInsert.hi",method=RequestMethod.POST)
+	@ResponseBody
+	public String loveInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+		
+		int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID  		= userDto.getId();
+		String NAME  	= userDto.getName();
+		String CONTENT 	= res.getParameter("CONTENT");
+		String STATE 	= res.getParameter("STATE").equals("false") ? "0" : "1";
+		
+		CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
+		int flag = commentSve.hi_insert(commentDto);
+		
+		JsonObject jsonObject = new JsonObject();
+	      if(flag > 0){
+	    	  jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+	       }else{
+	    	   jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+	       }
+		Gson gson = new Gson();
+		
+		return gson.toJson(jsonObject);
+	}
+	*/
 	
 }
 

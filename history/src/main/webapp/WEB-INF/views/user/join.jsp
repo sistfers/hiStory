@@ -114,7 +114,7 @@
 	<div class="col-xs-8" >
 	
 		<!-- form명 바꾸면 안되요 : id, name꼭 다시 확인하세요.. 중복된 이름이 있을수도 있음  -->
-			<form class="form-horizontal" action="/user/join.hi" method="post" id="joinForm">
+			<form class="form-horizontal" action="/user/join.hi" method="post" enctype="multipart/form-data" id="joinForm">
 				<input type="hidden" name="do_join" value="do_join">
 				<div class="form-group" >
 					<span class="label label-danger">필수입력사항</span>
@@ -225,23 +225,6 @@
 					</div>
 				</div>
 
-<!--아래내용은 라디오 버튼인데.... 위에서 버튼으로 값 넘기는거 못하면 라디오 버튼으로 하세요 ㅋㅋ  -->
-				<!-- 				<div class="form-group"> -->
-<!-- 					<label class="col-lg-2 control-label">성별</label> -->
-<!-- 					<div class="col-lg-10"> -->
-<!-- 						<div class="radio"> -->
-<!-- 							<label> <input name="optionsRadios" id="optionsRadios1" -->
-<!-- 								type="radio" checked="" value="option1"> 남 -->
-<!-- 							</label> -->
-<!-- 						</div> -->
-<!-- 						<div class="radio"> -->
-<!-- 							<label> <input name="optionsRadios" id="optionsRadios2" -->
-<!-- 								type="radio" value="option2"> 여 -->
-<!-- 							</label> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-
 				<hr>
 
 				<div class="form-group" id="choose">
@@ -251,8 +234,12 @@
 				<div class="form-group" id="divProfileImg">
 					<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 					<div class="col-lg-10">
-					<img src="/resources/image/girl.png" width="130"><!--사진 첨부터 보여줄건지는 알아서 ㅋㅋ  -->
-						<input type="button" class="btn btn-default" value="사진등록" name="profileImg">
+						<img src="/resources/image/girl.png" width="130" name="previewimg" id="previewimg" alt="">
+						<input type="file" name="profileImg" onchange="loadname(this,'previewimg')" >
+
+						<%--<img src="/resources/image/girl.png" width="130"><!--사진 첨부터 보여줄건지는 알아서 ㅋㅋ  -->--%>
+						<%--<input type="file" name="profileImg">--%>
+						<%--<input type="button" class="btn btn-default" value="사진등록" name="profileImg1">--%>
 					</div>
 				</div>
 
@@ -285,6 +272,32 @@
 <!--푸터 START -->
 
 
+<script type="text/javascript">
+    function loadname(img, previewName){
 
+        var isIE = (navigator.appName=="Microsoft Internet Explorer");
+        var path = img.value;
+        var ext = path.substring(path.lastIndexOf('.') + 1).toLowerCase();
+		var incorrect = "";
+        if(ext == "gif" || ext == "jpeg" || ext == "jpg" ||  ext == "png" )
+        {
+            if(isIE) {
+                $('#'+ previewName).attr('src', path);
+            }else{
+                if (img.files[0])
+                {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#'+ previewName).attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(img.files[0]);
+                }
+            }
+
+        }else{
+            incorrect += "incorrect file type";
+        }
+    }
+</script>
 </body>
 </html>

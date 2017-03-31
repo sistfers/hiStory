@@ -159,6 +159,6 @@
 </form>
 <form name="logoutfrm" action="/main/logout.hi"></form>
 <form name="loginfrm" action="/main/login.hi" method="post"></form>
-<form name="joinfrm" action="/user/join.hi" method="post"></form>
+<form name="joinfrm" action="/user/join.hi" method="post" enctype="multipart/form-data"></form>
 <form name="updatefrm" action="/user/update.hi" method="post"></form>
 <form name="messagefrm" action="/message/receive.hi" method="post"></form>

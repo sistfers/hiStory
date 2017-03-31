@@ -12,10 +12,9 @@ import com.hifive.history.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,12 +44,14 @@ public class UserControl {
 	@Autowired
 	FollowService followService;
 
-	@RequestMapping(value = "user/join.hi", method = RequestMethod.POST)
-	public ModelAndView join(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "user/join.hi", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) {
 		ModelAndView mav = new ModelAndView();
 
 		// 회원 가입 버튼 클릭해서 넘어왔을 시
 		if (request.getParameter("do_join") != null) {
+			final String IMAGE_DIR = request.getSession().getServletContext().getRealPath("/");
+
 			// 회원 추가
 			UserDto userDto = new UserDto();
 			userDto.setId(request.getParameter("id"));
@@ -61,20 +62,26 @@ public class UserControl {
 			userDto.setBirth(request.getParameter("birth"));
 			userDto.setSex(request.getParameter("sex"));
 			userDto.setPf_content(request.getParameter("profileCon"));
-			userDto.setPf_image("");
-//			userDto.setPf_image(request.getParameter("profileImg"));
-			userService.hi_insert(userDto);
+//			userDto.setPf_image("");
+//			userDto.setPf_image("http://localhost:8080/resources/userProfileImages/" + request.getParameter("id") + "_profile.jpg");
+			userDto.setPf_image(IMAGE_DIR + imageFile.getOriginalFilename());
 
-			// 블로그 추가
-			BlogDto blogDto = new BlogDto();
-			blogDto.setId(request.getParameter("id"));
-			blogDto.setTitle(request.getParameter("id") + "님의 블로그");
-			blogService.hi_insert(blogDto);
+			System.out.println("======================================================");
+			System.out.println("udto = " + userDto.toString());
+			mav.setViewName("/user/join");
 
-			// 세션에 로그인정보 추가
-			userDto = (UserDto) userService.hi_login(userDto);
-			model.addAttribute("user", userDto);
-			mav.setViewName("redirect:/");
+//			userService.hi_insert(userDto);
+//
+//			// 블로그 추가
+//			BlogDto blogDto = new BlogDto();
+//			blogDto.setId(request.getParameter("id"));
+//			blogDto.setTitle(request.getParameter("id") + "님의 블로그");
+//			blogService.hi_insert(blogDto);
+//
+//			// 세션에 로그인정보 추가
+//			userDto = (UserDto) userService.hi_login(userDto);
+//			model.addAttribute("user", userDto);
+//			mav.setViewName("redirect:/");
 
 		} else {
 			// 지역 리스트 가져오기

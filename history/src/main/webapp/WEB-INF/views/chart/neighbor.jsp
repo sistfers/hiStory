@@ -62,7 +62,7 @@ border-radius: 15px;
 						if(neighborList!=null && neighborList.size()!=0){
 							for(int i = 0; i < neighborList.size(); ++i){
 					%>
-						<tr class="Basic">
+						<tr class="active">
 							<td><input type="checkbox"></td>
 							<td><a href="/post/main.hi?id=<%=neighborList.get(i).get("MY_ID")%>">
 							<%=neighborList.get(i).get("MY_ID")+" " %> [ <%=neighborList.get(i).get("NAME") %> ]</a>

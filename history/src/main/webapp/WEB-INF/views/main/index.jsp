@@ -310,44 +310,696 @@ $(document).ready(function () {
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
 <center>
-<h3> <span class="glyphicon-circle-arrow-down"></span> 테마별보기</h3>
-<a href="#">일상</a> | 기타 | 게임 | 영화 | 여행 | 스포츠 | 자동차 | 맛집 | 뷰티 | IT
-</center>
-<br>
 
-
-<div class="view view-first col-xs-4">
-    <img src="/resources/image/main.jpg" />
-    <div class="mask">
-      <h2>블로그타이틀</h2>
-      <p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
-      <p>mihyun</p>
-      <a href="#" class="info">글보러가기</a>
-    </div>
-</div>
-
-<a href="http://naver.com" ><div class="view view-first col-xs-4" style="cursor:pointer;">
-   <img src="/resources/image/main.jpg"  />
-    <div class="mask">
-      <h2>Empire State</h2>
-      <p>어떤게 더 이쁜지 모르겠구나...<br>
-      이쪽껀 버튼 없는 스타일...<br>
-      <br>
-      작성자 <br>
-       </p>
-    </div>
-</div></a>
-
-<div class="view view-first col-xs-4">
-    <img src="/resources/image/main.jpg" />
-    <div class="mask">
-      <h2>Empire State</h2>
-      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
-      <a href="#" class="info">Read More</a>
-    </div>
-</div>
+<div class="container">
+  <h3> <span class="glyphicon-circle-arrow-down"></span> 테마별보기</h3>
   
-<div class="clearfix"></div><br>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#menu1">일상</a></li>
+    <li><a data-toggle="tab" href="#menu2">기타</a></li>
+    <li><a data-toggle="tab" href="#menu3">게임</a></li>
+    <li><a data-toggle="tab" href="#menu4">영화</a></li>
+    <li><a data-toggle="tab" href="#menu5">여행</a></li>
+    <li><a data-toggle="tab" href="#menu6">스포츠</a></li>
+    <li><a data-toggle="tab" href="#menu7">자동차</a></li>
+    <li><a data-toggle="tab" href="#menu8">맛집</a></li>
+    <li><a data-toggle="tab" href="#menu9">뷰티</a></li>
+    <li><a data-toggle="tab" href="#menu10">IT</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <br>
+    <div id="menu1" class="tab-pane fade in active">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu2" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu3" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu4" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu5" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu6" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu7" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu8" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu9" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	<div id="menu10" class="tab-pane fade">
+      
+      	<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    	<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    	</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+	    <br><br>
+		</div>
+		<div class="view view-first col-xs-4">
+    	<img src="/resources/image/main.jpg" />
+      	<div class="mask">
+      		<h2>블로그타이틀</h2>
+      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
+      		<p>mihyun</p>
+      		<a href="#" class="info">글보러가기</a>
+    	</div>
+	  	</div>
+
+
+		<div class="view view-first col-xs-4" style="cursor:pointer;">
+   		<img src="/resources/image/main.jpg"  />
+    		<div class="mask">
+      		<h2>Empire State</h2>
+      		<p>어떤게 더 이쁜지 모르겠구나...<br>
+      		이쪽껀 버튼 없는 스타일...<br>
+      		<br>
+      		작성자 <br>
+       		</p>
+    		</div>
+		</div>
+
+		<div class="view view-first col-xs-4">
+	    <img src="/resources/image/main.jpg" />
+	    <div class="mask">
+	      <h2>Empire State</h2>
+	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
+	      <a href="#" class="info">Read More</a>
+	    </div>
+		</div>
+	</div>
+	
+	
+	
+	</div><!-- 탭컨텐츠 -->
+</div><!-- 컨테이너 -->
+	</center>
+	<br>
+
+
+
+  
+	<div class="clearfix"></div><br>
   
 </div>
 </div>

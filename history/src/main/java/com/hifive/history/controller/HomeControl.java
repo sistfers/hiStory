@@ -4,6 +4,7 @@ package com.hifive.history.controller;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import com.hifive.history.model.UserDto;
 import com.hifive.history.portal.Channel;
 import com.hifive.history.portal.Item;
 import com.hifive.history.portal.Rss;
+import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.PostService;
 import com.hifive.history.service.SearchService;
 import com.hifive.history.service.UserService;
@@ -49,19 +51,38 @@ public class HomeControl {
 	@Autowired
 	PostService postSvc;
 	
+	@Autowired
+	CodeDService codeDSvc;
+	
 	@RequestMapping(value = "main/index.hi")
-	public ModelAndView home(HttpServletRequest request, HttpSession session) {
+	public ModelAndView home(HttpServletRequest request, HttpSession session) throws Exception{
+		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
 		if (session.getAttribute("user") != null) {
 			UserDto dto = (UserDto) session.getAttribute("user");
 			System.out.println(dto.toString());
 		}
+		Map<String, Object> condition = new HashMap<String, Object>(); 
+		Map<String, Object> codeMap = new HashMap<String, Object>();
+		List<String> codeList = new ArrayList<String>();
+		codeList.add("100");
+		codeMap.put("code_list", codeList);
 		
+		List<Map<String, Object>> codes = (List<Map<String, Object>>)codeDSvc.hi_selectList(codeMap); //주제 코드 가져오기
+		for(int i=0; i<codes.size(); ++i){
+			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
+			if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
+		}
+		for(int i=0; i<themeCode.size(); ++i){
+			condition.put("THEME"+(i+1),themeCode.get(i).get("CD_D_NM"));
+		}
 		ModelAndView mav = new ModelAndView();
 		List<Map<String, Object>> searchRank = searchSvc.hi_selectRankList();
+		List<Map<String, Object>> themeList = postSvc.hi_selectThemeList(condition);
 		
 		mav.setViewName("/main/index");
 		mav.addObject("searchRank", searchRank);
-		
+		mav.addObject("themeList", themeList);
+		mav.addObject("themeCode", themeCode);
 		return mav;
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.UserDto;
 
+
 public class EmailSenderUtil {
 
 	@Autowired
@@ -17,15 +18,11 @@ public class EmailSenderUtil {
 
 	public static ModelAndView eamilSender(UserDto dto) {
 		
+		String tmp = IssueAnTokenUtil.tokenMaker(dto);
+		
 		String sender  = "sisthifive@gmail.com";
-		String title   = "[Hifive] Please verify your email address";
-		String content = "<p>Hi <strong>@"+ dto.getId() +"</strong>!</p>"+
-				"<p>Help us secure your GitHub account by verifying your email address (<a class=\"m_-8909468775075422849plaintext\" href=\"mailto:"
-				+ dto.getEmail()+" target=\"_blank\">"+ dto.getEmail() + "</a>). This lets you access all of GitHub's features.</p>"+
-				"<hr />"+
-				"<p class=\"m_-8909468775075422849email-text-small m_-8909468775075422849email-text-gray\">Button not working? Paste the following link into your browser:<br /> <a href=\"https://github.com/users/sisthifive/emails/29885124/confirm_verification/c56e6cda617e4e98303c50ac91eb40f5dd5d6ecf?utm_campaign=github-email-verification&utm_content=html&utm_medium=email&utm_source=verification-email\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?hl=ko&q=https://github.com/users/sisthifive/emails/29885124/confirm_verification/c56e6cda617e4e98303c50ac91eb40f5dd5d6ecf?utm_campaign%3Dgithub-email-verification%26utm_content%3Dhtml%26utm_medium%3Demail%26utm_source%3Dverification-email&source=gmail&ust=1491028170679000&usg=AFQjCNHetHKc49QsKOsx3u4DE8FV6FlxLg\">https://github.com/users/sisthifive/emails/29885124/confirm_verification/c56e6cda617e4e98303c50ac91eb40f5dd5d6ecf</a></p>"+
-				"<p class=\"m_-8909468775075422849email-text-small m_-8909468775075422849email-text-gray\">You’re receiving this email because you recently created a new GitHub account or added a new email address. "+
-				"If this wasn’t you, please ignore this email.</p>";		
+		String title   = "[Hifive] Please verify your email address";		
+		String content = "http://localhost:8080/userAuth/" + tmp + ".hi";
 		
 		try {
 			MimeMessage message = mailSender.createMimeMessage();

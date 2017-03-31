@@ -84,7 +84,8 @@ public class MessageControl {
 		SENDID = res.getParameter("SENDID");
 		TAKEID = res.getParameter("TAKEID");	
 		NAME   = res.getParameter("NAME");
-		
+
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/message/writeForm");
 		mav.addObject("SENDID", SENDID);
@@ -94,7 +95,7 @@ public class MessageControl {
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/writeForm.hi");
 		loger.debug("----------------------------------------------------------");
-		
+
 		return mav;
 	}
 	

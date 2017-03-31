@@ -5,7 +5,7 @@
 
 <%
 	String SENDID = "";
-	String TAKEID = "";
+	String TAKEID = request.getParameter("TAKEID");
 	String NAME   = "";
 
 	HttpSession sesson =request.getSession(false);
@@ -13,7 +13,6 @@
 	
 	if(dto != null) {
 		SENDID = dto.getId();
-		TAKEID = (String) request.getAttribute("TAKEID");
 		NAME   = (String) request.getAttribute("NAME");
 		
 	} else {

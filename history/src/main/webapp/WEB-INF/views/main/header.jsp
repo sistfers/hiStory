@@ -120,19 +120,34 @@
                     $("#followUl").append("<li><a href=\"#\">\"이웃을 추가해보세요!\"</a></li>");
                 } else {
                     for (var i = 0; i < followList.length; i++) {
-                        var followUrl = "/post/main.hi?id=" + followList[i].ID;
-                        $("#followUl").append("<li><a href=\"" + followUrl + "\">" + followList[i].TITLE + "</a></li>");
+                        var followBlogUrl = "/post/main.hi?id=" + followList[i].ID;
+                        var followMessageUrl = "/message/writeForm.hi?TAKEID=" + followList[i].ID;
+                        $("#followUl").append("" +
+                            "<li>" +
+                            "   <div class=\"navbar-login\">" +
+                            "       <div class=\"row\">" +
+                            "           <div class=\"col-sm-8\">" +
+                            "               <p class=\"text-center\">" +
+                            "                   <a href=\"#\">" + followList[i].NAME + "</a> " +
+                            "                   <a href=\"#\">" + followList[i].TITLE + "</a> " +
+                            "               </p>" +
+                            "           </div>" +
+                            "           <div class=\"col-sm-4\">" +
+                            "                   <a href=\"" + followBlogUrl + "\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-home\"></span></a> " +
+                            "                   <a href=\"" + followMessageUrl + "\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-envelope\"></span></a> " +
+                            "           </div>" +
+                            "       </div>" +
+                            "   </div>" +
+                            "</li>");
                     }
 
-
-//                    $("#followUl").append("<li><div class=\"navbar-login\"><div class=\"row\"><div class=\"col-lg-4\"><p class=\"text-center\"><span class=\"glyphicon glyphicon-user icon-size\"></span></p></div><div class=\"col-lg-8\"><p class=\"text-left\"><strong>Mahesh</strong></p><p class=\"text-left small\">justdemo@gmail.com</p><p class=\"text-left\"><a href=\"#\" class=\"btn btn-primary btn-block btn-sm\">Logout</a></p></div></div></div></li>");
                 }
             },
             complete: function (data) {
                 // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
             },
             error: function (xhr, status, error) {
-                alert("에러발생");
+//                alert("에러발생?");
             }
         });
     }

@@ -67,4 +67,10 @@ public class CategoryDao implements iDao {
 		logger.debug("dto.toSting() = " + dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
+	public int updateCategory(Map<String, String> map){
+		String statement = namespace +".updateCategory";
+		logger.debug("statement"+statement);
+		logger.debug("map.toString() = "+map.toString());
+		return sqlSession.update(statement,map);
+	}
 }

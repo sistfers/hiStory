@@ -1,12 +1,18 @@
 package com.hifive.history.controller;
 
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +26,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.UserDto;
+import com.hifive.history.portal.Channel;
+import com.hifive.history.portal.Item;
+import com.hifive.history.portal.Rss;
+import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.PostService;
 import com.hifive.history.service.SearchService;
 import com.hifive.history.service.UserService;
@@ -41,19 +51,38 @@ public class HomeControl {
 	@Autowired
 	PostService postSvc;
 	
+	@Autowired
+	CodeDService codeDSvc;
+	
 	@RequestMapping(value = "main/index.hi")
-	public ModelAndView home(HttpServletRequest request, HttpSession session) {
+	public ModelAndView home(HttpServletRequest request, HttpSession session) throws Exception{
+		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
 		if (session.getAttribute("user") != null) {
 			UserDto dto = (UserDto) session.getAttribute("user");
 			System.out.println(dto.toString());
 		}
+		Map<String, Object> condition = new HashMap<String, Object>(); 
+		Map<String, Object> codeMap = new HashMap<String, Object>();
+		List<String> codeList = new ArrayList<String>();
+		codeList.add("100");
+		codeMap.put("code_list", codeList);
 		
+		List<Map<String, Object>> codes = (List<Map<String, Object>>)codeDSvc.hi_selectList(codeMap); //주제 코드 가져오기
+		for(int i=0; i<codes.size(); ++i){
+			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
+			if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
+		}
+		for(int i=0; i<themeCode.size(); ++i){
+			condition.put("THEME"+(i+1),themeCode.get(i).get("CD_D_NM"));
+		}
 		ModelAndView mav = new ModelAndView();
 		List<Map<String, Object>> searchRank = searchSvc.hi_selectRankList();
+		List<Map<String, Object>> themeList = postSvc.hi_selectThemeList(condition);
 		
 		mav.setViewName("/main/index");
 		mav.addObject("searchRank", searchRank);
-		
+		mav.addObject("themeList", themeList);
+		mav.addObject("themeCode", themeCode);
 		return mav;
 	}
 
@@ -99,8 +128,8 @@ public class HomeControl {
 	public ModelAndView do_search(HttpServletRequest res)throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
-		
-		String search_word = "%"+res.getParameter("search_word").trim()+"%";
+		String apiSearch_word = res.getParameter("search_word").trim();
+		String search_word = "%"+apiSearch_word+"%";
 		String PAGE_SIZE 	= "10";	//페이지사이즈
 		String PAGE_NUM		= "1";	//페이지NUM
 		
@@ -111,11 +140,50 @@ public class HomeControl {
 		condition.put("PAGE_SIZE", PAGE_SIZE);
 		condition.put("PAGE_NUM", PAGE_NUM);
 		condition.put("SEARCH_WORD", search_word);
+		condition.put("SEARCH_TAG","#"+apiSearch_word+"#");
 		List<Map<String, Object>> searchList = postSvc.hi_selectSearchList(condition);
 		
 		mav.setViewName("/main/home_search");
 		mav.addObject("searchList", searchList);
 		mav.addObject("PAGE_NUM"  , PAGE_NUM  );
+		mav.addObject("search_word"  , apiSearch_word);
+		mav.addObject("blogItem", getNaverBlog(apiSearch_word));
 		return mav;
+	}
+	
+	private List<Item> getNaverBlog(String search_word)
+	{
+		String clientId = "O0vtAeL1SFMdVcoY_DVQ";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "hN2z81uZ_T";//애플리케이션 클라이언트 시크릿값";
+        
+        List<Item> items=null;
+        try{
+        	  String text = URLEncoder.encode(search_word, "UTF-8");
+              
+              String apiURL = "https://openapi.naver.com/v1/search/blog.xml?display=20&query="+ text; // xml 결과
+              URL url = new URL(apiURL);
+              HttpURLConnection con = (HttpURLConnection)url.openConnection();
+              con.setRequestMethod("GET");
+              con.setRequestProperty("X-Naver-Client-Id", clientId);
+              con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+              int responseCode = con.getResponseCode();
+              
+			  JAXBContext jc=JAXBContext.newInstance(Rss.class); 
+			  Unmarshaller um=jc.createUnmarshaller();
+			  Rss rss =(Rss)um.unmarshal( con.getInputStream());
+			
+			  Channel channel = (Channel)rss.getChannel();
+			  items=(List<Item>) channel.getItem();
+			  for(Item item:items)
+			  {
+				  loger.debug("::::"+item.getTitle());
+				  loger.debug("::::"+item.getPostdate());
+				  loger.debug("::::"+item.getBloggername());
+			  }
+        }catch(Exception e){
+        	
+        }		
+        return items;
+        
 	}
 }

@@ -29,4 +29,11 @@
 		INTO CATEGORY_H(SEQ, ID, NAME, STATE)
 		VALUES(SEQ_CATEGORY.NEXTVAL, #{id}, #{name}, #{state})
 	</insert>
+	
+	<update id="updateCategory" parameterType="map">
+		UPDATE CATEGORY_H
+		SET NAME  = #{catename},
+			STATE = #{catestate}
+		WHERE SEQ = #{cateseq}
+	</update>
 </mapper>

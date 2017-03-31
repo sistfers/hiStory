@@ -13,4 +13,9 @@
 		INSERT INTO SISTSYSTEM.BLOG_H (ID, TITLE)
 		  VALUES (#{id}, #{title})
 	</insert>
+	<select id="getMyBlog" parameterType="String" resultType="com.hifive.history.model.BlogDto">
+		SELECT * 
+		FROM BLOG_H 
+		WHERE ID = #{id}
+	</select>
 </mapper>

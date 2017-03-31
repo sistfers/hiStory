@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.BlogDto"%>
 <%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.List"%>
@@ -11,6 +12,8 @@
 	if(session.getAttribute("user")!=null){
 		UserDto user = (UserDto)session.getAttribute("user");
 	}
+	
+	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
@@ -31,26 +34,26 @@ margin-left:0.5%;
 border-radius: 15px;
 }
 </style>
-<script type="text/javascript">
-window.onload = addRowHandlers;
-
-function addRowHandlers() {
-	var table  = document.getElementById("categoryTable");
-	
-    var rows = table.getElementsByTagName("tr");
-    for (i = 1; i < rows.length; i++) {
-        row = table.rows[i];
-        row.onclick = function(){
-                          var cell = this.getElementsByTagName("td")[0];
-                          var id = cell.innerHTML;
-                          
-                          cell = this.getElementsByTagName("td")[1];
-                          var name = cell.innerHTML;
-                          alert("id:" + id + "name : " + name);
-                          
-         };
-    }
-}
+<script>
+	$(document).ready(function name() {
+		$("#categoryTable tr").click(function trclick() {
+			var id = $(this).attr("id");
+			var name = $(this).eq(0).find("td").eq(1).text();
+			var state = $(this).eq(0).find("td").eq(2).text();
+			alert(" [ " + name + " ] 카테고리를 수정하시 겠습니까? " + state);
+			//$("#output").attr("value") = name;
+			$("#catename").val(name);
+			$("#cateseq").val(id);
+			/* state=="전체공개"?$("#optionsRadios1").attr("checked",true):$("#optionsRadios2").attr("checked",true); */
+			if(state=="전체공개"){
+				$("#optionsRadios1").attr("checked",true);
+				$("#optionsRadios2").attr("checked",false);
+			}else{
+				$("#optionsRadios2").attr("checked",true);
+				$("#optionsRadios1").attr("checked",false);
+			}
+	})
+});
 </script>
 </head>
 <body>
@@ -72,9 +75,11 @@ function addRowHandlers() {
         <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
-		       	<p style="font-size: 25px; margin-top: 20px">등록된 카테고리</p>
-		        <div class="col-xs-6" style="overflow: scroll; height: 200px">
-		       	<table class="table table-striped" id="categoryTable">
+		       	
+		       	<p style="font-size: 25px; margin-top: 20px; margin-bottom: 20px">등록된 카테고리</p>
+		       	<div class="col-xs-12" style="background-color: white; padding-bottom: 20px; padding-top: 20px;">
+		        <div class="col-xs-6" style="overflow: scroll;overflow-x:hidden; height: 300px; ">
+		       	<table class="table table-striped table-hover" id="categoryTable">
 		        	<tr class="info">
 						<th>No</th>
 						<th>카테고리명</th>
@@ -83,8 +88,8 @@ function addRowHandlers() {
 		        	<%
 		        		for(int i = 0; i < categoryList.size(); ++i){
 		        	%>
-		        	<tr class="active">
-		        		<td><%=i+1 %><input type="hidden" value="<%=categoryList.get(i).getSeq() %>"></td>
+		        	<tr class="active" id="<%=categoryList.get(i).getSeq() %>">
+		        		<td><%=i+1 %></td>
 		        		<td><%=categoryList.get(i).getName() %></td>
 		        		<td><%=categoryList.get(i).getState().equals("0")?"전체공개":"나만보기" %></td>
 		        	</tr>
@@ -93,38 +98,42 @@ function addRowHandlers() {
 		        	%>
 		        </table>
 				</div>
-				<div class="col-xs-6" style="height: 200px">
-				<form class="form-horizontal" method="post" action="control.hi" id="ouput">
-					<div class="form-group">
-							<br><br>
+				<div class="col-xs-6" style="height: 200px;" >
+				<form class="form-horizontal" method="post" action="control.hi" id="ouput" name="output">
+						<div class="form-group">
+							<br><br><br><br>
 							<label for="inputEmail" class="col-lg-4 control-label">카테고리</label>
 							<div class="col-lg-6">
-								<input type="text" class="form-control" id="name" name="name"
-									placeholder="카테고리명 입력">
+								<input type="text" class="form-control" id="catename" name="catename"
+									placeholder="카테고리명 입력" value="">
+								<input type="hidden" id="cateseq" name="cateseq" value="">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="col-lg-4 control-label">공개 설정</label>
 							<div class="col-lg-6">
-									<label class="radio-inline"> <input type="radio" name="state"
-										id="optionsRadios1" value="true" checked="">공개
+									<label class="radio-inline"> <input type="radio" name="catestate"
+										id="optionsRadios1" value="true" >공개
 									</label>
 								
-									<label class="radio-inline"> <input type="radio" name="state"
-										id="optionsRadios2" value="false"> 비공개
+									<label class="radio-inline"> <input type="radio" name="catestate"
+										id="optionsRadios2" value="false" > 비공개
 									</label>
 							</div>
 						</div>
+						<br>
 						<div class="form-group">
-							<div class="col-lg-offset-7 col-lg-5">
+							<div class="col-lg-offset-3 col-lg-9">
+								<button type="reset" class="btn btn-warning"> 삭제 </button>
+								
 								<button type="submit" class="btn btn-primary"> 수정 </button>
 							</div>
 						</div>
 				</form>
 				</div>
-				
-				<div class="col-xs-12" style="margin-top: 20px">
+				</div>
+				<div class="col-xs-12" style="margin-top: 50px; ">
 				<form class="form-horizontal" method="post" action="control.hi">
 					<fieldset>
 						<legend>카테고리 등록</legend>
@@ -140,7 +149,7 @@ function addRowHandlers() {
 							<label class="col-lg-2 control-label">공개 설정</label>
 							<div class="col-lg-9">
 									<label class="radio-inline"> <input type="radio" name="state"
-										id="optionsRadios1" value="true" checked="">공개
+										id="optionsRadios1" value="true">공개
 									</label>
 								
 									<label class="radio-inline"> <input type="radio" name="state"
@@ -151,7 +160,7 @@ function addRowHandlers() {
 						
 						<div class="form-group">
 							<div class="col-lg-offset-9 col-lg-3">
-								<button type="reset" class="btn btn-default"> 초기화 </button>
+								<button type="reset" class="btn btn-default"> 리셋 </button>
 								<button type="submit" class="btn btn-primary"> 추가 </button>
 							</div>
 						</div>
@@ -168,21 +177,21 @@ function addRowHandlers() {
 							<label for="inputEmail" class="col-lg-2 control-label">제목</label>
 							<div class="col-lg-9">
 								<input type="text" class="form-control" id="title" name="title"
-									placeholder="원래 블로거의 제목 불러와 주세요">
+									value="<%=blogdto.getTitle()%>">
 							</div>
 						</div>
 						
 						
 						<div class="form-group">
-							<label for="select" class="col-lg-2 control-label">Selects</label>
+							<label for="select" class="col-lg-2 control-label">테마설정</label>
 							<div class="col-lg-9">
 								<br>
 								<select multiple="" class="form-control" name="theme">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
+									<option style="background-color: #cee1ff; text-align: center;" value="#f7e3a3"></option>
+									<option style="background-color: #cefffb; text-align: center;" value="#baffcc"></option>
+									<option style="background-color: #ceffd7; text-align: center;" value="#bac5ff"></option>
+									<option style="background-color: #f8ffce; text-align: center;" value="#debaff"></option>
+									<option style="background-color: #ffceeb; text-align: center;" value="#ffbae2"></option>
 								</select>
 							</div>
 						</div>

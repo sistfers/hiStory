@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.LoveDto"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.hifive.history.model.UserDto"%>
@@ -38,7 +39,10 @@
 %>
 
 <%
+	// 로그인한 세션정보
 	UserDto userDto = (UserDto) session.getAttribute("user");
+
+	// 보여질 블로그 id
 	String id		= request.getParameter("id");
 	
 	Date today = new Date();
@@ -72,6 +76,9 @@
 		DTO = new PostDto();
 		DTO.setSeq(0);
 	}
+	
+	//해당 포스트에 공감을 했는지 체크
+	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
 	
 	// 테마 색깔 정해야함
 // 	String THEME = "#FFFFDE";		// 노랑
@@ -138,6 +145,7 @@ function go_delete(){
 	var frm = document.postDeleteForm;
 	frm.submit();
 }
+
 </script>
 
 
@@ -179,40 +187,60 @@ function go_delete(){
 				<%}else{  %>
 	
 <form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
-<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
-<input type="hidden" name="id" value="<%=id%>">
+	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+	<input type="hidden" name="id" value="<%=id%>">
 </form> 
-<form name="postDeleteForm" action="delete.hi" method="get">		<!-- 글삭제 -->
+<form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
 	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
 	<input type="hidden" name="id" value="<%=id%>">  
 </form> 
-<form name="postForm" action="main.hi" method="get">		
+<%-- <form name="postLoveForm" action="love.hi" method="get">					<!-- 글공감 -->
+	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
+	<input type="hidden" name="id" value="<%=userDto.getId()%>">  
+	<input type="hidden" name="sex" value="<%=userDto.getSex()%>">  
+	<input type="hidden" name="area" value="<%=userDto.getArea()%>">  
+	<input type="hidden" name="birth" value="<%=userDto.getBirth()%>">  
+</form>  --%>
+<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
 	<input type="hidden" name="PAGE_NUM" value="">  
-	<input type="hidden" name="id" value="<%=id%>">    
+	<input type="hidden" name="id" value="<%=id%>">  
+	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">    
 </form> 
 
 
 		        <div class="col-xs-12">
 		        <table width="100%" >
 		        <tr>
-		        <!-- 포스트 제목 -->
+<!-- 포스트 제목 -->
 		        <td width="80%" align="left" ><h2><%=DTO.getTitle() %></h2> 
 		        </td>
-		        <td width="20%" rowspan="2" >
 		        
-		        <!--공감하기  -->
-		        <button class="btn btn-default btn-sm" style="color: red"><span class="glyphicon glyphicon-heart"></span> &nbsp;공감 (1)</button> 
-
-<%if (userDto != null && id.equals(userDto.getId())) {%>
-		        <!--글 수정하기 버튼  -->
-		        <br><br>
-		        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();">글수정</button> 
-		        <button class="btn btn-danger btn-sm" onclick="javascript:go_delete();">글삭제</button>
-<%} %>
+		        
+		        
+		        <td width="20%" rowspan="2" >
+<!--공감하기  -->
+		        <%
+		       	 	if (loveCheck != null) {
+		        %>
+		        	<button class="btn btn-default btn-sm" style="color: red" id="postLove"><h6>♥ 공감취소</h6> </button> 
+		        	<input type="hidden" id="loveState" value="loveDelete">
+		        <%
+		       	 	}else{
+		        %>
+		       	 	<button class="btn btn-default btn-sm" style="color: red" id="postLove"><h6>♡ 공감</h6> </button>
+		       	 	<input type="hidden" id="loveState" value="loveInsert">
+		        <%} %>
+<!--글 수정/삭제 버튼  -->
+				<%if (userDto != null && id.equals(userDto.getId())) {%>
+			        
+			        <br><br>
+			        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();">글수정</button> 
+			        <button class="btn btn-danger btn-sm" onclick="javascript:go_delete();">글삭제</button>
+				<%} %>
 		        </td>		        
 		        </tr>
 		        
-		        <!-- 포스트 작성일 -->
+<!-- 포스트 작성일 -->
 		        <tr>
 		        <td align="left"><h6>&nbsp;&nbsp;<%=DTO.getWdate() %></h6></td>
 		        <td></td>
@@ -220,12 +248,12 @@ function go_delete(){
 		        </table>
 		        
 				<hr>		        
-		        <!-- 포스트 내용 -->
+<!-- 포스트 내용 -->
 				<%=DTO.getContent() %>
 				</div>
 				
 				
-				<!-- 태그 부분 -->
+<!-- 해시태그 부분 -->
 				<div class="col-xs-12" style="margin-bottom: 10px" >
 				<hr>
 				<button type="button" class="btn btn-default btn-sm disabled">
@@ -392,14 +420,44 @@ function go_delete(){
 
 
 
-<!-- 댓글/대댓글 script -->
+
 <script type="text/javascript">
 $(function(){
-<%-- 	$("td[name=selseq]").click(function(){
-		console.log("/post/main.hi?seq="+<%=DTO.getSeq()%>+"&id="+<%=id%>");
 	
-		location.href = "/post/main.hi?seq="+<%=DTO.getSeq()%>+"&id="+<%=id%>;
-	}); --%>
+// 글 공감 ajax
+	$("#postLove").bind("click", function() {
+		 
+		var loveState = document.getElementById('loveState').value;
+// 		var storeId = document.getElementById('storeId').value;
+// 		var heartImg = document.getElementById('heartImg');
+
+		$.ajax({
+			type:"POST",
+			url:"loveInsert.hi",			// 컨트롤러에 보낼 이름
+			dataType:"html",
+			data:{
+<%-- 				"POST_SEQ" 	: <%=DTO.getSeq()%>,
+ 				"STATE"	 	: stateYN,
+				"CONTENT" 	: pText.val() --%>
+			},
+			success:function(data){
+				console.log("data"+data);
+				var flag = $.parseJSON(data);
+				
+
+				} else {
+					alert("댓글등록 실패");
+				}
+			},
+			complete : function(data) {
+				// 실패, 성공 상관없이 무조건 수행
+			},
+			error:function(){
+				 alert("에러냐아아앙!!! ");
+			}
+		});  
+		
+	});
 
        
 //제일 하단에 있는 depth1의 댓글을 다는 이벤트=========================================================

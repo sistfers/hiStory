@@ -245,6 +245,18 @@ public class GraphControl {
 			user = (UserDto)session.getAttribute("user");
 		}		
 		ModelAndView mav = new ModelAndView();
+		if(request.getParameter("cateseq")!=null){
+			String cateseq  = request.getParameter("cateseq");
+			String catename = request.getParameter("catename");
+			String catestate = request.getParameter("catestate").equals("true")?"0":"1";
+			Map<String, String> map = new HashMap<>();
+			map.put("cateseq", cateseq);
+			map.put("catename", catename);
+			map.put("catestate", catestate);
+			
+			categoryService.updateCategory(map);
+		}
+		
 		//카테고리 불러오기(전체)
 		Map<String, String> dto = new HashMap<>();
 		dto.put("id",user.getId());
@@ -273,6 +285,7 @@ public class GraphControl {
 				if(categoryService.hi_insert(dto2)>0){System.out.println("::::::::::::::::::데이터입력성공");};
 			}			
 		}
+		
 		//블로그 타이틀 바꾸기
 		if(request.getParameter("title")!=null){
 			String title = request.getParameter("title");
@@ -280,10 +293,13 @@ public class GraphControl {
 			BlogDto bdto = new BlogDto(user.getId(), title, theme);
 			if(blogService.hi_update(bdto)>0){System.out.println("::::::::::::::::::블로그테마 변경 성공");};
 		}
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
 		//카테고리 목록 뿌리기
 		List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);		
 		mav.setViewName("chart/control");
 		mav.addObject("categoryList", categoryList);
+		mav.addObject("blogdto", blogdto);
 		
 		return mav;
 	}

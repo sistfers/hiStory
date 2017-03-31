@@ -17,7 +17,7 @@ import com.hifive.history.model.iDto;
 @Repository
 public class LoveDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.LoveCode";
+	private final String namespace="com.hifive.history.repository.mappers.loveCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -55,12 +55,16 @@ public class LoveDao implements iDao {
 		return sqlSession.selectList(statement,condition);
 	}
 
-	
-//= 사용안함 =========================================	
 	@Override
 	public iDto hi_detail(iDto dto) {
-		return null;
+		String statement = namespace +".hi_detail";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.selectOne(statement,dto);
 	}
+	
+//= 사용안함 =========================================	
+
 
 	@Override
 	public int hi_delete(int cnt) {

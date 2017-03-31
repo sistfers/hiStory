@@ -74,11 +74,11 @@
 	}
 	
 	// 테마 색깔 정해야함
-	//String THEME = "#FFFFDE";		// 노랑
+// 	String THEME = "#FFFFDE";		// 노랑
 	//String THEME = "#C6E8FF";		// 하늘
-	//String THEME = "#DAD9FF";		// 보라
-	//String THEME = "#FFD8D8";		// 살구
-	String THEME = "#8C8C8C";		// 회색
+// 	String THEME = "#DAD9FF";		// 보라
+	String THEME = "#FFD8D8";		// 살구
+	//String THEME = "#8C8C8C";		// 회색
 %>    
 
 
@@ -152,7 +152,7 @@ function go_delete(){
 
 <!-- 메인내용 START -->
    <br><br>
-   <div class="container" style="margin-top: 40px">
+   <div class="container" style="margin-top: 30px">
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">

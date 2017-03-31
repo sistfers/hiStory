@@ -16,9 +16,14 @@
 	public String removeTag(String html) throws Exception {
 		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 	}
+
 %>
 <%
+	response.setHeader("Pragma", "no-cache"); //11
+	response.setHeader("Cache-Control", "no-cache");//22페이지 캐쉬를 사용하도록 처리하여 브라우저에게 해당 페이지 내용을 매번 새로 요청하지 않고 캐싱하여 페이지를 볼수 있도록 지시한다. 
+
 	List<Map<String, Object>> searchList = (List<Map<String, Object>>)request.getAttribute("searchList");
+	String search_word = (String)request.getAttribute("search_word");
 	String PAGE_NUM = "1"; //페이지NUM	
 	PAGE_NUM = request.getAttribute("PAGE_NUM").toString();
 	int page_num = 1; //선택된 페이지
@@ -41,6 +46,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Cache-Control" content="No-Cache"> 
+<meta http-equiv="Pragma" content="No-Cache"> 
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -139,7 +146,7 @@
 
 <div class="col-lg-1"></div>
 <div class="col-lg-10">
-<table width="100%" class="table table-hover" >
+<table class="table table-hover" >
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
 <tr name="search_detail" style="cursor:pointer;">
@@ -154,7 +161,7 @@
 		<div class="media-body">
 		
 		
-		<h4 class="title">
+		<h5 class="title">
 		<%String tempTitle = searchList.get(i).get("TITLE")+"";
 			String title = tempTitle;
 			if(tempTitle.length() >30){
@@ -162,18 +169,26 @@
 			}
 		%>
 		<%= title%>
-		</h4>
+		</h5>
 		<%String tempContent = removeTag(searchList.get(i).get("CONTENT")+"");
 			String content = tempContent;
 			if(tempContent.length() >100){
 				content = tempContent.substring(0,100) + "...";
 			}
+			content = content.replace(search_word, "<b>" + search_word + "</b>");
 		%>
-		<p class="summary"><%= content%></p>
+		<p class="summary"> <%= content%></p>
+		<%if(searchList.get(i).get("HASHTAG")!=null){ 
+			String hashtag = (String)searchList.get(i).get("HASHTAG");
+			hashtag = hashtag.substring(0, hashtag.length()-1);
+			hashtag = hashtag.replace("#" + search_word, "<b>" + "#" + search_word + "</b>");
+			%>
+			<div style="color: #86a0c9"><%= hashtag%></div>
+		<%} %>
 		</div>
 		<br>
 	</td>
-	<td align="right" valign="top" >
+	<td align="right" valign="top" width="50px">
 	<div class="media-body">
 	<%=searchList.get(i).get("WDATE") %>
 	</div>
@@ -203,6 +218,7 @@
 <!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 End -->
 
 <script type="text/javascript">
+
 $(document).ready(function () {
 	$("tr[name=search_detail]").click(function(){
 		
@@ -217,6 +233,16 @@ $(document).ready(function () {
 
  });
  
+$(document).ready(function () {
+	$("tr[name=api_search_detail]").click(function(){
+		
+		url = $(this).eq(0).find("td").eq(0).attr('id');	//link
+	
+		
+		window.open(url);
+	});
+
+ });
  
 function do_search() {
 	var frm = document.searchForm;
@@ -234,6 +260,8 @@ function do_search_page(url, page_num) {
 
 }
 
+
+
 </script>
 <!--페이징  -->
 
@@ -242,12 +270,47 @@ function do_search_page(url, page_num) {
 
 <!-- 네이버 검색결과 START -->
 <br><br>
-<div class="row">
-<div class="col-lg-12">
-<h3 class="page-header" style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
+ <div class="row">
+	<div class="col-lg-12">
+<c:set var="item" value="${blogItem }"/>
+<c:choose>
+	<c:when test="${empty item}">
 
-<p>내용</p>
-</div>
+    </c:when>
+	<c:otherwise>
+		<h3 class="page-header" style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
+		<div class="col-lg-1"></div>
+			<div class="col-lg-10">
+				<table cellpadding="0"  cellspacing="0" border="0" class="table table-hover">		
+					<c:forEach var="item" items="${blogItem}">
+					 	<tr name="api_search_detail" style="cursor:pointer;">	
+					 		<td valign="top" id="${item.link }">
+							<div class="media-body">
+		
+							<h5 class="title">
+							${item.title }
+							</h5>
+							
+							<p class="summary">${item.description}</p>
+							</div>
+							<br>
+							</td>
+							<td align="right" valign="middle" width="200px">
+							${item.bloggername }
+							</td>
+							<td align="right" valign="top" width="50px">
+							<div class="media-body">
+							${item.postdate }
+							</div>
+							</td>
+					 	</tr>
+					</c:forEach>
+				</table>
+			</div>
+    </c:otherwise> 
+</c:choose>
+
+	</div>
 </div>
 
 <!-- 네이버 검색결과 END -->

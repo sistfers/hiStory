@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.iDto;
 
 @Repository
@@ -57,5 +58,11 @@ public class BlogDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
+	}
+	public BlogDto getMyBlog(String id){
+		String statement = namespace +".getMyBlog";
+		logger.debug("statement"+statement);
+		logger.debug("id = "+id);
+		return sqlSession.selectOne(statement,id);
 	}
 }

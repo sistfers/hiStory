@@ -50,4 +50,7 @@ public class CategoryService implements iService {
 	public List<CategoryDto> hi_selectCategory(Map<String, String> dto){
 		return categoryDao.hi_selectCategory(dto);
 	}
+	public int updateCategory(Map<String, String> map){
+		return categoryDao.updateCategory(map);
+	}
 }

@@ -1,5 +1,6 @@
 package com.hifive.history.service;
 
+import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.BlogDao;
 
@@ -39,5 +40,8 @@ public class BlogService implements iService {
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return blogDao.hi_selectList(condition);
+	}
+	public BlogDto getMyBlog(String id){
+		return blogDao.getMyBlog(id);
 	}
 }

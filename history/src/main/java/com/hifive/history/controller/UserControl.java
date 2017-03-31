@@ -45,6 +45,9 @@ public class UserControl {
 
 	@Autowired
 	FollowService followService;
+	
+	@Autowired
+	EmailSenderUtil emailSenderUtil;
 
 	@RequestMapping(value = "user/join.hi", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) {
@@ -75,8 +78,11 @@ public class UserControl {
 //			userService.hi_insert(userDto);
 //			
 //			// 이메일 발송
-//			EmailSenderUtil emailSenderUtil = new EmailSenderUtil();
-//			emailSenderUtil.eamilSender(userDto);
+			emailSenderUtil.eamilSender(userDto);
+			
+			
+			
+			
 //
 //			// 블로그 추가
 //			BlogDto blogDto = new BlogDto();

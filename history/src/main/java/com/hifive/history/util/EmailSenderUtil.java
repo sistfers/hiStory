@@ -13,22 +13,18 @@ import com.hifive.history.model.UserDto;
 
 @Component
 public class EmailSenderUtil {
-
+	
 	@Autowired
-	private JavaMailSender mailSender;	
-
-	public EmailSenderUtil() {
-		
-	}
+	private JavaMailSender mailSender;
 
 	public ModelAndView eamilSender(UserDto dto) {
 		
-		IssueAnTokenUtil issueAnTokenUtil = new IssueAnTokenUtil();
-		String tmp = issueAnTokenUtil.tokenMaker(dto);
+//		IssueAnTokenUtil issueAnTokenUtil = new IssueAnTokenUtil();
+//		String tmp = issueAnTokenUtil.tokenMaker(dto);
 		
 		String sender  = "sisthifive@gmail.com";
 		String title   = "[Hifive] Please verify your email address";		
-		String content = "http://localhost:8080/userAuth/" + tmp + ".hi";
+		String content = "http://localhost:8080/userAuth/";
 		
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -36,7 +32,7 @@ public class EmailSenderUtil {
 			= new MimeMessageHelper(message, true, "UTF-8");
 			
 			messageHelper.setFrom(sender);   		// 보내는사람 생략하거나 하면 정상작동을 안함
-		    messageHelper.setTo(dto.getEmail());    // 받는사람 이메일
+		    messageHelper.setTo("kalgoorlie@naver.com");    // 받는사람 이메일
 		    messageHelper.setSubject(title); 		// 메일제목은 생략이 가능하다
 		    messageHelper.setText(content); 		// 메일 내용
 		    

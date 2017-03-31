@@ -77,17 +77,28 @@
 	            )
 	</sql>
 
+	<!--페이징 없음-->
 	<select id="hi_selectList" parameterType="hashmap" resultMap="followMap">
-		SELECT TT2.*
-		FROM(
 	      SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT
 	      FROM(
 	      <include refid="BaseCondition"></include>
 	        )T2
-	    )TT2
-		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
-		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
 	</select>
+
+	<!--페이징-->
+	<!--<select id="hi_selectList" parameterType="hashmap" resultMap="followMap">-->
+		<!--SELECT TT2.*-->
+		<!--FROM(-->
+		<!--SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT-->
+		<!--FROM(-->
+		<!--<include refid="BaseCondition"></include>-->
+		<!--)T2-->
+		<!--)TT2-->
+		<!--WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)-->
+		<!--AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})-->
+		<!--ORDER BY TT2.RNUM DESC-->
+	<!--</select>-->
+
 	<select id="hi_getFollowList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 									

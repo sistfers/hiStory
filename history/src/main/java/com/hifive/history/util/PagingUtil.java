@@ -31,7 +31,7 @@ public class PagingUtil {
 		html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">   \n");
 		html.append("<tr> 																						\n");
 		html.append("<td class=\"list_num\">                                                                    \n");
-		html.append("<ul class=\"pagination pagination-sm\"> 	\n");
+		html.append("<ul class=\"pagination pagination-sm\"> 	                                                \n");
 		// <<
 		if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
 			html.append("<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  \n");
@@ -56,7 +56,7 @@ public class PagingUtil {
 //		  <li><a href="#">5</a></li>
 //		  <li><a href="#">&raquo;</a></li>
 //		</ul>
-		
+
 		// 1 2 3 ... 10	(숫자보여주기)
 		for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
 			

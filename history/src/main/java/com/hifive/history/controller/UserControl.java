@@ -139,6 +139,7 @@ public class UserControl {
 		Gson gson = new Gson();
 		return gson.toJson(followList);
 	}
+
 	@RequestMapping(value = "user/update.hi", method = RequestMethod.POST)
 	public ModelAndView update(HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView();

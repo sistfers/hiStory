@@ -18,6 +18,7 @@
 				++count;
 			}
 		}
+		
 		if(count!=0){
 			count = count-1;
 		}

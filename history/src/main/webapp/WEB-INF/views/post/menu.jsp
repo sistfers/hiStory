@@ -15,6 +15,8 @@
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 	
 	UserDto loginuser = (UserDto)session.getAttribute("user");
+	
+	UserDto userDto = (UserDto)request.getAttribute("userDto");
 
 	Map<String, Integer> visit = new HashMap<>();
 	visit = (Map<String, Integer>)request.getAttribute("visit");
@@ -40,13 +42,14 @@
 <br>
 
 <!-- 이용자의 프로필사진을 넣습니다 -->
-<img src="/resources/image/1.png" width="150" height="150"><br>
+<img src="<%=userDto.getPf_image() %>" width="150" height="150"><br>
+<!-- <img src="/resources/image/1.png" width="150" height="150"><br> -->
 
 <!-- 이용자의 닉네임을 넣습니다 -->
-<h3><%=loginuser.getName() %></h3>
+<h3><%=userDto.getName() %></h3>
 
 <!-- 이용자의 블로그소개를 넣습니다 -->
-<h5><%=loginuser.getPf_content() %></h5>
+<h5><%=userDto.getPf_content() %></h5>
 
 <%
 if(loginuser != null){

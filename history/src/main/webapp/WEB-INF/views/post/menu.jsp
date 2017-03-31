@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.List"%>
@@ -14,7 +16,8 @@
 	
 	UserDto loginuser = (UserDto)session.getAttribute("user");
 
-	
+	Map<String, Integer> visit = new HashMap<>();
+	visit = (Map<String, Integer>)request.getAttribute("visit");
 	
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -40,10 +43,10 @@
 <img src="/resources/image/1.png" width="150" height="150"><br>
 
 <!-- 이용자의 닉네임을 넣습니다 -->
-<h3>Haengtion.93</h3>
+<h3><%=loginuser.getName() %></h3>
 
 <!-- 이용자의 블로그소개를 넣습니다 -->
-<h5>초보개발자 블로그</h5>
+<h5><%=loginuser.getPf_content() %></h5>
 
 <%
 if(loginuser != null){
@@ -88,8 +91,8 @@ if(updateDiv == null) updateDiv = "profile";
 <div class="panel panel-info">
       <div class="panel-heading">방문자수</div>
       <div class="panel-body">
-      	Today 10<br>
-      	Total 2559
+      	Today <%=visit.get("today") %><br>
+      	Total <%=visit.get("total") %>
       </div>
 </div>
 		

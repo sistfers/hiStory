@@ -32,6 +32,7 @@ import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.CommentService;
 import com.hifive.history.service.PostService;
+import com.hifive.history.service.VisitService;
 
 @Controller
 public class BlogControl {
@@ -44,6 +45,8 @@ public class BlogControl {
 	private CodeDService codeDSvc;
 	@Autowired
 	private CommentService commentSve;
+	@Autowired
+	private VisitService visitService;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -295,9 +298,17 @@ public class BlogControl {
 	      Map<String, String> dto = new HashMap<>();
 	      dto.put("id", id);
 	      dto.put("isAll", "false");
-	      
 	      List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
+	      
+	      Map<String, Integer> visit = new HashMap<>();
+	      int today = visitService.hi_getToday(id);
+	      int total = visitService.hi_getTotal(id);
+	      
+	      visit.put("today", today);
+	      visit.put("total", total);
+	      
 	      mav.setViewName("post/menu");
+	      mav.addObject("visit", visit);
 	      mav.addObject("categoryList", categoryList);
 	      
 	      return mav;

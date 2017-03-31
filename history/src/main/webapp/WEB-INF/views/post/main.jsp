@@ -152,7 +152,7 @@ function go_delete(){
 
 <!-- 메인내용 START -->
    <br><br>
-   <div class="container" >
+   <div class="container" style="margin-top: 50px">
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">
@@ -172,9 +172,15 @@ function go_delete(){
 				if(DTO.getSeq() == 0){	// 글 내용 없을때 
 				%>	
 					<div class="col-xs-12">
-						<br><br><br><br><br><br><br><br><br><br><br><br>
-						<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
-						<br><br><br><br><br><br><br><br><br><br><br><br>
+					<table width="100%" >
+						<tr>	
+							<td>
+							<br><br><br><br><br><br><br><br><br><br><br><br>
+							<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
+							<br><br><br><br><br><br><br><br><br><br><br><br>
+							</td>
+						</tr>
+					</table>
 					</div>
 				<%}else{  %>
 	

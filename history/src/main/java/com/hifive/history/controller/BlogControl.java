@@ -32,6 +32,7 @@ import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.CommentService;
 import com.hifive.history.service.PostService;
+import com.hifive.history.service.UserService;
 import com.hifive.history.service.VisitService;
 
 @Controller
@@ -47,6 +48,8 @@ public class BlogControl {
 	private CommentService commentSve;
 	@Autowired
 	private VisitService visitService;
+	@Autowired
+	private UserService userSvc;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -294,11 +297,15 @@ public class BlogControl {
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
 	      ModelAndView mav = new ModelAndView();
 	      String id = request.getParameter("id");
-	      System.out.println(id);
-	      Map<String, String> dto = new HashMap<>();
-	      dto.put("id", id);
-	      dto.put("isAll", "false");
-	      List<CategoryDto> categoryList = categoryService.hi_selectCategory(dto);
+
+	      Map<String, String> condition = new HashMap<>();
+	      condition.put("id", id);
+	      condition.put("isAll", "false");
+	      List<CategoryDto> categoryList = categoryService.hi_selectCategory(condition);
+	      
+	      UserDto dto = new UserDto();
+	      dto.setId(id);
+	      UserDto userDto =  (UserDto) userSvc.hi_detail(dto);
 	      
 	      Map<String, Integer> visit = new HashMap<>();
 	      int today = visitService.hi_getToday(id);
@@ -309,6 +316,7 @@ public class BlogControl {
 	      
 	      mav.setViewName("post/menu");
 	      mav.addObject("visit", visit);
+	      mav.addObject("userDto", userDto);
 	      mav.addObject("categoryList", categoryList);
 	      
 	      return mav;

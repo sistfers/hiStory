@@ -18,7 +18,6 @@
 				++count;
 			}
 		}
-		
 		if(count!=0){
 			count = count-1;
 		}
@@ -75,11 +74,11 @@
 	}
 	
 	// 테마 색깔 정해야함
-	//String THEME = "#FFFFDE";		// 노랑
+// 	String THEME = "#FFFFDE";		// 노랑
 	//String THEME = "#C6E8FF";		// 하늘
-	//String THEME = "#DAD9FF";		// 보라
-	//String THEME = "#FFD8D8";		// 살구
-	String THEME = "#8C8C8C";		// 회색
+// 	String THEME = "#DAD9FF";		// 보라
+	String THEME = "#FFD8D8";		// 살구
+	//String THEME = "#8C8C8C";		// 회색
 %>    
 
 
@@ -153,7 +152,7 @@ function go_delete(){
 
 <!-- 메인내용 START -->
    <br><br>
-   <div class="container" style="margin-top: 50px">
+   <div class="container" style="margin-top: 30px">
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">
@@ -173,15 +172,9 @@ function go_delete(){
 				if(DTO.getSeq() == 0){	// 글 내용 없을때 
 				%>	
 					<div class="col-xs-12">
-					<table width="100%" >
-						<tr>	
-							<td>
 							<br><br><br><br><br><br><br><br><br><br><br><br>
 							<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
 							<br><br><br><br><br><br><br><br><br><br><br><br>
-							</td>
-						</tr>
-					</table>
 					</div>
 				<%}else{  %>
 	
@@ -194,7 +187,8 @@ function go_delete(){
 	<input type="hidden" name="id" value="<%=id%>">  
 </form> 
 <form name="postForm" action="main.hi" method="get">		
-	<input type="hidden" name="PAGE_NUM" value="">     
+	<input type="hidden" name="PAGE_NUM" value="">  
+	<input type="hidden" name="id" value="<%=id%>">    
 </form> 
 
 
@@ -349,7 +343,8 @@ function go_delete(){
 					%>
 					<tr>
 						<td><%=i+1 %></td>
-						<td align="left" style="cursor:pointer;"><a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a></td>
+						<td align="left" "><a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a></td>
+						<%--style="cursor:pointer; --%>
 						<td><%=wdate %></td>
 					</tr>
 					

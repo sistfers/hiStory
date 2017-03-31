@@ -146,13 +146,16 @@ public class GraphControl {
 		if(session.getAttribute("user")!=null){
 			user = (UserDto)session.getAttribute("user");
 		}
-		
+		String PAGE_NUM = "1";
+		if(request.getParameter("PAGE_NUM")!=null){
+			PAGE_NUM = request.getParameter("PAGE_NUM");
+		}
 		ModelAndView mav = new ModelAndView("chart/neighbor");
 		
 		HashMap<String,String> map = new HashMap<>();
 		map.put("id", user.getId());
 		map.put("PAGE_SIZE", "10");
-		map.put("PAGE_NUM", "1");
+		map.put("PAGE_NUM", PAGE_NUM);
 		
 		List<Map<String, Object>> neighborList = followService.hi_getNeighborList(map);
 		mav.addObject("neighborList", neighborList);
@@ -248,6 +251,10 @@ public class GraphControl {
 		dto.put("isAll", "true");
 		List<CategoryDto> categoryBefore = categoryService.hi_selectCategory(dto);
 		boolean b = true;
+		if(request.getParameter("cateUpdate")!=null){
+			
+		}
+		
 		if(request.getParameter("name")!=null){
 			String name = request.getParameter("name");
 			String state = request.getParameter("state").equals("true")?"0":"1";
@@ -259,7 +266,7 @@ public class GraphControl {
 			}
 			if(b){
 				CategoryDto dto2 = new CategoryDto();
-				dto2.setId("1");
+				dto2.setId(user.getId());
 				dto2.setName(name);
 				dto2.setState(state);
 				
@@ -270,7 +277,7 @@ public class GraphControl {
 		if(request.getParameter("title")!=null){
 			String title = request.getParameter("title");
 			String theme = request.getParameter("theme");
-			BlogDto bdto = new BlogDto("Q328", title, theme);
+			BlogDto bdto = new BlogDto(user.getId(), title, theme);
 			if(blogService.hi_update(bdto)>0){System.out.println("::::::::::::::::::블로그테마 변경 성공");};
 		}
 		//카테고리 목록 뿌리기

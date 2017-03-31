@@ -51,7 +51,7 @@ border-radius: 15px;
 	        <div class="col-xs-10">
 		        <!-- 포스트-->
 		        <div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-top:20px; padding-top: 20px; margin-bottom: 20px">
-		 			<p style="font-size: 25px; margin-top: 20px">등록된 카테고리</p>
+		 			<p style="font-size: 25px; margin-top: 20px">나의 팔로우 보기</p>
 					<table class="table" style="margin-top: 20px">
 					<tr class="info">
 						<th> <input type="checkbox"> </th>
@@ -71,6 +71,22 @@ border-radius: 15px;
 						</tr>
 					<%
 							}
+					%>
+						<tr>
+							<td colspan="3" style="text-align: center;">
+							<%
+							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/10+1;
+							for(int i = 1; i<= tot; ++i){							
+							%>
+								<a href="" id="PAGE_NUM">
+								<%=i %>
+								</a>
+							<%
+							}
+							%>
+							</td>
+						</tr>
+					<%
 						}else{
 					%>
 						<tr>

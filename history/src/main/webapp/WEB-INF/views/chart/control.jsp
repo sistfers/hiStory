@@ -16,12 +16,13 @@
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>:::::::::::블로그 관리:::::::::::::::</title>
 <style type="text/css">
 .mydiv{
 width:20%;
-margin-right:0.5%;http://localhost:8190/chart/comment.hi
+margin-right:0.5%;
 border-radius: 15px;
 }
 .mydiv2{
@@ -30,7 +31,27 @@ margin-left:0.5%;
 border-radius: 15px;
 }
 </style>
+<script type="text/javascript">
+window.onload = addRowHandlers;
 
+function addRowHandlers() {
+	var table  = document.getElementById("categoryTable");
+	
+    var rows = table.getElementsByTagName("tr");
+    for (i = 1; i < rows.length; i++) {
+        row = table.rows[i];
+        row.onclick = function(){
+                          var cell = this.getElementsByTagName("td")[0];
+                          var id = cell.innerHTML;
+                          
+                          cell = this.getElementsByTagName("td")[1];
+                          var name = cell.innerHTML;
+                          alert("id:" + id + "name : " + name);
+                          
+         };
+    }
+}
+</script>
 </head>
 <body>
 <!--헤더 START-->
@@ -52,7 +73,8 @@ border-radius: 15px;
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
 		       	<p style="font-size: 25px; margin-top: 20px">등록된 카테고리</p>
-		        <table class="table" style="margin-top: 10px">
+		        <div class="col-xs-6" style="overflow: scroll; height: 200px">
+		       	<table class="table table-striped" id="categoryTable">
 		        	<tr class="info">
 						<th>No</th>
 						<th>카테고리명</th>
@@ -62,17 +84,47 @@ border-radius: 15px;
 		        		for(int i = 0; i < categoryList.size(); ++i){
 		        	%>
 		        	<tr class="active">
-		        		<td><%=i+1 %></td>
+		        		<td><%=i+1 %><input type="hidden" value="<%=categoryList.get(i).getSeq() %>"></td>
 		        		<td><%=categoryList.get(i).getName() %></td>
 		        		<td><%=categoryList.get(i).getState().equals("0")?"전체공개":"나만보기" %></td>
 		        	</tr>
 		        	<%
 		        		}
 		        	%>
-		        	
 		        </table>
-				<br><br><br>
+				</div>
+				<div class="col-xs-6" style="height: 200px">
+				<form class="form-horizontal" method="post" action="control.hi" id="ouput">
+					<div class="form-group">
+							<br><br>
+							<label for="inputEmail" class="col-lg-4 control-label">카테고리</label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control" id="name" name="name"
+									placeholder="카테고리명 입력">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-lg-4 control-label">공개 설정</label>
+							<div class="col-lg-6">
+									<label class="radio-inline"> <input type="radio" name="state"
+										id="optionsRadios1" value="true" checked="">공개
+									</label>
+								
+									<label class="radio-inline"> <input type="radio" name="state"
+										id="optionsRadios2" value="false"> 비공개
+									</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-offset-7 col-lg-5">
+								<button type="submit" class="btn btn-primary"> 수정 </button>
+							</div>
+						</div>
+				</form>
+				</div>
 				
+				<div class="col-xs-12" style="margin-top: 20px">
 				<form class="form-horizontal" method="post" action="control.hi">
 					<fieldset>
 						<legend>카테고리 등록</legend>
@@ -106,8 +158,9 @@ border-radius: 15px;
 						
 					</fieldset>
 				</form>
-				<br><br><br>
+				</div>
 				
+				<div class="col-xs-12">
 				<form class="form-horizontal" method="post" action="control.hi">
 					<fieldset>
 						<legend>블로그 설정</legend>
@@ -141,7 +194,7 @@ border-radius: 15px;
 						</div>
 					</fieldset>
 				</form>
-
+				</div>
 
 				<div class="col-xs-1"></div>
   		</div>

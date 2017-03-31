@@ -53,51 +53,45 @@
 		WHERE SEQ=#{id}	
 	</delete>
 	
-	<sql id="BaseCondition">
-		<where>
-			<choose>
-				<when test="condi == receiver ">
-					WHERE TAKE_ID=#{id}		
-				</when>
-				<when test="condi == send ">
-					WHERE SEND_ID=#{id}		
-				</when>
-				<otherwise></otherwise>
-			</choose>
-		</where>
+	<sql id="BaseCondition">		
+		<choose>
+			<when test="condi == 'receiver'">
+				WHERE TAKE_ID=#{id}		
+			</when>
+			<when test="condi == 'send'">
+				WHERE SEND_ID=#{id}		
+			</when>
+			<otherwise></otherwise>
+		</choose>		
 	</sql>
 	
-	<!-- <include refid="BaseCondition" /> -->
-	
 	<!-- 리스트 불러오기(내용 검색) -->
-	<select id="hi_select_filtered" parameterType="String" resultMap="GetNotes">
-		<![CDATA[
-		SELECT T1.*, T2.*
+	<select id="hi_select_filtered" parameterType="hashmap" resultMap="GetNotes">
+		
+		SELECT T1.*
 		FROM(
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
 		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-		           T.STATE, T.NAME							
+		           T.STATE, T.NAME, T.TOTAL						
 		    FROM(							
 		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
 		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
-		               B.NAME							
+		               B.NAME, LST.TOTAL							
 		     	FROM(							
-		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
-		       		FROM MESSAGE_H							
-		        	WHERE TAKE_ID=#{id}	
+		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE,
+		        			ROWNUM, MAX(ROWNUM) OVER() TOTAL							
+		       		FROM MESSAGE_H
+		        	<include refid="BaseCondition" />
 		        	AND CONTENTS LIKE '%' || #{words} || '%'						
 		        	ORDER BY WDATE					
-		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
+		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)
+		        <![CDATA[			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
-			) T1 NATURAL JOIN  
-		    (                                                  
-		      SELECT COUNT(*) TOTAL                                  
-		      FROM MESSAGE_H                        
-		      WHERE TAKE_ID=#{id} ) T2
-		]]>	
+			) T1
+		]]>
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->

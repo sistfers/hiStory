@@ -3,6 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -38,7 +39,7 @@ if((String) request.getAttribute("My_Id") != null) {
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- http://aramk.tistory.com/21 -->
 <script type="text/javascript">
-/* 내용 검색 */
+/* 내용 검색  */
 $(document).ready(function() {
 	$("#words").on("click", function() {
 		var words = $('#searchbox').val();
@@ -56,24 +57,73 @@ $(document).ready(function() {
 			success : function(data) {
 				// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
 				
-				alert("success " + data);
-				/* var flag = $.parseJSON(data);
-				if (flag.msg == "true") {
-					do_search();
-				} else {
-					alert("등록 오류 입니다.");
-				} */
+				$('#filteredForm').remove();
+				// alert('success ' +data);
+				
+				var item = $.parseJSON(data);
+				/* $.each(item,function(key,value) {
+					alert('key:'+key+', idx:'+value.IDX+', seq:'+value.SEQ+
+							', send_id:'+value.SEND_ID+', take_id:'+value.TAKE_ID+
+							', contents:'+value.CONTENTS+', wdate:'+value.WDATE+
+							', rdate:'+value.RDATE+', state:'+value.STATE+
+							', name:'+value.NAME+', TOTAL:'+value.TOTAL);
+				});	 */			
+				
+				if (item.length == 0) {
+					alert('item.length ' +item.length);
+					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="20%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
+				}
+				else {
+					var filteredForm = '<table id="filteredForm" class="table"><tr class="warning" >';
+					filteredForm = filteredForm + '<th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
+					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">보낸사람</th>';
+					filteredForm = filteredForm + '<th width="40%" style="text-align: center;">내용</th>';
+					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">날짜</th>';
+					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">읽음</th>';
+											
+					for (var i = 0; i < item.length; i++) {
+						var idx		 = item[i].IDX;
+						var seq		 = item[i].SEQ;
+						var send_id	 = item[i].SEND_ID;
+						var take_id	 = item[i].TAKE_ID;
+						var contents = item[i].CONTENTS;
+						var wdate	 = item[i].WDATE;
+						var rdate	 = item[i].RDATE;
+						var state	 = item[i].STATE;
+						var name	 = item[i].NAME;
+						var total	 = item[i].TOTAL;
+						
+						if(contents.length > 15) {
+							contents = contents.substring(0, 15) + '...';
+							// alert(contents);
+						}
+						
+						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
+						filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
+						filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
+						filteredForm = filteredForm + '<td>'+wdate+'</td>';						
+
+						if(state == '0') {
+							filteredForm = filteredForm + '<td>읽지 않음</td></tr>';
+						} else {
+							filteredForm = filteredForm + '<td>'+rdate+'</td></tr>';
+						}						
+					}
+					
+					filteredForm = filteredForm + '</table>';
+					// alert(filteredForm);
+					$("#wrapfilteredForm").append(filteredForm);
+				}
 			},
 			complete : function(data) {
 				// 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
 			},
 			error : function(xhr, status, error) {
-				alert("에러발생");
+				alert("에러 발생");
 			}
 		});		
 	});	
 });
-
 
 // 페이징
 function do_search_page(url, page_num) 
@@ -117,6 +167,10 @@ function deleteAction(){
 	}
 }
 
+function viewAll() {
+	location.href='receive.hi';
+}
+
 
 </script>	
 </head>
@@ -146,12 +200,14 @@ function deleteAction(){
 	<div class="col-xs-10">
  		<!-- 버튼 -->	
  		<div>
-			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
-			<button class="btn btn-warning" onclick="">답장</button>
+			<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-warning" />
+			<button onclick="" class="btn btn-warning" >답장</button>
 			<input type="text" id="searchbox" />
 			<input type="button" id="words" value="검색" class="btn btn-warning" />
+			<input type="button" id="viewall" value="전체 보기" onclick="viewAll();" class="btn btn-warning" />
     	</div>  
-		<table class="table">
+    	<div id="wrapfilteredForm">
+		<table  id="filteredForm" class="table">
 			<tr class="warning" >
 				<th width="10%" style="text-align: center;">
 				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>
@@ -205,18 +261,17 @@ function deleteAction(){
 			<%	
 			}
 			%>
-	
+			<tr>
+				<td><center>
+					<!-- Paging Area Start -->
+					<%=PagingUtil.renderPaging(
+							intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
+					<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+					</center>
+				</td>
+			</tr>
 		</table>
-		<center>
-			<!-- Paging Area Start -->
-			<%
-//			System.out.println("intTotalCount " + intTotalCount);
-			%>
-			<%=PagingUtil.renderPaging(
-					intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
-			<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-		</center>
-	
+		</div>
 	</div>
 	</form>
 	<div class="col-xs-1"></div>

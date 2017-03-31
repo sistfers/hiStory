@@ -12,9 +12,15 @@
 	String id = request.getParameter("id");
 	// 해당블로그 유저정보 받아오기
 	
+	String ct_seq = request.getParameter("ct_seq");	
+	System.out.println("ct_seq==========================="+ct_seq);
+	if(ct_seq == null) ct_seq = "All";
+	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 	
 	UserDto loginuser = (UserDto)session.getAttribute("user");
+	
+	UserDto userDto = (UserDto)request.getAttribute("userDto");
 
 	Map<String, Integer> visit = new HashMap<>();
 	visit = (Map<String, Integer>)request.getAttribute("visit");
@@ -40,13 +46,14 @@
 <br>
 
 <!-- 이용자의 프로필사진을 넣습니다 -->
-<img src="/resources/image/1.png" width="150" height="150"><br>
+<img src="<%=userDto.getPf_image() %>" width="150" height="150"><br>
+<!-- <img src="/resources/image/1.png" width="150" height="150"><br> -->
 
 <!-- 이용자의 닉네임을 넣습니다 -->
-<h3><%=loginuser.getName() %></h3>
+<h3><%=userDto.getName() %></h3>
 
 <!-- 이용자의 블로그소개를 넣습니다 -->
-<h5><%=loginuser.getPf_content() %></h5>
+<h5><%=userDto.getPf_content() %></h5>
 
 <%
 if(loginuser != null){
@@ -65,13 +72,14 @@ if(loginuser != null){
 
 <!-- 카테고리 -->
 <div class="list-group">
-<a href="main.hi?id=<%=id%>" class="list-group-item active">카테고리 &nbsp;&nbsp;&nbsp;&nbsp;
-<span class="glyphicon glyphicon-chevron-down"></span></a>
+<a href="main.hi?id=<%=id%>" class="list-group-item btn-link" style="color: #F15F5F; background-color: #F6F6F6;" >
+<h6>카테고리 전체글보기 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span></h6> 
+</a>
 
   <%
   	for(int i = 0 ; i < categoryList.size(); ++i){
   %>
-    <a class="list-group-item" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>">
+    <a class="list-group-item <%if(ct_seq.equals(categoryList.get(i).getSeq()+"")) out.println("active");%>" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" >
     <span class="badge"><%=i+2 %></span>		<!-- 카테고리별 글 갯수  -->
     <%=categoryList.get(i).getName() %>
     </a>
@@ -81,10 +89,8 @@ if(loginuser != null){
 </div>
 
 <%-- 선택된 메뉴 색깔 바뀌게 하는것... 나중에 해야함.. 
-String updateDiv = request.getAttribute("div").toString();
-if(updateDiv == null) updateDiv = "profile";
 
-<a href="/update?div=profile" class="list-group-item btn btn-link <%if(updateDiv.equals("profile")) out.println("active");%>">프로필편집</a> --%> 
+ <a class="list-group-item" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" <%if(ct_seq.equals(categoryList.get(i).getSeq())) out.println("style='color:red'");%>> --%> 
 
 
 <!-- 방문자수 -->

@@ -99,7 +99,7 @@ border-radius: 15px;
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 
 <!-- 중간 START -->

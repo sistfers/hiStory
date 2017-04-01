@@ -21,7 +21,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>:::::::::::블로그 관리::::::::!!!:::::::</title>
+<title>:::::::::::블로그 관리:::::::::::::::</title>
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -58,7 +58,7 @@ border-radius: 15px;
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 
 <!-- 

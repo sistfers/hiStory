@@ -41,7 +41,7 @@
         ]);
 
         var options = {
-          title: '방문자 분석',
+          title: '이웃증감 분석',
           hAxis: {title: '범위 내 분석',  titleTextStyle: {color: '#111'}},
           vAxis: {minValue: 0}
         };
@@ -69,7 +69,7 @@ border-radius: 15px;
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 
 <!-- 중간 START -->
@@ -82,7 +82,7 @@ border-radius: 15px;
         <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
-		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p><hr>
+		       	<p style="font-size: 25px; margin-top: 20px">이웃증감</p><hr>
 		       	<form class="form-horizontal" method="post" action="follow.hi">
 		        	<div class="form-group" id="endday" style="margin-top: 10px">
 						<div class="col-lg-1">

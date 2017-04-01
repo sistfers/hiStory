@@ -1,8 +1,13 @@
 package com.hifive.history.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,6 +19,8 @@ import com.hifive.history.model.UserDto;
 @Component
 public class EmailSenderUtil {
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -21,7 +28,16 @@ public class EmailSenderUtil {
 				
 		String sender  = "sisthifive@gmail.com";
 		String title   = "[Hifive] Please verify your email address";		
-		String content = "http://localhost:8080/userAuth/" + token;
+		String content = "http://localhost:8080/userAuth.hi/" + token;
+		
+		logger.debug("[[[content  ]] "+content);
+		
+//		try {
+//			content = URLEncoder.encode(content, "UTF-8");
+//			
+//		} catch (UnsupportedEncodingException e1) {
+//			e1.printStackTrace();
+//		}
 		
 		try {
 			MimeMessage message = mailSender.createMimeMessage();

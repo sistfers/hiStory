@@ -15,7 +15,7 @@ public class IssueAnTokenUtil {
 		long time = System.currentTimeMillis(); 
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		
-		String origin = dto.getEmail() + " " + dayTime.format(new Date(time));
+		String origin = dto.getEmail() + "t" + dayTime.format(new Date(time));
 		String generatedToken = origin;
 				
 		return generatedToken;		

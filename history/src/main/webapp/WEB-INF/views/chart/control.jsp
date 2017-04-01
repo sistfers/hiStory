@@ -21,7 +21,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>:::::::::::블로그 관리:::::::::::::::</title>
+<title>:::::::::::블로그 관리::::::::!!!:::::::</title>
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -40,7 +40,7 @@ border-radius: 15px;
 			var id = $(this).attr("id");
 			var name = $(this).eq(0).find("td").eq(1).text();
 			var state = $(this).eq(0).find("td").eq(2).text();
-			alert(" [ " + name + " ] 카테고리를 수정하시 겠습니까? " + state);
+			alert(" [ " + name + " ] 카테고리를 수정하시 겠습니까??? " + state);
 			//$("#output").attr("value") = name;
 			$("#catename").val(name);
 			$("#cateseq").val(id);

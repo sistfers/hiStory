@@ -8,11 +8,7 @@ import org.springframework.stereotype.Component;
 import com.hifive.history.model.UserDto;
 
 @Component
-public class IssueAnTokenUtil {
-	
-	IssueAnTokenUtil() {
-		
-	}
+public class IssueAnTokenUtil {	
 
 	public String tokenMaker(UserDto dto) {		
 		

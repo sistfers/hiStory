@@ -10,6 +10,7 @@ import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.FollowService;
 import com.hifive.history.service.UserService;
 import com.hifive.history.util.EmailSenderUtil;
+import com.hifive.history.util.IssueAnTokenUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,9 @@ public class UserControl {
 	
 	@Autowired
 	EmailSenderUtil emailSenderUtil;
+	
+	@Autowired
+	IssueAnTokenUtil issueAnTokenUtil;
 
 	@RequestMapping(value = "user/join.hi", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) {
@@ -77,11 +81,14 @@ public class UserControl {
 
 //			userService.hi_insert(userDto);
 //			
-//			// 이메일 발송
-			emailSenderUtil.eamilSender(userDto);
+//			
 			
 			
+			// 토큰 생성
+			String token = issueAnTokenUtil.tokenMaker(userDto);
 			
+			// 이메일 발송 -> /auth/welcome 페이지 이동
+			mav = emailSenderUtil.eamilSender(userDto, token);
 			
 //
 //			// 블로그 추가

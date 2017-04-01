@@ -4,5 +4,9 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.userAuth">
 
+	<insert id="hi_throwToken" parameterType="com.hifive.history.model.TokenDto">
+		INSERT INTO TOKEN_H (SEQ, ID, TOKEN, GDATE)
+		VALUES (SEQ_TOKEN.NEXTVAL, #{id}, #{token}, SYSDATE)
+	</insert>
 
 </mapper>

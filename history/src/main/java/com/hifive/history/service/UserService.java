@@ -1,16 +1,15 @@
 package com.hifive.history.service;
 
-import com.hifive.history.model.iDto;
-import com.hifive.history.repository.UserDao;
-
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import com.hifive.history.model.TokenDto;
+import com.hifive.history.model.UserDto;
+import com.hifive.history.model.iDto;
+import com.hifive.history.repository.UserDao;
 
 /**
  * Created by Admin on 2017-03-24.
@@ -52,6 +51,17 @@ public class UserService implements iService {
 
 	public iDto hi_login(iDto dto) {
 		return userDao.hi_login(dto);
+	}
+	
+	public int hi_throwToken(iDto dto, String token) {		
+		
+		UserDto  us = (UserDto) dto;
+		TokenDto tk = new TokenDto();
+		
+		tk.setId(us.getId());
+		tk.setToken(token);		
+		
+		return userDao.hi_throwToken(tk);
 	}
 	
 	

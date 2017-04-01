@@ -87,9 +87,16 @@ public class UserControl {
 			// 토큰 생성
 			String token = issueAnTokenUtil.tokenMaker(userDto);
 			
-			// 이메일 발송 -> /auth/welcome 페이지 이동
-			mav = emailSenderUtil.eamilSender(userDto, token);
+			//  Table에 id와 토큰 저장
+			int flag = userService.hi_throwToken(userDto, token);
 			
+			if(flag == 1) {
+				// 이메일 발송 -> /auth/welcome 페이지 이동
+				mav = emailSenderUtil.eamilSender(userDto, token);
+				
+			} else {
+				// 예외 처리
+			}			
 //
 //			// 블로그 추가
 //			BlogDto blogDto = new BlogDto();

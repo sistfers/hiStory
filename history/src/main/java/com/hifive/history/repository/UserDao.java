@@ -19,6 +19,8 @@ public class UserDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final String namespace="com.hifive.history.repository.mappers.userCode";
 	
+	private final String tokenspace="com.hifive.history.repository.mappers.userAuth";
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
 
@@ -74,5 +76,13 @@ public class UserDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectOne(statement,dto);
+	}
+	
+	public int hi_throwToken(iDto dto) {	
+		
+		String statement = tokenspace +".hi_throwToken";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.insert(statement, dto);
 	}
 }

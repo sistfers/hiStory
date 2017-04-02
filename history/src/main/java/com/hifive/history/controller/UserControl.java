@@ -79,7 +79,7 @@ public class UserControl {
 			System.out.println("udto = " + userDto.toString());
 //			mav.setViewName("/user/join");
 
-			userService.hi_insert(userDto);
+//			userService.hi_insert(userDto); 
 //			
 //			
 			

@@ -58,11 +58,21 @@ public class UserService implements iService {
 		UserDto  us = (UserDto) dto;
 		TokenDto tk = new TokenDto();
 		
+		// id와 token을 TokenDto 형식으로 넘겨준다
 		tk.setId(us.getId());
 		tk.setToken(token);		
 		
 		return userDao.hi_throwToken(tk);
 	}
 	
+	public iDto hi_searchToken(String id) {	
+		
+		return userDao.hi_searchToken(id);
+	}
+	
+	public int hi_unlockId(String id) {
+		
+		return userDao.hi_unlockId(id);
+	}
 	
 }

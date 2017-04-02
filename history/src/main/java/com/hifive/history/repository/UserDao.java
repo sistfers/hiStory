@@ -19,6 +19,7 @@ public class UserDao implements iDao {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final String namespace="com.hifive.history.repository.mappers.userCode";
 	
+	// userCode에서 userAuth로 별도 분리
 	private final String tokenspace="com.hifive.history.repository.mappers.userAuth";
 	
 	@Autowired
@@ -84,5 +85,21 @@ public class UserDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.insert(statement, dto);
+	}
+	
+	public iDto hi_searchToken(String id) {	
+		
+		String statement = tokenspace +".hi_searchToken";
+		logger.debug("id"+id);
+//		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.selectOne(statement, id);
+	}
+	
+	public int hi_unlockId(String id) {
+		
+		String statement = tokenspace +".hi_unlockId";
+		logger.debug("id"+id);
+//		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.update(statement, id);
 	}
 }

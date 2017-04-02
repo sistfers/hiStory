@@ -8,5 +8,17 @@
 		INSERT INTO TOKEN_H (SEQ, ID, TOKEN, GDATE)
 		VALUES (SEQ_TOKEN.NEXTVAL, #{id}, #{token}, SYSDATE)
 	</insert>
+	
+	<select id="hi_searchToken" parameterType="String" resultType="com.hifive.history.model.TokenDto">
+		SELECT SEQ, ID, TOKEN, GDATE
+		FROM TOKEN_H
+		WHERE ID = #{id}
+	</select>
+	
+	<update id="hi_unlockId" parameterType="String">
+		UPDATE USER_H
+		SET GRADE = 1
+		WHERE ID = #{id}
+	</update>
 
 </mapper>

@@ -26,9 +26,11 @@ public class EmailSenderUtil {
 
 	public ModelAndView eamilSender(UserDto dto, String token) {
 				
+		String seq = "";
+		
 		String sender  = "sisthifive@gmail.com";
 		String title   = "[Hifive] Please verify your email address";		
-		String content = "http://localhost:8080/userAuth.hi/" + token;
+		String content = "http://localhost:8080/verified/" + dto.getId() + "/" +  token +".hi";
 		
 		logger.debug("[[[content  ]] "+content);
 		
@@ -45,7 +47,7 @@ public class EmailSenderUtil {
 			= new MimeMessageHelper(message, true, "UTF-8");
 			
 			messageHelper.setFrom(sender);   		// 보내는사람 생략하거나 하면 정상작동을 안함
-		    messageHelper.setTo("kalgoorlie@naver.com");    // 받는사람 이메일
+		    messageHelper.setTo(dto.getEmail());    // 받는사람 이메일
 		    messageHelper.setSubject(title); 		// 메일제목은 생략이 가능하다
 		    messageHelper.setText(content); 		// 메일 내용
 		    

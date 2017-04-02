@@ -143,6 +143,10 @@ public class HomeControl {
 		condition.put("SEARCH_TAG","#"+apiSearch_word+"#");
 		List<Map<String, Object>> searchList = postSvc.hi_selectSearchList(condition);
 		
+		for(int i=0; i<searchList.size(); ++i){
+			loger.debug(i+"번째 blog_title" + searchList.get(i).get("blog_title"));
+		}
+		
 		mav.setViewName("/main/home_search");
 		mav.addObject("searchList", searchList);
 		mav.addObject("PAGE_NUM"  , PAGE_NUM  );

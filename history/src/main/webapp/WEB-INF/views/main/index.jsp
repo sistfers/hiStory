@@ -351,32 +351,52 @@ $(document).ready(function () {
     	<%}else{ %>
     		<div id="menu<%=i+1 %>" class="tab-pane fade" style="cursor:pointer;">
     	<%}
-    		int k=0;
+    		
     		for(int j=0; j<themeList.size(); ++j){
-    			if(themeList.get(j).get("FIELD").equals(themeCode.get(i).get("CD_D_NM"))){
-    				k++;
-    			%>
-    				<div class="view view-first col-xs-4">
-    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" />
-    				<div class="mask">
-      				<h2><%=themeList.get(j).get("TITLE") %></h2>
-      				<p>
-      					<%
-      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
-      					String content = tempContent;
-      					if(tempContent.length() >50){
-	      					content = tempContent.substring(0,50) + "...";
-      					} %>
-      					<%=content %> 
-      				</p>
-      				<p><%=themeList.get(j).get("ID") %></p>
-      				<a href="#" class="info">글보러가기</a>
-    				</div>
-    				<%if(k%3 == 0 && k!=0){ %>
-    					<br><br>
-    				<%} %>
-	  				</div>
-    	<%			themeList.remove(j);
+    			if(themeList.get(j).get("FIELD").equals(themeCode.get(i).get("CD_D_NM"))){%>
+    				<%if(j<=3){ %>
+	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px">
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
+	    				<div class="mask" style="padding-bottom: 15px">
+	      				<h2><%=themeList.get(j).get("TITLE") %></h2>
+	      				<p>
+	      					<%
+	      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
+	      					String content = tempContent;
+	      					if(tempContent.length() >50){
+		      					content = tempContent.substring(0,50) + "...";
+	      					} %>
+	      					<%=content %> 
+	      				</p>
+	      				<p><%=themeList.get(j).get("NAME") %></p>
+	      				<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>" class="info">글보러가기</a>
+	    				</div>
+	    				</div> 
+    				
+  						
+    				<%}else{%>
+    					<div class="view view-first col-xs-4" style="padding-top: 15px">
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
+	    				<div class="mask" style="padding-top: 15px">
+	      				<h2><%=themeList.get(j).get("TITLE") %></h2>
+	      				<p>
+	      					<%
+	      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
+	      					String content = tempContent;
+	      					if(tempContent.length() >50){
+		      					content = tempContent.substring(0,50) + "...";
+	      					} %>
+	      					<%=content %> 
+	      				</p>
+	      				<p><%=themeList.get(j).get("ID") %></p>
+	      				<a href="#" class="info">글보러가기</a>
+	    				</div>
+	    				</div> 
+    				<%	
+    				  }
+    				%>
+	  				
+    	<%			
     			}
     		}
     	%>

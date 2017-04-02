@@ -124,15 +124,16 @@ public class BlogControl {
 			mav.addObject("PAGE_NUM"   ,PAGE_NUM);
 			
 			
-			UserDto userDto = (UserDto) session.getAttribute("user");
+			UserDto userDto = session.getAttribute("user") == null? null : (UserDto)session.getAttribute("user");
 			
+			if(userDto != null){
 			//글 공감 확인하기
 			LoveDto loveDto = new LoveDto();
 			loveDto.setId(userDto.getId());							// 로그인한사람 id
 			loveDto.setPost_seq(DTO.getSeq());						// 공감 누를 글의 번호
 			LoveDto loveCheck = (LoveDto) loveSvc.hi_detail(loveDto);
 			mav.addObject("loveCheck",loveCheck);
-			
+			}
 			
 		}
 		mav.setViewName("post/main");

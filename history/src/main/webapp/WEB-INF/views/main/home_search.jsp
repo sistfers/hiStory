@@ -188,6 +188,9 @@
 		</div>
 		<br>
 	</td>
+	<td align="right" valign="middle" width="200px">
+	<%=searchList.get(i).get("BLOG_TITLE") %>
+	</td>
 	<td align="right" valign="top" width="50px">
 	<div class="media-body">
 	<%=searchList.get(i).get("WDATE") %>

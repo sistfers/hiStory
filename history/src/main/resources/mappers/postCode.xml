@@ -53,6 +53,8 @@
 	<result javaType="java.lang.String" column="POST_SEQ" property="POST_SEQ" />
 	<result javaType="java.lang.String" column="ORI_NAME" property="ORI_NAME" />
 	<result javaType="java.lang.String" column="SAVE_NAME" property="SAVE_NAME" />
+	<result javaType="java.lang.String" column="BLOG_TITLE" property="BLOG_TITLE" />
+	<result javaType="java.lang.String" column="NAME" property="NAME" />
 	<result javaType="int" column="TOT_CNT" property="TOT_CNT" />
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
@@ -71,6 +73,8 @@
 	<result javaType="java.lang.String" column="CO_STATE" property="CO_STATE" />
 	<result javaType="java.lang.String" column="ORI_NAME" property="ORI_NAME" />
 	<result javaType="java.lang.String" column="SAVE_NAME" property="SAVE_NAME" />
+	<result javaType="java.lang.String" column="BLOG_TITLE" property="BLOG_TITLE" />
+	<result javaType="java.lang.String" column="NAME" property="NAME" />
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
 
@@ -288,7 +292,7 @@ WHERE SEQ     = #{SEQ}
 <select id="hi_selectFollowerList" parameterType="hashmap" resultMap="FollowerPostMap">
 SELECT TT2.*
 FROM
-  (SELECT ROWNUM RNUM, T3.*, T4.*
+  (SELECT ROWNUM RNUM, T3.*, T4.*, BLOG1.BLOG_TITLE, USER1.NAME
   FROM
     (SELECT T1.*, T2.POST_SEQ, T2.LOCATION, T2.ORI_NAME, T2.SAVE_NAME
     FROM
@@ -317,7 +321,16 @@ FROM
     GROUP BY POST_SEQ 
     HAVING POST_SEQ = T1.SEQ)
     OR T2.POST_SEQ IS NULL
-    ) T3 NATURAL JOIN
+    ) T3 
+    INNER JOIN
+       (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG1
+        ON T3.ID = BLOG1.ID
+        INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER1
+       ON T3.ID = USER1.ID
+    NATURAL JOIN
     (SELECT COUNT(*) TOT_CNT
     FROM POST_H B1
     WHERE EXISTS
@@ -335,250 +348,350 @@ FROM
 
 <select id="hi_selectThemeList" parameterType="hashmap" resultMap="ThemePostMap">
 
-SELECT TT21.*
-  FROM
-      (SELECT ROWNUM RNUM, A11.*, A21.ORI_NAME, A21.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A1
-        WHERE STATE = 0
-        AND A1.FIELD = #{THEME1}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A11
-        LEFT OUTER JOIN
-        ( SELECT B1.SEQ AS BOX_SEQ, B1.ORI_NAME, B1.SAVE_NAME, B1.POST_SEQ
-          FROM BOX_H B1
-          WHERE B1.LOCATION = 0
-        )A21
-      ON A11.SEQ = A21.POST_SEQ
-      WHERE A21.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A11.SEQ)
-      OR A21.POST_SEQ IS NULL) TT21
-  WHERE TT21.RNUM BETWEEN 1 AND 6
-UNION ALL
-  SELECT TT2.*
-  FROM
-      (SELECT ROWNUM RNUM, A1.*, A2.ORI_NAME, A2.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A
-        WHERE STATE = 0
-        AND A.FIELD = #{THEME2}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A1
-        LEFT OUTER JOIN
-        ( SELECT B.SEQ AS BOX_SEQ, B.ORI_NAME, B.SAVE_NAME, B.POST_SEQ
-          FROM BOX_H B
-          WHERE B.LOCATION = 0
-        )A2
-      ON A1.SEQ = A2.POST_SEQ
-      WHERE A2.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A1.SEQ)
-      OR A2.POST_SEQ IS NULL) TT2
-  WHERE TT2.RNUM BETWEEN 1 AND 6
-  UNION ALL
-  SELECT TT23.*
-  FROM
-      (SELECT ROWNUM RNUM, A13.*, A23.ORI_NAME, A23.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A3
-        WHERE STATE = 0
-        AND A3.FIELD = #{THEME3}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A13
-        LEFT OUTER JOIN
-        ( SELECT B3.SEQ AS BOX_SEQ, B3.ORI_NAME, B3.SAVE_NAME, B3.POST_SEQ
-          FROM BOX_H B3
-          WHERE B3.LOCATION = 0
-        )A23
-      ON A13.SEQ = A23.POST_SEQ
-      WHERE A23.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A13.SEQ)
-      OR A23.POST_SEQ IS NULL) TT23
-  WHERE TT23.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT24.*
-  FROM
-      (SELECT ROWNUM RNUM, A14.*, A24.ORI_NAME, A24.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A4
-        WHERE STATE = 0
-        AND A4.FIELD = #{THEME4}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A14
-        LEFT OUTER JOIN
-        ( SELECT B4.SEQ AS BOX_SEQ, B4.ORI_NAME, B4.SAVE_NAME, B4.POST_SEQ
-          FROM BOX_H B4
-          WHERE B4.LOCATION = 0
-        )A24
-      ON A14.SEQ = A24.POST_SEQ
-      WHERE A24.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A14.SEQ)
-      OR A24.POST_SEQ IS NULL) TT24
-  WHERE TT24.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT25.*
-  FROM
-      (SELECT ROWNUM RNUM, A15.*, A25.ORI_NAME, A25.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A5
-        WHERE STATE = 0
-        AND A5.FIELD = #{THEME5}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A15
-        LEFT OUTER JOIN
-        ( SELECT B5.SEQ AS BOX_SEQ, B5.ORI_NAME, B5.SAVE_NAME, B5.POST_SEQ
-          FROM BOX_H B5
-          WHERE B5.LOCATION = 0
-        )A25
-      ON A15.SEQ = A25.POST_SEQ
-      WHERE A25.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A15.SEQ)
-      OR A25.POST_SEQ IS NULL) TT25
-  WHERE TT25.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT26.*
-  FROM
-      (SELECT ROWNUM RNUM, A16.*, A26.ORI_NAME, A26.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A6
-        WHERE STATE = 0
-        AND A6.FIELD = #{THEME6}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A16
-        LEFT OUTER JOIN
-        ( SELECT B6.SEQ AS BOX_SEQ, B6.ORI_NAME, B6.SAVE_NAME, B6.POST_SEQ
-          FROM BOX_H B6
-          WHERE B6.LOCATION = 0
-        )A26
-      ON A16.SEQ = A26.POST_SEQ
-      WHERE A26.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A16.SEQ)
-      OR A26.POST_SEQ IS NULL) TT26
-  WHERE TT26.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT27.*
-  FROM
-      (SELECT ROWNUM RNUM, A17.*, A27.ORI_NAME, A27.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A7
-        WHERE STATE = 0
-        AND A7.FIELD = #{THEME7}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A17
-        LEFT OUTER JOIN
-        ( SELECT B7.SEQ AS BOX_SEQ, B7.ORI_NAME, B7.SAVE_NAME, B7.POST_SEQ
-          FROM BOX_H B7
-          WHERE B7.LOCATION = 0
-        )A27
-      ON A17.SEQ = A27.POST_SEQ
-      WHERE A27.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A17.SEQ)
-      OR A27.POST_SEQ IS NULL) TT27
-  WHERE TT27.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT28.*
-  FROM
-      (SELECT ROWNUM RNUM, A18.*, A28.ORI_NAME, A28.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A8
-        WHERE STATE = 0
-        AND A8.FIELD = #{THEME8}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A18
-        LEFT OUTER JOIN
-        ( SELECT B8.SEQ AS BOX_SEQ, B8.ORI_NAME, B8.SAVE_NAME, B8.POST_SEQ
-          FROM BOX_H B8
-          WHERE B8.LOCATION = 0
-        )A28
-      ON A18.SEQ = A28.POST_SEQ
-      WHERE A28.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A18.SEQ)
-      OR A28.POST_SEQ IS NULL) TT28
-  WHERE TT28.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT29.*
-  FROM
-      (SELECT ROWNUM RNUM, A19.*, A29.ORI_NAME, A29.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A9
-        WHERE STATE = 0
-        AND A9.FIELD = #{THEME9}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A19
-        LEFT OUTER JOIN
-        ( SELECT B9.SEQ AS BOX_SEQ, B9.ORI_NAME, B9.SAVE_NAME, B9.POST_SEQ
-          FROM BOX_H B9
-          WHERE B9.LOCATION = 0
-        )A29
-      ON A19.SEQ = A29.POST_SEQ
-      WHERE A29.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A19.SEQ)
-      OR A29.POST_SEQ IS NULL) TT29
-  WHERE TT29.RNUM BETWEEN 1 AND 6
-  UNION ALL
-   SELECT TT210.*
-  FROM
-      (SELECT ROWNUM RNUM, A110.*, A210.ORI_NAME, A210.SAVE_NAME
-      FROM
-        (SELECT *
-        FROM POST_H A10
-        WHERE STATE = 0
-        AND A10.FIELD = #{THEME10}
-        ORDER BY WDATE DESC, SEQ DESC
-        )A110
-        LEFT OUTER JOIN
-        ( SELECT B10.SEQ AS BOX_SEQ, B10.ORI_NAME, B10.SAVE_NAME, B10.POST_SEQ
-          FROM BOX_H B10
-          WHERE B10.LOCATION = 0
-        )A210
-      ON A110.SEQ = A210.POST_SEQ
-      WHERE A210.BOX_SEQ = (SELECT MIN(SEQ) 
-                    FROM BOX_H 
-                    GROUP BY POST_SEQ 
-                    HAVING POST_SEQ = A110.SEQ)
-      OR A210.POST_SEQ IS NULL) TT210
-  WHERE TT210.RNUM BETWEEN 1 AND 6
+SELECT TTT21.*, USER21.NAME
+FROM
+(SELECT TT21.*,  BLOG21.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A11.*, A21.ORI_NAME, A21.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A1
+          WHERE STATE = 0
+          AND A1.FIELD = #{THEME1}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A11
+          LEFT OUTER JOIN
+          ( SELECT B1.SEQ AS BOX_SEQ, B1.ORI_NAME, B1.SAVE_NAME, B1.POST_SEQ
+            FROM BOX_H B1
+            WHERE B1.LOCATION = 0
+          )A21
+        ON A11.SEQ = A21.POST_SEQ
+        WHERE A21.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A11.SEQ)
+        OR A21.POST_SEQ IS NULL) TT21
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG21
+        ON TT21.ID = BLOG21.ID
+       WHERE TT21.RNUM BETWEEN 1 AND 6) TTT21
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER21
+       ON TTT21.ID = USER21.ID
+UNION ALL  
+SELECT TTT22.*, USER22.NAME
+FROM
+(SELECT TT22.*,  BLOG22.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A12.*, A22.ORI_NAME, A22.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A2
+          WHERE STATE = 0
+          AND A2.FIELD = #{THEME2}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A12
+          LEFT OUTER JOIN
+          ( SELECT B2.SEQ AS BOX_SEQ, B2.ORI_NAME, B2.SAVE_NAME, B2.POST_SEQ
+            FROM BOX_H B2
+            WHERE B2.LOCATION = 0
+          )A22
+        ON A12.SEQ = A22.POST_SEQ
+        WHERE A22.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A12.SEQ)
+        OR A22.POST_SEQ IS NULL) TT22
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG22
+        ON TT22.ID = BLOG22.ID
+       WHERE TT22.RNUM BETWEEN 1 AND 6) TTT22
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER22
+       ON TTT22.ID = USER22.ID
+UNION ALL  
+SELECT TTT23.*, USER23.NAME
+FROM
+(SELECT TT23.*,  BLOG23.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A13.*, A23.ORI_NAME, A23.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A3
+          WHERE STATE = 0
+          AND A3.FIELD = #{THEME3}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A13
+          LEFT OUTER JOIN
+          ( SELECT B3.SEQ AS BOX_SEQ, B3.ORI_NAME, B3.SAVE_NAME, B3.POST_SEQ
+            FROM BOX_H B3
+            WHERE B3.LOCATION = 0
+          )A23
+        ON A13.SEQ = A23.POST_SEQ
+        WHERE A23.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A13.SEQ)
+        OR A23.POST_SEQ IS NULL) TT23
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG23
+        ON TT23.ID = BLOG23.ID
+       WHERE TT23.RNUM BETWEEN 1 AND 6) TTT23
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER23
+       ON TTT23.ID = USER23.ID
+UNION ALL  
+SELECT TTT24.*, USER24.NAME
+FROM
+(SELECT TT24.*,  BLOG24.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A14.*, A24.ORI_NAME, A24.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A4
+          WHERE STATE = 0
+          AND A4.FIELD = #{THEME4}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A14
+          LEFT OUTER JOIN
+          ( SELECT B4.SEQ AS BOX_SEQ, B4.ORI_NAME, B4.SAVE_NAME, B4.POST_SEQ
+            FROM BOX_H B4
+            WHERE B4.LOCATION = 0
+          )A24
+        ON A14.SEQ = A24.POST_SEQ
+        WHERE A24.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A14.SEQ)
+        OR A24.POST_SEQ IS NULL) TT24
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG24
+        ON TT24.ID = BLOG24.ID
+       WHERE TT24.RNUM BETWEEN 1 AND 6) TTT24
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER24
+       ON TTT24.ID = USER24.ID              
+UNION ALL  
+SELECT TTT25.*, USER25.NAME
+FROM
+(SELECT TT25.*,  BLOG25.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A15.*, A25.ORI_NAME, A25.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A5
+          WHERE STATE = 0
+          AND A5.FIELD = #{THEME5}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A15
+          LEFT OUTER JOIN
+          ( SELECT B5.SEQ AS BOX_SEQ, B5.ORI_NAME, B5.SAVE_NAME, B5.POST_SEQ
+            FROM BOX_H B5
+            WHERE B5.LOCATION = 0
+          )A25
+        ON A15.SEQ = A25.POST_SEQ
+        WHERE A25.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A15.SEQ)
+        OR A25.POST_SEQ IS NULL) TT25
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG25
+        ON TT25.ID = BLOG25.ID
+       WHERE TT25.RNUM BETWEEN 1 AND 6) TTT25
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER25
+       ON TTT25.ID = USER25.ID  
+UNION ALL  
+SELECT TTT26.*, USER26.NAME
+FROM
+(SELECT TT26.*,  BLOG26.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A16.*, A26.ORI_NAME, A26.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A6
+          WHERE STATE = 0
+          AND A6.FIELD = #{THEME6}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A16
+          LEFT OUTER JOIN
+          ( SELECT B6.SEQ AS BOX_SEQ, B6.ORI_NAME, B6.SAVE_NAME, B6.POST_SEQ
+            FROM BOX_H B6
+            WHERE B6.LOCATION = 0
+          )A26
+        ON A16.SEQ = A26.POST_SEQ
+        WHERE A26.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A16.SEQ)
+        OR A26.POST_SEQ IS NULL) TT26
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG26
+        ON TT26.ID = BLOG26.ID
+       WHERE TT26.RNUM BETWEEN 1 AND 6) TTT26
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER26
+       ON TTT26.ID = USER26.ID
+UNION ALL  
+SELECT TTT27.*, USER27.NAME
+FROM
+(SELECT TT27.*,  BLOG27.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A17.*, A27.ORI_NAME, A27.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A7
+          WHERE STATE = 0
+          AND A7.FIELD = #{THEME7}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A17
+          LEFT OUTER JOIN
+          ( SELECT B7.SEQ AS BOX_SEQ, B7.ORI_NAME, B7.SAVE_NAME, B7.POST_SEQ
+            FROM BOX_H B7
+            WHERE B7.LOCATION = 0
+          )A27
+        ON A17.SEQ = A27.POST_SEQ
+        WHERE A27.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A17.SEQ)
+        OR A27.POST_SEQ IS NULL) TT27
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG27
+        ON TT27.ID = BLOG27.ID
+       WHERE TT27.RNUM BETWEEN 1 AND 6) TTT27
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER27
+       ON TTT27.ID = USER27.ID
+UNION ALL  
+SELECT TTT28.*, USER28.NAME
+FROM
+(SELECT TT28.*,  BLOG28.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A18.*, A28.ORI_NAME, A28.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A8
+          WHERE STATE = 0
+          AND A8.FIELD = #{THEME8}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A18
+          LEFT OUTER JOIN
+          ( SELECT B8.SEQ AS BOX_SEQ, B8.ORI_NAME, B8.SAVE_NAME, B8.POST_SEQ
+            FROM BOX_H B8
+            WHERE B8.LOCATION = 0
+          )A28
+        ON A18.SEQ = A28.POST_SEQ
+        WHERE A28.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A18.SEQ)
+        OR A28.POST_SEQ IS NULL) TT28
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG28
+        ON TT28.ID = BLOG28.ID
+       WHERE TT28.RNUM BETWEEN 1 AND 6) TTT28
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER28
+       ON TTT28.ID = USER28.ID
+UNION ALL  
+SELECT TTT29.*, USER29.NAME
+FROM
+(SELECT TT29.*,  BLOG29.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A19.*, A29.ORI_NAME, A29.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A9
+          WHERE STATE = 0
+          AND A9.FIELD = #{THEME9}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A19
+          LEFT OUTER JOIN
+          ( SELECT B9.SEQ AS BOX_SEQ, B9.ORI_NAME, B9.SAVE_NAME, B9.POST_SEQ
+            FROM BOX_H B9
+            WHERE B9.LOCATION = 0
+          )A29
+        ON A19.SEQ = A29.POST_SEQ
+        WHERE A29.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A19.SEQ)
+        OR A29.POST_SEQ IS NULL) TT29
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG29
+        ON TT29.ID = BLOG29.ID
+       WHERE TT29.RNUM BETWEEN 1 AND 6) TTT29
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER29
+       ON TTT29.ID = USER29.ID
+UNION ALL         
+SELECT TTT210.*, USER210.NAME
+FROM
+(SELECT TT210.*,  BLOG210.BLOG_TITLE 
+    FROM 
+        (SELECT ROWNUM RNUM, A110.*, A210.ORI_NAME, A210.SAVE_NAME
+        FROM
+          (SELECT *
+          FROM POST_H A10
+          WHERE STATE = 0
+          AND A10.FIELD = #{THEME10}
+          ORDER BY WDATE DESC, SEQ DESC
+          )A110
+          LEFT OUTER JOIN
+          ( SELECT B10.SEQ AS BOX_SEQ, B10.ORI_NAME, B10.SAVE_NAME, B10.POST_SEQ
+            FROM BOX_H B10
+            WHERE B10.LOCATION = 0
+          )A210
+        ON A110.SEQ = A210.POST_SEQ
+        WHERE A210.BOX_SEQ = (SELECT MIN(SEQ) 
+                      FROM BOX_H 
+                      GROUP BY POST_SEQ 
+                      HAVING POST_SEQ = A110.SEQ)
+        OR A210.POST_SEQ IS NULL) TT210
+        INNER JOIN
+        (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG210
+        ON TT210.ID = BLOG210.ID
+       WHERE TT210.RNUM BETWEEN 1 AND 6) TTT210
+       INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER210
+       ON TTT210.ID = USER210.ID
 </select>
 
 <select id="hi_selectSearchList" parameterType="hashmap" resultMap="SearchPostMap">
 SELECT TT2.*
    FROM(
-     SELECT ROWNUM RNUM,T1.*, T2.*
+     SELECT ROWNUM RNUM,T1.*, T2.*, BLOG1.BLOG_TITLE, USER1.NAME
        FROM(
                 SELECT A1.*, A2.POST_SEQ, A2.ORI_NAME, A2.SAVE_NAME
                 FROM
                   (SELECT A.SEQ, A.CT_SEQ, A.ID, A.FIELD, A.TITLE, A.CONTENT, to_char(A.WDATE, 'YYYYMMDD') AS WDATE, A.HASHTAG, A.STATE, A.CO_STATE
                   FROM POST_H A
                   WHERE STATE = 0
-                  AND A.TITLE LIKE #{SEARCH_WORD}
-                  OR A.CONTENT LIKE #{SEARCH_WORD}
-                  OR A.HASHTAG = #{SEARCH_TAG}
+                  AND A.TITLE LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
+                  OR A.CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
+                  OR A.HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
                   ORDER BY WDATE DESC,SEQ DESC
                   )A1
                 LEFT OUTER JOIN
@@ -592,17 +705,26 @@ SELECT TT2.*
                               GROUP BY POST_SEQ 
                               HAVING POST_SEQ = A1.SEQ)
                 OR A2.POST_SEQ IS NULL
+                
        )T1
+        INNER JOIN
+       (SELECT ID, TITLE AS BLOG_TITLE
+        FROM BLOG_H) BLOG1
+        ON T1.ID = BLOG1.ID
+        INNER JOIN
+       (SELECT ID, NAME
+       FROM USER_H) USER1
+       ON T1.ID = USER1.ID
        NATURAL JOIN
        (
        SELECT COUNT(*) TOT_CNT
         FROM POST_H
             WHERE STATE = 0
-            AND TITLE LIKE #{SEARCH_WORD}
-            OR CONTENT LIKE #{SEARCH_WORD}
-            OR HASHTAG = #{SEARCH_TAG}
+            AND TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
+            OR CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
+            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
        )T2
-)TT2				
+)TT2
 WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
 </select>

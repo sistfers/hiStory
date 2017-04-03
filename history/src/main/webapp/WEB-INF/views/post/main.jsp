@@ -82,8 +82,13 @@
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
 	
 	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
+	String THEME;
 	// 테마 색깔 
-	String THEME = blogdto.getTheme();
+	if(blogdto.getTheme().equals("DEFAULT_THEME")){
+		THEME = "#747474";
+	}else{
+		THEME = blogdto.getTheme();
+	}
 %>    
 
 

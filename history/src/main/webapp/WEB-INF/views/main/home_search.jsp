@@ -50,9 +50,10 @@
 <meta http-equiv="Pragma" content="No-Cache"> 
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
+    
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<style type="text/css">
 	.table-filter {
 	background-color: #fff;
@@ -111,7 +112,7 @@
 <body>
 
 <!--헤더 START-->
-<jsp:include page="header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 <div class="container" >
 <br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
@@ -141,11 +142,11 @@
 <!-- HISTORY START -->
 <br><br>
 <div class="row" >
-<div class="col-lg-12" >
+<div class="col-xs-12" >
 <h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 
-<div class="col-lg-1"></div>
-<div class="col-lg-10">
+<div class="col-xs-1"></div>
+<div class="col-xs-10">
 <table class="table table-hover" >
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
@@ -274,7 +275,7 @@ function do_search_page(url, page_num) {
 <!-- 네이버 검색결과 START -->
 <br><br>
  <div class="row">
-	<div class="col-lg-12">
+	<div class="col-xs-12">
 <c:set var="item" value="${blogItem }"/>
 <c:choose>
 	<c:when test="${empty item}">
@@ -282,8 +283,8 @@ function do_search_page(url, page_num) {
     </c:when>
 	<c:otherwise>
 		<h3 class="page-header" style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
-		<div class="col-lg-1"></div>
-			<div class="col-lg-10">
+		<div class="col-xs-1"></div>
+			<div class="col-xs-10">
 				<table cellpadding="0"  cellspacing="0" border="0" class="table table-hover">		
 					<c:forEach var="item" items="${blogItem}">
 					 	<tr name="api_search_detail" style="cursor:pointer;">	
@@ -318,7 +319,7 @@ function do_search_page(url, page_num) {
 
 <!-- 네이버 검색결과 END -->
 </div>
-<div class="col-lg-1"></div>
+<div class="col-xs-1"></div>
 </div>
 <!--푸터 START -->
 <jsp:include page="footer.jsp"/>

@@ -355,6 +355,7 @@ $(document).ready(function () {
     		for(int j=0; j<themeList.size(); ++j){
     			if(themeList.get(j).get("FIELD").equals(themeCode.get(i).get("CD_D_NM"))){%>
     				<%if(j<=3){ %>
+    					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
 	    				<div class="mask" style="padding-bottom: 15px">
@@ -369,12 +370,12 @@ $(document).ready(function () {
 	      					<%=content %> 
 	      				</p>
 	      				<p><%=themeList.get(j).get("NAME") %></p>
-	      				<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>" class="info">글보러가기</a>
+	      				<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
 	    				</div>
 	    				</div> 
-    				
-  						
+    					</a>
     				<%}else{%>
+    					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
     					<div class="view view-first col-xs-4" style="padding-top: 15px">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
 	    				<div class="mask" style="padding-top: 15px">
@@ -388,10 +389,11 @@ $(document).ready(function () {
 	      					} %>
 	      					<%=content %> 
 	      				</p>
-	      				<p><%=themeList.get(j).get("ID") %></p>
-	      				<a href="#" class="info">글보러가기</a>
+	      				<p><%=themeList.get(j).get("NAME") %></p>
+	      				<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
 	    				</div>
 	    				</div> 
+	    				</a>
     				<%	
     				  }
     				%>
@@ -404,78 +406,12 @@ $(document).ready(function () {
     	</div>
     <%}//THEME별로 사진넣을 프레임 구분 %>
     
-      
-      	
-	<!-- <div id="menu10" class="tab-pane fade">
-      
-      	<div class="view view-first col-xs-4">
-    	<img src="/resources/image/main.jpg" />
-      	<div class="mask">
-      		<h2>블로그타이틀</h2>
-      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
-      		<p>mihyun</p>
-      		<a href="#" class="info">글보러가기</a>
-    	</div>
-	  	</div>
-
-		<div class="view view-first col-xs-4" style="cursor:pointer;">
-   		<img src="/resources/image/main.jpg"  />
-    	<div class="mask">
-      		<h2>Empire State</h2>
-      		<p>어떤게 더 이쁜지 모르겠구나...<br>
-      		이쪽껀 버튼 없는 스타일...<br>
-      		<br>
-      		작성자 <br>
-       		</p>
-    	</div>
-		</div>
-
-		<div class="view view-first col-xs-4">
-	    <img src="/resources/image/main.jpg" />
-	    <div class="mask">
-	      <h2>Empire State</h2>
-	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
-	      <a href="#" class="info">Read More</a>
-	    </div>
-	    <br><br>
-		</div>
-		<div class="view view-first col-xs-4">
-    	<img src="/resources/image/main.jpg" />
-      	<div class="mask">
-      		<h2>블로그타이틀</h2>
-      		<p>아.. 정말... 100%맘에들순 없는것인가..뭔가 부족하다.... </p>
-      		<p>mihyun</p>
-      		<a href="#" class="info">글보러가기</a>
-    	</div>
-	  	</div>
-
-
-		<div class="view view-first col-xs-4" style="cursor:pointer;">
-   		<img src="/resources/image/main.jpg"  />
-    		<div class="mask">
-      		<h2>Empire State</h2>
-      		<p>어떤게 더 이쁜지 모르겠구나...<br>
-      		이쪽껀 버튼 없는 스타일...<br>
-      		<br>
-      		작성자 <br>
-       		</p>
-    		</div>
-		</div>
-
-		<div class="view view-first col-xs-4">
-	    <img src="/resources/image/main.jpg" />
-	    <div class="mask">
-	      <h2>Empire State</h2>
-	      <p>A cool description of some sort between these tags. I am so cool and awesomely awesome.</p>
-	      <a href="#" class="info">Read More</a>
-	    </div>
-		</div> -->
 	</div>
 	
 	<%} //if(themeCode != null)끝%>	
 	
 	</div><!-- 탭컨텐츠 -->
-</div><!-- 컨테이너 -->
+
 	</center>
 	<br>
 
@@ -565,7 +501,7 @@ $(document).ready(function () {
 </div>
 
 <!-- BEST 블로거 END -->
-
+</div><!-- 컨테이너 -->
 </div>
 <!--내용 END -->
 

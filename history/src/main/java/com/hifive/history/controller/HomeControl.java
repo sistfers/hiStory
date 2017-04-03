@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hifive.history.model.SearchDto;
 import com.hifive.history.model.UserDto;
+import com.hifive.history.model.iDto;
 import com.hifive.history.portal.Channel;
 import com.hifive.history.portal.Item;
 import com.hifive.history.portal.Rss;
@@ -55,7 +57,7 @@ public class HomeControl {
 	CodeDService codeDSvc;
 	
 	@RequestMapping(value = "main/index.hi")
-	public ModelAndView home(HttpServletRequest request, HttpSession session) throws Exception{
+	public ModelAndView home(HttpServletRequest requestss, HttpSession session) throws Exception{
 		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
 		if (session.getAttribute("user") != null) {
 			UserDto dto = (UserDto) session.getAttribute("user");
@@ -125,13 +127,30 @@ public class HomeControl {
 	}
 	
 	@RequestMapping(value="main/do_search.hi",method=RequestMethod.POST)
-	public ModelAndView do_search(HttpServletRequest res)throws Exception{
+	public ModelAndView do_search(HttpServletRequest res, HttpSession session)throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
-		String apiSearch_word = res.getParameter("search_word").trim();
+		String apiSearch_word = res.getParameter("search_word").trim(); 
 		String search_word = "%"+apiSearch_word+"%";
 		String PAGE_SIZE 	= "10";	//페이지사이즈
 		String PAGE_NUM		= "1";	//페이지NUM
+		
+		//검색어 기록에 추가 start
+		SearchDto dto = new SearchDto();
+		
+		dto.setSearch_word(apiSearch_word);
+			//로그인 정보 받아오기
+		if(session.getAttribute("user") != null){
+			dto.setS_id(((UserDto)session.getAttribute("user")).getId());
+		}else{
+			dto.setS_id("-1");
+		}
+		
+		int flag = searchSvc.hi_insert(dto);
+		
+		if(flag > 0) loger.debug("단어 인썰트 성공~~~~~~~~~~~~~~~~~~~~~~쑤아뤼");
+		
+		//검색어 기록에 추가 end
 		
 		PAGE_NUM		= (res.getParameter("PAGE_NUM")==null || res.getParameter("PAGE_NUM").equals("")) ? "1" : res.getParameter("PAGE_NUM");	//페이지NUM
 		loger.debug("들어왔다!!!!!!! 단어는 ::"+ search_word);

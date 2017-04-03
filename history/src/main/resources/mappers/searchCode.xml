@@ -3,6 +3,46 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.searchCode">
+
+<sql id="condition">
+	<choose>
+		<when test="s_id != '-1' ">
+			SEQ_SEARCH.NEXTVAL,
+		    #{search_word},
+		    #{s_id},
+		    SYSDATE,
+		    (
+		      select NULL SEX from dual
+		      where not exists (SELECT SEX FROM USER_H WHERE ID=#{s_id})
+		      union
+		      SELECT SEX FROM USER_H WHERE ID=#{s_id}
+		    ),
+		    (
+		      select NULL AREA from dual
+		      where not exists (SELECT AREA FROM USER_H WHERE ID=#{s_id})
+		      union
+		      SELECT AREA FROM USER_H WHERE ID=#{s_id}
+		    ),
+		    (
+		      select NULL BIRTH from dual
+		      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{s_id})
+		      union
+		      SELECT BIRTH FROM USER_H WHERE ID=#{s_id}
+		    )
+		</when>
+		<when test="s_id == '-1' ">
+			SEQ_SEARCH.NEXTVAL,
+		    #{search_word},
+		    null,
+		    SYSDATE,
+		    null,
+		    null,
+		    null
+		</when>
+		<otherwise></otherwise>
+	</choose>
+</sql>
+
 	
 	<resultMap id="SearchRankMap" type="java.util.HashMap">
 		<result javaType="int" column="RNUM" property="RNUM" />
@@ -25,28 +65,7 @@
 		  )
 		  VALUES
 		  (
-		    SEQ_SEARCH.NEXTVAL,
-		    #{search_word},
-		    #{s_id},
-		    SYSDATE,
-		    (
-		      select NULL SEX from dual
-		      where not exists (SELECT SEX FROM USER_H WHERE ID=#{s_id})
-		      union
-		      SELECT SEX FROM USER_H WHERE ID=#{s_id}
-		    ),
-		    (
-		      select NULL AREA from dual
-		      where not exists (SELECT AREA FROM USER_H WHERE ID=#{s_id})
-		      union
-		      SELECT AREA FROM USER_H WHERE ID=#{s_id}
-		    ),
-		    (
-		      select NULL BIRTH from dual
-		      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{s_id})
-		      union
-		      SELECT BIRTH FROM USER_H WHERE ID=#{s_id}
-		    )
+		  	<include refid="condition"/>
 		  )
 	</insert>
 	
@@ -63,7 +82,7 @@
   				ORDER BY COUNT(*) DESC
   			)A
   		)
-		WHERE RNUM BETWEEN 1 AND 9
+		WHERE RNUM BETWEEN 1 AND 10
 
 	</select>
 	

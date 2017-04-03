@@ -55,8 +55,11 @@
 	</update>
 	
 	<!-- 읽지 않은 쪽지 수 -->
-	<select id="" parameterType="String" resultType="int">
-		
+	<select id="hi_unread_note" parameterType="String" resultType="String">
+		SELECT COUNT(*)
+		FROM MESSAGE_H
+		WHERE TAKE_ID=#{id} 
+		AND STATE="0"
 	</select>	
 	
 	<!-- 쪽지 삭제 -->

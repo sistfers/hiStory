@@ -110,7 +110,7 @@ border-radius: 15px;
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #ededed;">
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
 		       	
 		       	<p style="font-size: 25px; margin-top: 20px; margin-bottom: 20px">등록된 카테고리</p>
 		       	<div class="col-xs-12" style="background-color: white; padding-bottom: 20px; padding-top: 20px;">

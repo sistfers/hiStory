@@ -110,6 +110,17 @@ $(document).ready(function() {
 						}						
 					}
 					
+					// pagination
+					var total_pg = item[0].TOTAL / 10;  
+					
+					// 나머지가 있다면 1페이지 추가
+					if (item[0].TOTAL % 10 > 0) {
+						total_pg++;
+					}
+					
+					
+					
+					
 					filteredForm = filteredForm + '</table>';
 					// alert(filteredForm);
 					$("#wrapfilteredForm").append(filteredForm);
@@ -152,8 +163,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-	alert(checkRow);
-	
+	alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){
 		alert("삭제할 대상을 선택하세요.");
@@ -164,6 +174,33 @@ function deleteAction(){
 	if(confirm("정보를 삭제 하시겠습니까?")){	    
 		location.href='delete.hi?idx='+checkRow+'&to=receive';
 	//  "${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
+	}
+}
+
+/* 답장(체크박스된 것 전부) */
+function replyAction() {
+	var checkRow = "";
+	$( "input[name='checkRow']:checked" ).each (function (){
+	    checkRow = checkRow + $(this).closest('td').next().html()+",";
+	});
+	
+	<%-- <tr>
+	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
+	<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
+	<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
+	<td><%=item.get("WDATE") %></td> --%>	
+	
+	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+	alert('답장 대상 ' +checkRow);
+	
+	if(checkRow == ''){
+		alert("답장할 대상을 선택하세요.");
+		return false;
+	}
+	console.log("### checkRow => {}"+checkRow);
+	
+	if(confirm("정말 보내겠습니까?")){	    
+		location.href='writeForm.hi?list='+checkRow;
 	}
 }
 
@@ -191,8 +228,6 @@ function viewAll() {
 <div class="col-xs-10">
 <center><h2> :: 받은쪽지함 ::</h2></center><br>
 	<div class="col-xs-1">
-	<!-- <button class="btn btn-warning" onclick="deleteAction();">삭제</button>
-	<button class="btn btn-warning" onclick="">답장</button> -->
 	</div>
 	<form name="searchForm" action="" method="POST">
 		<input type="hidden" name="PAGE_NUM" value="" />
@@ -201,7 +236,7 @@ function viewAll() {
  		<!-- 버튼 -->	
  		<div>
 			<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-warning" />
-			<button onclick="" class="btn btn-warning" >답장</button>
+			<input type="button" value="답장" onclick="replyAction();" class="btn btn-warning" />
 			<input type="text" id="searchbox" />
 			<input type="button" id="words" value="검색" class="btn btn-warning" />
 			<input type="button" id="viewall" value="전체 보기" onclick="viewAll();" class="btn btn-warning" />
@@ -234,7 +269,7 @@ function viewAll() {
 					}
 			%>
 				<tr>
-					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
+					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 					<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
 					<td><%=item.get("WDATE") %></td>

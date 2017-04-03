@@ -41,6 +41,12 @@ public class MessageService implements iService {
 		
 		return messageDao.hi_detail(dto);
 	}
+	
+	// 쪽지 읽고 나서
+	public int hi_detail_state(int seq) {
+		
+		return messageDao.hi_detail_state(seq);
+	}
 
 	// 쪽지 삭제
 	@Override

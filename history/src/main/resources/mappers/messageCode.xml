@@ -46,6 +46,19 @@
 		              	 ON (A.SEND_ID=B.ID)
 	</select>	
 	
+	<!-- 쪽지 읽고 나서 -->
+	<update id="hi_detail_state" parameterType="int">
+		UPDATE MESSAGE_H 
+		SET STATE = 1,
+		RDATE = SYSDATE
+		WHERE SEQ = #{seq}
+	</update>
+	
+	<!-- 읽지 않은 쪽지 수 -->
+	<select id="" parameterType="String" resultType="int">
+		
+	</select>	
+	
 	<!-- 쪽지 삭제 -->
 	<delete id="hi_delete" parameterType="int">
 		DELETE 	
@@ -141,7 +154,7 @@
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
 		       		FROM MESSAGE_H							
 		        	WHERE TAKE_ID=#{TAKEID}							
-		        ORDER BY WDATE						
+		        	ORDER BY WDATE DESC				
 		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							

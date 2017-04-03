@@ -425,7 +425,33 @@ public class BlogControl {
 		
 		return gson.toJson(jsonObject);
 	}
-	
-	
+
+	@RequestMapping(value="followInsert.hi")
+	@ResponseBody
+	public String followInsert(HttpServletRequest request, HttpSession session) {
+		String my_id = request.getParameter("my_id");
+		String you_id = request.getParameter("you_id");
+		String command = request.getParameter("command");
+
+		UserDto user = (UserDto)session.getAttribute("user");
+
+
+		FollowDto followDto = new FollowDto();
+		followDto.setMy_id(my_id);
+		followDto.setYou_id(you_id);
+		followDto.setArea(user.getArea());
+		followDto.setBirth(user.getBirth());
+		followDto.setSex(user.getSex());
+
+		if (command.equals("insert"))
+			followDto.setState("0");
+		else
+			followDto.setState("1");
+
+		if (followService.hi_insert(followDto) == 1)
+			return "success";
+		else
+			return "fail";
+	}
 }
 

@@ -32,19 +32,66 @@
 
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- 이웃추가버튼 스타일 -->
-<style type="text/css">
-.btn-glyphicon {
-	padding: 8px;
-	background: #ffffff;
-	margin-right: 4px;
-}
+	<!-- 이웃추가버튼 스타일 -->
+	<style type="text/css">
+	.btn-glyphicon {
+		padding: 8px;
+		background: #ffffff;
+		margin-right: 4px;
+	}
 
-.icon-btn {
-	padding: 1px 15px 3px 2px;
-	border-radius: 50px;
-}
-</style>
+	.icon-btn {
+		padding: 1px 15px 3px 2px;
+		border-radius: 50px;
+	}
+	</style>
+
+	<script type="text/javascript">
+		function delete_follow(loginId, blogId) {
+            var my_id = loginId;
+            var you_id = blogId;
+            var command = "delete";
+            $.ajax({
+                type: "POST",
+                url: "/followInsert.hi",
+                datatype: "html",
+                data: {
+                    my_id: my_id,
+                    you_id: you_id,
+                    command: command
+                },
+                success: function () {
+                    alert("이웃 삭제 되었습니다.");
+                    location.reload();
+                },
+                error: function () {
+                }
+            });
+        }
+
+		function insert_follow(loginId, blogId) {
+		    var my_id = loginId;
+		    var you_id = blogId;
+		    var command = "insert";
+			$.ajax({
+				type: "POST",
+				url: "/followInsert.hi",
+				datatype: "html",
+				data: {
+				    my_id: my_id,
+					you_id: you_id,
+					command: command
+				},
+				success: function (data) {
+                    alert("이웃 추가 되었습니다.");
+                    location.reload();
+				},
+				error: function (data) {
+
+				}
+			});
+        }
+	</script>
 </head>
 <body>
 <center>
@@ -52,7 +99,6 @@
 
 <!-- 블로그 주인의 프로필사진을 넣습니다 -->
 <img src="<%=userDto.getPf_image() %>" width="150" height="150"><br>
-<!-- <img src="/resources/image/1.png" width="150" height="150"><br> -->
 
 <!-- 블로그 주인의 닉네임을 넣습니다 -->
 <h3><%=userDto.getName() %></h3>
@@ -67,12 +113,12 @@
 			    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
 			</a>
 		<% } else if(follow){ %>
-			<a class="btn icon-btn btn-warning btn-sm" href="#">
+			<a class="btn icon-btn btn-warning btn-sm" href="javascript:delete_follow('<%=loginuser.getId()%>', '<%=id%>')">
 				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
 				이웃삭제
 			</a>
 		<% } else { %>
-			<a class="btn icon-btn btn-warning btn-sm" href="#">
+			<a class="btn icon-btn btn-warning btn-sm" href="javascript:insert_follow('<%=loginuser.getId()%>', '<%=id%>')">
 				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
 				이웃추가
 			</a>

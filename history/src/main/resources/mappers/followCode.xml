@@ -181,11 +181,17 @@
 		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
 	</select>
 
-	<insert id="hi_insert" parameterType="com.hifive.history.model.FollowDto">
-		INSERT
-		INTO FOLLOW_H ( SEQ,MY_ID,YOU_ID,FDATE,SEX,AREA,BIRTH,STATE)
-		VALUES(SEQ_FOLLOW.NEXTVAL,#{my_id},#{you_id}, SYSDATE,#{sex},#{area},#{birth}, 0 )
-	</insert>
+	<update id="hi_insert" parameterType="com.hifive.history.model.FollowDto">
+		MERGE INTO FOLLOW_H f1
+		USING DUAL
+		ON (MY_ID = #{my_id} AND YOU_ID = #{you_id} AND TO_CHAR(FDATE, 'YYYY/MM/DD') = TO_CHAR(SYSDATE, 'YYYY/MM/DD'))
+		WHEN MATCHED THEN
+		UPDATE SET f1.STATE = f1.STATE
+		DELETE WHERE MY_ID = #{my_id} AND YOU_ID = #{you_id} AND TO_CHAR(FDATE, 'YYYY/MM/DD') = TO_CHAR(SYSDATE, 'YYYY/MM/DD')
+		WHEN NOT MATCHED THEN
+		INSERT ( f1.SEQ, f1.MY_ID, f1.YOU_ID, f1.FDATE, f1.SEX, f1.AREA, f1.BIRTH, f1.STATE)
+		VALUES ( SEQ_FOLLOW.NEXTVAL, #{my_id}, #{you_id}, SYSDATE, #{sex}, #{area}, #{birth}, #{state} )
+	</update>
 
 	<select id="hi_detail" parameterType="com.hifive.history.model.FollowDto" resultType="com.hifive.history.model.FollowDto">
 		SELECT followtable.MY_ID, followtable.YOU_ID

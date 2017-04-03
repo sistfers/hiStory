@@ -104,13 +104,13 @@ border-radius: 15px;
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
-      <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
+      <div class="col-xs-2 mydiv" style="background-color: <%=blogdto.getTheme() %>; border-radius: 15px">
          <jsp:include page="menu.jsp"/>
       </div>
       <!--내용 START -->
-        <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
+        <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #ededed;">
 		       	
 		       	<p style="font-size: 25px; margin-top: 20px; margin-bottom: 20px">등록된 카테고리</p>
 		       	<div class="col-xs-12" style="background-color: white; padding-bottom: 20px; padding-top: 20px;">
@@ -238,10 +238,10 @@ border-radius: 15px;
 								<table class="table" style="margin-top: 10px">
 									<tr>
 										<td style="background-color: #f7e3a3;"></td>
-										<td style="background-color: #baffcc;"></td>
-										<td style="background-color: #bac5ff;"></td>
-										<td style="background-color: #debaff;"></td>
-										<td style="background-color: #ffbae2;"></td>
+										<td style="background-color: #f7c4a3;"></td>
+										<td style="background-color: #a3f7c4;"></td>
+										<td style="background-color: #a3e0f7;"></td>
+										<td style="background-color: #f7a3e4;"></td>
 									</tr>
 									<tr>
 										<td style="text-align: center;">
@@ -250,19 +250,19 @@ border-radius: 15px;
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios2" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>checked="checked"<%} %>></label>
+										id="optionsRadios2" value="#f7c4a3" <%if(blogdto.getTheme().equals("#f7c4a3")){%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios3" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>checked="checked"<%} %>></label>
+										id="optionsRadios3" value="#a3f7c4" <%if(blogdto.getTheme().equals("#a3f7c4")){%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios4" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>checked="checked"<%} %>></label>
+										id="optionsRadios4" value="#a3e0f7" <%if(blogdto.getTheme().equals("#a3e0f7")){%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios5" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>checked="checked"<%} %>></label>
+										id="optionsRadios5" value="#f7a3e4" <%if(blogdto.getTheme().equals("#f7a3e4")){%>checked="checked"<%} %>></label>
 										</td>
 									</tr>
 								</table>

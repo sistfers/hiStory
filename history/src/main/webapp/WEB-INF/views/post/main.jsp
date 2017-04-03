@@ -282,7 +282,7 @@ function go_delete(){
 					  	<td width=10% id="<%=commentdata.get("SEQ")%>">
 					  	
 			  		<%} else{%>
-			  			<td width=13% colspan=2 id="<%=commentdata.get("SEQ")%>">
+			  			<td width=13% colspan=2 >
 			  		<%} %>
 			  		<!-- 사진  -->
 			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
@@ -294,7 +294,7 @@ function go_delete(){
 						<!-- 댓글내용 -->
 		  				<%=commentdata.get("CONTENT") %>
 		  				</td>
-		  		  		<td width="20%" align="left">
+		  		  		<td width="20%" align="left" id="<%=commentdata.get("SEQ")%>">
 		  		  		<c:set var='login' value="${sessionScope.user}"/>
 		  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
 			  				<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
@@ -544,16 +544,6 @@ $(function(){
             return;
         }
            
-/*         var commentChildText = '<tr name="commentChildCode">'+
-                                    '<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+
-                                    '<td style="width:99%">'+
-                                        '<strong>'+cName.val()+'</strong> '+cPassword.val()+' <a style="cursor:pointer;" name="cAdd">답글</a> | <a style="cursor:pointer;" name="cDel">삭제</a>'+
-                                        '<p>'+cText.val().replace(/\n/g, "<br>")+'</p>'+
-                                    '</td>'+
-                                '</tr>'; */
-//         		 				<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td> 
-<%--         					  	<td width=10% id="<%=commentdata.get("SEQ")%>">                                 --%>
-                                
         // 대댓글로 들어갈 내용
         var commentChildText = '<tr name="commentChildCode">'+
         						'<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td> '+
@@ -564,13 +554,13 @@ $(function(){
                                 '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
                                 cText.val().replace(/\n/g, "<br>")+'</td>'+
                                 '<td width="20%" align="left">'+
-                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="cAdd">답글</button>'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;">수정</button>'+
-                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="cDel">삭제</button>'+
                                 '</td>'+
                                 '</tr>';                                
                                    
-        //앞의 tr노드 찾기
+ /*        //앞의 tr노드 찾기
         var prevTr = $(this).parent().parent().parent().parent().prev();
         //댓글 적는 에디터 삭제
         $("#commentEditor").remove();//여기에서 삭제를 해줘야 에디터tr을 안 찾는다.
@@ -597,30 +587,58 @@ $(function(){
         if(check){//댓글(depth1)의 댓글(depth2_n)이 있다면 그 댓글(depth2_n) 뒤에 댓글(depth2_n+1) 추가
             nextTr = nextTr.prev();//while문에서 검색하느라 next로 넘거갔던거 다시 앞으로 돌려줌
             nextTr.after(commentChildText);
-        }
+        } */
            
     });
        
        
     //답글 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
     $(document).on("click","table#commentTable button", function(){//동적으로 버튼이 생긴 경우 처리 방식
-           
-   	
+
         if($(this).attr("name")=="pDel"){
+        	console.log("댓글번호"+$(this).parent().attr('id'));
+        	
             if (confirm("정말 삭제하시겠습니까?") == true){    //확인
                    
                 var delComment = $(this).parent().parent();
                 var nextTr = delComment.next();
                 var delTr;
-                //댓글(depth1)의 댓글(depth2_1)이 있는지 검사하여 삭제
-                while(nextTr.attr("name")=="commentCode"){
-                    nextTr = nextTr.next();
-                    delTr = nextTr.prev();//삭제하고 넘기면 삭제되서 없기 때문에 다음값을 가져오기 어려워 다시 앞으로 돌려서 찾은 다음 삭제
-                    delTr.remove();
-                }
-                   
-                delComment.remove();
-                   
+                
+                
+                
+                $.ajax({
+        			type:"POST",
+        			url:"replyDelete.hi",			// 컨트롤러에 보낼 이름
+        			dataType:"html",
+        			data:{
+        				"seq" 	: $(this).parent().attr('id')
+        			},
+        			success:function(data){
+        				console.log("data"+data);
+        				var flag = $.parseJSON(data);
+        				
+        				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
+
+        	                //댓글(depth1)의 댓글(depth2_1)이 있는지 검사하여 삭제
+        	                while(nextTr.attr("name")=="commentCode"){
+        	                    nextTr = nextTr.next();
+        	                    delTr = nextTr.prev();//삭제하고 넘기면 삭제되서 없기 때문에 다음값을 가져오기 어려워 다시 앞으로 돌려서 찾은 다음 삭제
+        	                    delTr.remove();
+        	                }
+        	                   
+        	                delComment.remove();
+        				} else {
+        					alert("댓글삭제 실패");
+        				}
+        			},
+        			complete : function(data) {
+        				// 실패, 성공 상관없이 무조건 수행
+        			},
+        			error:function(){
+        				 alert("에러냐아아앙!!! ");
+        			}
+        		});  
+                
             }else{   //취소
                 return;
             }

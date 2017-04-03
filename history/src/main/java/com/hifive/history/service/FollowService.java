@@ -19,7 +19,7 @@ public class FollowService implements iService {
 
 	@Override
 	public int hi_insert(iDto dto) {
-		return 0;
+		return followDao.hi_insert(dto);
 	}
 
 	@Override

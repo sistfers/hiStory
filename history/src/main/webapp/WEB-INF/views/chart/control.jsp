@@ -89,6 +89,17 @@ border-radius: 15px;
 			alert('카테고리명을 입력하세요');
 		}		
 	}
+	function color() {
+		if($("#optionsRadios1").is(':checked')||$("#optionsRadios2").is(':checked')||$("#optionsRadios3").is(':checked')
+				||$("#optionsRadios4").is(':checked')||$("#optionsRadios5").is(':checked')){
+			if(confirm("설정을 변경하시겠어요?")){
+				var frm = document.blog;
+				frm.submit();
+			}
+		}else{
+			alert('테마를 입력하세요');
+		}
+	}
 </script>
 <!-- 
 태마 버전
@@ -205,7 +216,7 @@ border-radius: 15px;
 				</div>
 				
 				<div class="col-xs-12">
-				<form class="form-horizontal" method="post" action="control.hi">
+				<form class="form-horizontal" method="post" action="control.hi" name="blog">
 					<fieldset>
 						<legend>블로그 설정</legend>
 						<div class="form-group">
@@ -243,19 +254,19 @@ border-radius: 15px;
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios1" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>checked="checked"<%} %>></label>
+										id="optionsRadios2" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios1" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>checked="checked"<%} %>></label>
+										id="optionsRadios3" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios1" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>checked="checked"<%} %>></label>
+										id="optionsRadios4" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios1" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>checked="checked"<%} %>></label>
+										id="optionsRadios5" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>checked="checked"<%} %>></label>
 										</td>
 									</tr>
 								</table>
@@ -264,7 +275,7 @@ border-radius: 15px;
 						<div class="form-group">
 							<div class="col-xs-offset-9 col-xs-3">
 								<button type="reset" class="btn btn-default">취소</button>
-								<button type="submit" class="btn btn-primary">적용</button>
+								<button type="button" class="btn btn-primary" onclick="color()">적용</button>
 							</div>
 						</div>
 					</fieldset>

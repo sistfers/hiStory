@@ -114,7 +114,12 @@ border-radius: 15px;
 						<th>카테고리명</th>
 						<th>공개여부</th>
 		        	</tr>
+		        	<%if(categoryList.size()==0){ %>
+		        	<tr class="active">
+		        		<td colspan="3" style="text-align: center;">등록된 카테고리가 없습니다.</td>
+		        	</tr>
 		        	<%
+		        	}else{
 		        		for(int i = 0; i < categoryList.size(); ++i){
 		        	%>
 		        	<tr class="active" id="<%=categoryList.get(i).getSeq() %>">
@@ -124,6 +129,7 @@ border-radius: 15px;
 		        	</tr>
 		        	<%
 		        		}
+		        	}
 		        	%>
 		        </table>
 				</div>
@@ -213,17 +219,48 @@ border-radius: 15px;
 						
 						<div class="form-group">
 							<label for="select" class="col-xs-2 control-label">테마설정</label>
-							<div class="col-xs-9">
-								<br>
-								<select multiple="" class="form-control" name="theme">
+								<div class="col-xs-9">
+									
+									<%-- <select multiple="" class="form-control" name="theme">
 									<option style="background-color: #cee1ff; text-align: center;" value="#f7e3a3" <%if(blogdto.getTheme().equals("#f7e3a3")){%>selected="selected"<%} %>></option>
 									<option style="background-color: #cefffb; text-align: center;" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>selected="selected"<%} %>></option>
 									<option style="background-color: #ceffd7; text-align: center;" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>selected="selected"<%} %>></option>
 									<option style="background-color: #f8ffce; text-align: center;" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>selected="selected"<%} %>></option>
 									<option style="background-color: #ffceeb; text-align: center;" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>selected="selected"<%} %>></option>
-								</select>
+									</select> --%>
+								<table class="table" style="margin-top: 10px">
+									<tr>
+										<td style="background-color: #f7e3a3;"></td>
+										<td style="background-color: #baffcc;"></td>
+										<td style="background-color: #bac5ff;"></td>
+										<td style="background-color: #debaff;"></td>
+										<td style="background-color: #ffbae2;"></td>
+									</tr>
+									<tr>
+										<td style="text-align: center;">
+										<label class="radio-inline"> <input type="radio" name="theme"
+										id="optionsRadios1" value="#f7e3a3" <%if(blogdto.getTheme().equals("#f7e3a3")){%>checked="checked"<%} %>></label>
+										</td>
+										<td style="text-align: center;">
+										<label class="radio-inline"> <input type="radio" name="theme"
+										id="optionsRadios1" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>checked="checked"<%} %>></label>
+										</td>
+										<td style="text-align: center;">
+										<label class="radio-inline"> <input type="radio" name="theme"
+										id="optionsRadios1" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>checked="checked"<%} %>></label>
+										</td>
+										<td style="text-align: center;">
+										<label class="radio-inline"> <input type="radio" name="theme"
+										id="optionsRadios1" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>checked="checked"<%} %>></label>
+										</td>
+										<td style="text-align: center;">
+										<label class="radio-inline"> <input type="radio" name="theme"
+										id="optionsRadios1" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>checked="checked"<%} %>></label>
+										</td>
+									</tr>
+								</table>
+								</div>
 							</div>
-						</div>
 						<div class="form-group">
 							<div class="col-xs-offset-9 col-xs-3">
 								<button type="reset" class="btn btn-default">취소</button>

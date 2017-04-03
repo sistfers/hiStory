@@ -97,8 +97,44 @@ border-radius: 15px;
 						</div>
 					</div>
 				</form>
-				<div id="chart_div" style="width: 100%; height: 500px;"></div>
-				
+				<div id="chart_div" style="width: 100%; height: 500px;"></div><hr>
+					<div class="col-xs-12">
+		       		<table class="table" style="margin-top: 10px">
+		        	<tr class="warning">
+		        		<th colspan="8" style="text-align: center;">이웃증감</td>
+		        	</tr>
+		        	<tr class="active">
+						<td>날짜</td>
+						<%
+							for(int i =0; i < followIncList.size(); ++i){
+						%>
+						<td><%=followIncList.get(i).get("CUR_DATE") %></td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	<tr class="active">
+		        		<td>증가</td>
+		        		<%
+							for(int i =0; i < followIncList.size(); ++i){
+						%>
+						<td style="text-align: center; "><%=followIncList.get(i).get("CNT") %>명</td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	<tr class="active">
+		        		<td>감소</td>
+		        		<%
+							for(int i =0; i < followIncList.size(); ++i){
+						%>
+						<td style="text-align: center; "><%=followDecList.get(i).get("CNT") %>명</td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	</table>
+		       	</div>
 		       	
 			<div class="col-xs-1"></div>
   		</div>

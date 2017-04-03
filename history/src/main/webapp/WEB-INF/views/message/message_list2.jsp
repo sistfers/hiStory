@@ -96,7 +96,6 @@ function deleteAction(){
 		<!-- 버튼 -->	
 		<div> <!-- class="form-group"> -->			
 			<input type="button" value="삭제" class="btn btn-warning" onclick="deleteAction();" />
-			<button class="btn btn-warning" onclick="">답장</button>    
     	</div>
 		<table class="table">
 			<tr class="warning" >

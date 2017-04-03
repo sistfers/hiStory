@@ -85,20 +85,56 @@ border-radius: 15px;
 		       	<p style="font-size: 25px; margin-top: 20px">이웃증감</p><hr>
 		       	<form class="form-horizontal" method="post" action="follow.hi">
 		        	<div class="form-group" id="endday" style="margin-top: 10px">
-						<div class="col-lg-1">
+						<div class="col-xs-1">
 						</div>
-						<div class="col-lg-4">
+						<div class="col-xs-4">
 							<input type="date" class="form-control" id="endday" name="endday">
 						</div>
-						<div class="col-lg-3">
+						<div class="col-xs-3">
 							<button type="submit" class="btn btn-primary"> 조회 </button>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-xs-4">
 						</div>
 					</div>
 				</form>
-				<div id="chart_div" style="width: 100%; height: 500px;"></div>
-				
+				<div id="chart_div" style="width: 100%; height: 500px;"></div><hr>
+					<div class="col-xs-12">
+		       		<table class="table" style="margin-top: 10px">
+		        	<tr class="warning">
+		        		<th colspan="8" style="text-align: center;">이웃증감</td>
+		        	</tr>
+		        	<tr class="active">
+						<td>날짜</td>
+						<%
+							for(int i =0; i < followIncList.size(); ++i){
+						%>
+						<td><%=followIncList.get(i).get("CUR_DATE") %></td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	<tr class="active">
+		        		<td>증가</td>
+		        		<%
+							for(int i =0; i < followIncList.size(); ++i){
+						%>
+						<td style="text-align: center; "><%=followIncList.get(i).get("CNT") %>명</td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	<tr class="active">
+		        		<td>감소</td>
+		        		<%
+							for(int i =0; i < followIncList.size(); ++i){
+						%>
+						<td style="text-align: center; "><%=followDecList.get(i).get("CNT") %>명</td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	</table>
+		       	</div>
 		       	
 			<div class="col-xs-1"></div>
   		</div>

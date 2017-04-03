@@ -34,14 +34,14 @@ google.charts.setOnLoadCallback(drawVisualization);
 function drawVisualization() {
   // Some raw data (not necessarily accurate)
   var data = google.visualization.arrayToDataTable([
-	['Month', '방문자'],
-   	['<%=visitList.get(0).get("CUR_DATE")%>',  <%=visitList.get(0).get("CNT")%>],
-   	['<%=visitList.get(1).get("CUR_DATE")%>',  <%=visitList.get(1).get("CNT")%>],
-   	['<%=visitList.get(2).get("CUR_DATE")%>',  <%=visitList.get(2).get("CNT")%>],
-   	['<%=visitList.get(3).get("CUR_DATE")%>',  <%=visitList.get(3).get("CNT")%>],
-   	['<%=visitList.get(4).get("CUR_DATE")%>',  <%=visitList.get(4).get("CNT")%>],
-   	['<%=visitList.get(5).get("CUR_DATE")%>',  <%=visitList.get(5).get("CNT")%>],
-   	['<%=visitList.get(6).get("CUR_DATE")%>',  <%=visitList.get(6).get("CNT")%>],
+	['Month', '방문자', {role:'style'}],
+   	['<%=visitList.get(0).get("CUR_DATE")%>',  <%=visitList.get(0).get("CNT")%>, 'color: #bff1ff'],
+   	['<%=visitList.get(1).get("CUR_DATE")%>',  <%=visitList.get(1).get("CNT")%>, 'color: #bff1ff'],
+   	['<%=visitList.get(2).get("CUR_DATE")%>',  <%=visitList.get(2).get("CNT")%>, 'color: #bff1ff'],
+   	['<%=visitList.get(3).get("CUR_DATE")%>',  <%=visitList.get(3).get("CNT")%>, 'color: #bff1ff'],
+   	['<%=visitList.get(4).get("CUR_DATE")%>',  <%=visitList.get(4).get("CNT")%>, 'color: #bff1ff'],
+   	['<%=visitList.get(5).get("CUR_DATE")%>',  <%=visitList.get(5).get("CNT")%>, 'color: #bff1ff'],
+   	['<%=visitList.get(6).get("CUR_DATE")%>',  <%=visitList.get(6).get("CNT")%>, 'color: #bff1ff'],
 ]);
 
 	var options = {
@@ -90,20 +90,47 @@ border-radius: 15px;
 		       	<p style="font-size: 25px; margin-top: 20px;"> 방문자수</p><hr>
 		       	<form class="form-horizontal" method="post" action="visit.hi">
 		       	<div class="form-group" id="startdate" style="margin-top: 10px">
-					<div class="col-lg-1">
+					<div class="col-xs-1">
 					</div>
-					<div class="col-lg-4">
+					<div class="col-xs-4">
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-xs-2">
 						<button type="submit" class="btn btn-primary"> 조회 </button>
 					</div>
-					<div class="col-lg-5">
+					<div class="col-xs-5">
 						* 7일간의 데이터를 불러옵니다.
 					</div>
 				</div>
 				</form>
-		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
+		       	<div class="col-xs-12" id="chart_div" style="height: 400px;"></div>
+		       	<div class="col-xs-12">
+		       		<table class="table" style="margin-top: 10px">
+		        	<tr class="warning">
+		        		<th colspan="8" style="text-align: center;">방문자수</td>
+		        	</tr>
+		        	<tr class="active">
+						<td>날짜</td>
+						<%
+							for(int i =0; i < visitList.size(); ++i){
+						%>
+						<td><%=visitList.get(i).get("CUR_DATE") %></td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	<tr class="active">
+		        		<td>방문</td>
+		        		<%
+							for(int i =0; i < visitList.size(); ++i){
+						%>
+						<td style="text-align: center; "><%=visitList.get(i).get("CNT") %>명</td>
+						<%
+							}
+						%>
+		        	</tr>
+		        	</table>
+		       	</div>
 			<div class="col-xs-1"></div>
   		</div>
 </div>

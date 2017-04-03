@@ -148,8 +148,8 @@
 		ORDER BY CUR_DATE ASC
 		]]>
 	</select>
+
 	<select id="hi_getNeighborList" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
 		SELECT TT2.*							
 		FROM(							
      	 	SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT							
@@ -179,6 +179,23 @@
     	)TT2							
 		WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
 		AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
-		]]>
 	</select>
+
+	<insert id="hi_insert" parameterType="com.hifive.history.model.FollowDto">
+		INSERT
+		INTO FOLLOW_H ( SEQ,MY_ID,YOU_ID,FDATE,SEX,AREA,BIRTH,STATE)
+		VALUES(SEQ_FOLLOW.NEXTVAL,#{my_id},#{you_id}, SYSDATE,#{sex},#{area},#{birth}, 0 )
+	</insert>
+
+	<select id="hi_detail" parameterType="com.hifive.history.model.FollowDto" resultType="com.hifive.history.model.FollowDto">
+		SELECT followtable.MY_ID, followtable.YOU_ID
+		FROM (
+		       SELECT count(YOU_ID) as cnt, MY_ID, YOU_ID
+		       FROM FOLLOW_H
+		       WHERE MY_ID = #{my_id} AND YOU_ID = #{you_id}
+		       GROUP BY MY_ID, YOU_ID
+		     )followtable
+		WHERE MOD(followtable.cnt, 2) = 1
+	</select>
+
 </mapper>

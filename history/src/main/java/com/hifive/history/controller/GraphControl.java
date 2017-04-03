@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.BlogDto;
 import com.hifive.history.model.CategoryDto;
+import com.hifive.history.model.FollowDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.model.iDto;
@@ -146,6 +147,25 @@ public class GraphControl {
 		if(session.getAttribute("user")!=null){
 			user = (UserDto)session.getAttribute("user");
 		}
+		if(request.getParameter("addordel")!=null){
+			if(request.getParameter("addordel").equals("add")){
+				FollowDto dto = new FollowDto();
+				dto.setMy_id(user.getId());
+				dto.setYou_id(request.getParameter("id"));
+				dto.setFdate("SYSDATE");
+				dto.setSex(user.getSex());
+				dto.setArea(user.getArea());
+				dto.setBirth(user.getBirth());
+				dto.setState("0");
+				
+				followService.hi_insert(dto);
+				
+			}else if(request.getParameter("addordel").equals("del")){
+				
+			}
+		}
+		
+		
 		String PAGE_NUM = "1";
 		if(request.getParameter("PAGE_NUM")!=null){
 			PAGE_NUM = request.getParameter("PAGE_NUM");
@@ -253,8 +273,13 @@ public class GraphControl {
 			map.put("cateseq", cateseq);
 			map.put("catename", catename);
 			map.put("catestate", catestate);
-			
-			categoryService.updateCategory(map);
+			if(request.getParameter("btn").equals("mod")){
+				categoryService.updateCategory(map);
+			}else if(request.getParameter("btn").equals("del")){
+				categoryService.hi_delete(Integer.parseInt(cateseq));
+			}else{
+				
+			}
 		}
 		
 		//카테고리 불러오기(전체)

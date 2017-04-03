@@ -115,15 +115,15 @@ border-radius: 15px;
 		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p>
 		       	<form class="form-horizontal" method="post" action="age.hi">
 		       	<div class="form-group" id="startdate" style="margin-top: 10px">
-					<div class="col-lg-1">
+					<div class="col-xs-1">
 					</div>
-					<div class="col-lg-4">
+					<div class="col-xs-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
 					</div>
-					<div class="col-lg-4">
+					<div class="col-xs-4">
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-xs-2">
 						<button type="submit" class="btn btn-primary"> 조회 </button>
 					</div>
 				</div>

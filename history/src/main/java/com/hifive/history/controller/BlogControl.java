@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hifive.history.model.*;
+import com.hifive.history.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,36 +26,33 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hifive.history.model.CategoryDto;
-import com.hifive.history.model.CommentDto;
-import com.hifive.history.model.LoveDto;
-import com.hifive.history.model.PostDto;
-import com.hifive.history.model.UserDto;
-import com.hifive.history.service.CategoryService;
-import com.hifive.history.service.CodeDService;
-import com.hifive.history.service.CommentService;
-import com.hifive.history.service.LoveService;
-import com.hifive.history.service.PostService;
-import com.hifive.history.service.UserService;
-import com.hifive.history.service.VisitService;
 
 @Controller
 public class BlogControl {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private CategoryService categoryService;
+
 	@Autowired
 	private PostService postSvc;
+
 	@Autowired
 	private CodeDService codeDSvc;
+
 	@Autowired
 	private CommentService commentSve;
+
 	@Autowired
 	private VisitService visitService;
+
 	@Autowired
 	private UserService userSvc;
+
 	@Autowired
-	LoveService loveSvc;
+	private LoveService loveSvc;
+
+	@Autowired
+	private FollowService followService;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -312,60 +311,127 @@ public class BlogControl {
 	//왼쪽menu 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
-	      ModelAndView mav = new ModelAndView();
-	      String id = request.getParameter("id");
+	    ModelAndView mav = new ModelAndView();
+	    String id = request.getParameter("id");
+		Boolean follow = false;
 
-	      Map<String, String> condition = new HashMap<>();
-	      condition.put("id", id);
-	      condition.put("isAll", "false");
-	      List<CategoryDto> categoryList = categoryService.hi_selectCategory(condition);
+	    Map<String, String> condition = new HashMap<>();
+	    condition.put("id", id);
+	    condition.put("isAll", "false");
+	    List<CategoryDto> categoryList = categoryService.hi_selectCategory(condition);
 	      
-	      UserDto dto = new UserDto();
-	      dto.setId(id);
-	      UserDto userDto =  (UserDto) userSvc.hi_detail(dto);
+	    UserDto dto = new UserDto();
+	    dto.setId(id);
+	    UserDto userDto =  (UserDto) userSvc.hi_detail(dto);
 	      
-	      Map<String, Integer> visit = new HashMap<>();
-	      int today = visitService.hi_getToday(id);
-	      int total = visitService.hi_getTotal(id);
+	    Map<String, Integer> visit = new HashMap<>();
+	    int today = visitService.hi_getToday(id);
+	    int total = visitService.hi_getTotal(id);
 	      
-	      visit.put("today", today);
-	      visit.put("total", total);
-	      
-	      mav.setViewName("post/menu");
-	      mav.addObject("visit", visit);
-	      mav.addObject("userDto", userDto);
-	      mav.addObject("categoryList", categoryList);
-	      
-	      return mav;
+	    visit.put("today", today);
+	    visit.put("total", total);
+
+	    UserDto loginuser = (UserDto)session.getAttribute("user");
+	    if (loginuser != null) {
+		    FollowDto followCon = new FollowDto();
+		    followCon.setMy_id(loginuser.getId());
+		    followCon.setYou_id(id);
+
+		    if (followService.hi_detail(followCon) != null) {
+			    follow = true;
+		    }
+	    }
+
+	    mav.setViewName("post/menu");
+	    mav.addObject("visit", visit);
+	    mav.addObject("userDto", userDto);
+	    mav.addObject("categoryList", categoryList);
+		mav.addObject("follow", follow);
+
+	    return mav;
 	}
 		
 	
 	// 댓글 등록 (ajax)
-	@RequestMapping(value="post/replyInsert.hi",method=RequestMethod.POST)
-	   @ResponseBody
-	   public String replyInsert(HttpServletRequest res, HttpSession session) {
-	      UserDto userDto = (UserDto) session.getAttribute("user");
-	      
-	      int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
-	      String ID        = userDto.getId();
-	      String NAME     = userDto.getName();
-	      String CONTENT    = res.getParameter("CONTENT");
-	      String STATE    = res.getParameter("STATE").equals("false") ? "0" : "1";
-	      
-	      /*int seq, int post_seq, String id, String name, String content, int parent, String state*/
-	      CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
-	      int flag = commentSve.hi_insert(commentDto);
-	      
-	      JsonObject jsonObject = new JsonObject();
-	         if(flag > 0){
-	            jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
-	          }else{
-	             jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
-	          }
-	      Gson gson = new Gson();
-	      
-	      return gson.toJson(jsonObject);
-	   }
+	@RequestMapping(value = "post/replyInsert.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String replyInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+
+		int POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID = userDto.getId();
+		String NAME = userDto.getName();
+		String CONTENT = res.getParameter("CONTENT");
+		String STATE = res.getParameter("STATE").equals("false") ? "0" : "1";
+
+		/*
+		 * int seq, int post_seq, String id, String name, String content, int
+		 * parent, String state
+		 */
+		CommentDto commentDto = new CommentDto(0, POST_SEQ, ID, NAME, CONTENT, 0, STATE, null);
+		int flag = commentSve.hi_insert(commentDto);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
+	
+	// 대댓글 등록 (ajax)
+	@RequestMapping(value = "post/rereInsert.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String rereInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+
+		int POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID = userDto.getId();
+		String NAME = userDto.getName();
+		String CONTENT = res.getParameter("CONTENT");
+		int PARENT = Integer.parseInt(res.getParameter("PARENT"));
+		String STATE = res.getParameter("STATE").equals("false") ? "0" : "1";
+
+		/*
+		 * int seq, int post_seq, String id, String name, String content, int
+		 * parent, String state
+		 */
+		CommentDto commentDto = new CommentDto(0, POST_SEQ, ID, NAME, CONTENT, PARENT, STATE, null);
+		int flag = commentSve.hi_insertRe(commentDto);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
+	
+	// 댓글 삭제 (ajax)
+	@RequestMapping(value = "post/replyDelete.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String replyDelete(HttpServletRequest res) {
+
+		int	   seq 		= res.getParameter("seq")==null ? 0 : Integer.parseInt(res.getParameter("seq"));
+		
+		int flag = commentSve.hi_delete(seq);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
 	
 	// 공감 등록 (ajax)
 	@RequestMapping(value="post/loveInsert.hi",method=RequestMethod.POST)

@@ -276,6 +276,7 @@ WHERE SEQ     = #{SEQ}
 	  INNER JOIN POST_H T2
 	  ON T1.POST_SEQ = T2.SEQ
 	WHERE NOT STATE = '2' AND T2.ID = #{id}
+	ORDER BY TOTAL_CNT DESC
 	]]>
 </select>
 <select id="hi_selectLoveRank" parameterType="hashmap" resultType="hashmap">

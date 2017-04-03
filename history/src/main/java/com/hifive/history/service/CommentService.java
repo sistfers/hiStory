@@ -38,6 +38,10 @@ public class CommentService implements iService {
 		return commentDao.hi_selectList(condition);
 	}
 	
+	public int hi_insertRe(iDto dto) {
+		return commentDao.hi_insertRe(dto);
+		
+	}
 	
 //= 사용안함=======================================	
 	@Override

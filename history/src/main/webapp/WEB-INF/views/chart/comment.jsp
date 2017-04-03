@@ -93,16 +93,16 @@ border-radius: 15px;
 		        <form class="form-horizontal" method="post" action="comment.hi">
 		       	<p style="font-size: 25px; margin-top: 20px">기간별 조회</p>
 		       	<div class="form-group" id="startdate">
-					<div class="col-lg-4">
+					<div class="col-xs-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
 					</div>
-					<div class="col-lg-1">
+					<div class="col-xs-1">
 						<h4>~</h4>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-xs-4">
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
-					<div class="col-lg-3">
+					<div class="col-xs-3">
 						<button type="submit" class="btn btn-primary"> 조회 </button>
 					</div>
 				</div>

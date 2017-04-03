@@ -299,13 +299,10 @@ function go_delete(){
 					  				</td>
 					  		  		
 					  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-					  		  		<c:set var='login' value="${sessionScope.user}"/>
-					  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
 						  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
 						  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 						  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 						  				<%} %>
-					  				</c:if>
 					  				</td>
 								 <%}else if(commentdata.get("STATE").equals("1")){ 
 									 if(userDto != null && userDto.getId().equals(commentdata.get("ID"))){%>
@@ -318,13 +315,11 @@ function go_delete(){
 						  				</td>
 						  		  		
 						  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-						  		  		<c:set var='login' value="${sessionScope.user}"/>
-						  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+	  		  		 
 							  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
 							  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 							  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 							  				<%} %>
-						  				</c:if>
 						  				</td>
 									  	 
 							  		<%}else{ %>
@@ -372,13 +367,11 @@ function go_delete(){
 							  				</td>
 							  		  		
 							  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-							  		  		<c:set var='login' value="${sessionScope.user}"/>
-							  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+  		  		 
 								  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
 								  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
 								  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 								  				<%} %>
-							  				</c:if>
 							  				</td>
 										  	 
 								  		<%}else{ %>

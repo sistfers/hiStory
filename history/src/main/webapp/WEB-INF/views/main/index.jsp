@@ -273,7 +273,7 @@ $(document).ready(function () {
             }
             %>
          ],
-         eval: function (item) {return item.count;},
+         eval: function (item) {return item.count>100?99:item.count;},
          classed: function (item) {return item.text.split(" ").join("");}
        },
        plugins: [
@@ -477,27 +477,43 @@ $(document).ready(function () {
 	<%if(followList.size() != 0){
 		for(int i=0; i<followList.size(); ++i){ %>
 		<tr name="search_detail" style="cursor:pointer;">
-			<td rowspan="2" align="center">
-			<div class="media">
+			<td id="<%=followList.get(i).get("ID")%>">
+			<div>
 				<a href="#" class="pull-left">
 				<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="150px" height="100px" onerror='src="/resources/image/main.jpg"'>
 				</a>
 			</div>
 			</td>
+			<td valign="top" id="<%=followList.get(i).get("SEQ")%>">
+			<div style="display: block;">
 			
-		<td> <%=followList.get(i).get("NAME") %> | <%=followList.get(i).get("WDATE") %></td>
-		</tr>
-		<tr>
-		<td>
-			<%
-				String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
-				String content = tempContent;
-				if(tempContent.length() >50){
-					content = tempContent.substring(0,50) + "...";
-				} 
+			
+			<h5 class="title">
+			<%String tempTitle = followList.get(i).get("TITLE")+"";
+				String title = tempTitle;
+				if(tempTitle.length() >50){
+					title = tempTitle.substring(0,50) + "...";
+				}
 			%>
-			<%=content %> 
-		</td>
+			<%= title%>
+			</h5>
+			<%String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
+				String content = tempContent;
+				if(tempContent.length() >150){
+					content = tempContent.substring(0,150) + "...";
+				}
+			%>
+			<p class="summary" style="width: 650px"> <%= content%></p>
+			</div>
+			</td>
+			<td align="right" valign="middle" width="200px">
+			<%=followList.get(i).get("NAME") %>
+			</td>
+			<td align="right" valign="top" width="50px">
+			<div style="display: block;">
+			<%=followList.get(i).get("WDATE") %>
+			</div>
+			</td>
 		</tr>
 <%		}
 	}else{%>

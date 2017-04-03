@@ -90,14 +90,10 @@ border-radius: 15px;
 		}		
 	}
 	function color() {
-		if($("#optionsRadios1").is(':checked')||$("#optionsRadios2").is(':checked')||$("#optionsRadios3").is(':checked')
-				||$("#optionsRadios4").is(':checked')||$("#optionsRadios5").is(':checked')){
-			if(confirm("설정을 변경하시겠어요?")){
-				var frm = document.blog;
-				frm.submit();
-			}
-		}else{
-			alert('테마를 입력하세요');
+		if(confirm("설정을 변경하시겠어요?")){
+			var frm = document.blog;
+			frm.submit();
+			
 		}
 	}
 </script>

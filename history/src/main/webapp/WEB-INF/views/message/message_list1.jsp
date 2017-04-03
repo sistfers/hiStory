@@ -180,8 +180,14 @@ function deleteAction(){
 /* 답장(체크박스된 것 전부) */
 function replyAction() {
 	var checkRow = "";
-	$( "input[name='checkRow']:checked" ).each (function (){
-	    checkRow = checkRow + $(this).closest('td').next().html()+",";
+	$( "input[name='checkRow']:checked" ).each (function (){		
+		var index = checkRow.indexOf($(this).closest('td').next().html());
+		
+		if(index != -1) {
+			
+		} else {
+			checkRow = checkRow + $(this).closest('td').next().html()+",";
+		}
 	});
 	
 	<%-- <tr>

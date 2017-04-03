@@ -283,9 +283,6 @@ public class MessageControl {
 		String[] arrIdx = paramMap.split(",");
 		for (int i = 0; i < arrIdx.length; i++) {
 			int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
-			
-			
-			
 		}
 		
 		ModelAndView mav = new ModelAndView();
@@ -382,6 +379,7 @@ public class MessageControl {
 			loger.debug("session.getAttribute(user) -> null");
 			mav.setViewName("/main/login");
 		}		
+		
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: send.hi");
 		loger.debug("----------------------------------------------------------");

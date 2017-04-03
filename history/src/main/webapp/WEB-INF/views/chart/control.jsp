@@ -40,8 +40,7 @@ border-radius: 15px;
 			var id = $(this).attr("id");
 			var name = $(this).eq(0).find("td").eq(1).text();
 			var state = $(this).eq(0).find("td").eq(2).text();
-			alert(" [ " + name + " ] 카테고리를 수정하시 겠습니까??? " + state);
-			//$("#output").attr("value") = name;
+			
 			$("#catename").val(name);
 			$("#cateseq").val(id);
 			/* state=="전체공개"?$("#optionsRadios1").attr("checked",true):$("#optionsRadios2").attr("checked",true); */
@@ -125,9 +124,8 @@ border-radius: 15px;
 						<br>
 						<div class="form-group">
 							<div class="col-lg-offset-3 col-lg-9">
-								<button type="reset" class="btn btn-warning"> 삭제 </button>
-								
-								<button type="submit" class="btn btn-primary"> 수정 </button>
+								<button type="button" class="btn btn-warning" name="btn" value="del"> 삭제 </button>
+								<button type="button" class="btn btn-primary" name="btn" value="modify"> 수정 </button>
 							</div>
 						</div>
 				</form>

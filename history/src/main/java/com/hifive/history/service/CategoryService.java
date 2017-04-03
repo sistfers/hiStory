@@ -39,7 +39,7 @@ public class CategoryService implements iService {
 	@Override
 	public int hi_delete(int cnt) {
 		// TODO Auto-generated method stub
-		return 0;
+		return categoryDao.hi_delete(cnt);
 	}
 
 	@Override

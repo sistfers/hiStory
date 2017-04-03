@@ -89,7 +89,7 @@ function do_del(id) {
 						<tr class="active">
 							<td><input type="checkbox"></td>
 							<td><a href="/post/main.hi?id=<%=neighborList.get(i).get("MY_ID")%>">
-							<%=neighborList.get(i).get("MY_ID")%></a>
+							<%=neighborList.get(i).get("MY_ID")+" "%> [ <%=neighborList.get(i).get("NAME")+" "%> ]</a>
 							</td>
 							<td><%=neighborList.get(i).get("TITLE") %></td>
 							<td style="text-align: center;">

@@ -29,7 +29,7 @@ public class FollowService implements iService {
 
 	@Override
 	public iDto hi_detail(iDto dto) {
-		return null;
+		return followDao.hi_detail(dto);
 	}
 
 	@Override

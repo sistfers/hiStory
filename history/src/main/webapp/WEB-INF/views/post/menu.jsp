@@ -10,21 +10,26 @@
 <head>
 <%
 	String id = request.getParameter("id");
-	// 해당블로그 유저정보 받아오기
+	// 해당블로그 유저id 받아오기
 	
 	String ct_seq = request.getParameter("ct_seq");	
 	System.out.println("ct_seq==========================="+ct_seq);
 	if(ct_seq == null) ct_seq = "All";
 	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
-	
+
+	// 로그인 유저
 	UserDto loginuser = (UserDto)session.getAttribute("user");
-	
+
+	// 블로그 주인
 	UserDto userDto = (UserDto)request.getAttribute("userDto");
 
 	Map<String, Integer> visit = new HashMap<>();
 	visit = (Map<String, Integer>)request.getAttribute("visit");
-	
+
+	boolean follow = (Boolean)request.getAttribute("follow");
+//	boolean follow = false;
+
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 이웃추가버튼 스타일 -->
@@ -45,28 +50,34 @@
 <center>
 <br>
 
-<!-- 이용자의 프로필사진을 넣습니다 -->
+<!-- 블로그 주인의 프로필사진을 넣습니다 -->
 <img src="<%=userDto.getPf_image() %>" width="150" height="150"><br>
 <!-- <img src="/resources/image/1.png" width="150" height="150"><br> -->
 
-<!-- 이용자의 닉네임을 넣습니다 -->
+<!-- 블로그 주인의 닉네임을 넣습니다 -->
 <h3><%=userDto.getName() %></h3>
 
-<!-- 이용자의 블로그소개를 넣습니다 -->
+<!-- 블로그 주인의 블로그소개를 넣습니다 -->
 <h5><%=userDto.getPf_content() %></h5>
 
 <%
-if(loginuser != null){
-	if(id.equals(loginuser.getId())){ %>
-		<a href="write.hi?id=<%=id %>" class="btn btn-default btn-md">
-		    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
-		</a>
-	<%}else if(!id.equals(loginuser.getId())){ %>
-		<a class="btn icon-btn btn-warning btn-sm" href="#">
-		<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
-		이웃추가</a>
-	<%}
-}%>
+	if(loginuser != null){
+		if(id.equals(loginuser.getId())){ %>
+			<a href="write.hi?id=<%=id %>" class="btn btn-default btn-md">
+			    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
+			</a>
+		<% } else if(follow){ %>
+			<a class="btn icon-btn btn-warning btn-sm" href="#">
+				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
+				이웃삭제
+			</a>
+		<% } else { %>
+			<a class="btn icon-btn btn-warning btn-sm" href="#">
+				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
+				이웃추가
+			</a>
+		<% } %>
+<%}%>
 <br>
 <hr>
 

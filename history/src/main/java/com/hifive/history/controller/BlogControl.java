@@ -382,6 +382,37 @@ public class BlogControl {
 		return gson.toJson(jsonObject);
 	}
 	
+	// 대댓글 등록 (ajax)
+	@RequestMapping(value = "post/rereInsert.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String rereInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+
+		int POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID = userDto.getId();
+		String NAME = userDto.getName();
+		String CONTENT = res.getParameter("CONTENT");
+		int PARENT = Integer.parseInt(res.getParameter("PARENT"));
+		String STATE = res.getParameter("STATE").equals("false") ? "0" : "1";
+
+		/*
+		 * int seq, int post_seq, String id, String name, String content, int
+		 * parent, String state
+		 */
+		CommentDto commentDto = new CommentDto(0, POST_SEQ, ID, NAME, CONTENT, PARENT, STATE, null);
+		int flag = commentSve.hi_insertRe(commentDto);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
+	
 	// 댓글 삭제 (ajax)
 	@RequestMapping(value = "post/replyDelete.hi", method = RequestMethod.POST)
 	@ResponseBody

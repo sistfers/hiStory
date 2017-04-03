@@ -36,4 +36,8 @@
 			STATE = #{catestate}
 		WHERE SEQ = #{cateseq}
 	</update>
+	<delete id="hi_delete" parameterType="int">
+		DELETE FROM CATEGORY_H
+		WHERE SEQ = #{cnt}
+	</delete>
 </mapper>

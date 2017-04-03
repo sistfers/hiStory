@@ -273,8 +273,13 @@ public class GraphControl {
 			map.put("cateseq", cateseq);
 			map.put("catename", catename);
 			map.put("catestate", catestate);
-			
-			categoryService.updateCategory(map);
+			if(request.getParameter("btn").equals("modify")){
+				categoryService.updateCategory(map);
+			}else if(request.getParameter("btn").equals("del")){
+				categoryService.hi_delete(Integer.parseInt(cateseq));
+			}else{
+				
+			}
 		}
 		
 		//카테고리 불러오기(전체)

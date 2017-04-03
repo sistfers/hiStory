@@ -194,13 +194,6 @@ function go_delete(){
 	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
 	<input type="hidden" name="id" value="<%=id%>">  
 </form> 
-<%-- <form name="postLoveForm" action="love.hi" method="get">					<!-- 글공감 -->
-	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
-	<input type="hidden" name="id" value="<%=userDto.getId()%>">  
-	<input type="hidden" name="sex" value="<%=userDto.getSex()%>">  
-	<input type="hidden" name="area" value="<%=userDto.getArea()%>">  
-	<input type="hidden" name="birth" value="<%=userDto.getBirth()%>">  
-</form>  --%>
 <form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
 	<input type="hidden" name="PAGE_NUM" value="">  
 	<input type="hidden" name="id" value="<%=id%>">  
@@ -292,7 +285,6 @@ function go_delete(){
 			  			<td width=13% colspan=2 id="<%=commentdata.get("SEQ")%>">
 			  		<%} %>
 			  		<!-- 사진  -->
-			  		<!-- <img src="http://localhost:8190/resources/image/aa.jpg" width="50px" height="50px"></td> -->
 			  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
 		
 	 				<%if(commentdata.get("STATE").toString().equals("0") || (userDto != null && userDto.getId().equals(commentdata.get("ID"))) ) {%>
@@ -443,8 +435,10 @@ $(function(){
 				
 				if (flag.msg=="intrue") {	
 					document.getElementById('postLove').innerHTML ="<h6>♥ 공감취소</h6>";
+					document.getElementById('loveState').value = "loveDelete.hi";
 				}else if(flag.msg=="deltrue") {	
 					document.getElementById('postLove').innerHTML ="<h6>♡ 공감</h6>";
+					document.getElementById('loveState').value = "loveInsert.hi";
 				}
 
 			},
@@ -452,7 +446,7 @@ $(function(){
 				// 실패, 성공 상관없이 무조건 수행
 			},
 			error:function(){
-				 alert("에러냐아아앙!!! ");
+				 alert("로그인이 필요하다아아아~~!!!");
 			}
 		});  
 		
@@ -535,6 +529,14 @@ $(function(){
     $(document).on("click","#commentChildSubmit", function(){
            
         var cText = $("#commentChildText");
+        
+        var d = new Date();
+		var today =    d.getFullYear() + "-" +
+					("00" + (d.getMonth() + 1)).slice(-2) + "-" +
+					("00" + d.getDate()).slice(-2) +
+					("00" + d.getHours()).slice(-2) + ":" +
+					("00" + d.getMinutes()).slice(-2) + ":" +
+					("00" + d.getSeconds()).slice(-2)	
            
         if($.trim(cText.val())==""){
             alert("내용을 입력하세요.");
@@ -542,13 +544,31 @@ $(function(){
             return;
         }
            
-        var commentChildText = '<tr name="commentChildCode">'+
+/*         var commentChildText = '<tr name="commentChildCode">'+
                                     '<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+
                                     '<td style="width:99%">'+
                                         '<strong>'+cName.val()+'</strong> '+cPassword.val()+' <a style="cursor:pointer;" name="cAdd">답글</a> | <a style="cursor:pointer;" name="cDel">삭제</a>'+
                                         '<p>'+cText.val().replace(/\n/g, "<br>")+'</p>'+
                                     '</td>'+
-                                '</tr>';
+                                '</tr>'; */
+//         		 				<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td> 
+<%--         					  	<td width=10% id="<%=commentdata.get("SEQ")%>">                                 --%>
+                                
+        // 대댓글로 들어갈 내용
+        var commentChildText = '<tr name="commentChildCode">'+
+        						'<td style="width:3%"><span class="glyphicon glyphicon-arrow-right"></span></td> '+
+                                '<td width=10% >'+
+                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+
+                                '</td>'+
+                                '<td width="67%" style="text-align: left;">'+
+                                '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
+                                cText.val().replace(/\n/g, "<br>")+'</td>'+
+                                '<td width="20%" align="left">'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;">수정</button>'+
+                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+
+                                '</td>'+
+                                '</tr>';                                
                                    
         //앞의 tr노드 찾기
         var prevTr = $(this).parent().parent().parent().parent().prev();

@@ -70,7 +70,7 @@ border-radius: 15px;
 		        		if(loveRank.size()==0){
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="5" style="text-align: center;">해당 기간에 공감받은 글이 없습니다.</td>
+		        		<td colspan="5" style="text-align: center;">공감받은 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        		}else{

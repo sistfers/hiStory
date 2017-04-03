@@ -68,7 +68,7 @@ border-radius: 15px;
 		        		if(postList.size()==0){
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="4">댓글이 달린 글이 없습니다.</td>
+		        		<td colspan="5" style="text-align: center;">댓글이 달린 글이 없습니다.</td>
 		        		</tr>
 		        	<%
 		        		}else{

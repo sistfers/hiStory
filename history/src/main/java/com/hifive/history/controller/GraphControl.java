@@ -229,7 +229,7 @@ public class GraphControl {
 			enddate = request.getParameter("enddate");			
 		}
 		HashMap<String,String> map = new HashMap<>();
-		map.put("id", "1");
+		map.put("id", user.getId());
 		map.put("startdate", startdate);
 		map.put("enddate", enddate);
 		

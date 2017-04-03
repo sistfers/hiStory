@@ -77,20 +77,44 @@ public class MessageControl {
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/writeForm.hi");	
 		
 		
-		String SENDID ="";
-		String TAKEID ="";
-		String NAME	  ="";
-		
-		SENDID = res.getParameter("SENDID");
-		TAKEID = res.getParameter("TAKEID");	
-		NAME   = res.getParameter("NAME");
-
-
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/message/writeForm");
-		mav.addObject("SENDID", SENDID);
-		mav.addObject("TAKEID", TAKEID);
-		mav.addObject("NAME", NAME);
+		if(res.getParameter("list") != null) {
+			String list = res.getParameter("list");
+			loger.debug("답장 보낼 대상 -> "+ list);
+			
+			String values[] = list.split(",");			
+			
+			String ids = "";
+//			Map<String, String> ids = new HashMap<String, String>();
+			for(int i = 0; i < values.length; i++) {
+				int startIdx = values[i].indexOf('(');
+				loger.debug("values list -> "+ values[i].substring(0, startIdx));
+				ids = ids + values[i].substring(0, startIdx) + ",";
+//				ids.put(i + "", values[i].substring(0, startIdx));
+				loger.debug("ids list -> " + ids);
+			}
+			
+//			String TAKEID =ids;
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			loger.debug("TAKEID -> " + ids);
+			
+			mav.setViewName("/message/writeForm");
+			mav.addObject("TAKEID", ids);	
+			
+		} else {
+//			String SENDID ="";
+			String TAKEID ="";
+			String NAME	  ="";
+			
+//			SENDID = res.getParameter("SENDID");
+			TAKEID = res.getParameter("TAKEID");	
+			NAME   = res.getParameter("NAME");
+			
+			mav.setViewName("/message/writeForm");
+//			mav.addObject("SENDID", SENDID);
+			mav.addObject("TAKEID", TAKEID);
+			mav.addObject("NAME", NAME);
+		}
 		
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/writeForm.hi");
@@ -108,14 +132,15 @@ public class MessageControl {
 		
 		String SENDID ="";
 		String TAKEID ="";
-		String note ="";
+		String note   ="";
 		
 		SENDID = res.getParameter("SEND_ID");
 		TAKEID	 = res.getParameter("TAKE_ID");		
 		note = res.getParameter("NOTE");
 		loger.debug("SENDID -> " + SENDID);
 		loger.debug("TAKEID -> " + TAKEID);
-		loger.debug("note -> " + note);
+		loger.debug("note   -> " + note);
+		
 		
 		/*
 		private	int		seq;
@@ -126,22 +151,49 @@ public class MessageControl {
 		private	String	rdate;
 		private	String	state;
 		private String  nick;	*/
-		MessageDto dto = new MessageDto();
-		dto.setSeq(0);
-		dto.setSend_id(SENDID);
-		dto.setTake_id(TAKEID);
-		dto.setContents(note);
-		dto.setWdate("");
-		dto.setRdate("");
-		dto.setState("");
-		dto.setname("");
 		
-		int result = messageService.hi_insert(dto);
 		ModelAndView mav = new ModelAndView();
+		if(TAKEID.matches(".*,*.")) {	
+			loger.debug("전체  쪽지");
+			String[] arrIdx = TAKEID.split(",");
+			
+			for (int i = 0; i < arrIdx.length; i++) {
+				MessageDto dto = new MessageDto();
+				dto.setSeq(0);
+				dto.setSend_id(SENDID);
+				dto.setTake_id(arrIdx[i]);
+				dto.setContents(note);
+				dto.setWdate("");
+				dto.setRdate("");
+				dto.setState("");
+				dto.setname("");
+				
+				int result = messageService.hi_insert(dto);
+				
+				if(result == 1) {
+					mav.setView(new RedirectView(("send.hi")));
+				}	
+			}			
+		} else {
+			loger.debug("단일  쪽지");
+			
+			MessageDto dto = new MessageDto();
+			dto.setSeq(0);
+			dto.setSend_id(SENDID);
+			dto.setTake_id(TAKEID);
+			dto.setContents(note);
+			dto.setWdate("");
+			dto.setRdate("");
+			dto.setState("");
+			dto.setname("");
+			
+			int result = messageService.hi_insert(dto);
+			
+			if(result == 1) {
+				mav.setView(new RedirectView(("send.hi")));
+			}	
+		}						
 		
-		if(result == 1) {
-			mav.setView(new RedirectView(("send.hi")));
-		}				
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/write.hi");
 		loger.debug("----------------------------------------------------------");
@@ -170,6 +222,13 @@ public class MessageControl {
 		
 		MessageDto note = new MessageDto();
 		note = (MessageDto) messageService.hi_detail(dto);
+		
+		if(note.getState().equals("0")) {
+			messageService.hi_detail_state(note.getSeq());
+			
+		} else {
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/message/read");
@@ -208,6 +267,36 @@ public class MessageControl {
 		
 		return mav;
 	}
+	
+	@RequestMapping("message/reply.hi")
+	public ModelAndView do_reply(
+			@RequestParam(value = "idx", required=true) 
+						String paramMap,
+			@RequestParam(value = "to", required=true) 
+			String to) {
+		
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/reply.hi");	
+		
+		
+		loger.debug("paramMap -> "+paramMap.toString());
+		String[] arrIdx = paramMap.split(",");
+		for (int i = 0; i < arrIdx.length; i++) {
+			int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
+			
+			
+			
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView((to+".hi")));
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/reply.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		return mav;
+	}	
 	
 	@RequestMapping("message/receive.hi")
 	public ModelAndView do_search(HttpServletRequest res) {

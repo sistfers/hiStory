@@ -53,6 +53,8 @@ public class BlogControl {
 
 	@Autowired
 	private FollowService followService;
+	@Autowired
+	private BlogService blogSvc;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -82,6 +84,9 @@ public class BlogControl {
 		Integer ct_seq;
 		
 		int	   seq 	= request.getParameter("seq")==null ? 0 : Integer.parseInt(request.getParameter("seq"));
+		
+		BlogDto blogdto = blogSvc.getMyBlog(ID);
+		mav.addObject("blogdto",blogdto);
 		
 		// 최신 글 내용 보여주기
 		PostDto postDto = new PostDto();
@@ -353,31 +358,85 @@ public class BlogControl {
 		
 	
 	// 댓글 등록 (ajax)
-	@RequestMapping(value="post/replyInsert.hi",method=RequestMethod.POST)
-	   @ResponseBody
-	   public String replyInsert(HttpServletRequest res, HttpSession session) {
-	      UserDto userDto = (UserDto) session.getAttribute("user");
-	      
-	      int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
-	      String ID        = userDto.getId();
-	      String NAME     = userDto.getName();
-	      String CONTENT    = res.getParameter("CONTENT");
-	      String STATE    = res.getParameter("STATE").equals("false") ? "0" : "1";
-	      
-	      /*int seq, int post_seq, String id, String name, String content, int parent, String state*/
-	      CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
-	      int flag = commentSve.hi_insert(commentDto);
-	      
-	      JsonObject jsonObject = new JsonObject();
-	         if(flag > 0){
-	            jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
-	          }else{
-	             jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
-	          }
-	      Gson gson = new Gson();
-	      
-	      return gson.toJson(jsonObject);
-	   }
+	@RequestMapping(value = "post/replyInsert.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String replyInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+
+		int POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID = userDto.getId();
+		String NAME = userDto.getName();
+		String CONTENT = res.getParameter("CONTENT");
+		String STATE = res.getParameter("STATE").equals("false") ? "0" : "1";
+
+		/*
+		 * int seq, int post_seq, String id, String name, String content, int
+		 * parent, String state
+		 */
+		CommentDto commentDto = new CommentDto(0, POST_SEQ, ID, NAME, CONTENT, 0, STATE, null);
+		int flag = commentSve.hi_insert(commentDto);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
+	
+	// 대댓글 등록 (ajax)
+	@RequestMapping(value = "post/rereInsert.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String rereInsert(HttpServletRequest res, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+
+		int POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+		String ID = userDto.getId();
+		String NAME = userDto.getName();
+		String CONTENT = res.getParameter("CONTENT");
+		int PARENT = Integer.parseInt(res.getParameter("PARENT"));
+		String STATE = res.getParameter("STATE").equals("false") ? "0" : "1";
+
+		/*
+		 * int seq, int post_seq, String id, String name, String content, int
+		 * parent, String state
+		 */
+		CommentDto commentDto = new CommentDto(0, POST_SEQ, ID, NAME, CONTENT, PARENT, STATE, null);
+		int flag = commentSve.hi_insertRe(commentDto);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
+	
+	// 댓글 삭제 (ajax)
+	@RequestMapping(value = "post/replyDelete.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String replyDelete(HttpServletRequest res) {
+
+		int	   seq 		= res.getParameter("seq")==null ? 0 : Integer.parseInt(res.getParameter("seq"));
+		
+		int flag = commentSve.hi_delete(seq);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
 	
 	// 공감 등록 (ajax)
 	@RequestMapping(value="post/loveInsert.hi",method=RequestMethod.POST)

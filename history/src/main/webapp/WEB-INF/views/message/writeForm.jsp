@@ -1,9 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="org.slf4j.LoggerFactory"%>
+<%@page import="org.slf4j.Logger"%>
 <%@page import="com.hifive.history.model.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
+	Logger loger = LoggerFactory.getLogger(this.getClass());
+
 	String SENDID = "";
 	String TAKEID = request.getParameter("TAKEID");
 	String NAME   = "";
@@ -13,7 +17,11 @@
 	
 	if(dto != null) {
 		SENDID = dto.getId();
+		TAKEID = (String) request.getAttribute("TAKEID");
 		NAME   = (String) request.getAttribute("NAME");
+		
+		loger.debug("TAKEID  -> " + TAKEID);
+		loger.debug("NAME    -> " + NAME);
 		
 	} else {
 		

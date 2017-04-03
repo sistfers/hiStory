@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
@@ -17,11 +18,42 @@
 %>
 
 <%
+	String PAGE_NUM = "1"; //페이지NUM
+	String PAGE_SIZE = "5"; //페이지SIZE
+	int page_num = 1; //선택된 페이지
+	int page_size = 5; //페이지 사이즈
+	int intTotalCount = 0; //총 글수
+	int pageCount = 0; //페이지 수
+	Map<String, Object> dataCnt = null;
+	List<Map<String, Object>> followList = null;
 	List<Map<String, Object>> searchRank = (List<Map<String, Object>>)request.getAttribute("searchRank");
-	List<Map<String, Object>> themeList = (List<Map<String, Object>>)request.getAttribute("themeList");	
+	List<Map<String, Object>> themeList = (List<Map<String, Object>>)request.getAttribute("themeList");
+	
 	List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100
 	
 	themeCode = (List<Map<String, Object>>)request.getAttribute("themeCode");
+	
+	if(session.getAttribute("user") != null){
+		followList = (List<Map<String, Object>>)request.getAttribute("followList");
+		
+		PAGE_NUM = request.getAttribute("PAGE_NUM").toString();
+		PAGE_SIZE = request.getAttribute("PAGE_SIZE").toString();
+		
+		if (followList != null && followList.size() > 0) {
+			dataCnt = followList.get(0);
+			intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
+		}
+		pageCount = intTotalCount / page_size; // 페이지수
+		
+		if (intTotalCount % page_size != 0)
+			pageCount++;
+		if (PAGE_NUM != null && PAGE_NUM != "")
+			page_num = Integer.parseInt(PAGE_NUM);
+		if (PAGE_SIZE != null && PAGE_SIZE != "")
+			page_size = Integer.parseInt(PAGE_SIZE);
+		
+	}	 
+	
 	
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -43,9 +75,9 @@
 	  <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
 	  <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
-	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
+	  <script src="/resources/js/bubble-chart.js"></script>
 	  <script src="/resources/js/central-click.js"></script>
-	  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
+	  <script src="/resources/js/lines.js"></script>
 	
  <!-- 해시태그 스타일 --> 
   <style type="text/css">
@@ -241,7 +273,7 @@ $(document).ready(function () {
             }
             %>
          ],
-         eval: function (item) {return item.count;},
+         eval: function (item) {return item.count>100?99:item.count;},
          classed: function (item) {return item.text.split(" ").join("");}
        },
        plugins: [
@@ -351,12 +383,11 @@ $(document).ready(function () {
     	<%}else{ %>
     		<div id="menu<%=i+1 %>" class="tab-pane fade" style="cursor:pointer;">
     	<%}
-    		
     		for(int j=0; j<themeList.size(); ++j){
     			if(themeList.get(j).get("FIELD").equals(themeCode.get(i).get("CD_D_NM"))){%>
     				<%if(j<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
-	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px">
+	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
 	    				<div class="mask" style="padding-bottom: 15px">
 	      				<h2><%=themeList.get(j).get("TITLE") %></h2>
@@ -376,7 +407,7 @@ $(document).ready(function () {
     					</a>
     				<%}else{%>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
-    					<div class="view view-first col-xs-4" style="padding-top: 15px">
+    					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
 	    				<div class="mask" style="padding-top: 15px">
 	      				<h2><%=themeList.get(j).get("TITLE") %></h2>
@@ -442,21 +473,64 @@ $(document).ready(function () {
 <div class="col-xs-12">
 <h3 class="page-header">:: 이웃새글 :: </h3>
 
-<table class="table table-striped">
-	<tr><td rowspan="2" align="center"> <img src="/resources/image/main.jpg" width="100" ></td>
-	<td> 작성자 | 작성일</td></tr>
-	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
-	
-	<tr><td rowspan="2" align="center"> <img src="/resources/image/main.jpg" width="100" ></td>
-	<td> 작성자 | 작성일</td></tr>
-	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
-	
-	<tr><td rowspan="2" align="center"> <img src="/resources/image/main.jpg" width="100" ></td>
-	<td> 작성자 | 작성일</td></tr>
-	<tr><td>내용 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
+<table class="table table-hover" >
+	<%if(followList.size() != 0){
+		for(int i=0; i<followList.size(); ++i){ %>
+		<tr name="search_detail" style="cursor:pointer;">
+			<td id="<%=followList.get(i).get("ID")%>">
+			<div>
+				<a href="#" class="pull-left">
+				<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="150px" height="100px" onerror='src="/resources/image/main.jpg"'>
+				</a>
+			</div>
+			</td>
+			<td valign="top" id="<%=followList.get(i).get("SEQ")%>">
+			<div style="display: block;">
+			
+			
+			<h5 class="title">
+			<%String tempTitle = followList.get(i).get("TITLE")+"";
+				String title = tempTitle;
+				if(tempTitle.length() >50){
+					title = tempTitle.substring(0,50) + "...";
+				}
+			%>
+			<%= title%>
+			</h5>
+			<%String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
+				String content = tempContent;
+				if(tempContent.length() >150){
+					content = tempContent.substring(0,150) + "...";
+				}
+			%>
+			<p class="summary" style="width: 650px"> <%= content%></p>
+			</div>
+			</td>
+			<td align="right" valign="middle" width="200px">
+			<%=followList.get(i).get("NAME") %>
+			</td>
+			<td align="right" valign="top" width="50px">
+			<div style="display: block;">
+			<%=followList.get(i).get("WDATE") %>
+			</div>
+			</td>
+		</tr>
+<%		}
+	}else{%>
+	<tr>
+		<td align="center">:::이웃의 새 글이 없습니다:::</td>
+	</tr>
+<%	} %>
 
 </table>
 
+<center> 
+<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
+<table><tr><td style="text-align: center;">
+<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "do_search.hi", "do_search_page")%>
+</td></tr>
+</table>
+</center>
 <%
 	}
 %> 

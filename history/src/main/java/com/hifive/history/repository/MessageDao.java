@@ -55,6 +55,30 @@ public class MessageDao implements iDao {
 		
 		return sqlSession.selectOne(statement, dto);
 	}
+	
+	// 쪽지 읽고 나서
+	public int hi_detail_state(int seq) {
+		
+		String statement = namespace +".hi_detail_state";
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[seq	        ]]] "+seq);
+		
+		return sqlSession.update(statement, seq);
+	} 
+	
+	// 읽지 않은 쪽지
+	public int hi_unread_note(String id) {
+		
+		String statement = namespace +".hi_unread_note";
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[id	            ]]] "+id);
+		
+		String cnt = sqlSession.selectOne(statement, id);
+		
+		return Integer.parseInt(cnt);
+	}
 
 	// 쪽지 삭제
 	@Override

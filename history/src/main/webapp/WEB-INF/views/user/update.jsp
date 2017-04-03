@@ -32,9 +32,9 @@
         });
 
         function joinCheck() {
-            /* if ($("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
+            if ($("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
                 || $("#name").val()=="" || $("#birthday").val()=="") {
-                alert("필수 입력 사항을 모두 입력해 주세요.");
+                alert("빈칸이 존재합니다");
                 return false;
             }
             if ($("#password").val() != $("#passwordCheck").val()) {
@@ -44,7 +44,7 @@
             if (emailCheck == false) {
                 alert("이메일이 인증되지 않았습니다.");
                 return false;
-            } */
+            }
             return true;
         }
 	</script>
@@ -151,7 +151,7 @@
 						<%
 							for (String area : areaList) {
 						%>
-						<option><%=area%></option>
+						<option <%if(user_area.equals(area)){%> selected="selected"<%} %>><%=area%></option>
 						<%
 							}
 						%>

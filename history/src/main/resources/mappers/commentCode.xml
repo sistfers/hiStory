@@ -45,12 +45,12 @@ INTO COMMENT_H
   VALUES
   (
     SEQ_COMMENT.nextval,
-    #{POST_SEQ},
-    #{ID},
-    #{NAME},
-    #{CONTENT},
-    #{PARENT},
-    #{STATE}
+    #{post_seq},
+    #{id},
+    #{name},
+    #{content},
+    #{parent},
+    #{state}
   ) 
 </insert>
 

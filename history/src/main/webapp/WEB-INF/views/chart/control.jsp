@@ -59,7 +59,37 @@ border-radius: 15px;
 <!--헤더 START-->
 <jsp:include page="/header.hi"/>
 <!--헤더 END-->
-
+<script>
+	function do_func(ment) {
+		if($("#catename").val()!=null && $("#catename").val()!=''){
+			alert($("#catename").val());
+			if(ment=='del'){
+				if(confirm("정말 삭제하시겠습니까?")){
+					$("#btn").val(ment);
+					var frm = document.output;
+					frm.submit();
+				}
+			}else{
+				if(confirm("정말 수정하시겠습니까?")){
+					$("#btn").val(ment);
+					var frm = document.output;
+					frm.submit();
+				}
+			}
+		}else{
+			alert("카테고리를 선택하세요");
+		}
+	}
+	function check() {
+		if($("#name").val()!=null && $("#name").val()!=''){
+			if(confirm($("#name").val()+" 카테고리를 추가하시겠어요?")){
+				var frm = document.regiCate;
+				frm.submit();
+			}}else{
+			alert('카테고리명을 입력하세요');
+		}		
+	}
+</script>
 <!-- 
 태마 버전
 그린 : rgb(224, 239, 208) / rgb(251, 255, 247)
@@ -124,15 +154,16 @@ border-radius: 15px;
 						<br>
 						<div class="form-group">
 							<div class="col-xs-offset-3 col-xs-9">
-								<button type="submit" class="btn btn-warning" name="btn" value="del"> 삭제 </button>
-								<button type="submit" class="btn btn-primary" name="btn" value="modify"> 수정 </button>
+								<input type="hidden" name="btn" id="btn" value="">
+								<button type="button" class="btn btn-warning" name="" onclick="do_func('del')"> 삭제 </button>
+								<button type="button" class="btn btn-primary" name="" onclick="do_func('mod')"> 수정 </button>
 							</div>
 						</div>
 				</form>
 				</div>
 				</div>
 				<div class="col-xs-12" style="margin-top: 50px; ">
-				<form class="form-horizontal" method="post" action="control.hi">
+				<form class="form-horizontal" method="post" action="control.hi" name="regiCate">
 					<fieldset>
 						<legend>카테고리 등록</legend>
 						<div class="form-group">
@@ -159,7 +190,7 @@ border-radius: 15px;
 						<div class="form-group">
 							<div class="col-xs-offset-9 col-xs-3">
 								<button type="reset" class="btn btn-default"> 리셋 </button>
-								<button type="submit" class="btn btn-primary"> 추가 </button>
+								<button type="button" class="btn btn-primary" onclick="check()"> 추가 </button>
 							</div>
 						</div>
 						
@@ -185,11 +216,11 @@ border-radius: 15px;
 							<div class="col-xs-9">
 								<br>
 								<select multiple="" class="form-control" name="theme">
-									<option style="background-color: #cee1ff; text-align: center;" value="#f7e3a3"></option>
-									<option style="background-color: #cefffb; text-align: center;" value="#baffcc"></option>
-									<option style="background-color: #ceffd7; text-align: center;" value="#bac5ff"></option>
-									<option style="background-color: #f8ffce; text-align: center;" value="#debaff"></option>
-									<option style="background-color: #ffceeb; text-align: center;" value="#ffbae2"></option>
+									<option style="background-color: #cee1ff; text-align: center;" value="#f7e3a3" <%if(blogdto.getTheme().equals("#f7e3a3")){%>selected="selected"<%} %>></option>
+									<option style="background-color: #cefffb; text-align: center;" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>selected="selected"<%} %>></option>
+									<option style="background-color: #ceffd7; text-align: center;" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>selected="selected"<%} %>></option>
+									<option style="background-color: #f8ffce; text-align: center;" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>selected="selected"<%} %>></option>
+									<option style="background-color: #ffceeb; text-align: center;" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>selected="selected"<%} %>></option>
 								</select>
 							</div>
 						</div>

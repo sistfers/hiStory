@@ -101,7 +101,7 @@ function do_del(id) {
 							}
 					%>
 						<tr>
-							<td colspan="3" style="text-align: center;">
+							<td colspan="4" style="text-align: center;">
 							<%
 							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/10+1;
 							for(int i = 1; i<= tot; ++i){							

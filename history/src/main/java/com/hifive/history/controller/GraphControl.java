@@ -273,7 +273,7 @@ public class GraphControl {
 			map.put("cateseq", cateseq);
 			map.put("catename", catename);
 			map.put("catestate", catestate);
-			if(request.getParameter("btn").equals("modify")){
+			if(request.getParameter("btn").equals("mod")){
 				categoryService.updateCategory(map);
 			}else if(request.getParameter("btn").equals("del")){
 				categoryService.hi_delete(Integer.parseInt(cateseq));

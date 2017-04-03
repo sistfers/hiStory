@@ -85,19 +85,21 @@ public class MessageControl {
 			String values[] = list.split(",");			
 			
 			String ids = "";
+//			Map<String, String> ids = new HashMap<String, String>();
 			for(int i = 0; i < values.length; i++) {
 				int startIdx = values[i].indexOf('(');
 				loger.debug("values list -> "+ values[i].substring(0, startIdx));
 				ids = ids + values[i].substring(0, startIdx) + ",";
+//				ids.put(i + "", values[i].substring(0, startIdx));
 				loger.debug("ids list -> " + ids);
 			}
 			
-			String TAKEID =ids;
-			TAKEID = TAKEID.substring(0, TAKEID.lastIndexOf(","));
-			loger.debug("TAKEID -> " + TAKEID);
+//			String TAKEID =ids;
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			loger.debug("TAKEID -> " + ids);
 			
 			mav.setViewName("/message/writeForm");
-			mav.addObject("TAKEID", TAKEID);	
+			mav.addObject("TAKEID", ids);	
 			
 		} else {
 //			String SENDID ="";

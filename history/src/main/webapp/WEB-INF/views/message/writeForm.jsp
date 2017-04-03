@@ -17,6 +17,7 @@
 	
 	if(dto != null) {
 		SENDID = dto.getId();
+		TAKEID = (String) request.getAttribute("TAKEID");
 		NAME   = (String) request.getAttribute("NAME");
 		
 		loger.debug("TAKEID  -> " + TAKEID);

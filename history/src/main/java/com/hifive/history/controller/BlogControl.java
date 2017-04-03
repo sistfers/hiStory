@@ -128,11 +128,11 @@ public class BlogControl {
 			
 			if(userDto != null){
 			//글 공감 확인하기
-			LoveDto loveDto = new LoveDto();
-			loveDto.setId(userDto.getId());							// 로그인한사람 id
-			loveDto.setPost_seq(DTO.getSeq());						// 공감 누를 글의 번호
-			LoveDto loveCheck = (LoveDto) loveSvc.hi_detail(loveDto);
-			mav.addObject("loveCheck",loveCheck);
+				LoveDto loveDto = new LoveDto();
+				loveDto.setId(userDto.getId());							// 로그인한사람 id
+				loveDto.setPost_seq(DTO.getSeq());						// 공감 누를 글의 번호
+				LoveDto loveCheck = (LoveDto) loveSvc.hi_detail(loveDto);
+				mav.addObject("loveCheck",loveCheck);
 			}
 			
 		}
@@ -342,57 +342,78 @@ public class BlogControl {
 	
 	// 댓글 등록 (ajax)
 	@RequestMapping(value="post/replyInsert.hi",method=RequestMethod.POST)
-	@ResponseBody
-	public String replyInsert(HttpServletRequest res, HttpSession session) {
-		UserDto userDto = (UserDto) session.getAttribute("user");
-		
-		int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
-		String ID  		= userDto.getId();
-		String NAME  	= userDto.getName();
-		String CONTENT 	= res.getParameter("CONTENT");
-		String STATE 	= res.getParameter("STATE").equals("false") ? "0" : "1";
-		
-		/*int seq, int post_seq, String id, String name, String content, int parent, String state*/
-		CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
-		int flag = commentSve.hi_insert(commentDto);
-		
-		JsonObject jsonObject = new JsonObject();
-	      if(flag > 0){
-	    	  jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
-	       }else{
-	    	   jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
-	       }
-		Gson gson = new Gson();
-		
-		return gson.toJson(jsonObject);
-	}
-/*	
+	   @ResponseBody
+	   public String replyInsert(HttpServletRequest res, HttpSession session) {
+	      UserDto userDto = (UserDto) session.getAttribute("user");
+	      
+	      int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
+	      String ID        = userDto.getId();
+	      String NAME     = userDto.getName();
+	      String CONTENT    = res.getParameter("CONTENT");
+	      String STATE    = res.getParameter("STATE").equals("false") ? "0" : "1";
+	      
+	      /*int seq, int post_seq, String id, String name, String content, int parent, String state*/
+	      CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
+	      int flag = commentSve.hi_insert(commentDto);
+	      
+	      JsonObject jsonObject = new JsonObject();
+	         if(flag > 0){
+	            jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+	          }else{
+	             jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+	          }
+	      Gson gson = new Gson();
+	      
+	      return gson.toJson(jsonObject);
+	   }
+	
 	// 공감 등록 (ajax)
 	@RequestMapping(value="post/loveInsert.hi",method=RequestMethod.POST)
 	@ResponseBody
 	public String loveInsert(HttpServletRequest res, HttpSession session) {
 		UserDto userDto = (UserDto) session.getAttribute("user");
 		
-		int    POST_SEQ = Integer.parseInt(res.getParameter("POST_SEQ"));
-		String ID  		= userDto.getId();
-		String NAME  	= userDto.getName();
-		String CONTENT 	= res.getParameter("CONTENT");
-		String STATE 	= res.getParameter("STATE").equals("false") ? "0" : "1";
+		int	   seq 		= res.getParameter("seq")==null ? 0 : Integer.parseInt(res.getParameter("seq"));
+		String id  		= userDto.getId();
+		String sex  	= userDto.getSex();
+		String area		= userDto.getArea();
+		String birth 	= userDto.getBirth();
 		
-		CommentDto commentDto = new CommentDto(0,POST_SEQ,ID,NAME,CONTENT,0,STATE,null);
-		int flag = commentSve.hi_insert(commentDto);
+		LoveDto loveDto = new LoveDto(seq,id,null,sex,area,birth);
+		
+		int flag = loveSvc.hi_insert(loveDto);
 		
 		JsonObject jsonObject = new JsonObject();
 	      if(flag > 0){
-	    	  jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+	    	  jsonObject = new JsonParser().parse("{\"msg\":\"intrue\"}").getAsJsonObject();
 	       }else{
-	    	   jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+	    	  jsonObject = new JsonParser().parse("{\"msg\":\"infalse\"}").getAsJsonObject();
 	       }
 		Gson gson = new Gson();
 		
 		return gson.toJson(jsonObject);
 	}
-	*/
+	
+	// 공감 취소 (ajax)
+	@RequestMapping(value="post/loveDelete.hi",method=RequestMethod.POST)
+	@ResponseBody
+	public String loveDelete(HttpServletRequest res) {
+		
+		int	   seq 		= res.getParameter("seq")==null ? 0 : Integer.parseInt(res.getParameter("seq"));
+		
+		int flag = loveSvc.hi_delete(seq);
+		
+		JsonObject jsonObject = new JsonObject();
+	      if(flag > 0){
+	    	  jsonObject = new JsonParser().parse("{\"msg\":\"deltrue\"}").getAsJsonObject();
+	       }else{
+	    	  jsonObject = new JsonParser().parse("{\"msg\":\"delfalse\"}").getAsJsonObject();
+	       }
+		Gson gson = new Gson();
+		
+		return gson.toJson(jsonObject);
+	}
+	
 	
 }
 

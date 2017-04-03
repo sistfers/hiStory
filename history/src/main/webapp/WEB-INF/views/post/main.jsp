@@ -223,12 +223,12 @@ function go_delete(){
 		       	 	if (loveCheck != null) {
 		        %>
 		        	<button class="btn btn-default btn-sm" style="color: red" id="postLove"><h6>♥ 공감취소</h6> </button> 
-		        	<input type="hidden" id="loveState" value="loveDelete">
+		        	<input type="hidden" id="loveState" value="loveDelete.hi">
 		        <%
 		       	 	}else{
 		        %>
 		       	 	<button class="btn btn-default btn-sm" style="color: red" id="postLove"><h6>♡ 공감</h6> </button>
-		       	 	<input type="hidden" id="loveState" value="loveInsert">
+		       	 	<input type="hidden" id="loveState" value="loveInsert.hi">
 		        <%} %>
 <!--글 수정/삭제 버튼  -->
 				<%if (userDto != null && id.equals(userDto.getId())) {%>
@@ -428,26 +428,25 @@ $(function(){
 	$("#postLove").bind("click", function() {
 		 
 		var loveState = document.getElementById('loveState').value;
-// 		var storeId = document.getElementById('storeId').value;
-// 		var heartImg = document.getElementById('heartImg');
 
 		$.ajax({
 			type:"POST",
-			url:"loveInsert.hi",			// 컨트롤러에 보낼 이름
+			url:loveState,			// 컨트롤러에 보낼 이름
 			dataType:"html",
 			data:{
-<%-- 				"POST_SEQ" 	: <%=DTO.getSeq()%>,
- 				"STATE"	 	: stateYN,
-				"CONTENT" 	: pText.val() --%>
+				"seq" 	: <%=DTO.getSeq()%>,
+				
 			},
 			success:function(data){
 				console.log("data"+data);
 				var flag = $.parseJSON(data);
 				
-
-				} else {
-					alert("댓글등록 실패");
+				if (flag.msg=="intrue") {	
+					document.getElementById('postLove').innerHTML ="<h6>♥ 공감취소</h6>";
+				}else if(flag.msg=="deltrue") {	
+					document.getElementById('postLove').innerHTML ="<h6>♡ 공감</h6>";
 				}
+
 			},
 			complete : function(data) {
 				// 실패, 성공 상관없이 무조건 수행

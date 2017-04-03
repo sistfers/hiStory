@@ -63,11 +63,11 @@ public class LoveDao implements iDao {
 		return sqlSession.selectOne(statement,dto);
 	}
 	
-//= 사용안함 =========================================	
-
-
 	@Override
 	public int hi_delete(int cnt) {
-		return 0;
+		String statement = namespace +".hi_delete";
+		logger.debug("statement"+statement);
+		logger.debug("cnt = "+cnt);
+		return sqlSession.update(statement,cnt);
 	}
 }

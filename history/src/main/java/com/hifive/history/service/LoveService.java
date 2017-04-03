@@ -34,9 +34,8 @@ public class LoveService implements iService{
 		return loveDao.hi_detail(dto);
 	}
 	
-//= 사용안함 =========================================	
 	@Override
 	public int hi_delete(int cnt) {
-		return 0;
+		return loveDao.hi_delete(cnt);
 	}	
 }

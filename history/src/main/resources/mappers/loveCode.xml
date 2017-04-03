@@ -75,7 +75,7 @@ NATURAL JOIN
 <update id="hi_delete" parameterType="int">
 DELETE
 FROM LOVE_H
-WHERE POST_SEQ = #{post_seq}
+WHERE POST_SEQ = #{seq}
 </update>
 
 

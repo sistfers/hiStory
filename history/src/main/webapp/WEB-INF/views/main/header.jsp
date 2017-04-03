@@ -54,41 +54,45 @@ if(session.getAttribute("user") != null) {
 	}
 </style>
 
-
-
 <!-- 네이게이션 바.. 상단고정 -->
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container">		<!-- 양 옆에 공백 -->
+	<div class="container-fluid">		<!-- 양 옆에 공백 -->
 
 		<div class="navbar-header" style="vertical-align: center">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
 			<!-- 왼쪽로고. 클릭시 첫화면으로 이동함 -->
 			<a href="/"><img src="/resources/image/logo_sm.png" width="150" id="logo"></a>
 		</div>
 
-		<!-- 로그인전 =============================================================================== -->
-		<% if (session.getAttribute("user") == null) { %>
-		<!-- 오른쪽 로그인/회원가입 버튼 -->
-		<ul class="nav navbar-nav navbar-right">
-			<li><button class="btn btn-default navbar-btn" onclick="do_login()">Login</button></li>
-			<li>&nbsp;&nbsp;&nbsp;</li> <!-- 버튼 사이 공백 넣어주려고 -->
-			<li><button class="btn btn-default navbar-btn" onclick="do_join()">Join</button></li>
-		</ul>
-
-		<!-- 로그인후 =============================================================================== -->
-		<% } else { %>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="javascript:go_myblog();">내블로그</a></li>
-			<li class="dropdown" id="followDropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃</a>
-				<ul class="dropdown-menu scrollable-menu" role="menu" id="followUl" ></ul>
-			</li>
-			<li><a href="/chart/control.hi">블로그관리</a></li>
-			<li><a href="javascript:do_message(); ">쪽지함(0)</a></li>
-			<li><a href="javascript:do_update()">내정보</a></li>
-			<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
-		</ul>
-		<% } %>
-
+		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+			<!-- 로그인전 =============================================================================== -->
+			<% if (session.getAttribute("user") == null) { %>
+				<!-- 오른쪽 로그인/회원가입 버튼 -->
+				<ul class="nav navbar-nav navbar-right">
+					<li><button class="btn btn-default navbar-btn" onclick="do_login()">Login</button></li>
+					<li>&nbsp;&nbsp;&nbsp;</li> <!-- 버튼 사이 공백 넣어주려고 -->
+					<li><button class="btn btn-default navbar-btn" onclick="do_join()">Join</button></li>
+				</ul>
+			<!-- 로그인후 =============================================================================== -->
+			<% } else { %>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="javascript:go_myblog();">내블로그</a></li>
+				<li class="dropdown" id="followDropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃</a>
+					<ul class="dropdown-menu scrollable-menu" role="menu" id="followUl" ></ul>
+				</li>
+				<li><a href="/chart/control.hi">블로그관리</a></li>
+				<li><a href="javascript:do_message(); ">쪽지함(0)</a></li>
+				<li><a href="javascript:do_update()">내정보</a></li>
+				<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
+			</ul>
+			<% } %>
+		</div>
 	</div>
 </nav>
 

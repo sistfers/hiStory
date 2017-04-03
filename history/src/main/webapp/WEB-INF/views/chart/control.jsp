@@ -101,8 +101,8 @@ border-radius: 15px;
 				<form class="form-horizontal" method="post" action="control.hi" id="ouput" name="output">
 						<div class="form-group">
 							<br><br><br><br>
-							<label for="inputEmail" class="col-lg-4 control-label">카테고리</label>
-							<div class="col-lg-6">
+							<label for="inputEmail" class="col-xs-4 control-label">카테고리</label>
+							<div class="col-xs-6">
 								<input type="text" class="form-control" id="catename" name="catename"
 									placeholder="카테고리명 입력" value="">
 								<input type="hidden" id="cateseq" name="cateseq" value="">
@@ -110,8 +110,8 @@ border-radius: 15px;
 						</div>
 						
 						<div class="form-group">
-							<label class="col-lg-4 control-label">공개 설정</label>
-							<div class="col-lg-6">
+							<label class="col-xs-4 control-label">공개 설정</label>
+							<div class="col-xs-6">
 									<label class="radio-inline"> <input type="radio" name="catestate"
 										id="optionsRadios1" value="true" >공개
 									</label>
@@ -123,7 +123,7 @@ border-radius: 15px;
 						</div>
 						<br>
 						<div class="form-group">
-							<div class="col-lg-offset-3 col-lg-9">
+							<div class="col-xs-offset-3 col-xs-9">
 								<button type="submit" class="btn btn-warning" name="btn" value="del"> 삭제 </button>
 								<button type="submit" class="btn btn-primary" name="btn" value="modify"> 수정 </button>
 							</div>
@@ -136,18 +136,18 @@ border-radius: 15px;
 					<fieldset>
 						<legend>카테고리 등록</legend>
 						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">카테고리명</label>
-							<div class="col-lg-9">
+							<label for="inputEmail" class="col-xs-2 control-label">카테고리명</label>
+							<div class="col-xs-9">
 								<input type="text" class="form-control" id="name" name="name"
 									placeholder="카테고리명 입력">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-lg-2 control-label">공개 설정</label>
-							<div class="col-lg-9">
+							<label class="col-xs-2 control-label">공개 설정</label>
+							<div class="col-xs-9">
 									<label class="radio-inline"> <input type="radio" name="state"
-										id="optionsRadios1" value="true">공개
+										id="optionsRadios1" value="true" checked="checked">공개
 									</label>
 								
 									<label class="radio-inline"> <input type="radio" name="state"
@@ -157,7 +157,7 @@ border-radius: 15px;
 						</div>
 						
 						<div class="form-group">
-							<div class="col-lg-offset-9 col-lg-3">
+							<div class="col-xs-offset-9 col-xs-3">
 								<button type="reset" class="btn btn-default"> 리셋 </button>
 								<button type="submit" class="btn btn-primary"> 추가 </button>
 							</div>
@@ -172,8 +172,8 @@ border-radius: 15px;
 					<fieldset>
 						<legend>블로그 설정</legend>
 						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">제목</label>
-							<div class="col-lg-9">
+							<label for="inputEmail" class="col-xs-2 control-label">제목</label>
+							<div class="col-xs-9">
 								<input type="text" class="form-control" id="title" name="title"
 									value="<%=blogdto.getTitle()%>">
 							</div>
@@ -181,8 +181,8 @@ border-radius: 15px;
 						
 						
 						<div class="form-group">
-							<label for="select" class="col-lg-2 control-label">테마설정</label>
-							<div class="col-lg-9">
+							<label for="select" class="col-xs-2 control-label">테마설정</label>
+							<div class="col-xs-9">
 								<br>
 								<select multiple="" class="form-control" name="theme">
 									<option style="background-color: #cee1ff; text-align: center;" value="#f7e3a3"></option>
@@ -194,7 +194,7 @@ border-radius: 15px;
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-offset-9 col-lg-3">
+							<div class="col-xs-offset-9 col-xs-3">
 								<button type="reset" class="btn btn-default">취소</button>
 								<button type="submit" class="btn btn-primary">적용</button>
 							</div>

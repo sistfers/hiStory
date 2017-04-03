@@ -85,15 +85,15 @@ border-radius: 15px;
 		       	<p style="font-size: 25px; margin-top: 20px">이웃증감</p><hr>
 		       	<form class="form-horizontal" method="post" action="follow.hi">
 		        	<div class="form-group" id="endday" style="margin-top: 10px">
-						<div class="col-lg-1">
+						<div class="col-xs-1">
 						</div>
-						<div class="col-lg-4">
+						<div class="col-xs-4">
 							<input type="date" class="form-control" id="endday" name="endday">
 						</div>
-						<div class="col-lg-3">
+						<div class="col-xs-3">
 							<button type="submit" class="btn btn-primary"> 조회 </button>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-xs-4">
 						</div>
 					</div>
 				</form>

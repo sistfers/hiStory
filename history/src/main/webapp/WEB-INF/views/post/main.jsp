@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.BlogDto"%>
 <%@page import="com.hifive.history.model.LoveDto"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
@@ -80,12 +81,9 @@
 	//해당 포스트에 공감을 했는지 체크
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
 	
-	// 테마 색깔 정해야함
-// 	String THEME = "#FFFFDE";		// 노랑
-	//String THEME = "#C6E8FF";		// 하늘
-// 	String THEME = "#DAD9FF";		// 보라
-	String THEME = "#FFD8D8";		// 살구
-	//String THEME = "#8C8C8C";		// 회색
+	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
+	// 테마 색깔 
+	String THEME = blogdto.getTheme();
 %>    
 
 
@@ -99,7 +97,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<title>여기에 블로그 타이틀이 들어가면 좋겠음</title>
+<title><%=blogdto.getTitle()%></title>
 
 <style type="text/css">
 	.mydiv{						/* 왼쪽 메뉴 영역  */
@@ -277,42 +275,120 @@ function go_delete(){
 	  	  				HashMap<String, Object> commentdata = (HashMap<String, Object>)(commentList.get(i)); 
   				%>
  					<tr id="r1" name="commentParentCode"> 
-						<%if(!commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {%>
+						<%if(!commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {%>		<!--대댓글  -->
 			 				<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td> 
-						  	<td width=10% id="<%=commentdata.get("SEQ")%>">
+						  	<td width=10%>
 						  	
-				  		<%} else{%>
-				  			<td width=11% colspan=2 align="left">
-				  		<%} %>
-				  		
-				  		<!-- 사진  -->
-				  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
+						  	<!-- 사진  -->
+				  			<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
+				
+				 				<%
+				 				if(commentdata.get("STATE").equals("0") ) {%>
+					 				<!-- if(commentdata.get("STATE").equals("0") || (userDto != null && userDto.getId().equals(commentdata.get("ID"))) ) {%> -->
+					 				<!-- 작성자/작성일 -->
+							  		<td width="69%" style="text-align: left;">
+									<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
+									
+									<!-- 댓글내용 -->
+					  				<%=commentdata.get("CONTENT") %>
+					  				</td>
+					  		  		
+					  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
+					  		  		<c:set var='login' value="${sessionScope.user}"/>
+					  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+						  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
+						  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+						  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+						  				<%} %>
+					  				</c:if>
+					  				</td>
+								 <%}else if(commentdata.get("STATE").equals("1")){ 
+									 if(userDto != null && userDto.getId().equals(commentdata.get("ID"))){%>
+							 			<!-- 작성자/작성일 -->
+								  		<td width="69%" style="text-align: left;">
+										<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
+										
+										<!-- 댓글내용 -->
+						  				<span class="glyphicon glyphicon-lock"></span><%=commentdata.get("CONTENT") %>
+						  				</td>
+						  		  		
+						  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
+						  		  		<c:set var='login' value="${sessionScope.user}"/>
+						  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+							  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
+							  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+							  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+							  				<%} %>
+						  				</c:if>
+						  				</td>
+									  	 
+							  		<%}else{ %>
+					  					<td colspan="2" align="left"  style="color: #8C8C8C;"><span class="glyphicon glyphicon-lock"></span> 비밀글입니다</td>
+							  		<%} %>
+								 <%}else if(commentdata.get("STATE").equals("2")){ //if end %>
+								  <td colspan="2" align="left" style="color: #BDBDBD;"><span class="glyphicon glyphicon-fire"></span> 삭제된 댓글입니다</td>
+								 <%} //if end%>
 			
-		 				<%if(commentdata.get("STATE").toString().equals("0") || (userDto != null && userDto.getId().equals(commentdata.get("ID"))) ) {%>
-			 				
-			 				<!-- 작성자/작성일 -->
-					  		<td width="69%" style="text-align: left;">
-							<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
-							
-							<!-- 댓글내용 -->
-			  				<%=commentdata.get("CONTENT") %>
-			  				</td>
-			  		  		
-			  		  		<td width="20%" align="left" id="<%=commentdata.get("SEQ")%>">
-			  		  		<c:set var='login' value="${sessionScope.user}"/>
-			  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
-				  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-				  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
-				  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
-				  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
-				  				<%} %>
-			  				</c:if>
-			  				</td>
-						 <%}else{ %>
-						   <td colspan="2" align="left"><span class="glyphicon glyphicon-lock"></span> 비밀글입니다</td>
-						 <%} //if end %>
-					  </tr>
-					  
+						  	
+				  		<%} else{%>				<!--댓글  -->
+				  			<td width=11% colspan=2 align="left">
+				  		
+					  		<!-- 사진  -->
+					  		<img src="<%=commentdata.get("PF_IMAGE") %>" width="40px" height="40px"></td>
+				
+			 				<%if(commentdata.get("STATE").equals("0") ) {%>
+				 				
+				 				<!-- 작성자/작성일 -->
+						  		<td width="69%" style="text-align: left;">
+								<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
+								
+								<!-- 댓글내용 -->
+				  				<%=commentdata.get("CONTENT") %>
+				  				</td>
+				  		  		
+				  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
+				  		  		<c:set var='login' value="${sessionScope.user}"/>
+				  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+					  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
+					  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
+					  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+					  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+					  				<%} %>
+				  				</c:if>
+				  				</td>
+								 <%}else if(commentdata.get("STATE").equals("1")){ 
+								 		if(userDto != null && userDto.getId().equals(commentdata.get("ID"))){%>
+								 			<!-- 작성자/작성일 -->
+									  		<td width="69%" style="text-align: left;">
+											<a href="#"> <%=commentdata.get("NAME") %> </a> <%=commentdata.get("WDATE") %><br>
+											
+											<!-- 댓글내용 -->
+							  				<span class="glyphicon glyphicon-lock"></span><%=commentdata.get("CONTENT") %>
+							  				</td>
+							  		  		
+							  		  		<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
+							  		  		<c:set var='login' value="${sessionScope.user}"/>
+							  		  		<c:if test="${!empty login}"> <!-- 로그인정보 없으면 안보임 -->		  		  		 
+								  				<%if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {%>
+								  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+								  					<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+								  				<%} %>
+							  				</c:if>
+							  				</td>
+										  	 
+								  		<%}else{ %>
+						  					<td colspan="2" align="left"  style="color: #8C8C8C;"><span class="glyphicon glyphicon-lock"></span> 비밀글입니다</td>
+								  		<%} %>
+						 <%}else if(commentdata.get("STATE").equals("2")){ //if end %>
+						  <td colspan="2" align="left" style="color: #BDBDBD;"><span class="glyphicon glyphicon-fire"></span> 삭제된 댓글입니다</td>
+						 <%} //if end%>
+						 
+						 
+						 
+						 
+						 
+					 	 </tr>
+					  <%} %>
 				  <%
 					  } //for end 
 				  } // if end%>  
@@ -487,7 +563,7 @@ $(function(){
                                 '<td width="69%" style="text-align: left;">'+
                                 '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
                                 pText.val().replace(/\n/g, "<br>")+'</td>'+
-                                '<td width="20%" align="left">'+
+                                '<td width="20%" align="right">'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pUp">수정</button>'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+
@@ -563,8 +639,7 @@ $(function(){
                                 '<td width="69%" style="text-align: left;">'+
                                 '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
                                 cText.val().replace(/\n/g, "<br>")+'</td>'+
-                                '<td width="20%" align="left">'+
-                                '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+
+                                '<td width="20%" align="right">'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pUp">수정</button>'+
                                 '<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+
                                 '</td>'+

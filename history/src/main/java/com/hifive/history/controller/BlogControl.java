@@ -53,6 +53,8 @@ public class BlogControl {
 
 	@Autowired
 	private FollowService followService;
+	@Autowired
+	private BlogService blogSvc;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -82,6 +84,9 @@ public class BlogControl {
 		Integer ct_seq;
 		
 		int	   seq 	= request.getParameter("seq")==null ? 0 : Integer.parseInt(request.getParameter("seq"));
+		
+		BlogDto blogdto = blogSvc.getMyBlog(ID);
+		mav.addObject("blogdto",blogdto);
 		
 		// 최신 글 내용 보여주기
 		PostDto postDto = new PostDto();

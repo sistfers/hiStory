@@ -143,10 +143,10 @@
 <br><br>
 <div class="row" >
 <div class="col-xs-12" >
-<h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
+<h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 <table class="table table-hover" >
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
@@ -178,7 +178,7 @@
 			}
 			content = content.replace(search_word, "<b>" + search_word + "</b>");
 		%>
-		<p class="summary"> <%= content%></p>
+		<p class="summary" style="width: 450px"> <%= content%></p>
 		<%if(searchList.get(i).get("HASHTAG")!=null){ 
 			String hashtag = (String)searchList.get(i).get("HASHTAG");
 			hashtag = hashtag.substring(0, hashtag.length()-1);
@@ -282,9 +282,9 @@ function do_search_page(url, page_num) {
 
     </c:when>
 	<c:otherwise>
-		<h3 class="page-header" style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
 		<div class="col-xs-1"></div>
 			<div class="col-xs-10">
+				<h3 class="page-header" style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
 				<table cellpadding="0"  cellspacing="0" border="0" class="table table-hover">		
 					<c:forEach var="item" items="${blogItem}">
 					 	<tr name="api_search_detail" style="cursor:pointer;">	

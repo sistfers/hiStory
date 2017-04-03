@@ -24,6 +24,24 @@
 	</choose>
 </sql>
 
+<sql id="searchCondition">
+	<choose>
+		<when test="SEARCH_WORD == '' ">
+			WHERE STATE = 0
+		</when>
+		<otherwise></otherwise>
+	</choose>
+	<choose>
+		<when test="SEARCH_WORD != '' ">
+			WHERE STATE = 0
+            AND TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
+            OR CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
+            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
+		</when>
+		<otherwise></otherwise>
+	</choose>
+</sql>
+
 <!-- 결과 리턴을 MAP으로 할때 스타일 지정해주기 -->  
 <resultMap id = "PostMap" type="java.util.HashMap">
    <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
@@ -303,7 +321,7 @@ FROM
                       (
                         SELECT YOU_ID, COUNT(*) CNT
                         FROM FOLLOW_H
-                        WHERE MY_ID=#{id}
+                        WHERE MY_ID=#{ID}
                         GROUP BY YOU_ID
                       )A
                       WHERE B1.ID = A.YOU_ID
@@ -337,10 +355,11 @@ FROM
       (SELECT 1 
       FROM FOLLOW_H B2 
       WHERE B1.ID = B2.YOU_ID 
-      AND B2.MY_ID=#{id}
+      AND B2.MY_ID=#{ID}
       )
     AND STATE IN (0,3)
     )T4
+    ORDER BY WDATE DESC
   )TT2
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
@@ -688,11 +707,7 @@ SELECT TT2.*
                 FROM
                   (SELECT A.SEQ, A.CT_SEQ, A.ID, A.FIELD, A.TITLE, A.CONTENT, to_char(A.WDATE, 'YYYYMMDD') AS WDATE, A.HASHTAG, A.STATE, A.CO_STATE
                   FROM POST_H A
-                  WHERE STATE = 0
-                  AND A.TITLE LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
-                  OR A.CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
-                  OR A.HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
-                  ORDER BY WDATE DESC,SEQ DESC
+                  <include refid="searchCondition"/>
                   )A1
                 LEFT OUTER JOIN
                   ( SELECT B.SEQ, B.POST_SEQ, B.ORI_NAME, B.SAVE_NAME
@@ -719,10 +734,7 @@ SELECT TT2.*
        (
        SELECT COUNT(*) TOT_CNT
         FROM POST_H
-            WHERE STATE = 0
-            AND TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
-            OR CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
-            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
+            <include refid="searchCondition"/>
        )T2
 )TT2
 WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)

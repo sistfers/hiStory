@@ -59,10 +59,7 @@ public class HomeControl {
 	@RequestMapping(value = "main/index.hi")
 	public ModelAndView home(HttpServletRequest requestss, HttpSession session) throws Exception{
 		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
-		if (session.getAttribute("user") != null) {
-			UserDto dto = (UserDto) session.getAttribute("user");
-			System.out.println(dto.toString());
-		}
+		
 		Map<String, Object> condition = new HashMap<String, Object>(); 
 		Map<String, Object> codeMap = new HashMap<String, Object>();
 		List<String> codeList = new ArrayList<String>();
@@ -81,10 +78,27 @@ public class HomeControl {
 		List<Map<String, Object>> searchRank = searchSvc.hi_selectRankList();
 		List<Map<String, Object>> themeList = postSvc.hi_selectThemeList(condition);
 		
+		
+		//로그인 시 유저의 이웃새글 START
+		String PAGE_SIZE 	= "5";	//페이지사이즈
+		String PAGE_NUM		= "1";	//페이지NUM
+		
+		Map<String, Object> followCondition = new HashMap<String, Object>(); 
+		followCondition.put("PAGE_SIZE", PAGE_SIZE);
+		followCondition.put("PAGE_NUM", PAGE_NUM);
+		
+		if(session.getAttribute("user") != null){
+			followCondition.put("ID", ((UserDto)session.getAttribute("user")).getId());
+			List<Map<String, Object>> followList = postSvc.hi_selectFollowerList(followCondition);
+			mav.addObject("followList", followList);
+		}
+		//로그인 시 유저의 이웃새글 END
 		mav.setViewName("/main/index");
 		mav.addObject("searchRank", searchRank);
 		mav.addObject("themeList", themeList);
 		mav.addObject("themeCode", themeCode);
+		mav.addObject("PAGE_NUM", PAGE_NUM);
+		mav.addObject("PAGE_SIZE", PAGE_SIZE);
 		return mav;
 	}
 
@@ -139,17 +153,18 @@ public class HomeControl {
 		SearchDto dto = new SearchDto();
 		
 		dto.setSearch_word(apiSearch_word);
-			//로그인 정보 받아오기
-		if(session.getAttribute("user") != null){
-			dto.setS_id(((UserDto)session.getAttribute("user")).getId());
-		}else{
-			dto.setS_id("-1");
+		if(dto.getSearch_word() != "" && dto.getSearch_word() != null){
+				//로그인 정보 받아오기
+			if(session.getAttribute("user") != null){
+				dto.setS_id(((UserDto)session.getAttribute("user")).getId());
+			}else{
+				dto.setS_id("-1");
+			}
+			
+			int flag = searchSvc.hi_insert(dto);
+			
+			if(flag > 0) loger.debug("단어 인썰트 성공~~~~~~~~~~~~~~~~~~~~~~쑤아뤼");	
 		}
-		
-		int flag = searchSvc.hi_insert(dto);
-		
-		if(flag > 0) loger.debug("단어 인썰트 성공~~~~~~~~~~~~~~~~~~~~~~쑤아뤼");
-		
 		//검색어 기록에 추가 end
 		
 		PAGE_NUM		= (res.getParameter("PAGE_NUM")==null || res.getParameter("PAGE_NUM").equals("")) ? "1" : res.getParameter("PAGE_NUM");	//페이지NUM

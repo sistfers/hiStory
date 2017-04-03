@@ -7,37 +7,57 @@
 <sql id="condition">
 	<choose>
 		<when test="s_id != '-1' ">
-			SEQ_SEARCH.NEXTVAL,
-		    #{search_word},
-		    #{s_id},
-		    SYSDATE,
-		    (
-		      select NULL SEX from dual
-		      where not exists (SELECT SEX FROM USER_H WHERE ID=#{s_id})
-		      union
-		      SELECT SEX FROM USER_H WHERE ID=#{s_id}
-		    ),
-		    (
-		      select NULL AREA from dual
-		      where not exists (SELECT AREA FROM USER_H WHERE ID=#{s_id})
-		      union
-		      SELECT AREA FROM USER_H WHERE ID=#{s_id}
-		    ),
-		    (
-		      select NULL BIRTH from dual
-		      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{s_id})
-		      union
-		      SELECT BIRTH FROM USER_H WHERE ID=#{s_id}
-		    )
+			INSERT
+			INTO SEARCH_H
+			  (
+			    SEQ,
+			    SEARCH_WORD,
+			    S_ID,
+			    SDATE,
+			    SEX,
+			    AREA,
+			    BIRTH
+			  )
+			VALUES
+			(
+				SEQ_SEARCH.NEXTVAL,
+			    #{search_word},
+			    #{s_id},
+			    SYSDATE,
+			    (
+			      select NULL SEX from dual
+			      where not exists (SELECT SEX FROM USER_H WHERE ID=#{s_id})
+			      union
+			      SELECT SEX FROM USER_H WHERE ID=#{s_id}
+			    ),
+			    (
+			      select NULL AREA from dual
+			      where not exists (SELECT AREA FROM USER_H WHERE ID=#{s_id})
+			      union
+			      SELECT AREA FROM USER_H WHERE ID=#{s_id}
+			    ),
+			    (
+			      select NULL BIRTH from dual
+			      where not exists (SELECT BIRTH FROM USER_H WHERE ID=#{s_id})
+			      union
+			      SELECT BIRTH FROM USER_H WHERE ID=#{s_id}
+			    )
+			 )
 		</when>
 		<when test="s_id == '-1' ">
-			SEQ_SEARCH.NEXTVAL,
-		    #{search_word},
-		    null,
-		    SYSDATE,
-		    null,
-		    null,
-		    null
+			INSERT
+				INTO SEARCH_H
+				  (
+				    SEQ,
+				    SEARCH_WORD,
+				    SDATE
+				  )
+				VALUES
+				(
+					SEQ_SEARCH.NEXTVAL,
+				    #{search_word},
+				    SYSDATE
+				)
 		</when>
 		<otherwise></otherwise>
 	</choose>
@@ -52,21 +72,8 @@
 	</resultMap>
 	<!-- 등록 -->
 	<insert id="hi_insert" parameterType="com.hifive.history.model.iDto">
-		INSERT
-		INTO SEARCH_H
-		  (
-		    SEQ,
-		    SEARCH_WORD,
-		    S_ID,
-		    SDATE,
-		    SEX,
-		    AREA,
-		    BIRTH
-		  )
-		  VALUES
-		  (
-		  	<include refid="condition"/>
-		  )
+		<include refid="condition"/>
+		
 	</insert>
 	
 	<select id="hi_selectRankList" resultMap="SearchRankMap">

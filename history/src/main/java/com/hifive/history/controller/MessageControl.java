@@ -132,14 +132,15 @@ public class MessageControl {
 		
 		String SENDID ="";
 		String TAKEID ="";
-		String note ="";
+		String note   ="";
 		
 		SENDID = res.getParameter("SEND_ID");
 		TAKEID	 = res.getParameter("TAKE_ID");		
 		note = res.getParameter("NOTE");
 		loger.debug("SENDID -> " + SENDID);
 		loger.debug("TAKEID -> " + TAKEID);
-		loger.debug("note -> " + note);
+		loger.debug("note   -> " + note);
+		
 		
 		/*
 		private	int		seq;
@@ -150,22 +151,49 @@ public class MessageControl {
 		private	String	rdate;
 		private	String	state;
 		private String  nick;	*/
-		MessageDto dto = new MessageDto();
-		dto.setSeq(0);
-		dto.setSend_id(SENDID);
-		dto.setTake_id(TAKEID);
-		dto.setContents(note);
-		dto.setWdate("");
-		dto.setRdate("");
-		dto.setState("");
-		dto.setname("");
 		
-		int result = messageService.hi_insert(dto);
 		ModelAndView mav = new ModelAndView();
+		if(TAKEID.matches(".*,*.")) {	
+			loger.debug("전체  쪽지");
+			String[] arrIdx = TAKEID.split(",");
+			
+			for (int i = 0; i < arrIdx.length; i++) {
+				MessageDto dto = new MessageDto();
+				dto.setSeq(0);
+				dto.setSend_id(SENDID);
+				dto.setTake_id(arrIdx[i]);
+				dto.setContents(note);
+				dto.setWdate("");
+				dto.setRdate("");
+				dto.setState("");
+				dto.setname("");
+				
+				int result = messageService.hi_insert(dto);
+				
+				if(result == 1) {
+					mav.setView(new RedirectView(("send.hi")));
+				}	
+			}			
+		} else {
+			loger.debug("단일  쪽지");
+			
+			MessageDto dto = new MessageDto();
+			dto.setSeq(0);
+			dto.setSend_id(SENDID);
+			dto.setTake_id(TAKEID);
+			dto.setContents(note);
+			dto.setWdate("");
+			dto.setRdate("");
+			dto.setState("");
+			dto.setname("");
+			
+			int result = messageService.hi_insert(dto);
+			
+			if(result == 1) {
+				mav.setView(new RedirectView(("send.hi")));
+			}	
+		}						
 		
-		if(result == 1) {
-			mav.setView(new RedirectView(("send.hi")));
-		}				
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/write.hi");
 		loger.debug("----------------------------------------------------------");

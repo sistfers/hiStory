@@ -3,13 +3,24 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hifive.history.repository.mappers.visitCode">
+	<insert id="hi_upsert" parameterType="hashmap">
+		MERGE INTO VISIT_H T1
+		USING DUAL
+		ON  (ID = #{id} AND V_ID = #{vid} AND  TO_CHAR(VDATE, 'YY/MM/DD') = TO_CHAR(SYSDATE, 'YY/MM/DD') )
+		WHEN MATCHED THEN
+		     UPDATE SET T1.SEX = #{sex}
+		WHEN NOT MATCHED THEN
+		      INSERT (SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH)
+		      VALUES (SEQ_VISIT.NEXTVAL,  #{id}, #{vid}, SYSDATE, #{sex}, #{area}, #{birth})
+		
+	</insert>
 	<select id="hi_getToday" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS TOTAL_CNT
 	 	 FROM(
 	  			SELECT SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH 
 	 			FROM VISIT_H 
 	  			WHERE ID = #{id} 
-	  			AND VDATE = TO_CHAR(SYSDATE, 'YY/MM/DD')
+	  			AND TO_CHAR(VDATE, 'YY/MM/DD') = TO_CHAR(SYSDATE, 'YY/MM/DD')
 	 	) 
 	</select>
 	<select id="hi_getTotal" parameterType="String" resultType="int">

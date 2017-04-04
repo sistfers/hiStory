@@ -118,9 +118,9 @@ $(document).ready(function() {
 						total_pg++;
 					}
 					
-					
-					
-					
+					/* filteredForm = filteredForm + '<tr><td><center>';
+					filteredForm = filteredForm + '';
+					filteredForm = filteredForm + '</center></td></tr>'; */	
 					filteredForm = filteredForm + '</table>';
 					// alert(filteredForm);
 					$("#wrapfilteredForm").append(filteredForm);
@@ -145,6 +145,67 @@ function do_search_page(url, page_num)
 	  frm.PAGE_NUM.value = page_num;
 	  frm.action = url;
 	  frm.submit();
+}
+
+function do_search_for_filtered() {
+	
+	html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">  \n");
+	html.append("<tr> 																					   \n");
+	html.append("<td class=\"list_num\">                                                                   \n");
+	html.append("<ul class=\"pagination pagination-sm\"> 	                                               \n");
+	
+	// <<
+	if(nowBlockNo>1&&nowBlockNo<=maxBlockNo)
+	{
+		html.append("<li><a href=\"javascript:" + scriptName 
+				+ "( '" + url+ "', 1 );\">  \n");
+		html.append("&laquo;    \n");
+		html.append("</a></li>  \n");
+	}
+
+	// <
+	if(startPageNo>bottomCount)
+	{
+		html.append("<li><a href=\"javascript:" + scriptName 
+				+ "( '" + url + "'," + (startPageNo - 1) + ");\">  \n");
+		html.append("<          \n");
+		html.append("</a></li>  \n");
+	}
+
+	// 1 2 3 ... 10 (숫자보여주기)
+	for(inx=startPageNo;inx<=maxPageNo&&inx<=endPageNo;inx++)
+	{
+
+		if (inx == currPageNo) {
+			html.append("<li class='active'><a href='#'>" + inx + "</a></li>");
+		} else {
+			html.append("<li><a href=\"javascript:" + scriptName 
+					+ "('" + url + "'," + inx + ");\" class=\"num_text\">" 
+					+ inx + "</a></li>  \n");
+		}
+	}
+
+	// >
+	if(maxPageNo>=inx)
+	{
+		html.append("<li><a href=\"javascript:" + scriptName 
+				+ "('" + url + "'," + ((nowBlockNo * bottomCount) + 1)
+				+ ");\">        \n");
+		html.append(">          \n");
+		html.append("</a></li>  \n");
+	}
+
+	// >>
+	if(maxPageNo>=inx)
+	{
+		html.append("<li><a href=\"javascript:" + scriptName 
+				+ "('" + url + "'," + maxPageNo + ");\">  \n");
+		html.append("&raquo;    \n");
+		html.append("</a></li>  \n");
+	}
+	
+	html.append("</ul>  \n");html.append("</td>  	\n");
+	html.append("</tr>  \n");html.append("</table>  \n");
 }
 
 /* 체크박스 전체선택, 전체해제 */

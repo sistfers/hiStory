@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%!
 /**
  * 모든 HTML 태그를 제거하고 반환한다.
@@ -53,7 +54,10 @@
 			page_size = Integer.parseInt(PAGE_SIZE);
 		
 	}	 
-	
+	int total = 0;
+	for(int i = 0; i < searchRank.size(); ++i){
+		total += Integer.parseInt((searchRank.get(i).get("CNT")).toString());
+	}
 	
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -273,7 +277,7 @@ $(document).ready(function () {
             }
             %>
          ],
-         eval: function (item) {return item.count>100?99:item.count;},
+         eval: function (item) {return item.count/<%=total%>*100;},
          classed: function (item) {return item.text.split(" ").join("");}
        },
        plugins: [
@@ -469,14 +473,15 @@ $(document).ready(function () {
 	} else {
 %>
 <br><br>
-<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
+<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
 <div class="col-xs-12">
 <h3 class="page-header">:: 이웃새글 :: </h3>
 
-<table class="table table-hover" >
+<table class="table table-hover" id="followTable">
+	<tbody>
 	<%if(followList.size() != 0){
 		for(int i=0; i<followList.size(); ++i){ %>
-		<tr name="search_detail" style="cursor:pointer;">
+		<tr name="follow_detail" style="cursor:pointer;">
 			<td id="<%=followList.get(i).get("ID")%>">
 			<div>
 				<a href="#" class="pull-left">
@@ -515,6 +520,7 @@ $(document).ready(function () {
 			</div>
 			</td>
 		</tr>
+		</tbody>
 <%		}
 	}else{%>
 	<tr>
@@ -526,9 +532,13 @@ $(document).ready(function () {
 
 <center> 
 <!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
-<table><tr><td style="text-align: center;">
-<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "do_search.hi", "do_search_page")%>
+<table id="pageTable">
+<tbody>
+<tr>
+<td style="text-align: center;">
+<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "/main/followPost.hi", "do_search_page")%>
 </td></tr>
+</tbody>
 </table>
 </center>
 <%
@@ -536,12 +546,196 @@ $(document).ready(function () {
 %> 
 
 
-
 </div>
 </div>
-
+<!-- 디테일 클릭시 해당 ID, SEQ 들고 폼전송 구간 Start -->
+<form name="do_detail" method="get" action="">
+<input type="hidden" id="id" name="id" value="">
+<input type="hidden" id="seq" name="seq" value="">
+</form>
+<!-- 검색순위 클릭시 해당 검색어 들고 폼전송 구간 End -->
 <!-- 이웃새글 END -->
+<script type="text/javascript">
+$(document).ready(function () {
+	$("tr[name=follow_detail]").click(function(){
+		
+		var frm = document.do_detail;
+		frm.id.value = $(this).eq(0).find("td").eq(0).attr('id');	//id
+		frm.seq.value = $(this).eq(0).find("td").eq(1).attr('id');	//seq
+		console.log("frm.id.value=" + frm.id.value);
+		console.log("frm.seq.value=" + frm.seq.value);
+		frm.action = "/post/main.hi";
+		frm.submit();
+		
+	});
 
+ });
+
+function do_search_page(url, page_num) {
+	console.log(url + "\t" + page_num);
+	<c:if test="${!empty sessionScope.user.id }">
+    	var id = "${sessionScope.user.id}";
+	</c:if>
+	$.ajax({
+		type : "POST",
+		url : url,
+		dataType : "html",
+		data :{
+			"PAGE_NUM" : page_num,
+			"id": id
+		},
+		success : function(data){
+			var followList = $.parseJSON(data);
+			$( '#followTable > tbody').empty();
+			$( '#pageTable > tbody').empty();
+			if (followList.length == 0) {
+				$('#followTable > tbody:last').append('<tr><td>::글이없습니다::</td></tr>');
+            } else {
+            	var html;
+                for (var i = 0; i < followList.length-1; i++) {
+                	var followBlogUrl = "/post/main.hi?id=" + followList[i].ID+"&seq=" + followList[i].SEQ;
+                	html +="<tr name=\"follow_detail\" style=\"cursor:pointer;\">";
+                    html +="<td id=\"" +followList[i].ID +"\">";
+        			html +="<div>";
+        			html +="<a href=\"#\" class=\"pull-left\">";
+        			html +="<img src=\""+followList[i].SAVE_NAME+ "\" width=\"150px\" height=\"100px\" onerror='src=" +"\"/resources/image/main.jpg\"'>";
+        			html +="</a>";
+        			html +="</div>";
+        			html +="</td>";
+        			html +="<td valign=\"top\" id=\""+followList[i].SEQ+"\">";
+        			html +="<div style=\"display: block;\">";
+        			html +="<h5 class=\"title\">";	
+        			
+	        			var tempTitle = followList[i].TITLE;
+	        			var title = tempTitle;
+	        			if(tempTitle.length >50){
+	        				title = tempTitle.substring(0,50) + "...";
+	        			} 
+        			html += title;        				
+        			html +="</h5>";
+        			
+	        			var tempContent = removeTag(followList[i].CONTENT);
+	        			var content = tempContent;
+	        			if(tempContent.length >150){
+	        				content = tempContent.substring(0,150) + "...";
+	        			}
+	        		html +="<p class=\"summary\" style=\"width: 650px\">"+ content + "</p>";
+	        		html +="</div>";
+	        		html +="</td>";
+	        		html +="<td align=\"right\" valign=\"middle\" width=\"200px\">";
+        			html += followList[i].NAME;
+      				html +="</td>";
+        			html +="<td align=\"right\" valign=\"top\" width=\"50px\">";
+        			html +="<div style=\"display: block;\">";
+        			html +=followList[i].WDATE;
+        			html +="</div></td></tr>";
+      			
+                }
+                $('#followTable > tbody:last').append(html);
+                var pageHtml;
+                
+                pageHtml +="<tr><td style=\"text-align: center;\">";
+                pageHtml += renderPaging(followList[0].TOT_CNT, followList[followList.length-1].PAGE_NUM, 5, 5, "/main/followPost.hi", "do_search_page");
+                pageHtml +="</td></tr>";
+                $('#pageTable > tbody:last').append(pageHtml);
+                
+               
+            } 
+		},
+		complete : function(data){		
+			
+		},
+		error : function(xhr, status, error) {
+			alert("에러발생");
+		}
+	});
+        			
+	function removeTag( html ) {
+		html = html.replace(/<br\/>/ig, "");
+		html = html.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+		return html;
+	}
+	
+	function renderPaging(maxNum_i, currPageNoIn_i, rowsPerPage_i, bottomCount_i,
+			url_i, scriptName_i) {
+		var maxNum = parseInt("0"); // 총 갯수
+		var currPageNo = parseInt("1"); // 현재 페이지 번호 : page_num
+		var rowPerPage = parseInt("10"); // 한페이지에 보여질 행수 : page_size
+		var bottomCount = parseInt("10"); // 바닥에 보여질 페이지 수: 10
+
+		maxNum = parseInt(maxNum_i);
+		currPageNo = parseInt(currPageNoIn_i);
+		rowPerPage = parseInt(rowsPerPage_i);
+		bottomCount = parseInt(bottomCount_i);
+
+		var url = url_i; // 호출 URL
+		var scriptName = scriptName_i; // 호출 자바스크립트
+
+		var maxPageNo = ((maxNum - 1) / rowPerPage) + 1;
+		var startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;
+		var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
+		var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
+		var maxBlockNo = ((maxNum - 1) / bottomCount) + 1;
+
+		var inx = parseInt("0");
+		var html;
+		if (currPageNo > maxPageNo) {
+			return "";
+		}
+
+		html +="<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">";
+		html +="<tr>";
+		html +="<td class=\"list_num\">";
+		html +="<ul class=\"pagination pagination-sm\"> 	                                                ";
+		// <<
+		if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  ";
+			html +="&laquo;   ";
+			html +="</a></li>      ";
+		}
+
+		// <
+		if (startPageNo > bottomCount) {
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> ";
+			html +="<        ";
+			html +="</a></li>     ";
+		}
+
+		// 1 2 3 ... 10	(숫자보여주기)
+		for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
+			console.log("scriptName = " + scriptName);
+			console.log("inx = " + inx);
+			console.log("url = " + url);
+			if (inx == currPageNo) {
+				html +="<li class='active'><a href='#'>" + inx	+ "</a></li>";
+				
+			} else {
+				html +="<li><a href=\"javascript:" + scriptName + "('" + url + "'," + inx+ ");\" class=\"num_text\">" + inx + "</a></li> ";
+			}
+		}
+		
+		// >
+		if (maxPageNo >= inx) {
+			html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> ";
+			html +=">                       ";
+			html +="</a></li>              ";
+		}
+
+		// >>
+		if (maxPageNo >= inx) {
+			html +="<li><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      ";
+			html +="&raquo;     ";
+			html +="</a></li>    ";
+		}
+		html +="</ul>		";
+		html +="</td>  	";
+		html +="</tr>  	";
+		html +="</table>   ";
+
+		return html;
+	}
+}
+</script>
 
 <!-- BEST 블로거 START -->
 <br><br>
@@ -578,10 +772,10 @@ $(document).ready(function () {
 </div><!-- 컨테이너 -->
 </div>
 <!--내용 END -->
-
 <!--푸터 START -->
 <jsp:include page="footer.jsp"/>
 <!--푸터 START -->
+
 </body>
 </html>
 

@@ -42,6 +42,7 @@
 	</choose>
 </sql>
 
+
 <!-- 결과 리턴을 MAP으로 할때 스타일 지정해주기 -->  
 <resultMap id = "PostMap" type="java.util.HashMap">
    <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
@@ -316,7 +317,7 @@ FROM
   FROM
     (SELECT T1.*, T2.POST_SEQ, T2.LOCATION, T2.ORI_NAME, T2.SAVE_NAME
     FROM
-      (SELECT *
+      (SELECT B1.SEQ, B1.CT_SEQ, B1.ID, B1.FIELD, B1.TITLE, B1.CONTENT, to_char(B1.WDATE, 'YYYY-MM-DD') AS WDATE, B1.HASHTAG, B1.STATE, B1.CO_STATE
       FROM POST_H B1
       WHERE EXISTS (SELECT 1
                       FROM
@@ -707,7 +708,7 @@ SELECT TT2.*
        FROM(
                 SELECT A1.*, A2.POST_SEQ, A2.ORI_NAME, A2.SAVE_NAME
                 FROM
-                  (SELECT A.SEQ, A.CT_SEQ, A.ID, A.FIELD, A.TITLE, A.CONTENT, to_char(A.WDATE, 'YYYYMMDD') AS WDATE, A.HASHTAG, A.STATE, A.CO_STATE
+                  (SELECT A.SEQ, A.CT_SEQ, A.ID, A.FIELD, A.TITLE, A.CONTENT, to_char(A.WDATE, 'YYYY-MM-DD') AS WDATE, A.HASHTAG, A.STATE, A.CO_STATE
                   FROM POST_H A
                   <include refid="searchCondition"/>
                   )A1

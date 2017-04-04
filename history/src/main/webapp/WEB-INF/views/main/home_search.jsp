@@ -60,7 +60,7 @@
 	border-bottom: 1px solid #eee;
 }
 .table-filter tbody tr td {
-	padding: 10px;
+	/* padding: 10px; */
 	vertical-align: middle;
 	border-top-color: #eee;
 }
@@ -89,7 +89,7 @@
 	font-size: 14px;
 	font-weight: bold;
 	line-height: normal;
-	margin: 0;
+	/* margin: 0; */
 }
 .table-filter .media .title span {
 	font-size: .8em;
@@ -140,37 +140,38 @@
 <br>
 
 <!-- HISTORY START -->
-<br><br>
-<div class="row" >
-<div class="col-xs-12" >
 
-<div class="col-xs-1"></div>
-<div class="col-xs-10">
-<h3 class="page-header" style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
+<br><br>
+<div class="col-xs-12" >
+<hr style="border-color: #F361A6; border-width: 10px">
+<h3 style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
 <table class="table table-hover" >
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
 <tr name="search_detail" style="cursor:pointer;">
-	<td id="<%=searchList.get(i).get("ID")%>">
+
+<!--이미지  -->
+	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="150px" height="100px">
+		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="130px" height="90px">
 		</a>
 	</div>
 	</td>
-	<td valign="top" id="<%=searchList.get(i).get("SEQ")%>">
-		<div class="media-body">
-		
-		
+	
+	<td valign="top" id="<%=searchList.get(i).get("SEQ")%>" width="60%">
+		<div class="media-body" style="word-wrap : break-word; max-width: 600px" >
+<!--글제목  -->
 		<h5 class="title">
 		<%String tempTitle = searchList.get(i).get("TITLE")+"";
 			String title = tempTitle;
-			if(tempTitle.length() >30){
-				title = tempTitle.substring(0,30) + "...";
+			if(tempTitle.length() >40){
+				title = tempTitle.substring(0,40) + "...";
 			}
 		%>
 		<%= title%>
 		</h5>
+<!--글내용 -->		
 		<%String tempContent = removeTag(searchList.get(i).get("CONTENT")+"");
 			String content = tempContent;
 			if(tempContent.length() >100){
@@ -178,7 +179,7 @@
 			}
 			content = content.replace(search_word, "<b>" + search_word + "</b>");
 		%>
-		<p class="summary" style="width: 450px"> <%= content%></p>
+		<p class="summary" style="word-wrap : break-word;" > <%= content%></p>
 		<%if(searchList.get(i).get("HASHTAG")!=null){ 
 			String hashtag = (String)searchList.get(i).get("HASHTAG");
 			hashtag = hashtag.substring(0, hashtag.length()-1);
@@ -189,10 +190,12 @@
 		</div>
 		<br>
 	</td>
-	<td align="right" valign="middle" width="200px">
+<!--블로그이름  -->	
+	<td align="right" valign="middle" width="10%">
 	<%=searchList.get(i).get("BLOG_TITLE") %>
 	</td>
-	<td align="right" valign="top" width="50px">
+<!-- 작성일 -->	
+	<td align="right" valign="top" width="10%">
 	<div class="media-body">
 	<%=searchList.get(i).get("WDATE") %>
 	</div>
@@ -212,7 +215,7 @@
 
 
 </div>
-</div>
+
 
 <!-- 디테일 클릭시 해당 ID, SEQ 들고 폼전송 구간 Start -->
 <form name="do_detail" method="get" action="">
@@ -263,9 +266,6 @@ function do_search_page(url, page_num) {
 	frm.submit();
 
 }
-
-
-
 </script>
 <!--페이징  -->
 
@@ -274,18 +274,17 @@ function do_search_page(url, page_num) {
 
 <!-- 네이버 검색결과 START -->
 <br><br>
- <div class="row">
+
 	<div class="col-xs-12">
+	<hr style="border-color: #2F9D27; border-width: 10px">
 <c:set var="item" value="${blogItem }"/>
 <c:choose>
 	<c:when test="${empty item}">
 
     </c:when>
 	<c:otherwise>
-		<div class="col-xs-1"></div>
-			<div class="col-xs-10">
-				<h3 class="page-header" style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
-				<table cellpadding="0"  cellspacing="0" border="0" class="table table-hover">		
+				<h3 style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
+				<table  class="table table-hover">		
 					<c:forEach var="item" items="${blogItem}">
 					 	<tr name="api_search_detail" style="cursor:pointer;">	
 					 		<td valign="top" id="${item.link }">
@@ -310,16 +309,12 @@ function do_search_page(url, page_num) {
 					 	</tr>
 					</c:forEach>
 				</table>
-			</div>
     </c:otherwise> 
 </c:choose>
 
-	</div>
 </div>
 
 <!-- 네이버 검색결과 END -->
-</div>
-<div class="col-xs-1"></div>
 </div>
 <!--푸터 START -->
 <jsp:include page="footer.jsp"/>

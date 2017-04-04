@@ -22,9 +22,11 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.hifive.history.model.SearchDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.model.iDto;
@@ -57,7 +59,7 @@ public class HomeControl {
 	CodeDService codeDSvc;
 	
 	@RequestMapping(value = "main/index.hi")
-	public ModelAndView home(HttpServletRequest requestss, HttpSession session) throws Exception{
+	public ModelAndView home(HttpServletRequest request, HttpSession session) throws Exception{
 		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
 		
 		Map<String, Object> condition = new HashMap<String, Object>(); 
@@ -82,6 +84,7 @@ public class HomeControl {
 		//로그인 시 유저의 이웃새글 START
 		String PAGE_SIZE 	= "5";	//페이지사이즈
 		String PAGE_NUM		= "1";	//페이지NUM
+		PAGE_NUM		= (request.getParameter("PAGE_NUM")==null || request.getParameter("PAGE_NUM").equals("")) ? "1" : request.getParameter("PAGE_NUM");	//페이지NUM
 		
 		Map<String, Object> followCondition = new HashMap<String, Object>(); 
 		followCondition.put("PAGE_SIZE", PAGE_SIZE);
@@ -100,6 +103,24 @@ public class HomeControl {
 		mav.addObject("PAGE_NUM", PAGE_NUM);
 		mav.addObject("PAGE_SIZE", PAGE_SIZE);
 		return mav;
+	}
+	
+	@RequestMapping(value = "main/followPost.hi", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String followSearch(HttpServletRequest request) throws Exception {
+		List<Map<String, Object>> followList = null;
+		String PAGE_SIZE = (request.getParameter("PAGE_SIZE") == null) ? "5" : request.getParameter("PAGE_SIZE");
+		String PAGE_NUM = (request.getParameter("PAGE_NUM") == null
+				|| request.getParameter("PAGE_NUM").equals("")) ? "1" : request.getParameter("PAGE_NUM");
+		
+		Map<String, Object> followCondition = new HashMap<String, Object>();
+		followCondition.put("PAGE_SIZE", PAGE_SIZE);
+		followCondition.put("PAGE_NUM", PAGE_NUM);
+		followCondition.put("ID", request.getParameter("id"));
+		followList = postSvc.hi_selectFollowerList(followCondition);
+		followList.add(followCondition);
+		Gson gson = new Gson();
+		return gson.toJson(followList);
 	}
 
 	@RequestMapping(value = "main/login.hi", method = RequestMethod.POST)

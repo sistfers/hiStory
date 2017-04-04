@@ -55,7 +55,7 @@ border-radius: 15px;
 });
 </script>
 </head>
-<body>
+<body style="background-color: <%=blogdto.getTheme() %>;">
 <!--헤더 START-->
 <jsp:include page="/header.hi"/>
 <!--헤더 END-->

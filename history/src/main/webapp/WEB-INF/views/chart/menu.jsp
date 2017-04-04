@@ -33,8 +33,6 @@
       	<a href="comment.hi">댓글수 순위</a> <br>   	
       </div>
 </div>
-		
-
 
 </center>
 </body>

@@ -203,5 +203,28 @@
 		     )followtable
 		WHERE MOD(followtable.cnt, 2) = 1
 	</select>
-
+	<update id="blockFollow" parameterType="map">
+	MERGE INTO FOLLOW_H T1
+	USING ( SELECT 
+	               #{myid} MY_ID,
+	               #{youid} YOU_ID,
+	               SYSDATE FDATE,
+	              (SELECT SEQ       
+	                FROM FOLLOW_H
+	                WHERE MY_ID = #{myid}
+	                AND YOU_ID  = #{youid}
+	                AND TO_CHAR(FDATE, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')) AS SEQ
+	         FROM DUAL       
+	      ) T2
+	 ON (T1.YOU_ID=T2.YOU_ID
+	 AND T1.MY_ID=T2.MY_ID
+	 AND T1.STATE=0
+	 AND TO_CHAR(T1.FDATE, 'YYYYMMDD') = TO_CHAR(T2.FDATE, 'YYYYMMDD'))
+	 WHEN MATCHED THEN
+	    UPDATE SET  T1.AREA = '대구'
+	    DELETE WHERE (T1.SEQ=T2.SEQ)
+	 WHEN NOT MATCHED THEN   
+    INSERT (SEQ, MY_ID, YOU_ID, SEX, AREA, BIRTH, STATE)
+    VALUES (SEQ_FOLLOW.NEXTVAL, #{myid},#{youid}, 0, '서울', SYSDATE, 1)
+	</update>
 </mapper>

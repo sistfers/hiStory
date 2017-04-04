@@ -10,11 +10,21 @@
 <html>
 <head>
 <%
-	List<HashMap<String, Object>> loveRank = new ArrayList();
-	loveRank = (List<HashMap<String, Object>>)request.getAttribute("loveRank");
+	List<HashMap<String, Object>> loveRank;
+	if(request.getAttribute("loveRank")!=null){
+		loveRank = (List<HashMap<String, Object>>)request.getAttribute("loveRank");
+	}else{
+		loveRank = new ArrayList<>();
+	}
 	
-	List<HashMap<String, Object>> loveSelectRank = new ArrayList();
-	loveSelectRank = (List<HashMap<String, Object>>)request.getAttribute("loveSelectRank");
+	List<HashMap<String, Object>> loveSelectRank;
+	if(request.getAttribute("loveSelectRank")!=null){
+		loveSelectRank = (List<HashMap<String, Object>>)request.getAttribute("loveSelectRank");
+	}else{
+		loveSelectRank = new ArrayList<>();
+	}
+	
+	
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -67,24 +77,24 @@ border-radius: 15px;
 						<th>작성일</th>
 		        	</tr>
 		        	<%
-		        		if(loveRank.size()==0){
+		        		if(loveRank!=null&&loveRank.size()!=0){
+		        			for(int i = 0; i < loveRank.size(); ++i){	
+		    		%>	
+		    		       		<tr class="active">
+		    		       		<td><%=i+1 %>위</td>
+		    		       		<td><%=loveRank.get(i).get("TITLE") %></td>
+		    		       		<td><%=loveRank.get(i).get("FIELD") %></td>
+		    		       		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
+		    		       		<td><%=loveRank.get(i).get("WDATE") %></td>
+		    		       		</tr>
+		    		<%
+		        			}		    		
+		        		}else{
 		        	%>
 		        		<tr class="active">
-		        		<td colspan="5" style="text-align: center;">공감받은 글이 없습니다.</td>
+		        			<td colspan="5" style="text-align: center;">공감받은 글이 없습니다.</td>
 		        		</tr>
 		        	<%
-		        		}else{
-		        			for(int i = 0; i < loveRank.size(); ++i){	
-		        	%>	
-		        		<tr class="active">
-		        		<td><%=i+1 %>위</td>
-		        		<td><%=loveRank.get(i).get("TITLE") %></td>
-		        		<td><%=loveRank.get(i).get("FIELD") %></td>
-		        		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
-		        		<td><%=loveRank.get(i).get("WDATE") %></td>
-		        		</tr>
-		        	<%
-		        			}
 		        		}
 		        	%>
 		        	
@@ -123,24 +133,24 @@ border-radius: 15px;
 						<th>작성일</th>
 		        	</tr>
 		        	<%
-		        		if(loveSelectRank.size()==0){
-		        	%>
-		        		<tr class="active">
-		        		<td colspan="5" style="text-align: center;">선택하신 기간에 공감받은 글이 없습니다.</td>
-		        		</tr>
-		        	<%
-		        		}else{
+		        		if(loveSelectRank!=null&&loveSelectRank.size()!=0){
 		        			for(int i = 0; i < loveSelectRank.size(); ++i){	
 		        	%>	
-		        		<tr class="active">
-		        		<td><%=i+1 %>위</td>
-		        		<td><%=loveRank.get(i).get("TITLE") %></td>
-		        		<td><%=loveRank.get(i).get("FIELD") %></td>
-		        		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
-		        		<td><%=loveRank.get(i).get("WDATE") %></td>
-		        		</tr>
+			        		<tr class="active">
+			        		<td><%=i+1 %>위</td>
+			        		<td><%=loveRank.get(i).get("TITLE") %></td>
+			        		<td><%=loveRank.get(i).get("FIELD") %></td>
+			        		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
+			        		<td><%=loveRank.get(i).get("WDATE") %></td>
+			        		</tr>
 		        	<%
 		        			}
+		        		}else{
+		        	%>
+		        			<tr class="active">
+			        		<td colspan="5" style="text-align: center;">선택하신 기간에 공감받은 글이 없습니다.</td>
+			        		</tr>
+			        <%
 		        		}
 		        	%>
 		        	

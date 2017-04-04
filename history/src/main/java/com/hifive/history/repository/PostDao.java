@@ -82,7 +82,7 @@ public class PostDao implements iDao {
 		logger.debug("map : "+map);
 		return sqlSession.selectList(statement,map);
 	}
-	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map){
+	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map) throws Exception{
 		String statement = namespace +".hi_selectLoveRank";		
 		logger.debug("statement"+statement);
 		logger.debug("map : " + map);

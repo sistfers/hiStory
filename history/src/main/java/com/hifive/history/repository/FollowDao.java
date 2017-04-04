@@ -73,4 +73,10 @@ public class FollowDao implements iDao {
 		logger.debug("condition.toString() = "+condition.toString());
 		return sqlSession.selectList(statement, condition);
 	}
+	public int blockFollow(Map<String,String> condition){
+		String statement = namespace +".blockFollow";
+		logger.debug("statement"+statement);
+		logger.debug("cnt = "+condition);
+		return sqlSession.update(statement,condition);
+	}
 }

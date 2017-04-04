@@ -161,7 +161,10 @@ public class GraphControl {
 				followService.hi_insert(dto);
 				
 			}else if(request.getParameter("addordel").equals("del")){
-				
+				Map<String,String> condition = new HashMap<>();
+				condition.put("myid", request.getParameter("id"));
+				condition.put("youid", user.getId());
+				followService.blockFollow(condition);
 			}
 		}
 		
@@ -183,7 +186,7 @@ public class GraphControl {
 		
 	}
 	@RequestMapping("chart/love.hi")
-	public ModelAndView love(HttpServletRequest request, HttpSession session) {
+	public ModelAndView love(HttpServletRequest request, HttpSession session) throws Exception{
 		UserDto user = new UserDto();;
 		if(session.getAttribute("user")!=null){
 			user = (UserDto)session.getAttribute("user");
@@ -194,6 +197,7 @@ public class GraphControl {
 		Date date = new Date();
 		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
 		String startdate = "17/03/01";
+		date.setDate(date.getDate()+1);
 		String enddate = sd.format(date);
 		
 		// 전체조회

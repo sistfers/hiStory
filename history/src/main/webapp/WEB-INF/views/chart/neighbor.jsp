@@ -37,17 +37,19 @@ border-radius: 15px;
 <script>
 function do_add(id) {
 	//var id = $("#neighbor").find("td").eq(1).text();
-	alert(id + "을 이웃으로 추가 하시겠습니까?");
+	if(confirm(id + "을 이웃으로 추가 하시겠습니까?")){
 	$("#addid").val(id);
 	var frm = document.addForm;
 	frm.submit();
+	}
 }
 function do_del(id) {
 	//var id = $("#neighbor").find("td").eq(1).text();
-	alert(id + "님을 차단하시겠습니까?");
-	$("#addid").val(id);
-	var frm = document.delForm;
-	frm.submit();
+	if(confirm(id + "님을 정말로 차단하시겠습니까?")){
+		$("#delid").val(id);
+		var frm = document.delForm;
+		frm.submit();
+	}
 }
 </script>
 <form name="addForm" action="neighbor.hi" method="post">
@@ -117,8 +119,10 @@ function do_del(id) {
 					<%
 						}else{
 					%>
-						<tr>
-						<td rowspan="3" style="text-align: center;">회원님을 팔로우하는 회원이 없습니다.</td>
+						<tr class="active">
+						<td colspan="4" style="text-align: center;">회원님을 팔로우하는 회원이 없습니다.</td> 
+						</tr>
+						
 					<%
 						}
 					%>

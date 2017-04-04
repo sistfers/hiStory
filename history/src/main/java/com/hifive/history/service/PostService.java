@@ -108,7 +108,7 @@ public class PostService implements iService {
 	public List<HashMap<String, Object>> hi_selectTodayCommentRank(HashMap<String, String> map){
 		return postDao.hi_selectTodayCommentRank(map);
 	}
-	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map){
+	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map) throws Exception{
 		return postDao.hi_selectLoveRank(map);
 	}
 	

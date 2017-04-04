@@ -42,6 +42,7 @@
 	</choose>
 </sql>
 
+
 <!-- 결과 리턴을 MAP으로 할때 스타일 지정해주기 -->  
 <resultMap id = "PostMap" type="java.util.HashMap">
    <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />

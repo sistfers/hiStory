@@ -92,7 +92,10 @@ $(document).ready(function() {
 						var state	 = item[i].STATE;
 						var name	 = item[i].NAME;
 						var total	 = item[i].TOTAL;
+						var take	 = item[i].TAKE_VIEW;
 						
+						if(take == '-1') 
+							continue;
 						
 						if(contents.length > 15) {
 							contents = contents.substring(0, 15) + '...';

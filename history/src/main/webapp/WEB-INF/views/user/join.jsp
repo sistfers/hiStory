@@ -208,7 +208,7 @@
 						<p style="color: red" hidden="hidden" id="emailCheckFail"> 메일 확인 후 인증번호를 확인해주세요. </p>
 					</div>
 					<div class="col-lg-2">
-						<button type="button" class="btn btn-success btn-block" id="emailCk"
+						<button type="button" class="btn btn-danger btn-block" id="emailCk"
 						        name="emailCk">인증</button>
 					</div>
 				</div>
@@ -304,9 +304,17 @@
 					<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 					<div class="col-lg-10">
 						<img src="/resources/image/girl.png" width="130" name="previewimg" id="previewimg" alt="">
-						<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg')" >
+						<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg')"  style="display:none;">
+						<input type="button" value="사진찾기"  class="btn btn-default" id="upload_btn">
 					</div>
 				</div>
+
+<script>
+// 사진찾기를 클릭시 파일인풋클릭되게 하는 스크립트
+document.querySelector('#upload_btn').addEventListener('click', function(e) {
+ document.querySelector('#fileInput').click();
+}, false);
+</script>
 
 				<div class="form-group" id="divProfileCon">
 					<label for="divProfileCon" class="col-lg-2 control-label" style="color: #A6A6A6">프로필내용</label>
@@ -323,7 +331,7 @@
 				<!-- 회원가입/취소 버튼 -->
 				<div class="form-group" align="center">
 						<button type="button" class="btn btn-info" id="join">회원가입</button>
-						<button type="reset" class="btn btn-default">취소</button>
+						<a href="/"><input type="button" class="btn btn-default" id="cancle" value="취소" /></a>
 				</div>
 			</form>
 	</div>

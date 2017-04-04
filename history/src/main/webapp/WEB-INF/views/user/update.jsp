@@ -28,7 +28,7 @@
                 }
             });
 
-        }); 
+        });
 
         function joinCheck() {
             if ($("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""

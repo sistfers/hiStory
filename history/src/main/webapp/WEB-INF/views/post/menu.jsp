@@ -114,7 +114,7 @@
 			</a>
 		<% } else if(follow){ %>
 			<a class="btn icon-btn btn-warning btn-sm" href="javascript:delete_follow('<%=loginuser.getId()%>', '<%=id%>')">
-				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
+				<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
 				이웃삭제
 			</a>
 		<% } else { %>

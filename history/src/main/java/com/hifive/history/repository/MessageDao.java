@@ -1,5 +1,6 @@
 package com.hifive.history.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +91,22 @@ public class MessageDao implements iDao {
 		logger.debug("[[[cnt		]]] "+cnt);		
 		
 		return sqlSession.delete(statement, cnt);
+	}
+	
+	// 쪽지 VIEW 변경
+	public int hi_update_view(String dest, int seq) {
+			
+		String statement = namespace +".hi_update_view";
+		logger.debug("----------------------------------------------------------");
+		logger.debug("[[[statement  ]]] "+statement);
+		logger.debug("[[[dest		]]] "+dest);
+		logger.debug("[[[seq		]]] "+seq);
+		
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("dest", dest);
+		data.put("seq", Integer.toString(seq));
+		
+		return sqlSession.update(statement, data);
 	}
 
 	// 즐겨찾기 : 내가 추가한(미정)

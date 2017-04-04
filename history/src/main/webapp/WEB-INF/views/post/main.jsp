@@ -228,10 +228,9 @@ function go_delete(){
 		        <%} %>
 <!--글 수정/삭제 버튼  -->
 				<%if (userDto != null && id.equals(userDto.getId())) {%>
-			        
-			        <br><br>
-			        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();">글수정</button> 
-			        <button class="btn btn-danger btn-sm" onclick="javascript:go_delete();">글삭제</button>
+			        <br>
+			        <button class="btn btn-danger btn-sm" onclick="javascript:go_update();" style="margin-top: 5px">글수정</button> 
+			        <button class="btn btn-danger btn-sm" onclick="javascript:go_delete();" style="margin-top: 5px">글삭제</button>
 				<%} %>
 		        </td>		        
 		        </tr>

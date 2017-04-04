@@ -43,13 +43,13 @@
 				<form action="writeForm.hi" method="post" class="form-horizontal">
 					<input type="hidden" name="SENDID" value="Patricia" /> 
 					<input type="hidden" name="TAKEID" value="<%=data.getSend_id() %>"  />
-					<input type="hidden" name="NAME" value="<%=data.getname() %>"/>
+					<input type="hidden" name="NAME" value="<%=data.getName() %>"/>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸사람</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
-								value="<%=data.getSend_id()%>(<%=data.getname()%>)"
+								value="<%=data.getSend_id()%>(<%=data.getName()%>)"
 								maxlength="30">
 						</div>
 					</div>

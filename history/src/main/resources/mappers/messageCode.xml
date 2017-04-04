@@ -26,6 +26,8 @@
 		<result javaType="java.lang.String"   column="STATE" 	property="STATE" />		
 		<result javaType="java.lang.String"   column="NAME" 	property="NAME" />
 		<result javaType="java.lang.Integer"  column="TOTAL" 	property="TOTAL" />
+		<result javaType="java.lang.String"   column="SEND_VIEW"	property="SEND_VIEW" />
+		<result javaType="java.lang.String"   column="TAKE_VIEW"	property="TAKE_VIEW" />
 	</resultMap>
 	
 	<!-- SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE(sysdate), RDATE(null), STATE(0) -->	
@@ -59,7 +61,8 @@
 		SELECT COUNT(*)
 		FROM MESSAGE_H
 		WHERE TAKE_ID=#{id} 
-		AND STATE="0"
+		AND STATE='0'
+		AND TAKE_VIEW='-1'
 	</select>	
 	
 	<!-- 쪽지 삭제 -->
@@ -68,6 +71,24 @@
 		FROM MESSAGE_H			
 		WHERE SEQ=#{id}	
 	</delete>
+	
+	<!-- 쪽지 VIEW 변경 -->
+	<update id="hi_update_view" parameterType="hashmap">
+		UPDATE MESSAGE_H 
+		<include refid="BaseConditionForView" />
+		WHERE SEQ=#{seq}
+	</update>
+	
+	<sql id="BaseConditionForView">
+		<choose>
+			<when test="dest == 'receive'">
+				SET TAKE_VIEW=-1
+			</when>
+			<when test="dest == 'send'">
+				SET SEND_VIEW=-1
+			</when>
+		</choose>
+	</sql>
 	
 	<sql id="BaseCondition">		
 		<choose>
@@ -89,14 +110,14 @@
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
 		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-		           T.STATE, T.NAME, T.TOTAL						
+		           T.STATE, T.NAME, T.TOTAL, T.SEND_VIEW, T.TAKE_VIEW						
 		    FROM(							
 		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
 		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
-		               B.NAME, LST.TOTAL							
+		               B.NAME, 		 LST.TOTAL,	LST.SEND_VIEW, LST.TAKE_VIEW							
 		     	FROM(							
 		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE,
-		        			ROWNUM, MAX(ROWNUM) OVER() TOTAL							
+		        			ROWNUM, MAX(ROWNUM) OVER() TOTAL, SEND_VIEW, TAKE_VIEW							
 		       		FROM MESSAGE_H
 		        	<include refid="BaseCondition" />
 		        	AND CONTENTS LIKE '%' || #{words} || '%'						
@@ -118,13 +139,13 @@
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
 		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-		           T.STATE, T.NAME							
+		           T.STATE, T.NAME, T.SEND_VIEW, T.TAKE_VIEW							
 		    FROM(							
-		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
-		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
-		               B.NAME							
+		     	SELECT ROWNUM IDX,   LST.SEQ,   	LST.SEND_ID, LST.TAKE_ID, 							
+		               LST.CONTENTS, LST.WDATE,	 	LST.RDATE,   LST.STATE,
+		               B.NAME,		 LST.SEND_VIEW, LST.TAKE_VIEW								
 		     	FROM(							
-		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
+		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE, SEND_VIEW, TAKE_VIEW							
 		       		FROM MESSAGE_H							
 		        	WHERE SEND_ID=#{SENDID}							
 		        	ORDER BY WDATE					
@@ -148,13 +169,13 @@
 			SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID, T.CONTENTS, 							
 		           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 		           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-		           T.STATE, T.NAME							
+		           T.STATE, T.NAME, T.SEND_VIEW, T.TAKE_VIEW							
 		    FROM(							
-		     	SELECT ROWNUM IDX,   LST.SEQ,   LST.SEND_ID, LST.TAKE_ID, 							
-		               LST.CONTENTS, LST.WDATE, LST.RDATE,   LST.STATE,
-		               B.NAME							
+		     	SELECT ROWNUM IDX,   LST.SEQ,   	LST.SEND_ID, LST.TAKE_ID, 							
+		               LST.CONTENTS, LST.WDATE, 	LST.RDATE,   LST.STATE,
+		               B.NAME,		 LST.SEND_VIEW, LST.TAKE_VIEW					
 		     	FROM(							
-		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE							
+		        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, STATE, SEND_VIEW, TAKE_VIEW							
 		       		FROM MESSAGE_H							
 		        	WHERE TAKE_ID=#{TAKEID}							
 		        	ORDER BY WDATE DESC				

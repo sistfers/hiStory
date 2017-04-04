@@ -38,9 +38,9 @@ border-radius: 15px;
 function do_add(id) {
 	//var id = $("#neighbor").find("td").eq(1).text();
 	if(confirm(id + "을 이웃으로 추가 하시겠습니까?")){
-	$("#addid").val(id);
-	var frm = document.addForm;
-	frm.submit();
+		$("#addid").val(id);
+		var frm = document.addForm;
+		frm.submit();
 	}
 }
 function do_del(id) {

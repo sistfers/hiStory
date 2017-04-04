@@ -4,6 +4,7 @@ import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.CategoryDao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,5 +53,8 @@ public class CategoryService implements iService {
 	}
 	public int updateCategory(Map<String, String> map){
 		return categoryDao.updateCategory(map);
+	}
+	public List<HashMap<String, Object>> getCategoryCount(String id){
+		return categoryDao.getCategoryCount(id);
 	}
 }

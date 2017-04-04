@@ -14,13 +14,14 @@ public class MessageDto implements iDto, Serializable {
 	private	String	rdate;
 	private	String	state;
 	private String  name;
+	private String	send_view;
+	private String  take_view;
 	
 	public MessageDto() {
 	}
 
-	public MessageDto(int seq, String send_id, String take_id, 
-			String contents, String wdate, String rdate,
-			String state, String name) {
+	public MessageDto(int seq, String send_id, String take_id, String contents, String wdate, String rdate,
+			String state, String name, String send_view, String take_view) {
 		super();
 		this.seq = seq;
 		this.send_id = send_id;
@@ -30,6 +31,8 @@ public class MessageDto implements iDto, Serializable {
 		this.rdate = rdate;
 		this.state = state;
 		this.name = name;
+		this.send_view = send_view;
+		this.take_view = take_view;
 	}
 
 	public int getSeq() {
@@ -88,18 +91,35 @@ public class MessageDto implements iDto, Serializable {
 		this.state = state;
 	}
 
-	public String getname() {
+	public String getName() {
 		return name;
 	}
 
-	public void setname(String name) {
+	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSend_view() {
+		return send_view;
+	}
+
+	public void setSend_view(String send_view) {
+		this.send_view = send_view;
+	}
+
+	public String getTake_view() {
+		return take_view;
+	}
+
+	public void setTake_view(String take_view) {
+		this.take_view = take_view;
 	}
 
 	@Override
 	public String toString() {
 		return "MessageDto [seq=" + seq + ", send_id=" + send_id + ", take_id=" + take_id + ", contents=" + contents
-				+ ", wdate=" + wdate + ", rdate=" + rdate + ", state=" + state + ", name=" + name + "]";
+				+ ", wdate=" + wdate + ", rdate=" + rdate + ", state=" + state + ", name=" + name + ", send_view="
+				+ send_view + ", take_view=" + take_view + "]";
 	}
 	
 }

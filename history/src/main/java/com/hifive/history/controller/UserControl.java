@@ -150,8 +150,32 @@ public class UserControl {
 	}
 	
 	// 사용자 요청에 의한 인증번호 발송
-	
-	
+	@RequestMapping(value = "user/generated.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String generatedFive_digit(HttpServletRequest request) {
+		
+		// 이메일을 받는다
+		String email = request.getParameter("email");
+//		loger.debug("email  -> " +email);
+		
+		// 5자리 난수 생성 부분
+		int generatedDigit = 12345;
+		
+		// 이메일을 보낸다
+		int flag = emailSenderUtil.five_digitSender(email, generatedDigit);	
+		
+		JsonObject jobj = new JsonObject();
+		if(flag > 0) {
+			//jobj = new JsonParser().parse("{\"msg\":\"true\"}, {\"digit\":\\" + generatedDigit + "\"}").getAsJsonObject();
+			jobj = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+			
+		} else {
+			jobj = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		
+		Gson gson = new Gson();
+		return gson.toJson(jobj);	
+	}	
 
 	@RequestMapping(value = "user/followSearch.hi", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
 	@ResponseBody

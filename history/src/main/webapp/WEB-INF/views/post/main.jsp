@@ -189,26 +189,26 @@ function go_delete(){
 					</div>
 				<%}else{  %>
 	
-<form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
-	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
-	<input type="hidden" name="id" value="<%=id%>">
-</form> 
-<form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
-	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
-	<input type="hidden" name="id" value="<%=id%>">  
-</form> 
-<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
-	<input type="hidden" name="PAGE_NUM" value="">  
-	<input type="hidden" name="id" value="<%=id%>">  
-	<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">    
-</form> 
+				<form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
+					<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+					<input type="hidden" name="id" value="<%=id%>">
+				</form> 
+				<form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
+					<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
+					<input type="hidden" name="id" value="<%=id%>">  
+				</form> 
+				<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
+					<input type="hidden" name="PAGE_NUM" value="">  
+					<input type="hidden" name="id" value="<%=id%>">  
+					<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">    
+				</form> 
 
 
-		        <div class="col-xs-12">
+		        <div class="col-xs-12" style="word-wrap : break-word;" >
 		        <table width="100%" >
 		        <tr>
 <!-- 포스트 제목 -->
-		        <td width="80%" align="left" ><h2><%=DTO.getTitle() %></h2> 
+		        <td width="80%" align="left" style="word-wrap : break-word;  max-width: 500"><h2><%=DTO.getTitle() %></h2> 
 		        </td>
 		        
 		        
@@ -424,10 +424,10 @@ function go_delete(){
 				
 <!--글 목록 보여주기 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
 				<div class="col-xs-12">
-					<table class="table table-hover tbList" >
+					<table class="table table-hover tbList">
 					<tr class="warning">
 						<th width="10%">글번호</th>
-						<th width="70%">제목</th>
+						<th width="70%" >제목</th>
 						<th width="20%">작성일</th>
 					</tr>
 
@@ -441,7 +441,7 @@ function go_delete(){
 					%>
 					<tr>
 						<td><%=i+1 %></td>
-						<td align="left" "><a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a></td>
+						<td align="left" style="text-overflow : ellipsis; max-width: 300; overflow: hidden;"><a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a></td>
 						<%--style="cursor:pointer; --%>
 						<td><%=wdate %></td>
 					</tr>

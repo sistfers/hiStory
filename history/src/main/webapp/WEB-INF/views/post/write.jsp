@@ -60,7 +60,7 @@
 	    
 <!--제목  -->	    
 		<div class="col-xs-9">
-			<input type="text" name="title" id="TITLE" class="form-control" placeholder="제목을 입력해 주세요">
+			<input type="text" name="title" id="TITLE" class="form-control" placeholder="제목을 입력해 주세요" maxlength="60">
 		</div>
 		
 <!--내용  -->		

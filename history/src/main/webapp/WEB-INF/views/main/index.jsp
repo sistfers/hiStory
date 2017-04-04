@@ -387,9 +387,11 @@ $(document).ready(function () {
     	<%}else{ %>
     		<div id="menu<%=i+1 %>" class="tab-pane fade" style="cursor:pointer;">
     	<%}
+    		int k = 0;
     		for(int j=0; j<themeList.size(); ++j){
     			if(themeList.get(j).get("FIELD").equals(themeCode.get(i).get("CD_D_NM"))){%>
-    				<%if(j<=3){ %>
+    				<%k++;
+    				  if(k<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>

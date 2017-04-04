@@ -60,6 +60,12 @@ public class MessageService implements iService {
 		
 		return messageDao.hi_delete(cnt);
 	}
+	
+	// 쪽지 VIEW 변경
+	public int hi_update_view(String dest, int seq) {
+		
+		return messageDao.hi_update_view(dest, seq); 
+	}
 
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {

@@ -166,7 +166,9 @@ public class MessageControl {
 				dto.setWdate("");
 				dto.setRdate("");
 				dto.setState("");
-				dto.setname("");
+				dto.setName("");
+				dto.setSend_view("");
+				dto.setTake_view("");
 				
 				int result = messageService.hi_insert(dto);
 				
@@ -185,7 +187,9 @@ public class MessageControl {
 			dto.setWdate("");
 			dto.setRdate("");
 			dto.setState("");
-			dto.setname("");
+			dto.setName("");
+			dto.setSend_view("");
+			dto.setTake_view("");
 			
 			int result = messageService.hi_insert(dto);
 			
@@ -218,7 +222,9 @@ public class MessageControl {
 		dto.setWdate("");
 		dto.setRdate("");
 		dto.setState("");
-		dto.setname("");
+		dto.setName("");
+		dto.setSend_view("");
+		dto.setTake_view("");
 		
 		MessageDto note = new MessageDto();
 		note = (MessageDto) messageService.hi_detail(dto);
@@ -254,8 +260,45 @@ public class MessageControl {
 		
 		loger.debug("paramMap -> "+paramMap.toString());
 		String[] arrIdx = paramMap.split(",");
-		for (int i = 0; i < arrIdx.length; i++) {
-			int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
+		for (int i = 0; i < arrIdx.length; i++) {		
+			
+			MessageDto dto = new MessageDto();
+			dto.setSeq(Integer.parseInt(arrIdx[i]));
+			dto.setSend_id("");
+			dto.setTake_id("");
+			dto.setContents("");
+			dto.setWdate("");
+			dto.setRdate("");
+			dto.setState("");
+			dto.setName("");
+			dto.setSend_view("");
+			dto.setTake_view("");
+			
+			MessageDto note = new MessageDto();
+			note = (MessageDto) messageService.hi_detail(dto);
+			
+			// to     : 받은 쪽지/보낸 쪽지
+			// select : send_view, take_view 선택
+			// update : 삭제에 영향받지 않는 경우
+			// delete : update할 필요 없이 삭제에 해당하는 경우
+			
+			if(to.equals("receive")) {
+				if(note.getSend_view().equals("-1")) {
+					// delete
+					int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
+					
+				} else {
+					// update
+					messageService.hi_update_view(to, Integer.parseInt(arrIdx[i]));
+				}				
+			} else {
+				if(note.getTake_view().equals("-1")) {
+					int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
+					
+				} else {
+					messageService.hi_update_view(to, Integer.parseInt(arrIdx[i]));
+				}
+			}			
 		}
 		
 		ModelAndView mav = new ModelAndView();

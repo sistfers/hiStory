@@ -304,7 +304,7 @@ function viewAll() {
 	 		<!-- 버튼 -->	
 	 		<div class="col-xs-3" align="left">
 				<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-danger" />
-				<input type="button" value="답장" onclick="replyAction();" class="btn btn-danger" />
+				<input type="button" value="답장" onclick="replyAction();"  class="btn btn-danger" />
 			</div>
 			<div class="col-xs-7" align="left">
 				<div class="input-group"> 
@@ -337,6 +337,12 @@ function viewAll() {
 				
 				for(int i = 0; i < datas.size(); i++) {
 					Map<String, Object> item = datas.get(i);
+					
+					// view 삭제 여부 확인
+					if(item.get("TAKE_VIEW").equals("-1")) {
+						continue;	
+					}					
+					
 					String subContents = (String) item.get("CONTENTS");
 					
 					if(subContents.length() > 15) {

@@ -287,10 +287,11 @@ public class BlogControl {
 		postDto.setId(ID);
 		postDto.setSeq(seq);
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
+		
 
 		mav.addObject("DTO"   ,DTO);	
 		mav.setViewName("post/update");
-		System.out.println("넘어오는 데이타 뭐니?"+DTO.toString());
+		System.out.println("넘어오는 데이타 뭐니? PostDto"+DTO.toString());
 		return mav;
 	}
 	

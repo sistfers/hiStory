@@ -21,26 +21,38 @@
 	
 	// 포스트 내용 1건 보여주기
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
-	String hash = DTO.getHashtag();
-	int count = 0;
-	for(int i = 0; i < hash.length()-1; ++i){
-		if(hash.charAt(i)=='#'){
-			++count;
+	
+	
+ 	// 해시태그 부르기
+	if (DTO.getHashtag() != null){
+		String hash = DTO.getHashtag();
+		// 태그 갯수 확인하기
+		int count = 0;
+		for(int i = 0; i < hash.length()-1; ++i){
+			if(hash.charAt(i)=='#'){
+				++count;
+			}
 		}
-	}
-	String tag[] = new String[count];
-	int start = 0;
-	for(int i = 0; i < count; ++i){
-		tag[i] = "";
-	}
-	for(int i = 1; i < hash.length()-1; ++i){
-		if(hash.charAt(i)!='#'){
-			tag[start]+=hash.charAt(i);
-		}else{
-			++start;
+		
+		// 배열 초기화
+		String tag[] = new String[count];
+		int start = 0;
+		for(int i = 0; i < count; ++i){
+			tag[i] = "";
 		}
-	}
-	int init = 0;
+		
+		// 배열에 태그 잘라서 넣기
+		for(int i = 1; i < hash.length()-1; ++i){
+			if(hash.charAt(i)!='#'){
+				tag[start]+=hash.charAt(i);
+			}else{
+				++start;
+			}
+			System.out.println("해시태그="+tag[start]);
+		}
+		int init = 0;
+	} 
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -59,7 +71,7 @@
 </head>
 <body>
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 <br><br><br><br>
 
@@ -71,10 +83,9 @@
 <!-- 카테고리 -->
 		<div class="form-group col-xs-3" style="margin-left: 7px">
 			<select class="form-control" id="category" name="ct_seq">
-				<%-- <option><%=DTO.getCt_seq() %></option> 카테고리명과 매치 어떻게 하지?--%>
 			       <%if(categoryList.size() != 0){
 			       		for(int i=0; i<categoryList.size(); ++i){%>
-			       <option value="<%=categoryList.get(i).getSeq()%>">
+			       <option value="<%=categoryList.get(i).getSeq()%>" <%if((DTO.getCt_seq() == categoryList.get(i).getSeq())) { out.print("selected"); }%>>
 			       <%=categoryList.get(i).getName() %></option>
 			       
 			       <%	}
@@ -94,6 +105,7 @@
 		<textarea name="content" rows="500"><%=DTO.getContent() %></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
+				height : '400px',
 				filebrowserUploadUrl: 'ckeditorImageUpload.hi'
 			}); 
 		</script>
@@ -104,7 +116,8 @@
 			<select class="form-control" id="FIELD" name="field">
 			       <%if(themeCode.size() != 0){
 			       		for(int i=0; i<themeCode.size(); ++i){%>
-			       <option value="<%=themeCode.get(i).get("CD_D_NM") %>"><%=themeCode.get(i).get("CD_D_NM") %></option>
+			       <option value="<%=themeCode.get(i).get("CD_D_NM") %>" <%if((DTO.getField().equals(themeCode.get(i).get("CD_D_NM")))) { out.print("selected"); }%>>
+			       <%=themeCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
 			       <option>오류:::</option>
@@ -116,7 +129,8 @@
 			<select class="form-control" id="CO_STATE" name="co_state">
 			       <%if(reviewCode.size() != 0){
 			       		for(int i=0; i<reviewCode.size(); ++i){%>
-			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>"><%=reviewCode.get(i).get("CD_D_NM") %></option>
+			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>" <%if((DTO.getCo_state() == reviewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
+			       <%=reviewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
 			       <option>오류:::</option>
@@ -128,7 +142,8 @@
 			<select class="form-control" id="STATE" name="state">
 			       <%if(postViewCode.size() != 0){
 			       		for(int i=0; i<postViewCode.size(); ++i){%>
-			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>
+			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((DTO.getState() == postViewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
+			       <%=postViewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
 			       <option>오류:::</option>
@@ -145,7 +160,7 @@
 	
 	<!-- 태그 뿌려지는 부분 -->
 	<div id="after_tag" class="col-xs-12">
-	
+	<%=DTO.getHashtag() %>
 	</div>
     <input type="hidden" name="tag" id="tag"/>
 	<!--연결된 태그값 넘기기  -->
@@ -164,16 +179,12 @@
 
 <script>
 /* 태그 달기 js입니다 */
-				
-
 	$(document).ready(function(){
 		$("input:text").keydown(function(evt) 
 				{ 
 			if (evt.keyCode == 13) return false;
 			});
 
-
-		
 	    $("#tag_w").on('keyup',function(e){
 	
 	        var children = $("#after_tag").children('span').length;
@@ -238,6 +249,8 @@
 	   	$("#tag").val(ts).val();			/* 태그들 다 연결되어 붙은 값 */
 	    console.log("해시태그 ="+$("#tag").val(ts).val());
 	}
+	
+
 </script>
 	
 <script type="text/javascript">

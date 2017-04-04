@@ -68,6 +68,7 @@
 		<textarea name="content" rows="500"></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
+				height : '400px',
 				filebrowserUploadUrl: 'ckeditorImageUpload.hi'
 			}); 
 		</script>

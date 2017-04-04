@@ -32,7 +32,7 @@ if((String) request.getAttribute("My_Id") != null) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> 쪽지함 </title>
+<title> 받은쪽지함 </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
@@ -220,7 +220,7 @@ function viewAll() {
 <body>
 
 <!--헤더 START-->
-<jsp:include page="../main/header.jsp"/>
+<jsp:include page="/header.hi"/>
 <!--헤더 END-->
 <div class="container" >
 <br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
@@ -231,31 +231,42 @@ function viewAll() {
 </div>
 
 <!--내용 START -->
-<div class="col-xs-10">
+<div class="col-xs-10" style="min-height: 600px">
 <center><h2> :: 받은쪽지함 ::</h2></center><br>
 	<div class="col-xs-1">
 	</div>
 	<form name="searchForm" action="" method="POST">
 		<input type="hidden" name="PAGE_NUM" value="" />
 		<input type="hidden" id="My_ID" value="<%=my_id %>" />
-	<div class="col-xs-10">
- 		<!-- 버튼 -->	
- 		<div>
-			<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-warning" />
-			<input type="button" value="답장" onclick="replyAction();" class="btn btn-warning" />
-			<input type="text" id="searchbox" />
-			<input type="button" id="words" value="검색" class="btn btn-warning" />
-			<input type="button" id="viewall" value="전체 보기" onclick="viewAll();" class="btn btn-warning" />
-    	</div>  
-    	<div id="wrapfilteredForm">
+	<div class="col-xs-11" >
+		<div class="form-group">
+	 		<!-- 버튼 -->	
+	 		<div class="col-xs-3" align="left">
+				<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-danger" />
+				<input type="button" value="답장" onclick="replyAction();" class="btn btn-danger" />
+			</div>
+			<div class="col-xs-7" align="left">
+				<div class="input-group"> 
+			 	<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+				<input type="text" id="searchbox" class="form-control" placeholder="검색어를 입력하삼"/>
+				<span class="input-group-btn"><input type="button" id="words" value="검색" class="btn btn-info" /></span>
+				</div>
+			</div>
+			
+			<div class="col-xs-2" align="right">	
+				<input type="button" id="viewall" value="전체보기" onclick="viewAll();" class="btn btn-default" />
+			</div>		
+		</div>	
+    	<br><br>
+    	<div id="wrapfilteredForm" >
 		<table  id="filteredForm" class="table">
 			<tr class="warning" >
 				<th width="10%" style="text-align: center;">
 				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>
 				<th width="20%" style="text-align: center;">보낸사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
-				<th width="20%" style="text-align: center;">날짜</th>
-				<th width="10%" style="text-align: center;">읽음</th>
+				<th width="15%" style="text-align: center;">받은날짜</th>
+				<th width="15%" style="text-align: center;">수신확인</th>
 			</tr>
 			
 			<%
@@ -276,18 +287,18 @@ function viewAll() {
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
-					<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
+					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
-					<td><%=item.get("WDATE") %></td>
+					<td align="center"><%=item.get("WDATE") %></td>
 				
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>
-					<td>읽지 않음</td>
+					<td align="center">미확인</td>
 				<%	
 				} else {
 				%>
-					<td><%=item.get("RDATE") %></td>
+					<td align="center"><%=item.get("RDATE") %></td>
 				<%	
 				}
 				%>
@@ -302,20 +313,23 @@ function viewAll() {
 			<%	
 			}
 			%>
-			<tr>
-				<td><center>
-					<!-- Paging Area Start -->
-					<%=PagingUtil.renderPaging(
-							intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
-					<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-					</center>
-				</td>
-			</tr>
 		</table>
+	
+
+
+
 		</div>
+<center>
+<table><tr><td style="text-align: center;">
+<!-- Paging Area Start -->
+<%=PagingUtil.renderPaging(
+		intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
+<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+</td></tr>
+</table>
+</center>
 	</div>
 	</form>
-	<div class="col-xs-1"></div>
 </div>
 
 

@@ -148,6 +148,10 @@ public class UserControl {
 		Gson gson = new Gson();
 		return gson.toJson(jobj);
 	}
+	
+	// 사용자 요청에 의한 인증번호 발송
+	
+	
 
 	@RequestMapping(value = "user/followSearch.hi", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
 	@ResponseBody

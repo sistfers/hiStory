@@ -59,9 +59,45 @@
                     }
                 }
             });
+            
+            $("#emailCk").on("click", function () {
+				alert("이메일을 보내보자~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				
+				$.ajax({
+                    type: "POST",
+                    url: "/user/idCheck.hi",
+                    dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+                    data: {
+                        "id": id
+                    },
+                    success: function (data) {
+                        // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                        var flag = $.parseJSON(data);
+                        if (flag.msg == "true") {
+                            $("#idCheckSuccess").show();
+                            idCheck = true;
+                        }
+                        else {
+                            $("#idCheckFail").show();
+                            idCheck = false;
+                        }
+
+                    },
+                    complete: function (data) {
+                        // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                    },
+                    error: function (xhr, status, error) {
+                        alert("에러발생");
+                    }
+                });		
+            });
 
 			$("#emailCkaf").on("click", function () {
 				alert("인증번호 맞는지 알려줘~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				
+				
+				
+				
             });
 
             $("#join").on("click", function () {

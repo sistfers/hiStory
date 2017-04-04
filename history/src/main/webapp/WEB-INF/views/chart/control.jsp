@@ -62,7 +62,7 @@ border-radius: 15px;
 <script>
 	function do_func(ment) {
 		if($("#catename").val()!=null && $("#catename").val()!=''){
-			alert($("#catename").val());
+			
 			if(ment=='del'){
 				if(confirm("정말 삭제하시겠습니까?")){
 					$("#btn").val(ment);

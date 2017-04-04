@@ -93,6 +93,7 @@ $(document).ready(function() {
 						var name	 = item[i].NAME;
 						var total	 = item[i].TOTAL;
 						
+						
 						if(contents.length > 15) {
 							contents = contents.substring(0, 15) + '...';
 							// alert(contents);

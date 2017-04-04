@@ -21,7 +21,7 @@
 <body>
 
 	<!--헤더 START-->
-	<jsp:include page="../main/header.jsp" />
+<jsp:include page="/header.hi"/>
 	<!--헤더 END-->
 	<div class="container">
 		<br> <br> <br> <br>
@@ -33,7 +33,7 @@
 		</div>
 
 		<!--내용 START -->
-		<div class="col-xs-10">
+		<div class="col-xs-10" style="min-height: 600px">
 			<center>
 				<h2>:: 쪽지읽기 ::</h2>
 			</center>
@@ -42,14 +42,14 @@
 			<div class="col-xs-8">
 				<form action="writeForm.hi" method="post" class="form-horizontal">
 					<input type="hidden" name="SENDID" value="Patricia" /> 
-					<input type="hidden" name="TAKEID" value="<%=data.getSend_id() %>" />
-					<input type="hidden" name="NAME" value="<%=data.getname() %>" />
+					<input type="hidden" name="TAKEID" value="<%=data.getSend_id() %>"  />
+					<input type="hidden" name="NAME" value="<%=data.getname() %>"/>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸사람</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
-								placeholder="<%=data.getSend_id()%>(<%=data.getname()%>)"
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
+								value="<%=data.getSend_id()%>(<%=data.getname()%>)"
 								maxlength="30">
 						</div>
 					</div>
@@ -57,21 +57,21 @@
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸날짜</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
-								placeholder="<%=data.getWdate()%>" maxlength="30">
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
+								value="<%=data.getWdate()%>" maxlength="30">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">내용</label>
 						<div class="col-lg-10">
-							<textarea name="contents" rows="10" class="form-control"
+							<textarea name="contents" rows="10" class="form-control" readonly="readonly"
 								style="resize: none"><%=data.getContents()%></textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<button class="btn btn-primary col-lg-3 col-md-offset-3"
+						<button class="btn btn-danger col-lg-3 col-md-offset-3"
 							type="submit">답장</button>
 						<button class="btn btn-default col-lg-3 col-md-offset-1"
 							type="reset">Cancel</button>

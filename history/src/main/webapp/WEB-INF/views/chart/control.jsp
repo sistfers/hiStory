@@ -55,14 +55,14 @@ border-radius: 15px;
 });
 </script>
 </head>
-<body>
+<body style="background-color: <%=blogdto.getTheme() %>;">
 <!--헤더 START-->
 <jsp:include page="/header.hi"/>
 <!--헤더 END-->
 <script>
 	function do_func(ment) {
 		if($("#catename").val()!=null && $("#catename").val()!=''){
-			alert($("#catename").val());
+			
 			if(ment=='del'){
 				if(confirm("정말 삭제하시겠습니까?")){
 					$("#btn").val(ment);

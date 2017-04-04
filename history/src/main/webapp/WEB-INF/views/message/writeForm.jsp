@@ -208,7 +208,7 @@
 		</div>
 
 		<!--내용 START -->
-		<div class="col-xs-10">
+		<div class="col-xs-10" style="min-height: 600px">
 			<center>
 				<h2>:: 쪽지쓰기 ::</h2>
 			</center>
@@ -263,14 +263,14 @@
 						<label class="col-lg-2 control-label">내용</label>
 						<div class="col-lg-10">
 							<textarea id="realNote" name="NOTE" 
-							rows="10" maxlength="300" style="resize: none"
-							class="form-control"></textarea>
+							rows="10" maxlength="300" style="resize: none; min-height: 200px"
+							class="form-control" ></textarea>
 							<span id="counter">###</span>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<button class="btn btn-primary col-lg-3 col-md-offset-3"
+						<button class="btn btn-danger col-lg-3 col-md-offset-3"
 							type="submit">보내기</button>
 						<button class="btn btn-default col-lg-3 col-md-offset-1"
 							type="reset">Cancel</button>

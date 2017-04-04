@@ -30,6 +30,7 @@ if((String) request.getAttribute("PAGE_NUM") != null) {
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 // 페이징
 function do_search_page(url, page_num) 
@@ -116,7 +117,13 @@ function deleteAction(){
 				intTotalCount = (Integer) cnt.get("TOTAL");
 				
 				for(int i = 0; i < datas.size(); i++) {
-					Map<String, Object> item = datas.get(i);					
+					Map<String, Object> item = datas.get(i);	
+					
+					// view 삭제 여부 확인
+					if(item.get("SEND_VIEW").equals("-1")) {
+						continue;	
+					}	
+					
 					String subContents = (String) item.get("CONTENTS");
 					
 					if(subContents.length() > 15) {
@@ -130,6 +137,8 @@ function deleteAction(){
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
 					<td><%=item.get("NAME") %>  <span style="font-size: 11px; color :#670000 ">(<%=item.get("TAKE_ID") %>)</span></td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
+					
+					
 					<td><%=item.get("WDATE") %></td>
 				
 				<% 
@@ -139,11 +148,11 @@ function deleteAction(){
 				<%	
 				} else {
 				%>
-					<td align="center"><%=item.get("RDATE") %></td>
+					<td align="center">읽음</td>
 				<%	
 				}
 				%>
-			</tr>
+				</tr>
 			<%
 				}
 			} else {
@@ -153,8 +162,7 @@ function deleteAction(){
 				</tr>
 			<%	
 			}
-			%>
-	
+			%>	
 		</table>
 		<center>
 <table><tr><td style="text-align: center;">

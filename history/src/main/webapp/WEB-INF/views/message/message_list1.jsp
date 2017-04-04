@@ -37,6 +37,7 @@ if((String) request.getAttribute("My_Id") != null) {
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- http://aramk.tistory.com/21 -->
 <script type="text/javascript">
 /* 내용 검색  */
@@ -369,7 +370,7 @@ function viewAll() {
 				<%	
 				} else {
 				%>
-					<td align="center"><%=item.get("RDATE") %></td>
+					<td align="center">읽음</td>
 				<%	
 				}
 				%>
@@ -385,10 +386,6 @@ function viewAll() {
 			}
 			%>
 		</table>
-	
-
-
-
 		</div>
 <center>
 <table><tr><td style="text-align: center;">

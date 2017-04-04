@@ -29,7 +29,7 @@
 
 	boolean follow = (Boolean)request.getAttribute("follow");
 //	boolean follow = false;
-
+	List<HashMap<String, Object>> cateCount = (List<HashMap<String, Object>>)request.getAttribute("cateCount");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- 이웃추가버튼 스타일 -->
@@ -137,7 +137,7 @@
   	for(int i = 0 ; i < categoryList.size(); ++i){
   %>
     <a class="list-group-item <%if(ct_seq.equals(categoryList.get(i).getSeq()+"")) out.println("active");%>" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" >
-    <span class="badge"><%=i+2 %></span>		<!-- 카테고리별 글 갯수  -->
+    <span class="badge"><%=cateCount.get(i).get("TOTAL") %></span>		<!-- 카테고리별 글 갯수  -->
     <%=categoryList.get(i).getName() %>
     </a>
   <%

@@ -1,5 +1,6 @@
 package com.hifive.history.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,5 +73,11 @@ public class CategoryDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("map.toString() = "+map.toString());
 		return sqlSession.update(statement,map);
+	}
+	public List<HashMap<String, Object>> getCategoryCount(String id){
+		String statement = namespace +".getCategoryCount";
+		logger.debug("statement"+statement);
+		logger.debug("id = " + id);
+		return sqlSession.selectList(statement,id);
 	}
 }

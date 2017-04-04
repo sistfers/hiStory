@@ -147,6 +147,10 @@ public class BlogControl {
 			}
 			
 		}
+		//카테고리 갯수 뿌리기
+		List<HashMap<String, Object>> cateCount = categoryService.getCategoryCount(ID);
+		mav.addObject("cateCount", cateCount);
+		
 		mav.setViewName("post/main");
 		
 		return mav;

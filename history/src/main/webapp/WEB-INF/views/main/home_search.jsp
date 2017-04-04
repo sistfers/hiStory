@@ -127,7 +127,7 @@
 	<div class="form-group">
 	  <div class="input-group"> 	
 	    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
-	     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
+	     <input type="text" class="form-control input-lg" name="search_word" size=20 value="<%= search_word%>">
 	    <span class="input-group-btn">
 	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:submit()">
 	    </span>

@@ -394,13 +394,20 @@ $(document).ready(function () {
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
 	    				<div class="mask" style="padding-bottom: 15px">
-	      				<h2><%=themeList.get(j).get("TITLE") %></h2>
+	      				<h2>
+	      				<%
+	      					String title = themeList.get(j).get("TITLE")+"";
+	      					if(title.length() >15){
+	      						title = title.substring(0,15) + "...";
+	      					} %>
+	      					<%=title %> 
+	 					</h2>
 	      				<p>
 	      					<%
 	      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
 	      					String content = tempContent;
-	      					if(tempContent.length() >50){
-		      					content = tempContent.substring(0,50) + "...";
+	      					if(tempContent.length() >25){
+		      					content = tempContent.substring(0,25) + "...";
 	      					} %>
 	      					<%=content %> 
 	      				</p>
@@ -414,13 +421,20 @@ $(document).ready(function () {
     					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
 	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
 	    				<div class="mask" style="padding-top: 15px">
-	      				<h2><%=themeList.get(j).get("TITLE") %></h2>
+	      				<h2>
+	      				<%
+	      					String title = themeList.get(j).get("TITLE")+"";
+	      					if(title.length() >15){
+	      						title = title.substring(0,15) + "...";
+	      					} %>
+	      					<%=title %> 
+						</h2>
 	      				<p>
 	      					<%
 	      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
 	      					String content = tempContent;
-	      					if(tempContent.length() >50){
-		      					content = tempContent.substring(0,50) + "...";
+	      					if(tempContent.length() >25){
+		      					content = tempContent.substring(0,25) + "...";
 	      					} %>
 	      					<%=content %> 
 	      				</p>
@@ -465,84 +479,82 @@ $(document).ready(function () {
 <%
 	if (session.getAttribute("user") == null) {
 %>
-<br><br>
-<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
-<div class="col-xs-12">
-<!-- 로그인후 =============================================================================== -->
+		<br><br>
+		<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
+		<div class="col-xs-12">
+		<!-- 로그인후 =============================================================================== -->
 <%
 	} else {
 %>
-<br><br>
-<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
-<div class="col-xs-12">
-<h3 class="page-header">:: 이웃새글 :: </h3>
-
-<table class="table table-hover" id="followTable">
-	<tbody>
-	<%if(followList.size() != 0){
-		for(int i=0; i<followList.size(); ++i){ %>
-		<tr name="follow_detail" style="cursor:pointer;">
-			<td id="<%=followList.get(i).get("ID")%>">
-			<div>
-				<a href="#" class="pull-left">
-				<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="150px" height="100px" onerror='src="/resources/image/main.jpg"'>
-				</a>
-			</div>
-			</td>
-			<td valign="top" id="<%=followList.get(i).get("SEQ")%>">
-			<div style="display: block;">
-			
-			
-			<h5 class="title">
-			<%String tempTitle = followList.get(i).get("TITLE")+"";
-				String title = tempTitle;
-				if(tempTitle.length() >50){
-					title = tempTitle.substring(0,50) + "...";
-				}
-			%>
-			<%= title%>
-			</h5>
-			<%String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
-				String content = tempContent;
-				if(tempContent.length() >150){
-					content = tempContent.substring(0,150) + "...";
-				}
-			%>
-			<p class="summary" style="width: 650px"> <%= content%></p>
-			</div>
-			</td>
-			<td align="right" valign="middle" width="200px">
-			<%=followList.get(i).get("NAME") %>
-			</td>
-			<td align="right" valign="top" width="50px">
-			<div style="display: block;">
-			<%=followList.get(i).get("WDATE") %>
-			</div>
-			</td>
-		</tr>
-		</tbody>
-<%		}
-	}else{%>
-	<tr>
-		<td align="center">:::이웃의 새 글이 없습니다:::</td>
-	</tr>
+		<br><br>
+		<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
+		<div class="col-xs-12">
+		<h3 class="page-header">:: 이웃새글 :: </h3>
+		
+		<table class="table table-hover" id="followTable">
+			<tbody>
+		<% if(followList.size() != 0) {
+			for(int i=0; i<followList.size(); ++i) { %>
+				<tr name="follow_detail" style="cursor:pointer;">
+					<td id="<%=followList.get(i).get("ID")%>" width="20%">
+						<div>
+							<a href="#" class="pull-left">
+							<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="130px" height="90px" onerror='src="/resources/image/main.jpg"'>
+							</a>
+						</div>
+					</td>
+					<td valign="top" id="<%=followList.get(i).get("SEQ")%>"  width="60%">
+						<div style="display: block; word-wrap : break-word; max-width: 600px;">
+							<h5 class="title">
+<%								String tempTitle = followList.get(i).get("TITLE")+"";
+								String title = tempTitle;
+								if(tempTitle.length() > 40 ) {
+									title = tempTitle.substring(0,40) + "...";
+								}
+%>
+							<%= title%>
+							</h5>
+<%								String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
+								String content = tempContent;
+								if(tempContent.length() > 100) {
+									content = tempContent.substring(0,100) + "...";
+								}
+%>
+							<p class="summary" style="word-wrap : break-word;"> <%= content%></p>
+						</div>
+					</td>
+					<td align="right" valign="middle" width="10%">
+						<%=followList.get(i).get("NAME") %>
+					</td>
+					<td align="right" valign="top" width="10%">
+						<div style="display: block;">
+							<%=followList.get(i).get("WDATE") %>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+<%		}%>
+<%	} else {%>
+			<tr>
+				<td align="center">:::이웃의 새 글이 없습니다:::</td>
+			</tr>
 <%	} %>
-
-</table>
-
-<center> 
-<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
-<table id="pageTable">
-<tbody>
-<tr>
-<td style="text-align: center;">
-<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "/main/followPost.hi", "do_search_page")%>
-</td></tr>
-</tbody>
-</table>
-</center>
+		</table>
+		
+		<center> 
+		<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
+		<table id="pageTable">
+			<tbody>
+				<tr>
+					<td style="text-align: center;">
+						<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "/main/followPost.hi", "do_search_page")%>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</center>
 <%
-	}
+}
 %> 
 
 
@@ -591,19 +603,19 @@ function do_search_page(url, page_num) {
 			if (followList.length == 0) {
 				$('#followTable > tbody:last').append('<tr><td>::글이없습니다::</td></tr>');
             } else {
-            	var html;
+            	var html="";
                 for (var i = 0; i < followList.length-1; i++) {
                 	var followBlogUrl = "/post/main.hi?id=" + followList[i].ID+"&seq=" + followList[i].SEQ;
                 	html +="<tr name=\"follow_detail\" style=\"cursor:pointer;\">";
-                    html +="<td id=\"" +followList[i].ID +"\">";
+                    html +="<td id=\"" +followList[i].ID +"\" width=\"20%\">";
         			html +="<div>";
         			html +="<a href=\"#\" class=\"pull-left\">";
-        			html +="<img src=\""+followList[i].SAVE_NAME+ "\" width=\"150px\" height=\"100px\" onerror='src=" +"\"/resources/image/main.jpg\"'>";
+        			html +="<img src=\""+followList[i].SAVE_NAME+ "\" width=\"130px\" height=\"90px\" onerror='src=" +"\"/resources/image/main.jpg\"'>";
         			html +="</a>";
         			html +="</div>";
         			html +="</td>";
-        			html +="<td valign=\"top\" id=\""+followList[i].SEQ+"\">";
-        			html +="<div style=\"display: block;\">";
+        			html +="<td valign=\"top\" id=\""+followList[i].SEQ+"\" width=\"60%\">";
+        			html +="<div style=\"display: block; word-wrap : break-word; max-width: 600px;\">";
         			html +="<h5 class=\"title\">";	
         			
 	        			var tempTitle = followList[i].TITLE;
@@ -619,20 +631,20 @@ function do_search_page(url, page_num) {
 	        			if(tempContent.length >150){
 	        				content = tempContent.substring(0,150) + "...";
 	        			}
-	        		html +="<p class=\"summary\" style=\"width: 650px\">"+ content + "</p>";
+	        		html +="<p class=\"summary\" style=\"word-wrap : break-word;\">"+ content + "</p>";
 	        		html +="</div>";
 	        		html +="</td>";
-	        		html +="<td align=\"right\" valign=\"middle\" width=\"200px\">";
+	        		html +="<td align=\"right\" valign=\"middle\" width=\"10%\">";
         			html += followList[i].NAME;
       				html +="</td>";
-        			html +="<td align=\"right\" valign=\"top\" width=\"50px\">";
+        			html +="<td align=\"right\" valign=\"top\" width=\"10%\">";
         			html +="<div style=\"display: block;\">";
         			html +=followList[i].WDATE;
         			html +="</div></td></tr>";
       			
                 }
                 $('#followTable > tbody:last').append(html);
-                var pageHtml;
+                var pageHtml ="";
                 
                 pageHtml +="<tr><td style=\"text-align: center;\">";
                 pageHtml += renderPaging(followList[0].TOT_CNT, followList[followList.length-1].PAGE_NUM, 5, 5, "/main/followPost.hi", "do_search_page");
@@ -676,9 +688,9 @@ function do_search_page(url, page_num) {
 		var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
 		var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
 		var maxBlockNo = ((maxNum - 1) / bottomCount) + 1;
-
+		
 		var inx = parseInt("0");
-		var html;
+		var html = "";
 		if (currPageNo > maxPageNo) {
 			return "";
 		}
@@ -703,9 +715,6 @@ function do_search_page(url, page_num) {
 
 		// 1 2 3 ... 10	(숫자보여주기)
 		for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
-			console.log("scriptName = " + scriptName);
-			console.log("inx = " + inx);
-			console.log("url = " + url);
 			if (inx == currPageNo) {
 				html +="<li class='active'><a href='#'>" + inx	+ "</a></li>";
 				

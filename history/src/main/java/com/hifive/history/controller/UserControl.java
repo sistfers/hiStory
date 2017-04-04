@@ -4,11 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hifive.history.model.BlogDto;
+import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.UserDto;
-import com.hifive.history.service.BlogService;
-import com.hifive.history.service.CodeDService;
-import com.hifive.history.service.FollowService;
-import com.hifive.history.service.UserService;
+import com.hifive.history.service.*;
 import com.hifive.history.util.EmailSenderUtil;
 import com.hifive.history.util.IssueAnTokenUtil;
 
@@ -48,6 +46,9 @@ public class UserControl {
 
 	@Autowired
 	FollowService followService;
+
+	@Autowired
+	CategoryService categoryService;
 	
 	@Autowired
 	EmailSenderUtil emailSenderUtil;
@@ -85,11 +86,11 @@ public class UserControl {
 			System.out.println("rootPath = " + rootPath);
 			mav.setViewName("redirect:/");
 
-//			userService.hi_insert(userDto); 
-//			
-//			
+			userService.hi_insert(userDto);
+
+
 			
-			
+//			// 인증 이메일 자체 확인 부분
 //			// 토큰 생성
 //			String token = issueAnTokenUtil.tokenMaker(userDto);
 //
@@ -104,18 +105,23 @@ public class UserControl {
 //				// 예외 처리
 //			}
 
+			// 블로그 추가
+			BlogDto blogDto = new BlogDto();
+			blogDto.setId(request.getParameter("id"));
+			blogDto.setTitle(request.getParameter("id") + "님의 블로그");
+			blogService.hi_insert(blogDto);
 
-//
-//			// 블로그 추가
-//			BlogDto blogDto = new BlogDto();
-//			blogDto.setId(request.getParameter("id"));
-//			blogDto.setTitle(request.getParameter("id") + "님의 블로그");
-//			blogService.hi_insert(blogDto);
-//
-//			// 세션에 로그인정보 추가
-//			userDto = (UserDto) userService.hi_login(userDto);
-//			model.addAttribute("user", userDto);
-//			mav.setViewName("redirect:/");
+			// 카테고리 추가
+			CategoryDto categoryDto = new CategoryDto();
+			categoryDto.setId(request.getParameter("id"));
+			categoryDto.setName("기본 카테고리");
+			categoryDto.setState("0");
+			categoryService.hi_insert(categoryDto);
+
+			// 세션에 로그인정보 추가
+			userDto = (UserDto) userService.hi_login(userDto);
+			model.addAttribute("user", userDto);
+			mav.setViewName("redirect:/");
 
 		} else {
 			// 지역 리스트 가져오기
@@ -172,36 +178,32 @@ public class UserControl {
 		Gson gson = new Gson();
 		return gson.toJson(jobj);
 	}
-	
+
 	// 사용자 요청에 의한 인증번호 발송
 	@RequestMapping(value = "user/generated.hi", method = RequestMethod.POST)
 	@ResponseBody
 	public String generatedFive_digit(HttpServletRequest request) {
-		
+
 		// 이메일을 받는다
 		String email = request.getParameter("email");
-//		loger.debug("email  -> " +email);
-		
+
 		// 5자리 난수 생성 부분
-		int generatedDigit = 12345;
-		
+		int generatedDigit = (int)(Math.random() * 90000) + 10000;
+
 		// 이메일을 보낸다
-		int flag = emailSenderUtil.five_digitSender(email, generatedDigit);	
-		
+		int flag = emailSenderUtil.five_digitSender(email, generatedDigit);
+
 		JsonObject jobj = new JsonObject();
 		if(flag > 0) {
-			//String a = "{\"msg\":\"true\",\"digit\":\"" + generatedDigit + "\"}";
-			//System.out.println(a);
 			jobj = new JsonParser().parse("{\"msg\":\"true\",\"digit\":\"" + generatedDigit + "\"}").getAsJsonObject();
-			//jobj = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
-			
 		} else {
 			jobj = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
 		}
-		
+
 		Gson gson = new Gson();
-		return gson.toJson(jobj);	
-	}	
+		return gson.toJson(jobj);
+	}
+
 
 	@RequestMapping(value = "user/followSearch.hi", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
 	@ResponseBody

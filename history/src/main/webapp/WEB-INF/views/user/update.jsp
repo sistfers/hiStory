@@ -199,24 +199,25 @@
 			</div>
 
 			<div class="form-group" id="divProfileImg">
-				<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
-				<div class="col-lg-10">
-					<img src="/resources/image/girl.png" width="130"><!--사진 첨부터 보여줄건지는 알아서 ㅋㅋ  -->
-					<input type="button" class="btn btn-default" value="사진등록" name="profileImg">
+					<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
+					<div class="col-lg-10">
+						<img src="/resources/image/girl.png" width="130" name="previewimg" id="previewimg" alt="">
+						<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg')" >
+					</div>
 				</div>
-			</div>
 
-			<div class="form-group" id="divProfileCon">
-				<label for="divProfileCon" class="col-lg-2 control-label" style="color: #A6A6A6">프로필내용</label>
-				<div class="col-lg-10">
-					<input type="text" class="form-control" id="profile"
-					       name="profileCon" data-rule-required="true"
-					       maxlength="20" value="<%=user.getPf_content()%>">
+				<div class="form-group" id="divProfileCon">
+					<label for="divProfileCon" class="col-lg-2 control-label" style="color: #A6A6A6">프로필내용</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="profile"
+							name="profileCon" data-rule-required="true" placeholder="안녕하세요."
+							maxlength="20">
+					</div>
 				</div>
-			</div>
-			<hr>		<!-- 구분선 -->
+				<hr>		<!-- 구분선 -->
 
-			<div class="col-xs-2"></div>	<!--여백용  -->
+				<div class="col-xs-2"></div>	<!--여백용  -->
+
 
 			<!-- 회원가입/취소 버튼 -->
 			<div class="form-group" align="center">

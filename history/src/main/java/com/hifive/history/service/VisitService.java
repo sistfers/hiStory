@@ -24,7 +24,7 @@ public class VisitService implements iService {
 
 	@Override
 	public int hi_insert(iDto dto) {
-		return 0;
+		return visitDao.hi_insert(dto);
 	}
 
 	@Override
@@ -58,5 +58,8 @@ public class VisitService implements iService {
 	}
 	public List<Map<String,Object>> hi_getAgeVisit(HashMap<String, String> dto) throws Exception {
 		return visitDao.hi_getAgeVisit(dto);
+	}
+	public int hi_upsert(HashMap<String, String> dto) throws Exception{
+		return visitDao.hi_upsert(dto);
 	}
 }

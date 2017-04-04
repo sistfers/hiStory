@@ -89,4 +89,10 @@ public class VisitDao implements iDao {
 		logger.debug("dto = " + dto);
 		return sqlSession.selectList(statement,dto);
 	}
+	public int hi_upsert(HashMap<String, String> dto) throws Exception{
+		String statement = namespace +".hi_upsert";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.insert(statement,dto);
+	}
 }

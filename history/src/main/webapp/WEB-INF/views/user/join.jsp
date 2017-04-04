@@ -61,7 +61,7 @@
             });
 
 			$("#emailCkaf").on("click", function () {
-				alert("aaa");
+				alert("인증번호 맞는지 알려줘~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             });
 
             $("#join").on("click", function () {

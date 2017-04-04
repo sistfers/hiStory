@@ -65,7 +65,6 @@
 	if(DTO != null){
 		String PAGE_NUM 	= "1";	// 선택된 페이지
 		PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
-		out.print("PAGE_NUM="+PAGE_NUM);
 		
 		if(PAGE_NUM != null)  page_num  = Integer.parseInt(PAGE_NUM);
 		
@@ -208,7 +207,8 @@ function go_delete(){
 		        <table width="100%" >
 		        <tr>
 <!-- 포스트 제목 -->
-		        <td width="80%" align="left" style="word-wrap : break-word;  max-width: 500"><h2><%=DTO.getTitle() %></h2> 
+		        <td width="80%" align="left" >
+		        <h2 style="word-wrap : break-word; width: 500px"><%=DTO.getTitle() %></h2>
 		        </td>
 		        
 		        
@@ -490,8 +490,11 @@ function go_delete(){
 					%>
 					<tr>
 						<td><%=i+1 %></td>
-						<td align="left" style="text-overflow : ellipsis; max-width: 300; overflow: hidden;"><a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a></td>
-						<%--style="cursor:pointer; --%>
+						<td align="left">
+						<div style="text-overflow : ellipsis; width: 400px; overflow: hidden;">
+							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a>
+							<%--style="cursor:pointer; --%>
+						</div></td>
 						<td><%=wdate %></td>
 					</tr>
 					

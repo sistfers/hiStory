@@ -15,7 +15,8 @@
 
 	<script type="text/javascript">
 		var idCheck = false;
-		var emailCheck = true;
+		var emailCheck = false;
+		var verifiedEmail = "";
 
 		$(document).ready(function () {
 
@@ -59,14 +60,24 @@
                     }
                 }
             });
-            
+
+            $("#email").on("blur", function () {
+                if ($(this).val() != verifiedEmail) {
+                    $("#emailCheckSuccess").hide();
+                    emailCheck = false;
+                    $("#cknum").val("");
+                    $("#emailCheckFail").show();
+                }
+            });
+
             $("#emailCk").on("click", function () {
-				alert("이메일을 보내보자~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				
-				var email = $('#email').val();
-				alert('내가 입력한 이메일 ' +email);
-				
-				$.ajax({
+                var email = $('#email').val();
+                if (!validateEmail(email)) {
+                    alert("이메일 주소 형식이 틀립니다.")
+	                return;
+                }
+
+                $.ajax({
                     type: "POST",
                     url: "/user/generated.hi",
                     dataType: "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
@@ -75,42 +86,45 @@
                     },
                     success: function (data) {
                         // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-                        var flag = $.parseJSON(data);     
-                        
+                        var flag = $.parseJSON(data);
+
                         if (flag.msg == "true") {
-                            alert("메일 확인 해주세요~~");
-                            
                             var digit = flag.digit;
-                            alert("digit " + digit);
-                         // alert('나의 인증 번호는 ' +flag.digit);
                             $('#hiddenDigit').val(digit);
-                           
+                            alert("인증메일이 전송되었습니다.");
+                            $('#divEmailConfirm').show();
+
                         }
-                        /* else {
-                            $("#idCheckFail").show();
-                            idCheck = false;
-                        } */
                     },
                     complete: function (data) {
                         // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
                     },
                     error: function (xhr, status, error) {
-                        alert("에러발생");
+                        alert("인증메일이 전송에 실패하였습니다.");
                     }
-                });		
+                });
             });
 
-			$("#emailCkaf").on("click", function () {
-				alert("인증번호 맞는지 알려줘~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				
-				if($('#hiddenDigit').val() == $('#cknum').val()) {
-					alert('맞았어요');
-				} else {
-					alert('틀렸어요');
-				}
-				
-				
+            $("#emailCkaf").on("click", function () {
+
+                if($('#hiddenDigit').val() == $('#cknum').val()) {
+                    alert('인증되었습니다.');
+                    $('#divEmailConfirm').hide();
+                    verifiedEmail = $('#email').val();
+					emailCheck = true;
+					$("#emailCheckFail").hide();
+					$("#emailCheckSuccess").show();
+
+                } else {
+                    alert('인증 번호를 다시 확인해주세요.');
+                    emailCheck = false;
+                    $("#emailCheckSuccess").hide();
+                    $("#emailCheckFail").show();
+                }
+
+
             });
+
 
             $("#join").on("click", function () {
                 if (joinCheck()) {
@@ -140,6 +154,12 @@
 		    }
 			return true;
         }
+
+        function validateEmail(email) {
+            var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            return re.test(email);
+        }
+
 	</script>
 
 </head>
@@ -184,6 +204,8 @@
 					<div class="col-lg-8">
 						<input type="email" class="form-control" id="email" name="email"
 							placeholder="이메일" maxlength="30">
+						<p style="color: green" hidden="hidden" id="emailCheckSuccess"> 인증이 완료되었습니다. </p>
+						<p style="color: red" hidden="hidden" id="emailCheckFail"> 메일 확인 후 인증번호를 확인해주세요. </p>
 					</div>
 					<div class="col-lg-2">
 						<button type="button" class="btn btn-success btn-block" id="emailCk"
@@ -191,14 +213,12 @@
 					</div>
 				</div>
 
-				<div class="form-group" id="divEmailConfirm">
+				<div class="form-group" id="divEmailConfirm" hidden="hidden">
 					<label for="divEmailConfirm" class="col-lg-2 control-label">인증번호 입력</label>
 					<div class="col-lg-8">
 						<input type="hidden" id="hiddenDigit" value="" />
 						<input type="text" class="form-control" id="cknum" name="cknum"
 							placeholder="메일확인후 인증번호를 입력하세요" maxlength="30">
-						<p style="color: green" hidden="hidden" id="emailCheckSuccess"> 인증이 완료되었습니다. </p>
-						<p style="color: red" hidden="hidden" id="emailCheckFail"> 인증번호가 틀렸습니다. </p>
 					</div>
 					<div class="col-lg-2">
 						<button type="button" class="btn btn-success btn-block" id="emailCkaf"

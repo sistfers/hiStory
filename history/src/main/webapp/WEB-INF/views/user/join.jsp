@@ -284,11 +284,7 @@
 					<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 					<div class="col-lg-10">
 						<img src="/resources/image/girl.png" width="130" name="previewimg" id="previewimg" alt="">
-						<input type="file" name="profileImg" onchange="loadname(this,'previewimg')" >
-
-						<%--<img src="/resources/image/girl.png" width="130"><!--사진 첨부터 보여줄건지는 알아서 ㅋㅋ  -->--%>
-						<%--<input type="file" name="profileImg">--%>
-						<%--<input type="button" class="btn btn-default" value="사진등록" name="profileImg1">--%>
+						<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg')" >
 					</div>
 				</div>
 
@@ -326,15 +322,15 @@
 
         var isIE = (navigator.appName=="Microsoft Internet Explorer");
         var path = img.value;
+        var default_path = "/resources/image/girl.png";
         var ext = path.substring(path.lastIndexOf('.') + 1).toLowerCase();
 		var incorrect = "";
-        if(ext == "gif" || ext == "jpeg" || ext == "jpg" ||  ext == "png" )
-        {
-            if(isIE) {
+
+        if (ext == "gif" || ext == "jpeg" || ext == "jpg" ||  ext == "png" ) {
+            if (isIE) {
                 $('#'+ previewName).attr('src', path);
-            }else{
-                if (img.files[0])
-                {
+            } else {
+                if (img.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $('#'+ previewName).attr('src', e.target.result);
@@ -343,9 +339,21 @@
                 }
             }
 
-        }else{
+        } else if (ext != "") {
+            $('#'+ previewName).attr('src', default_path);
+            if (isIE) {
+                $('#fileInput').replaceWith( $('#fileInput').clone(true) );
+            } else {
+                $('#fileInput').val("");
+            }
+            incorrect += "파일 형식이 올바르지 않습니다.";
+            alert(incorrect);
+
+        } else {
+            $('#'+ previewName).attr('src', default_path);
             incorrect += "incorrect file type";
         }
+
     }
 </script>
 </body>

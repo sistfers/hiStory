@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,12 +56,14 @@ public class UserControl {
 	IssueAnTokenUtil issueAnTokenUtil;
 
 	@RequestMapping(value = "user/join.hi", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) {
+	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		// 회원 가입 버튼 클릭해서 넘어왔을 시
 		if (request.getParameter("do_join") != null) {
-			final String IMAGE_DIR = request.getSession().getServletContext().getRealPath("/");
+			final String rootPath = request.getSession().getServletContext().getRealPath("/");
+			final String resourcePath = "http://localhost:8080/resources/uploadImages/";
+			final String defaultImage = "http://localhost:8080/resources/image/girl.png";
 
 			// 회원 추가
 			UserDto userDto = new UserDto();
@@ -71,32 +75,36 @@ public class UserControl {
 			userDto.setBirth(request.getParameter("birth"));
 			userDto.setSex(request.getParameter("sex"));
 			userDto.setPf_content(request.getParameter("profileCon"));
-//			userDto.setPf_image("");
-//			userDto.setPf_image("http://localhost:8080/resources/userProfileImages/" + request.getParameter("id") + "_profile.jpg");
-			userDto.setPf_image(IMAGE_DIR + imageFile.getOriginalFilename());
+			if (imageFile.getOriginalFilename().equals(""))
+				userDto.setPf_image(defaultImage);
+			else
+				userDto.setPf_image(resourcePath + saveFile(imageFile, userDto.getId(), rootPath));
 
 			System.out.println("======================================================");
 			System.out.println("udto = " + userDto.toString());
-//			mav.setViewName("/user/join");
+			System.out.println("rootPath = " + rootPath);
+			mav.setViewName("redirect:/");
 
 //			userService.hi_insert(userDto); 
 //			
 //			
 			
 			
-			// 토큰 생성
-			String token = issueAnTokenUtil.tokenMaker(userDto);
-			
-			//  Table에 id와 토큰 저장
-			int flag = userService.hi_throwToken(userDto, token);
-			
-			if(flag == 1) {
-				// 이메일 발송 -> /auth/welcome 페이지 이동
-				mav = emailSenderUtil.eamilSender(userDto, token);
-				
-			} else {
-				// 예외 처리
-			}			
+//			// 토큰 생성
+//			String token = issueAnTokenUtil.tokenMaker(userDto);
+//
+//			//  Table에 id와 토큰 저장
+//			int flag = userService.hi_throwToken(userDto, token);
+//
+//			if(flag == 1) {
+//				// 이메일 발송 -> /auth/welcome 페이지 이동
+//				mav = emailSenderUtil.eamilSender(userDto, token);
+//
+//			} else {
+//				// 예외 처리
+//			}
+
+
 //
 //			// 블로그 추가
 //			BlogDto blogDto = new BlogDto();
@@ -129,6 +137,22 @@ public class UserControl {
 		}
 
 		return mav;
+	}
+
+	private String saveFile(MultipartFile file, String userId, String rootPath) throws Exception {
+		byte bytes[] = file.getBytes();
+		String imageDir = "resources/uploadImages/";
+		String originalFileName = file.getOriginalFilename();
+		String saveFileName = userId + "_profile." + originalFileName.substring(originalFileName.lastIndexOf('.' ) + 1).toLowerCase();
+		String savePath = rootPath + imageDir + saveFileName;
+
+		/* 파일 쓰기 */
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(savePath));
+		bos.write(bytes);
+		bos.flush();
+		bos.close();
+
+		return saveFileName;
 	}
 
 	@RequestMapping(value = "user/idCheck.hi", method = RequestMethod.POST)

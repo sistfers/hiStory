@@ -661,33 +661,37 @@ $(function(){
 				
 				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
 
-	/* 				  var prevTr = $(this).parent().parent().parent().parent().prev();
-				        //댓글 적는 에디터 삭제
-				        $("#commentEditor").remove();//여기에서 삭제를 해줘야 에디터tr을 안 찾는다.
+	 				  var prevTr = $(this).parent().parent().parent().parent().prev();
+// 				        //댓글 적는 에디터 삭제
+// 				        $("#commentEditor").remove();//여기에서 삭제를 해줘야 에디터tr을 안 찾는다.
 				           
-				        //댓글을 타고 올라가며 부모 tr을 찾음
-				        while(prevTr.attr("name")!="commentParentCode"){
-				            prevTr = prevTr.prev();
-				        }
-				        //while를 타는지 체크
-				        var check = false;
-				        //다음 노드가 댓글(depth1)의 댓글인지 찾기위해 next
-				        var nextTr = prevTr.next();
-				        //뒤에 댓글(depth1)의 댓글(depth2_1)이 없다면 바로 붙인다.
-				        if(nextTr.attr("name")!="commentChildCode"){
-				            prevTr.after(commentChildText);
-				        }else{
-				            //댓글(depth1)의 댓글(depth2_n)이 있는경우 마지막까지 찾는다.
-				            while(nextTr.attr("name")=="commentChildCode"){
-				                nextTr = nextTr.next();
-				                check = true;
-				            }
-				        }
+//  				        //댓글을 타고 올라가며 부모 tr을 찾음
+// 				        while(prevTr.attr("name")!="commentParentCode"){
+// 				            prevTr = prevTr.prev();
+// 				        } 
+				        
+// 				        //while를 타는지 체크
+// 				        var check = false;
+				        
+// 				        //다음 노드가 댓글(depth1)의 댓글인지 찾기위해 next
+// 				        var nextTr = prevTr.next();
+				        
+//  				        //뒤에 댓글(depth1)의 댓글(depth2_1)이 없다면 바로 붙인다.
+// 				        if(nextTr.attr("name")!="commentChildCode"){
+// 				            prevTr.after(commentChildText);
+// 				        }else{
+// 				            //댓글(depth1)의 댓글(depth2_n)이 있는경우 마지막까지 찾는다.
+// 				            while(nextTr.attr("name")=="commentChildCode"){
+// 				                nextTr = nextTr.next();
+// 				                check = true;
+// 				            }
+// 				        } 
 				           
-				        if(check){//댓글(depth1)의 댓글(depth2_n)이 있다면 그 댓글(depth2_n) 뒤에 댓글(depth2_n+1) 추가
-				            nextTr = nextTr.prev();//while문에서 검색하느라 next로 넘거갔던거 다시 앞으로 돌려줌
-				            nextTr.after(commentChildText);
-				        } */
+// 				        if(check){//댓글(depth1)의 댓글(depth2_n)이 있다면 그 댓글(depth2_n) 뒤에 댓글(depth2_n+1) 추가
+// 				            nextTr = nextTr.prev();//while문에서 검색하느라 next로 넘거갔던거 다시 앞으로 돌려줌
+// 				            nextTr.after(commentChildText);
+// 				        } 
+
 					
 				} else {
 					alert("댓글등록 실패");

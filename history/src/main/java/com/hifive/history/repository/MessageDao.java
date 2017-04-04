@@ -99,8 +99,8 @@ public class MessageDao implements iDao {
 		String statement = namespace +".hi_update_view";
 		logger.debug("----------------------------------------------------------");
 		logger.debug("[[[statement  ]]] "+statement);
-		logger.debug("[[[dest		]]] "+dest);
-		logger.debug("[[[seq		]]] "+seq);
+		logger.debug("[[[dest       ]]] "+dest);
+		logger.debug("[[[seq        ]]] "+seq);
 		
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("dest", dest);

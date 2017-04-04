@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
+
 <center>
 <br>
 
@@ -18,6 +14,8 @@
       	<a href="neighbor.hi">나를 추가한 이웃</a>
       </div>
 </div>
+
+
 
 <!-- 방문자수 -->
 <div class="panel panel-info">
@@ -35,5 +33,3 @@
 </div>
 
 </center>
-</body>
-</html>

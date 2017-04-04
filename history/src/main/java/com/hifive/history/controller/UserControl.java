@@ -232,12 +232,19 @@ public class UserControl {
 		return gson.toJson(followList);
 	}
 
-	@RequestMapping(value = "user/update.hi", method = RequestMethod.POST)
-	public ModelAndView update(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "user/update.hi", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView update(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
-		// 회원 가입 버튼 클릭해서 넘어왔을 시
+		// 수정 버튼 클릭해서 넘어왔을 시
 		if (request.getParameter("do_update") != null) {
+			UserDto loginUser = (UserDto)session.getAttribute("user");
+
+			final String rootPath = request.getSession().getServletContext().getRealPath("/");
+			final String resourcePath = "http://localhost:8080/resources/uploadImages/";
+			final String defaultImage = loginUser.getPf_image();
+
+
 			// 회원 추가
 			UserDto userDto = new UserDto();
 			userDto.setId(request.getParameter("id"));
@@ -248,9 +255,15 @@ public class UserControl {
 			userDto.setBirth(request.getParameter("birth"));
 			userDto.setSex(request.getParameter("sex"));
 			userDto.setPf_content(request.getParameter("profileCon"));
-			userDto.setPf_image("ddd");
-			userDto.setGrade("몽땅연필");
-//			userDto.setPf_image(request.getParameter("profileImg"));
+			if (request.getParameter("grade") == null)
+				userDto.setGrade(request.getParameter("grade"));
+			else
+				userDto.setGrade(loginUser.getGrade());
+
+			if (imageFile.getOriginalFilename().equals(""))
+				userDto.setPf_image(defaultImage);
+			else
+				userDto.setPf_image(resourcePath + saveFile(imageFile, userDto.getId(), rootPath));
 			userService.hi_update(userDto);
 
 

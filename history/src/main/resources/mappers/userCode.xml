@@ -40,7 +40,7 @@
 
 	<update id="hi_update" parameterType="com.hifive.history.model.UserDto">
 		UPDATE USER_H
-		SET PASSWORD = #{password}, NAME = #{name}, BIRTH = #{birth}, AREA = #{area}, EMAIL = #{email}, PF_IMAGE = #{pf_image}, PF_CONTENT = #{pf_content}, GRADE = #{grade}
+		SET PASSWORD = #{password}, NAME = #{name}, BIRTH = #{birth}, AREA = #{area}, EMAIL = #{email}, PF_IMAGE = #{pf_image}, PF_CONTENT = #{pf_content}, GRADE = #{grade}, SEX = #{sex}
 		WHERE ID = #{id}
 	</update>
 

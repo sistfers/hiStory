@@ -295,8 +295,8 @@ function go_delete(){
 							%>
 							<!-- if(commentdata.get("STATE").equals("0") || (userDto != null && userDto.getId().equals(commentdata.get("ID"))) ) {%> -->
 							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;"><a href="#"> <%=commentdata.get("NAME")%>
-							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <%=commentdata.get("CONTENT")%>
+							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
+							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
 							</td>
 
 							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
@@ -315,9 +315,9 @@ function go_delete(){
 													if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
 							%>
 							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;"><a href="#"> <%=commentdata.get("NAME")%>
+							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
 							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span
-								class="glyphicon glyphicon-lock"></span><%=commentdata.get("CONTENT")%>
+								class="glyphicon glyphicon-lock"></span><span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
 							</td>
 
 							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
@@ -365,8 +365,8 @@ function go_delete(){
 							%>
 
 							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;"><a href="#"> <%=commentdata.get("NAME")%>
-							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <%=commentdata.get("CONTENT")%>
+							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
+							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
 							</td>
 
 							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
@@ -392,9 +392,9 @@ function go_delete(){
 													if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
 							%>
 							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;"><a href="#"> <%=commentdata.get("NAME")%>
+							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
 							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span
-								class="glyphicon glyphicon-lock"></span><%=commentdata.get("CONTENT")%>
+								class="glyphicon glyphicon-lock"></span><span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
 							</td>
 
 							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
@@ -609,7 +609,7 @@ $(function(){
                                 '<td colspan=2 width=11% align="left">'+
                                 '<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+
                                 '</td>'+
-                                '<td width="69%" style="text-align: left;">'+
+                                '<td width="69%" style="text-align: left;" name="contentsTd">'+
                                 '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
                                 pText.val().replace(/\n/g, "<br>")+'</td>'+
                                 '<td width="20%" align="right">'+
@@ -686,7 +686,7 @@ $(function(){
                                 '<td width=10% align="left">'+
                                 '<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+
                                 '</td>'+
-                                '<td width="69%" style="text-align: left;">'+
+                                '<td width="69%" style="text-align: left;" name="contentsTd">'+
                                 '</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+
                                 cText.val().replace(/\n/g, "<br>")+'</td>'+
                                 '<td width="20%" align="right">'+
@@ -809,7 +809,7 @@ $(function(){
             }else{   //취소
                 return;
             }
-        }else{
+        }else if($(this).attr("name")=="pAdd"){
              //자기 부모의 tr을 알아낸다.
             var parentElement = $(this).parent().parent();
             
@@ -829,6 +829,32 @@ $(function(){
                                 '<td width="20%" align="left" id="'+$(this).parent().attr('id')+'">'+
                                 '<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+
                                 '<button type="button" id="commentChildSubmit" name="commentChildSubmit" class="btn btn-warning">답글입력</button>'+
+                                '</td>'+
+                                '</tr>';
+                                   
+            parentElement.after(commentEditor); 
+        }else if($(this).attr("name")=="pUp"){
+            //자기 부모의 tr을 알아낸다.
+            var parentElement = $(this).parent().parent();
+            
+            console.log("본인댓글번호 ="+$(this).parent().attr('id'));
+            var thisContents = parentElement.find("[name=contentsTd]").find("[name=contentsSpan]").html();
+            console.log("댓글 내용 = " + thisContents);
+            
+            //댓글달기 창을 없앤다.
+            $("#commentEditor").remove();
+            	
+            //부모의 하단에 댓글달기 창을 삽입
+            var commentEditor = '<tr id="commentEditor">'+
+                                '<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+
+                                '<td style="width:10%">'+
+                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+
+                                '<td width="69%">'+
+                                '<textarea rows="2" class="form-control" style="resize: none" id="commentChildText">' + thisContents + '</textarea>'+
+                                '</td>'+
+                                '<td width="20%" align="left" id="'+$(this).parent().attr('id')+'">'+
+                                '<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+
+                                '<button type="button" id="commentChildSubmit" name="commentChildSubmit" class="btn btn-warning">수정</button>'+
                                 '</td>'+
                                 '</tr>';
                                    

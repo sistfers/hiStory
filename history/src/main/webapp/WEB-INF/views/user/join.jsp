@@ -80,7 +80,8 @@
                         if (flag.msg == "true") {
                             alert("메일 확인 해주세요~~");
                             
-                            var digit = '12345';
+                            var digit = flag.digit;
+                            alert("digit " + digit);
                          // alert('나의 인증 번호는 ' +flag.digit);
                             $('#hiddenDigit').val(digit);
                            

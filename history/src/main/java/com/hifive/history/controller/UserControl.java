@@ -166,8 +166,10 @@ public class UserControl {
 		
 		JsonObject jobj = new JsonObject();
 		if(flag > 0) {
-			//jobj = new JsonParser().parse("{\"msg\":\"true\"}, {\"digit\":\\" + generatedDigit + "\"}").getAsJsonObject();
-			jobj = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+			//String a = "{\"msg\":\"true\",\"digit\":\"" + generatedDigit + "\"}";
+			//System.out.println(a);
+			jobj = new JsonParser().parse("{\"msg\":\"true\",\"digit\":\"" + generatedDigit + "\"}").getAsJsonObject();
+			//jobj = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
 			
 		} else {
 			jobj = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();

@@ -98,7 +98,7 @@ function deleteAction(){
 		<div class="form-group col-xs-12">
 			<!-- 버튼 -->	
 			<div> <!-- class="form-group"> -->			
-				<input type="button" value="삭제" class="btn btn-danger" onclick="deleteAction();" />
+				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
 	    	</div>
     	</div>
 		<table class="table">

@@ -121,7 +121,7 @@
 		       		FROM MESSAGE_H
 		        	<include refid="BaseCondition" />
 		        	AND CONTENTS LIKE '%' || #{words} || '%'						
-		        	ORDER BY WDATE					
+		        	ORDER BY WDATE DESC					
 		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)
 		        <![CDATA[			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
@@ -149,8 +149,8 @@
 		       		FROM MESSAGE_H							
 		        	WHERE SEND_ID=#{SENDID}	
 		        	AND SEND_VIEW=0						
-		        	ORDER BY WDATE					
-		          	) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
+		        	ORDER BY WDATE DESC				
+		          	) LST JOIN USER_H B ON(LST.TAKE_ID=B.ID)			
 		      	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
 		        ) T      							
 		    WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)

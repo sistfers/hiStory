@@ -83,7 +83,7 @@ $(document).ready(function() {
 					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">날짜</th>';
 					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">읽음</th>';
 											
-					for (var i = 0; i < item.length; i++) {
+					for (var i = 0; i < item.length - 1; i++) {
 						var idx		 = item[i].IDX;
 						var seq		 = item[i].SEQ;
 						var send_id	 = item[i].SEND_ID;
@@ -119,30 +119,27 @@ $(document).ready(function() {
 					// alert(filteredForm);
 					$("#wrapfilteredForm").append(filteredForm);
 					
-					// pagination
-					var total_pg = item[0].TOTAL / 10;  
+					// 내가 입력한 검색어 확인
+					var getWords = item[item.length-1].inputWords;
+					// alert('내가 입력한 검색어는 ? ' +getWords)
 					
-					// 나머지가 있다면 1페이지 추가
-					if (item[0].TOTAL % 10 > 0) {
-						total_pg++;
-					}		
+					var pagiForm = '<table id="pagiForm"><tr><td style="text-align: center;">';
 					
-					<table id="pagiForm"><tr><td style="text-align: center;">
-					<!-- Paging Area Start -->
-					<%=PagingUtil.renderPaging(
-							intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
-					<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-					</td></tr>
-					</table>
+					// 1 2 3 ..	 총 갯수		  현재 페이지 번호?		      페이지 크기	             바닥에 보여질 페이지 수?		URL				스크립트
+					// renderPaging(
+					//		int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i)
+					pagiForm = pagiForm + renderPaging(
+							item[0].TOTAL, 1, 10, 10, "filtered.hi", "do_search_for_filtered", item[0].TAKE_ID, getWords);					
 					
-					var pagiForm = '';
+					// 						params :    url,   받은이,   검색 단어
+					// function do_search_for_filtered(url_i, take_id, words)					
+										
+					pagiForm = pagiForm + '</td></tr></table>';					
 					
-					<div id="wrapPagiForm" >
-					<table id="pagiForm"><tr><td style="text-align: center;">
+					$("#wrapPagiForm").append(pagiForm);
 				}
 			},
 			complete : function(data) {
-				// 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
 			},
 			error : function(xhr, status, error) {
 				alert("에러 발생");
@@ -150,6 +147,199 @@ $(document).ready(function() {
 		});		
 	});	
 });
+
+function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
+	var url 	= url_i;
+	var words 	= words_i;
+	var id		= take_id_i;
+	var page	= page_i;
+	
+	$.ajax({
+		type : "POST",
+		url : "filtered.hi",
+		dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+		data : {
+			"condi" : 'receiver',
+			"words" : words,
+			"id"	: id,
+			"page"  : page
+		},
+		success : function(data) {
+			// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+			
+			$('#filteredForm').remove();
+			$('#pagiForm').remove();				
+			// alert('success ' +data);
+			
+			var item = $.parseJSON(data);
+			/* $.each(item,function(key,value) {
+				alert('key:'+key+', idx:'+value.IDX+', seq:'+value.SEQ+
+						', send_id:'+value.SEND_ID+', take_id:'+value.TAKE_ID+
+						', contents:'+value.CONTENTS+', wdate:'+value.WDATE+
+						', rdate:'+value.RDATE+', state:'+value.STATE+
+						', name:'+value.NAME+', TOTAL:'+value.TOTAL);
+			});	 */			
+			
+			if (item.length == 0) {
+				alert('item.length ' +item.length);
+				$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="20%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
+			}
+			else {
+				var filteredForm = '<table id="filteredForm" class="table"><tr class="warning" >';
+				filteredForm = filteredForm + '<th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
+				filteredForm = filteredForm + '<th width="25%" style="text-align: center;">보낸사람</th>';
+				filteredForm = filteredForm + '<th width="40%" style="text-align: center;">내용</th>';
+				filteredForm = filteredForm + '<th width="20%" style="text-align: center;">날짜</th>';
+				filteredForm = filteredForm + '<th width="10%" style="text-align: center;">읽음</th>';
+										
+				for (var i = 0; i < item.length - 1; i++) {
+					var idx		 = item[i].IDX;
+					var seq		 = item[i].SEQ;
+					var send_id	 = item[i].SEND_ID;
+					var take_id	 = item[i].TAKE_ID;
+					var contents = item[i].CONTENTS;
+					var wdate	 = item[i].WDATE;
+					var rdate	 = item[i].RDATE;
+					var state	 = item[i].STATE;
+					var name	 = item[i].NAME;
+					var total	 = item[i].TOTAL;
+					var take	 = item[i].TAKE_VIEW;
+					
+					if(take == '-1') 
+						continue;
+					
+					if(contents.length > 15) {
+						contents = contents.substring(0, 15) + '...';
+						// alert(contents);
+					}
+					
+					filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
+					filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
+					filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
+					filteredForm = filteredForm + '<td>'+wdate+'</td>';						
+
+					if(state == '0') {
+						filteredForm = filteredForm + '<td>읽지 않음</td></tr>';
+					} else {
+						filteredForm = filteredForm + '<td>'+rdate+'</td></tr>';
+					}						
+				}
+				filteredForm = filteredForm + '</table>';
+				// alert(filteredForm);
+				$("#wrapfilteredForm").append(filteredForm);
+				
+				// 내가 입력한 검색어 확인
+				var getWords = item[item.length-1].inputWords;
+				// alert('내가 입력한 검색어는 ? ' +getWords)
+				
+				var pagiForm = '<table id="pagiForm"><tr><td style="text-align: center;">';
+				
+				// 1 2 3 ..	 총 갯수		  현재 페이지 번호?		      페이지 크기	             바닥에 보여질 페이지 수?		URL				스크립트
+				// renderPaging(
+				//		int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i)
+				pagiForm = pagiForm + renderPaging(
+						item[0].TOTAL, page, 10, 10, "filtered.hi", "do_search_for_filtered", item[0].TAKE_ID, getWords);					
+				
+				// 						params :    url,   받은이,   검색 단어
+				// function do_search_for_filtered(url_i, take_id, words)					
+									
+				pagiForm = pagiForm + '</td></tr></table>';					
+				
+				$("#wrapPagiForm").append(pagiForm);
+			}
+		},
+		complete : function(data) {
+		},
+		error : function(xhr, status, error) {
+			alert("에러 발생");
+		}
+	});	
+}
+
+// 검색 결과 페이징
+function renderPaging(
+		maxNum_i, currPageNoIn_i, rowsPerPage_i, bottomCount_i,
+		url_i, scriptName_i, take_id_i, words_i) {
+	
+	var maxNum      = parseInt("0"); // 총 갯수
+	var currPageNo  = parseInt("1"); // 현재 페이지 번호 : page_num
+	var rowPerPage  = parseInt("10"); // 한페이지에 보여질 행수 : page_size
+	var bottomCount = parseInt("10"); // 바닥에 보여질 페이지 수: 10
+	var take_id     = take_id_i;
+	var words		= words_i;
+
+	maxNum = parseInt(maxNum_i);
+	currPageNo = parseInt(currPageNoIn_i);
+	rowPerPage = parseInt(rowsPerPage_i);
+	bottomCount = parseInt(bottomCount_i);
+
+	var url = url_i; // 호출 URL
+	var scriptName = scriptName_i; // 호출 자바스크립트
+
+	var maxPageNo = ((maxNum - 1) / rowPerPage) + 1;
+	var startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;
+	var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
+	var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
+	var maxBlockNo = ((maxNum - 1) / bottomCount) + 1;
+
+	var inx = parseInt("0");
+	var html = "";
+	if (currPageNo > maxPageNo) {
+		return "";
+	}
+	
+	html +="<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">";
+	html +="<tr>";
+	html +="<td class=\"list_num\">";
+	html +="<ul class=\"pagination pagination-sm\">";
+	
+	// <<
+	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  ";
+			html +="&laquo;   ";
+			html +="</a></li>      ";
+	}
+
+	// <
+	if (startPageNo > bottomCount) {
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> ";
+		html +="<        ";
+		html +="</a></li>     ";
+	}
+
+	// 1 2 3 ... 10	(숫자보여주기)
+	for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
+		if (inx == currPageNo) {
+			html +="<li class='active'><a href='#'>" + inx	+ "</a></li>";
+			
+		} else {								
+			html +="<li><a href=\"javascript:" + scriptName + "";
+			html +="('" + url + "'," + inx+ ",'" + take_id+ "','" + words+ "')";
+			html +="\" class=\"num_text\">" + inx + "</a></li> ";
+		}															
+	}
+
+	// >
+	if (maxPageNo >= inx) {
+		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> ";
+		html +=">                       ";
+		html +="</a></li>              ";
+	}
+
+	// >>
+	if (maxPageNo >= inx) {
+		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      ";
+		html +="&raquo;     ";
+		html +="</a></li>    ";
+	}
+	
+	html +="</ul>		";
+	html +="</td>  	";
+	html +="</tr>  	";
+	html +="</table>   ";
+
+	return html;
+}
 
 // 페이징
 function do_search_page(url, page_num) 
@@ -160,67 +350,6 @@ function do_search_page(url, page_num)
 	  frm.PAGE_NUM.value = page_num;
 	  frm.action = url;
 	  frm.submit();
-}
-
-function do_search_for_filtered() {
-	
-	html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">  \n");
-	html.append("<tr> 																					   \n");
-	html.append("<td class=\"list_num\">                                                                   \n");
-	html.append("<ul class=\"pagination pagination-sm\"> 	                                               \n");
-	
-	// <<
-	if(nowBlockNo>1&&nowBlockNo<=maxBlockNo)
-	{
-		html.append("<li><a href=\"javascript:" + scriptName 
-				+ "( '" + url+ "', 1 );\">  \n");
-		html.append("&laquo;    \n");
-		html.append("</a></li>  \n");
-	}
-
-	// <
-	if(startPageNo>bottomCount)
-	{
-		html.append("<li><a href=\"javascript:" + scriptName 
-				+ "( '" + url + "'," + (startPageNo - 1) + ");\">  \n");
-		html.append("<          \n");
-		html.append("</a></li>  \n");
-	}
-
-	// 1 2 3 ... 10 (숫자보여주기)
-	for(inx=startPageNo;inx<=maxPageNo&&inx<=endPageNo;inx++)
-	{
-
-		if (inx == currPageNo) {
-			html.append("<li class='active'><a href='#'>" + inx + "</a></li>");
-		} else {
-			html.append("<li><a href=\"javascript:" + scriptName 
-					+ "('" + url + "'," + inx + ");\" class=\"num_text\">" 
-					+ inx + "</a></li>  \n");
-		}
-	}
-
-	// >
-	if(maxPageNo>=inx)
-	{
-		html.append("<li><a href=\"javascript:" + scriptName 
-				+ "('" + url + "'," + ((nowBlockNo * bottomCount) + 1)
-				+ ");\">        \n");
-		html.append(">          \n");
-		html.append("</a></li>  \n");
-	}
-
-	// >>
-	if(maxPageNo>=inx)
-	{
-		html.append("<li><a href=\"javascript:" + scriptName 
-				+ "('" + url + "'," + maxPageNo + ");\">  \n");
-		html.append("&raquo;    \n");
-		html.append("</a></li>  \n");
-	}
-	
-	html.append("</ul>  \n");html.append("</td>  	\n");
-	html.append("</tr>  \n");html.append("</table>  \n");
 }
 
 /* 체크박스 전체선택, 전체해제 */
@@ -269,10 +398,14 @@ function replyAction() {
 	<%-- <tr>
 	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 	<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
-	<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
-	<td><%=item.get("WDATE") %></td> --%>	
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
 	
-	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+	
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
+	<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
+	<td><%=item.get("WDATE") %></td> --%>
+	
+	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ","));  
 	alert('답장 대상 ' +checkRow);
 	
 	if(checkRow == ''){

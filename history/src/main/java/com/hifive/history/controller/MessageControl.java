@@ -46,20 +46,34 @@ public class MessageControl {
 		String id 	 = res.getParameter("id");
 		String words = res.getParameter("words");
 		String condi = res.getParameter("condi");
+		String page  = "";
+		
+		if(res.getParameter("page") != null) {
+			page = res.getParameter("page");
+			
+		} else {
+			page = "1";
+		}
 		
 		Map<String, Object> search_info = new HashMap<String, Object>();			
 		
 		search_info.put("id", id);
 		search_info.put("words", words);
 		search_info.put("condi", condi);
-		search_info.put("PAGE_NUM", 1);
-		loger.debug("[[[id	   ]]] " + id);
-		loger.debug("[[[words  ]]] " + words);
-		loger.debug("[[[condi  ]]] " + condi);
-//		loger.debug("[[[PAGE_NUM  ]]] " + PAGE_NUM);
+		search_info.put("PAGE_NUM", page);
+		loger.debug("[[[id	      ]]] " + id);
+		loger.debug("[[[words     ]]] " + words);
+		loger.debug("[[[condi     ]]] " + condi);
+		loger.debug("[[[PAGE_NUM  ]]] " + page);
 		
 		
 		List<Map<String, Object>> filteredList = messageService.hi_select_filtered(search_info);
+		
+		// 내가 입력한 검색어를 넣어보자
+		Map<String, Object> inputWords = new HashMap<String, Object>();
+		inputWords.put("inputWords", words);
+		loger.debug("[[[inputWords  ]]] " + inputWords.toString());
+		filteredList.add(inputWords);
 		
 		Gson gson = new Gson();
 		

@@ -21,7 +21,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>:::::::::::블로그 관리:::::::::::::::</title>
+<title>블로그 관리/통계</title>
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -32,6 +32,10 @@ border-radius: 15px;
 width:78%;
 margin-left:0.5%;
 border-radius: 15px;
+}
+#categoryTable{
+font-size: 12px;
+border-width: 1px;
 }
 </style>
 <script>
@@ -112,14 +116,20 @@ border-radius: 15px;
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
 		       	
-		       	<p style="font-size: 25px; margin-top: 20px; margin-bottom: 20px">등록된 카테고리</p>
-		       	<div class="col-xs-12" style="background-color: white; padding-bottom: 20px; padding-top: 20px;">
-		        <div class="col-xs-6" style="overflow: scroll;overflow-x:hidden; height: 300px; ">
-		       	<table class="table table-striped table-hover" id="categoryTable">
-		        	<tr class="info">
-						<th>No</th>
-						<th>카테고리명</th>
-						<th>공개여부</th>
+		       	<!-- <p style="font-size: 25px; margin-top: 20px; margin-bottom: 20px">등록된 카테고리</p> -->
+
+		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
+		       	<fieldset>
+		       	<legend><span class="glyphicon glyphicon-list"></span> 등록된 카테고리 수정/삭제</legend>
+		       	
+		        <!-- <div class="col-xs-6" style="overflow: scroll;overflow-x:hidden; height: 300px; "> -->
+		        
+		        <div class="col-xs-6" style="min-height: 300px; border-radius: 15px; padding-top: 10px; border:2px solid black " >
+		       	<table class="table table-hover" id="categoryTable">
+		        	<tr class="info" >
+						<th width="10%" style="text-align: center;">No</th>
+						<th width="60%" style="text-align: center;">카테고리</th>
+						<th width="30%" style="text-align: center;">공개여부</th>
 		        	</tr>
 		        	<%if(categoryList.size()==0){ %>
 		        	<tr class="active">
@@ -129,7 +139,7 @@ border-radius: 15px;
 		        	}else{
 		        		for(int i = 0; i < categoryList.size(); ++i){
 		        	%>
-		        	<tr class="active" id="<%=categoryList.get(i).getSeq() %>">
+		        	<tr id="<%=categoryList.get(i).getSeq() %>" style="cursor:pointer; text-align: center;">
 		        		<td><%=i+1 %></td>
 		        		<td><%=categoryList.get(i).getName() %></td>
 		        		<td><%=categoryList.get(i).getState().equals("0")?"전체공개":"나만보기" %></td>
@@ -140,21 +150,21 @@ border-radius: 15px;
 		        	%>
 		        </table>
 				</div>
-				<div class="col-xs-6" style="height: 200px;" >
+				<div class="col-xs-5" style="margin-left: 15px">
 				<form class="form-horizontal" method="post" action="control.hi" id="ouput" name="output">
-						<div class="form-group">
-							<br><br><br><br>
-							<label for="inputEmail" class="col-xs-4 control-label">카테고리</label>
-							<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputEmail" class="control-label">카테고리</label>
+							</div>
+							<div class="form-group" style="margin-left: 10px">
 								<input type="text" class="form-control" id="catename" name="catename"
-									placeholder="카테고리명 입력" value="">
+									placeholder="◀카테고리를 선택하세요" value="">
 								<input type="hidden" id="cateseq" name="cateseq" value="">
 							</div>
-						</div>
 						
-						<div class="form-group">
-							<label class="col-xs-4 control-label">공개 설정</label>
-							<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label">공개설정</label>
+							</div>	
+							<div class="form-group" style="margin-left: 15px">
 									<label class="radio-inline"> <input type="radio" name="catestate"
 										id="optionsRadios1" value="true" >공개
 									</label>
@@ -163,33 +173,38 @@ border-radius: 15px;
 										id="optionsRadios2" value="false" > 비공개
 									</label>
 							</div>
-						</div>
+						
 						<br>
 						<div class="form-group">
 							<div class="col-xs-offset-3 col-xs-9">
 								<input type="hidden" name="btn" id="btn" value="">
-								<button type="button" class="btn btn-warning" name="" onclick="do_func('del')"> 삭제 </button>
 								<button type="button" class="btn btn-primary" name="" onclick="do_func('mod')"> 수정 </button>
+								<button type="button" class="btn btn-danger" name="" onclick="do_func('del')"> 삭제 </button>
 							</div>
 						</div>
 				</form>
+				
 				</div>
+				</fieldset>
 				</div>
+				
 				<div class="col-xs-12" style="margin-top: 50px; ">
+				<hr style="border:2px dashed">
 				<form class="form-horizontal" method="post" action="control.hi" name="regiCate">
 					<fieldset>
-						<legend>카테고리 등록</legend>
+						<legend><span class="glyphicon glyphicon-plus"></span> 카테고리 추가 </legend>
+						
 						<div class="form-group">
-							<label for="inputEmail" class="col-xs-2 control-label">카테고리명</label>
+							<label for="inputEmail" class="col-xs-2 control-label">카테고리</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="name" name="name"
-									placeholder="카테고리명 입력">
+									placeholder="추가할 카테고리명을 입력하세요 :D">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="col-xs-2 control-label">공개 설정</label>
-							<div class="col-xs-9">
+							<div class="col-xs-10">
 									<label class="radio-inline"> <input type="radio" name="state"
 										id="optionsRadios1" value="true" checked="checked">공개
 									</label>
@@ -200,21 +215,22 @@ border-radius: 15px;
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<div class="col-xs-offset-9 col-xs-3">
+						<div class="form-group" align="center">
 								<button type="reset" class="btn btn-default"> 리셋 </button>
-								<button type="button" class="btn btn-primary" onclick="check()"> 추가 </button>
-							</div>
+								<button type="button" class="btn btn-primary" onclick="check()"> 카테고리 추가 </button>
 						</div>
 						
 					</fieldset>
 				</form>
 				</div>
 				
+				
+				
 				<div class="col-xs-12">
+				<hr style="border:2px dashed">
 				<form class="form-horizontal" method="post" action="control.hi" name="blog">
 					<fieldset>
-						<legend>블로그 설정</legend>
+						<legend><span class="glyphicon glyphicon-cog"></span> 블로그 설정 </legend>
 						<div class="form-group">
 							<label for="inputEmail" class="col-xs-2 control-label">제목</label>
 							<div class="col-xs-9">
@@ -228,16 +244,9 @@ border-radius: 15px;
 							<label for="select" class="col-xs-2 control-label">테마설정</label>
 								<div class="col-xs-9">
 									
-									<%-- <select multiple="" class="form-control" name="theme">
-									<option style="background-color: #cee1ff; text-align: center;" value="#f7e3a3" <%if(blogdto.getTheme().equals("#f7e3a3")){%>selected="selected"<%} %>></option>
-									<option style="background-color: #cefffb; text-align: center;" value="#baffcc" <%if(blogdto.getTheme().equals("#baffcc")){%>selected="selected"<%} %>></option>
-									<option style="background-color: #ceffd7; text-align: center;" value="#bac5ff" <%if(blogdto.getTheme().equals("#bac5ff")){%>selected="selected"<%} %>></option>
-									<option style="background-color: #f8ffce; text-align: center;" value="#debaff" <%if(blogdto.getTheme().equals("#debaff")){%>selected="selected"<%} %>></option>
-									<option style="background-color: #ffceeb; text-align: center;" value="#ffbae2" <%if(blogdto.getTheme().equals("#ffbae2")){%>selected="selected"<%} %>></option>
-									</select> --%>
 								<table class="table" style="margin-top: 10px">
 									<tr>
-										<td style="background-color: #f7e3a3;"></td>
+										<td style="background-color: #f7e3a3; height: 100px"></td>
 										<td style="background-color: #f7c4a3;"></td>
 										<td style="background-color: #a3f7c4;"></td>
 										<td style="background-color: #a3e0f7;"></td>
@@ -268,11 +277,10 @@ border-radius: 15px;
 								</table>
 								</div>
 							</div>
-						<div class="form-group">
-							<div class="col-xs-offset-9 col-xs-3">
-								<button type="reset" class="btn btn-default">취소</button>
-								<button type="button" class="btn btn-primary" onclick="color()">적용</button>
-							</div>
+							
+						<div class="form-group" align="center">
+								<button type="reset" class="btn btn-default">리셋</button>
+								<button type="button" class="btn btn-primary" onclick="color()">테마적용</button>
 						</div>
 					</fieldset>
 				</form>

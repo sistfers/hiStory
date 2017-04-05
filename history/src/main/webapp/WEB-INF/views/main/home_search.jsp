@@ -147,7 +147,7 @@
 <div class="col-xs-12" >
 <hr style="border-color: #F361A6; border-width: 10px">
 <h3 style="color: #F361A6"> :: HISTORY 검색결과 :: </h3>
-<table class="table table-hover" >
+<table class="table table-hover">
 
 <%for(int i=0; i<searchList.size(); ++i){ %>
 <tr name="search_detail" style="cursor:pointer;">
@@ -156,7 +156,7 @@
 	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="130px" height="90px" onerror="src='/resources/image/noimg.png'">
+		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="100%" height="130px" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>
@@ -276,20 +276,19 @@ function do_search_page(url, page_num) {
 
 <!-- 네이버 검색결과 START -->
 <br><br>
-
-	<div class="col-xs-12">
-	<hr style="border-color: #2F9D27; border-width: 10px">
 <c:set var="item" value="${blogItem }"/>
 <c:choose>
 	<c:when test="${empty item}">
 
     </c:when>
 	<c:otherwise>
+			<div class="col-xs-12">
+			<hr style="border-color: #2F9D27; border-width: 10px">
 				<h3 style="color: #2F9D27"> :: 네이버 검색결과 :: </h3>
 				<table  class="table table-hover">		
 					<c:forEach var="item" items="${blogItem}">
 					 	<tr name="api_search_detail" style="cursor:pointer;">	
-					 		<td valign="top" id="${item.link }">
+					 		<td valign="top" id="${item.link }" width="70%">
 							<div class="media-body">
 		
 							<h5 class="title">
@@ -300,12 +299,13 @@ function do_search_page(url, page_num) {
 							</div>
 							<br>
 							</td>
-							<td align="right" valign="middle" width="200px">
+							<td align="right" valign="middle" width="20%">
 							${item.bloggername }
 							</td>
-							<td align="right" valign="top" width="50px">
+							<td align="right" valign="top" width="10%">
 							<div class="media-body">
-							<fmt:formatDate value="${item.postdate }" pattern="yyyy-MM-dd"/>
+							<fmt:parseDate var="dateString" value="${item.postdate }" pattern="yyyyMMdd"/>
+							<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd"/>
 							</div>
 							</td>
 					 	</tr>

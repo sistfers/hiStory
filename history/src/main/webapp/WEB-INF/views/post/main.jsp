@@ -1,3 +1,4 @@
+<%@page import="java.net.InetAddress"%>
 <%@page import="com.hifive.history.model.BlogDto"%>
 <%@page import="com.hifive.history.model.LoveDto"%>
 <%@page import="java.util.Date"%>
@@ -40,6 +41,11 @@
 %>
 
 <%
+	//IP받아오기
+	if(session.getAttribute("user")==null){
+		String ip = InetAddress.getLocalHost().getHostAddress();
+		session.setAttribute("ip", ip);
+	}
 	// 로그인한 세션정보
 	UserDto userDto = (UserDto) session.getAttribute("user");
 

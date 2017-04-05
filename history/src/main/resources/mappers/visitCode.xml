@@ -19,7 +19,7 @@
 	 	 FROM(
 	  			SELECT SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH 
 	 			FROM VISIT_H 
-	  			WHERE ID = #{id} 
+	  			WHERE V_ID = #{id} 
 	  			AND TO_CHAR(VDATE, 'YY/MM/DD') = TO_CHAR(SYSDATE, 'YY/MM/DD')
 	 	) 
 	</select>
@@ -28,7 +28,7 @@
 		 FROM(
 				SELECT SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH 
 				FROM VISIT_H 
-				WHERE ID = #{id}
+				WHERE V_ID = #{id}
 		)
 	</select>
 	<select id="hi_getTodayVisit" parameterType="hashmap" resultType="hashmap">

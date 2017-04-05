@@ -288,7 +288,7 @@
 				<div class="col-lg-10">
 					<input type="text" class="form-control" id="profile"
 						name="profileCon" data-rule-required="true" placeholder="안녕하세요."
-						maxlength="50" value="<%=user_pf_con%>">
+						maxlength="36" value="<%=user_pf_con%>">
 				</div>
 			</div>
 			<hr>		<!-- 구분선 -->

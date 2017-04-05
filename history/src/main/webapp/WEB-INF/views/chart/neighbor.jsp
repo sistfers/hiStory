@@ -95,8 +95,8 @@ function do_del(id) {
 							</td>
 							<td><%=neighborList.get(i).get("TITLE") %></td>
 							<td style="text-align: center;">
-							<button type="button" class="btn-xs btn-info" id="addNeighbor" onclick="do_add('<%=neighborList.get(i).get("MY_ID")%>')">추가</button>
-							<button type="button" class="btn-xs btn-danger" id="delNeighbor" onclick="do_del('<%=neighborList.get(i).get("MY_ID")%>')">삭제</button>
+							<button type="button" class="btn-xs btn-info" id="addNeighbor" onclick="do_add('<%=neighborList.get(i).get("MY_ID")%>')">이웃추가</button>
+							<button type="button" class="btn-xs btn-danger" id="delNeighbor" onclick="do_del('<%=neighborList.get(i).get("MY_ID")%>')">차단</button>
 							</td>
 						</tr>
 					<%

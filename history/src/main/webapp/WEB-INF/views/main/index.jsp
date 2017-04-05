@@ -395,7 +395,7 @@ $(document).ready(function () {
     				  if(k<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/life.jpg"'
 	    				style="height: 270px"/>
 	    				<div class="mask" style="padding-bottom: 15px;">
 	      				<h2>

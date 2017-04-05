@@ -33,9 +33,9 @@
 	<div class="col-xs-8">
 		<form action="/main/login.hi" method="post">
 			<input type="hidden" name="do_login" value="do_login">
-			<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*" style="font-family: 'Hanna', sans-serif;">
+			<input type="text" name="id" class="form-control input-lg" max="20" placeholder="YOUR ID*" style="font-family: 'Nanum Gothic', sans-serif;">
 			<br>
-			<input type="password" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*"  style="font-family: 'Hanna', sans-serif;">
+			<input type="password" name="password" class="form-control input-lg" max="20" placeholder="YOUR PASSWORD*"  style="font-family: 'Nanum Gothic', sans-serif;">
 			<br>
 			<center>
 			<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN" />

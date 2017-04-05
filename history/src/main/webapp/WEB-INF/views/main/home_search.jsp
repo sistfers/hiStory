@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <%!
 /**
@@ -18,6 +19,7 @@
 	}
 
 %>
+
 <%
 	response.setHeader("Pragma", "no-cache"); //11
 	response.setHeader("Cache-Control", "no-cache");//22페이지 캐쉬를 사용하도록 처리하여 브라우저에게 해당 페이지 내용을 매번 새로 요청하지 않고 캐싱하여 페이지를 볼수 있도록 지시한다. 
@@ -154,7 +156,7 @@
 	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="130px" height="90px">
+		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="130px" height="90px" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>
@@ -303,7 +305,7 @@ function do_search_page(url, page_num) {
 							</td>
 							<td align="right" valign="top" width="50px">
 							<div class="media-body">
-							${item.postdate }
+							<fmt:formatDate value="${item.postdate }" pattern="yyyy-MM-dd"/>
 							</div>
 							</td>
 					 	</tr>

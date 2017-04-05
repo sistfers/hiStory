@@ -54,6 +54,7 @@
 	<result javaType="java.lang.String" column="TITLE" property="TITLE" />
 	<result javaType="java.lang.String" column="NAME" property="NAME" />
 	<result javaType="java.lang.String" column="PF_IMAGE" property="PF_IMAGE" />
+	<result javaType="java.lang.String" column="PF_CONTENT" property="PF_CONTENT" />
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
 
@@ -230,7 +231,7 @@ WHERE SEQ     = #{SEQ}
 	SELECT TT1.*
 	FROM
 	(
-	    SELECT T3.RNUM AS RNUM, T3.ID AS ID, T3.TITLE AS TITLE, T4.NAME AS NAME, T4.PF_IMAGE AS PF_IMAGE
+	    SELECT T3.RNUM AS RNUM, T3.ID AS ID, T3.TITLE AS TITLE, T4.NAME AS NAME, T4.PF_IMAGE AS PF_IMAGE, T4.PF_CONTENT
 	    FROM
 	    (
 	      SELECT ROWNUM RNUM, T1.ID AS ID, T2.TITLE

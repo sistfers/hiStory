@@ -204,7 +204,7 @@
 				<label for="divPassword" class="col-lg-2 control-label">패스워드</label>
 				<div class="col-lg-10">
 					<input type="password" class="form-control" id="password" style="font-family: 'Nanum Gothic', sans-serif;"
-					       name="password" data-rule-required="true" placeholder="패스워드" maxlength="12" value="<%=user_password%>"
+					       name="password" data-rule-required="true" placeholder="패스워드" maxlength="12" value="<%=user_password%>">
 					<p style="color: red" hidden="hidden" id="pwLengthFail"> 패스워드의 길이는 4자 이상 12자 이내로 해주세요. </p>
 				</div>
 			</div>

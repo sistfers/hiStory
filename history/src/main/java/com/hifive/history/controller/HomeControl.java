@@ -155,6 +155,26 @@ public class HomeControl {
 	public String header() {
 		return "/main/header";
 	}
+	
+	@RequestMapping("hifive.hi")
+	public String hifive() {
+		return "/main/hifive";
+	}
+	
+	@RequestMapping("privacy.hi")
+	public String privacy() {
+		return "/main/privacy";
+	}
+	
+	@RequestMapping("service.hi")
+	public String service() {
+		return "/main/service";
+	}
+	
+	@RequestMapping("rule.hi")
+	public String rule() {
+		return "/main/rule";
+	}
 
 	@RequestMapping("main/logout.hi")
 	public String logout(ModelMap modelMap, HttpSession session) {

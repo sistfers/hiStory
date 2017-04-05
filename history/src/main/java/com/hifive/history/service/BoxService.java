@@ -1,19 +1,28 @@
 package com.hifive.history.service;
 
+import com.hifive.history.model.BoxDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.BoxDao;
+import com.hifive.history.util.FileUtils;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BoxService implements iService {
 
 	@Autowired
 	private BoxDao boxDao;
+	
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
 
 	@Override
 	public int hi_insert(iDto dto) {
@@ -38,5 +47,15 @@ public class BoxService implements iService {
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return boxDao.hi_selectList(condition);
+	}
+	
+	@Transactional
+	public int hi_insertList(List<BoxDto> boxList) throws SQLException{
+		int flagCnt = 0;
+		for(BoxDto box:boxList){
+			int flag = boxDao.hi_insert(box);
+			flagCnt += flag;
+		}
+		return flagCnt;
 	}
 }

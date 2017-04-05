@@ -15,7 +15,7 @@ import com.hifive.history.model.iDto;
 public class BoxDao implements iDao {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String namespace="com.hifive.history.repository.mappers.BoxCode";
+	private final String namespace="com.hifive.history.repository.mappers.boxCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -59,4 +59,6 @@ public class BoxDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
+	
+	
 }

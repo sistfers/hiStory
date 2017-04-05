@@ -35,9 +35,6 @@ public class PostService implements iService {
 	private PostDao postDao;
 	
 	@Autowired
-	private BoxService boxService;
-	
-	@Autowired
 	private BoxDao boxDao;
 	
 	@Resource(name="fileUtils")
@@ -160,5 +157,7 @@ public class PostService implements iService {
 		}
 		return flagCnt;
 	}
-	
+	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
+		return postDao.getLovePost(dto);
+	}
 }

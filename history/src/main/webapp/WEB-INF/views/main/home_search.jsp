@@ -19,6 +19,7 @@
 	}
 
 %>
+
 <%
 	response.setHeader("Pragma", "no-cache"); //11
 	response.setHeader("Cache-Control", "no-cache");//22페이지 캐쉬를 사용하도록 처리하여 브라우저에게 해당 페이지 내용을 매번 새로 요청하지 않고 캐싱하여 페이지를 볼수 있도록 지시한다. 

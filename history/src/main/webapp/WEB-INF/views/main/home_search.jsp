@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <%!
 /**
@@ -154,7 +155,7 @@
 	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="130px" height="90px">
+		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="130px" height="90px" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>
@@ -303,7 +304,7 @@ function do_search_page(url, page_num) {
 							</td>
 							<td align="right" valign="top" width="50px">
 							<div class="media-body">
-							${item.postdate }
+							<fmt:formatDate value="${item.postdate }" pattern="yyyy-MM-dd"/>
 							</div>
 							</td>
 					 	</tr>

@@ -77,7 +77,8 @@ public class HomeControl {
 			condition.put("THEME"+(i+1),themeCode.get(i).get("CD_D_NM"));
 		}
 		ModelAndView mav = new ModelAndView();
-		List<Map<String, Object>> searchRank = searchSvc.hi_selectRankList();
+		List<Map<String, Object>> searchRank = searchSvc.hi_selectRankList();	//검색어 순위
+		List<Map<String, Object>> bloggerRank = postSvc.hi_bloggerRankList();	//베스트 블로거
 		List<Map<String, Object>> themeList = postSvc.hi_selectThemeList(condition);
 		
 		
@@ -102,6 +103,7 @@ public class HomeControl {
 		mav.addObject("themeCode", themeCode);
 		mav.addObject("PAGE_NUM", PAGE_NUM);
 		mav.addObject("PAGE_SIZE", PAGE_SIZE);
+		mav.addObject("bloggerRank", bloggerRank);
 		return mav;
 	}
 	

@@ -29,6 +29,7 @@
 	List<Map<String, Object>> followList = null;
 	List<Map<String, Object>> searchRank = (List<Map<String, Object>>)request.getAttribute("searchRank");
 	List<Map<String, Object>> themeList = (List<Map<String, Object>>)request.getAttribute("themeList");
+	List<Map<String, Object>> bloggerRank = (List<Map<String, Object>>)request.getAttribute("bloggerRank");
 	
 	List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100
 	
@@ -394,7 +395,7 @@ $(document).ready(function () {
     				  if(k<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'/>
 	    				<div class="mask" style="padding-bottom: 15px">
 	      				<h2>
 	      				<%
@@ -421,7 +422,7 @@ $(document).ready(function () {
     				<%}else{%>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
     					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/main.jpg"'/>
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'/>
 	    				<div class="mask" style="padding-top: 15px">
 	      				<h2>
 	      				<%
@@ -501,7 +502,7 @@ $(document).ready(function () {
 					<td id="<%=followList.get(i).get("ID")%>" width="20%">
 						<div>
 							<a href="#" class="pull-left">
-							<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="130px" height="90px" onerror='src="/resources/image/main.jpg"'>
+							<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="130px" height="90px" onerror='src="/resources/image/noimg.png"'>
 							</a>
 						</div>
 					</td>
@@ -612,7 +613,7 @@ function do_search_page(url, page_num) {
                     html +="<td id=\"" +followList[i].ID +"\" width=\"20%\">";
         			html +="<div>";
         			html +="<a href=\"#\" class=\"pull-left\">";
-        			html +="<img src=\""+followList[i].SAVE_NAME+ "\" width=\"130px\" height=\"90px\" onerror='src=" +"\"/resources/image/main.jpg\"'>";
+        			html +="<img src=\""+followList[i].SAVE_NAME+ "\" width=\"130px\" height=\"90px\" onerror='src=" +"\"/resources/image/noimg.png\"'>";
         			html +="</a>";
         			html +="</div>";
         			html +="</td>";
@@ -754,29 +755,19 @@ function do_search_page(url, page_num) {
             <div class="col-xs-12">
                 <h3 class="page-header">:: BEST 블로거 :: </h3>
             </div>
-            <div class="col-xs-4 text-center">
-                <center><img class="img-circle img-responsive img-center" src="/resources/image/aa.jpg" width="150" ></center>
-                <h4>Mihyun Kim
-                    <small>블로그타이틀</small>
+<%
+			for(int i=0; i<bloggerRank.size(); ++i){
+%>
+			<div class="col-xs-3 text-center">
+                <center><img class="img-circle img-responsive img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" width="150px" onerror='src="/resources/image/noimg.png"'></center>
+                <h4><%=bloggerRank.get(i).get("NAME") %>
+                    <small><%=bloggerRank.get(i).get("TITLE") %></small>
                 </h4>
-                <p>블로그 소개글 - 안녕하세요 </p>
+                <p><%=bloggerRank.get(i).get("PF_CONTENT") %></p>
             </div>
-            
-            <div class="col-xs-4 text-center">
-                <center><img class="img-circle img-responsive img-center" src="/resources/image/bb.jpg" width="150"></center>
-                <h4>조윤행
-                    <small>하하하하하</small>
-                </h4>
-                <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-            </div>
-            
-            <div class="col-xs-4 text-center">
-                <center><img class="img-circle img-responsive img-center" src="/resources/image/cc.jpg" width="150"></center>
-                <h4>배한주
-                    <small>한주바보</small>
-                </h4>
-                <p>영어폰트가 예뻐서... 한글은 예쁘지 않아.. ㅠㅠ</p>
-            </div>
+<%
+			}
+%>
 </div>
 
 <!-- BEST 블로거 END -->

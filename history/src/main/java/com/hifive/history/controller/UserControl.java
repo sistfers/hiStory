@@ -63,6 +63,7 @@ public class UserControl {
 		// 회원 가입 버튼 클릭해서 넘어왔을 시
 		if (request.getParameter("do_join") != null) {
 			final String rootPath = request.getSession().getServletContext().getRealPath("/");
+//			final String rootPath = "http://hi-history.com/resources/uploadImages/";
 			final String resourcePath = "http://hi-history.com/resources/uploadImages/";
 			final String defaultImage = "http://hi-history.com/resources/image/girl.png";
 
@@ -241,6 +242,7 @@ public class UserControl {
 			UserDto loginUser = (UserDto)session.getAttribute("user");
 
 			final String rootPath = request.getSession().getServletContext().getRealPath("/");
+//			final String rootPath = "http://hi-history.com/resources/uploadImages/";
 			final String resourcePath = "http://hi-history.com/resources/uploadImages/";
 			final String defaultImage = loginUser.getPf_image();
 

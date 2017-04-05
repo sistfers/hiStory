@@ -29,6 +29,7 @@ if(session.getAttribute("user") != null) {
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+
 <style type="text/css">
 	img#logo{		/* 로고 윗부분 마진 */
 		margin-top: 15px;
@@ -94,9 +95,9 @@ if(session.getAttribute("user") != null) {
 		          <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown" style="color: #D9418C;">
 		       	   [<b>${sessionScope.user.name}</b>]님<span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="javascript:do_update()">내정보수정</a></li>
+		            <li><a href="javascript:do_update()"><i class="icon-user"></i> 내정보수정 </a></li>
 		            <li class="divider"></li>
-		            <li><a href="javascript:do_logout();" >로그아웃</a></li>
+		            <li><a href="javascript:do_logout();" ><i class="icon-off"></i> 로그아웃 </a></li>
 		          </ul>
 				
 			</ul>

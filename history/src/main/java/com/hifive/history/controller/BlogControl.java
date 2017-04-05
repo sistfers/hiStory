@@ -3,7 +3,6 @@ package com.hifive.history.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.hifive.history.model.*;
-import com.hifive.history.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +19,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hifive.history.model.BlogDto;
+import com.hifive.history.model.CategoryDto;
+import com.hifive.history.model.CommentDto;
+import com.hifive.history.model.FollowDto;
+import com.hifive.history.model.LoveDto;
+import com.hifive.history.model.PostDto;
+import com.hifive.history.model.UserDto;
+import com.hifive.history.service.BlogService;
+import com.hifive.history.service.CategoryService;
+import com.hifive.history.service.CodeDService;
+import com.hifive.history.service.CommentService;
+import com.hifive.history.service.FollowService;
+import com.hifive.history.service.LoveService;
+import com.hifive.history.service.PostService;
+import com.hifive.history.service.UserService;
+import com.hifive.history.service.VisitService;
 
 @Controller
 public class BlogControl {
@@ -58,8 +70,6 @@ public class BlogControl {
 	@Autowired
 	private BlogService blogSvc;
 	
-	@Autowired
-	private BoxService boxSvc;
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
@@ -219,26 +229,13 @@ public class BlogControl {
 		//ModelAndView mav = new ModelAndView();
 		
 		//첨부 파일!!!
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-	    Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-	    MultipartFile multipartFile = null;
-	    while(iterator.hasNext()){
-	        multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-	        if(multipartFile.isEmpty() == false){
-	            logger.debug("------------- file start -------------");
-	            logger.debug("name : "+multipartFile.getName());
-	            logger.debug("filename : "+multipartFile.getOriginalFilename());
-	            logger.debug("size : "+multipartFile.getSize());
-	            logger.debug("-------------- file end --------------\n");
-	        }
-	    }
 	    
 		//끄읕--첨부파일
 		
 		
 		
 		// view에서 넘어온값 받기
-	    Map<String, Object> map = new HashMap<String, Object>();
+	    /*Map<String, Object> map = new HashMap<String, Object>();
 	    
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
 		String id		= request.getParameter("id");
@@ -260,12 +257,14 @@ public class BlogControl {
 		
 		logger.debug("BlogControl.postWrite.map.toString() = "+map.toString());
 		
-		int flag = postSvc.hi_insert(map, request);
+		int flag = postSvc.hi_insertMap(map, request);
 		if(flag > 0){
+			
+			
 			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
 		}else{
 			// 입력 실패했을때 어떻게 해야할지 모르겠다
-		}
+		}*/
 		
 		return null;
 	}

@@ -37,8 +37,8 @@ public class PostService implements iService {
 	@Autowired
 	private BoxDao boxDao;
 	
-	@Resource(name="fileUtils")
-    private FileUtils fileUtils;
+	/*@Resource(name="fileUtils")
+    private FileUtils fileUtils;*/
 	
 	static String FILE_URL = "";	//저장할 경로
 	static final String SAVE_URL = "../resources/uploadImages";	// 불러올 경로
@@ -86,13 +86,13 @@ public class PostService implements iService {
 		return postDao.hi_insert(dto);
 	}
 	
-	public int hi_insert(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		int flag = postDao.hi_insert(map);
+	public int hi_insertMap(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		int flag = postDao.hi_insertMap(map);
 		
-		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		/*List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
         
 		hi_insertList(list);	//첨부파일 인설트 (트랜잭션 적용)
-		
+*/		
 		return flag;
 	}
 
@@ -148,16 +148,17 @@ public class PostService implements iService {
 		return postDao.hi_selectSearchList(condition);
 	}
 	
-	@Transactional
+	/*@Transactional
 	public int hi_insertList(List<Map<String, Object>> boxList) throws SQLException{
 		int flagCnt = 0;
 		for(Map<String, Object> map:boxList){
-			int flag = boxDao.hi_insert(map);
+			int flag = boxDao.hi_insertMap(map);
 			flagCnt += flag;
 		}
 		return flagCnt;
-	}
+	}*/
+	
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
-		return postDao.getLovePost(dto);
+	      return postDao.getLovePost(dto);
 	}
 }

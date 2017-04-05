@@ -28,8 +28,8 @@ public class BoxDao implements iDao {
 		return sqlSession.insert(statement,dto);
 	}
 	
-	public int hi_insert(Map<String, Object> map) {
-		String statement = namespace +".hi_insert";
+	public int hi_insertMap(Map<String, Object> map) {
+		String statement = namespace +".hi_insertMap";
 	
 		return sqlSession.insert(statement,map);
 	}

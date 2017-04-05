@@ -117,7 +117,7 @@
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
 <!--포스트쓰기  -->
-<insert id="hi_insert"  parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
+<insert id="hi_insertMap"  parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
 	 <selectKey keyProperty="IDX" resultType="string" order="BEFORE">
         SELECT SEQ_POST.NEXTVAL FROM DUAL
     </selectKey>

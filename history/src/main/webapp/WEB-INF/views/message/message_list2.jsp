@@ -103,9 +103,9 @@ function deleteAction(){
     	</div>
 		<table class="table">
 			<tr style="background-color:#FFDDDD " >
-				<th width="10%" style="text-align: center;">
+				<th width="5%" style="text-align: center;">
 				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>
-				<th width="20%" style="text-align: center;">받는사람</th>
+				<th width="25%" style="text-align: center;">받는사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
 				<th width="15%" style="text-align: center;">보낸날짜</th>
 				<th width="15%" style="text-align: center;">수신확인</th>

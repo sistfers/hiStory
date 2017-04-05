@@ -59,6 +59,7 @@ $(document).ready(function() {
 				// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
 				
 				$('#filteredForm').remove();
+				$('#pagiForm').remove();				
 				// alert('success ' +data);
 				
 				var item = $.parseJSON(data);
@@ -76,8 +77,8 @@ $(document).ready(function() {
 				}
 				else {
 					var filteredForm = '<table id="filteredForm" class="table"><tr class="warning" >';
-					filteredForm = filteredForm + '<th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
-					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">보낸사람</th>';
+					filteredForm = filteredForm + '<th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
+					filteredForm = filteredForm + '<th width="25%" style="text-align: center;">보낸사람</th>';
 					filteredForm = filteredForm + '<th width="40%" style="text-align: center;">내용</th>';
 					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">날짜</th>';
 					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">읽음</th>';
@@ -114,6 +115,9 @@ $(document).ready(function() {
 							filteredForm = filteredForm + '<td>'+rdate+'</td></tr>';
 						}						
 					}
+					filteredForm = filteredForm + '</table>';
+					// alert(filteredForm);
+					$("#wrapfilteredForm").append(filteredForm);
 					
 					// pagination
 					var total_pg = item[0].TOTAL / 10;  
@@ -121,14 +125,20 @@ $(document).ready(function() {
 					// 나머지가 있다면 1페이지 추가
 					if (item[0].TOTAL % 10 > 0) {
 						total_pg++;
-					}
+					}		
 					
-					/* filteredForm = filteredForm + '<tr><td><center>';
-					filteredForm = filteredForm + '';
-					filteredForm = filteredForm + '</center></td></tr>'; */	
-					filteredForm = filteredForm + '</table>';
-					// alert(filteredForm);
-					$("#wrapfilteredForm").append(filteredForm);
+					<table id="pagiForm"><tr><td style="text-align: center;">
+					<!-- Paging Area Start -->
+					<%=PagingUtil.renderPaging(
+							intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
+					<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+					</td></tr>
+					</table>
+					
+					var pagiForm = '';
+					
+					<div id="wrapPagiForm" >
+					<table id="pagiForm"><tr><td style="text-align: center;">
 				}
 			},
 			complete : function(data) {
@@ -308,8 +318,8 @@ function viewAll() {
 		<div class="form-group">
 	 		<!-- 버튼 -->	
 	 		<div class="col-xs-3" align="left">
-				<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-danger" />
-				<input type="button" value="답장" onclick="replyAction();"  class="btn btn-danger" />
+				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
+            	<span onclick="replyAction();"  class="btn btn-danger"><span class="glyphicon glyphicon-envelope" style="font-size: 22px"></span></span>
 			</div>
 			<div class="col-xs-7" align="left">
 				<div class="input-group"> 
@@ -325,11 +335,11 @@ function viewAll() {
 		</div>	
     	<br><br>
     	<div id="wrapfilteredForm" >
-		<table  id="filteredForm" class="table">
+		<table id="filteredForm" class="table">
 			<tr class="warning" >
-				<th width="10%" style="text-align: center;">
+				<th width="5%" style="text-align: center;">
 				<input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>
-				<th width="20%" style="text-align: center;">보낸사람</th>
+				<th width="25%" style="text-align: center;">보낸사람</th>
 				<th width="40%" style="text-align: center;">내용</th>
 				<th width="15%" style="text-align: center;">받은날짜</th>
 				<th width="15%" style="text-align: center;">수신확인</th>
@@ -388,13 +398,15 @@ function viewAll() {
 		</table>
 		</div>
 <center>
-<table><tr><td style="text-align: center;">
+<div id="wrapPagiForm" >
+<table id="pagiForm"><tr><td style="text-align: center;">
 <!-- Paging Area Start -->
 <%=PagingUtil.renderPaging(
 		intTotalCount, page_num, 10, 10, "receive.hi", "do_search_page")%>
 <!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
 </td></tr>
 </table>
+</div>
 </center>
 	</div>
 	</form>

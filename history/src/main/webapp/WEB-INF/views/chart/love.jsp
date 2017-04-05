@@ -58,7 +58,7 @@ border-radius: 15px;
 그린 : rgb(224, 239, 208) / rgb(251, 255, 247)
  -->
 <!-- 중간 START -->
-   <br><br><br><br>
+   <br><br><br>
    <div class="container" >
       <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
          <jsp:include page="menu.jsp"/>

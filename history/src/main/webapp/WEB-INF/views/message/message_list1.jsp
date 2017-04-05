@@ -308,7 +308,7 @@ function viewAll() {
 		<div class="form-group">
 	 		<!-- 버튼 -->	
 	 		<div class="col-xs-3" align="left">
-				<input type="button" value="삭제" onclick="deleteAction();" class="btn btn-danger" />
+				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
 				<input type="button" value="답장" onclick="replyAction();"  class="btn btn-danger" />
 			</div>
 			<div class="col-xs-7" align="left">

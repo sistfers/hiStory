@@ -151,6 +151,11 @@
 				}
 			});
 
+			// 사진찾기를 클릭시 파일인풋클릭되게 하는 스크립트
+			document.querySelector('#upload_btn').addEventListener('click', function(e) {
+				document.querySelector('#fileInput').click();
+			}, false);
+
         });
 
 		function pwLengthCheck() {
@@ -243,10 +248,6 @@
 
 		}
 
-		// 사진찾기를 클릭시 파일인풋클릭되게 하는 스크립트
-		document.querySelector('#upload_btn').addEventListener('click', function(e) {
-			document.querySelector('#fileInput').click();
-		}, false);
 	</script>
 </head>
 <body>

@@ -368,13 +368,13 @@ $(document).ready(function () {
 <center>
 
 <div class="container">
-  <h3> <span class="glyphicon-circle-arrow-down"></span> 테마별보기</h3>
+  <h3>테마별보기</h3>
   
   <%if(themeCode != null) {%>
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#menu1"><%=themeCode.get(0).get("CD_D_NM") %></a></li>
+  <ul class="nav nav-pills">
+    <li class="active" style="width: 100px"><a data-toggle="pill" href="#menu1" style="font-weight: bold;"><%=themeCode.get(0).get("CD_D_NM") %></a></li>
     <%for(int i=1; i<themeCode.size(); ++i){ %>
-    <li><a data-toggle="tab" href="#menu<%=i+1%>"><%=themeCode.get(i).get("CD_D_NM") %></a></li>
+    <li style="width: 100px"><a data-toggle="tab" href="#menu<%=i+1%>" style="font-weight: bold;"><%=themeCode.get(i).get("CD_D_NM") %></a></li>
     <%} %>
   </ul>
 	
@@ -395,8 +395,9 @@ $(document).ready(function () {
     				  if(k<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'/>
-	    				<div class="mask" style="padding-bottom: 15px">
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'
+	    				style="height: 270px"/>
+	    				<div class="mask" style="padding-bottom: 15px;">
 	      				<h2>
 	      				<%
 	      					String title = themeList.get(j).get("TITLE")+"";
@@ -418,11 +419,14 @@ $(document).ready(function () {
 	      				<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
 	    				</div>
 	    				</div> 
+	    				
     					</a>
+    					
     				<%}else{%>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
     					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'/>
+	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'
+	    				style="height: 270px"/>
 	    				<div class="mask" style="padding-top: 15px">
 	      				<h2>
 	      				<%
@@ -444,7 +448,8 @@ $(document).ready(function () {
 	      				<p><%=themeList.get(j).get("NAME") %></p>
 	      				<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
 	    				</div>
-	    				</div> 
+	    				</div>
+	    				 
 	    				</a>
     				<%	
     				  }
@@ -471,7 +476,6 @@ $(document).ready(function () {
 
   
 	<div class="clearfix"></div><br>
-  
 </div>
 </div>
 <!-- 테마별보기 END -->
@@ -492,7 +496,8 @@ $(document).ready(function () {
 		<br><br>
 		<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
 		<div class="col-xs-12">
-		<h3 class="page-header">:: 이웃새글 :: </h3>
+		 <h3 style="text-align: center;">이웃새글</h3>
+		 <div class="clearfix"></div><br>
 		
 		<table class="table table-hover" id="followTable">
 			<tbody>
@@ -753,7 +758,7 @@ function do_search_page(url, page_num) {
 <br><br>
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
             <div class="col-xs-12">
-                <h3 class="page-header">:: BEST 블로거 :: </h3>
+                <h3 style="text-align: center;">:: BEST 블로거 :: </h3>
             </div>
 <%
 			for(int i=0; i<bloggerRank.size(); ++i){
@@ -761,7 +766,7 @@ function do_search_page(url, page_num) {
 			<div class="col-xs-3 text-center">
                 <center><img class="img-circle img-responsive img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" width="150px" onerror='src="/resources/image/noimg.png"'></center>
                 <h4><%=bloggerRank.get(i).get("NAME") %>
-                    <small><%=bloggerRank.get(i).get("TITLE") %></small>
+                    <br><small><%=bloggerRank.get(i).get("TITLE") %></small>
                 </h4>
                 <p><%=bloggerRank.get(i).get("PF_CONTENT") %></p>
             </div>

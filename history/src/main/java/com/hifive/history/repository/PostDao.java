@@ -29,7 +29,13 @@ public class PostDao implements iDao {
 		String statement = namespace +".hi_insert";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.insert(statement,dto);
+		return 0;
+	}
+	
+	public int hi_insert(Map<String, Object> map) {
+		String statement = namespace +".hi_insert";
+	
+		return sqlSession.insert(statement,map);
 	}
 
 	@Override

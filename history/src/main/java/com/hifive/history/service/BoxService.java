@@ -20,9 +20,6 @@ public class BoxService implements iService {
 
 	@Autowired
 	private BoxDao boxDao;
-	
-	@Resource(name="fileUtils")
-    private FileUtils fileUtils;
 
 	@Override
 	public int hi_insert(iDto dto) {

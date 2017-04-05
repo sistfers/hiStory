@@ -58,6 +58,9 @@ public class BlogControl {
 	@Autowired
 	private BlogService blogSvc;
 	
+	@Autowired
+	private BoxService boxSvc;
+	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) throws     Exception {
 			
@@ -229,11 +232,14 @@ public class BlogControl {
 	            logger.debug("-------------- file end --------------\n");
 	        }
 	    }
+	    
 		//끄읕--첨부파일
 		
 		
 		
 		// view에서 넘어온값 받기
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
 		String id		= request.getParameter("id");
 		String field	= request.getParameter("field");   
@@ -243,10 +249,18 @@ public class BlogControl {
 		String state	= request.getParameter("state");   
 		String co_state= request.getParameter("co_state");
 		
-		PostDto postDto = new PostDto(0,ct_seq,id,field,title,content,null,hashtag,state,co_state);
-		logger.debug("BlogControl.postWrite.postDto.toString() = "+postDto.toString());
+		map.put("ct_seq", ct_seq);
+		map.put("id", id);
+		map.put("field", field);
+		map.put("title", title);
+		map.put("content", content);
+		map.put("hashtag", hashtag);
+		map.put("state", state);
+		map.put("co_state", co_state);
 		
-		int flag = postSvc.hi_insert(postDto);
+		logger.debug("BlogControl.postWrite.map.toString() = "+map.toString());
+		
+		int flag = postSvc.hi_insert(map, request);
 		if(flag > 0){
 			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
 		}else{

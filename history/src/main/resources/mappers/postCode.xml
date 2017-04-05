@@ -117,32 +117,37 @@
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
 <!--포스트쓰기  -->
-<insert id="hi_insert"  parameterType="com.hifive.history.model.PostDto">
-	INSERT
-	INTO POST_H
-	  (
-	    SEQ,
-	    CT_SEQ,
-	    ID,
-	    FIELD,
-	    TITLE,
-	    CONTENT,
-	    HASHTAG,
-	    STATE,
-	    CO_STATE
-	  )
-	  VALUES
-	  (
-	    SEQ_POST.nextval,
-	    #{ct_seq},
-	    #{id},
-	    #{field},
-	    #{title},
-	    #{content},
-	    #{hashtag},
-	    #{state},
-	    #{co_state}
-	  )
+<insert id="hi_insert"  parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
+	 <selectKey keyProperty="IDX" resultType="string" order="BEFORE">
+        SELECT SEQ_POST.NEXTVAL FROM DUAL
+    </selectKey>
+    <![CDATA[
+		INSERT
+		INTO POST_H
+		  (
+		    SEQ,
+		    CT_SEQ,
+		    ID,
+		    FIELD,
+		    TITLE,
+		    CONTENT,
+		    HASHTAG,
+		    STATE,
+		    CO_STATE
+		  )
+		  VALUES
+		  (
+		    #{IDX},
+		    #{ct_seq},
+		    #{id},
+		    #{field},
+		    #{title},
+		    #{content},
+		    #{hashtag},
+		    #{state},
+		    #{co_state}
+		  )
+	  ]]>
 </insert>
 
 <!--포스트수정  -->

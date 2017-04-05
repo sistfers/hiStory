@@ -6,23 +6,25 @@
 
 
 <insert id="hi_insert"  parameterType="com.hifive.history.model.BoxDto">
-INSERT
-INTO BOX_H
-  (
-    SEQ,
-    POST_SEQ,
-    LOCATION,
-    ORI_NAME,
-    SAVE_NAME
-  )
-  VALUES
-  (
-    SEQ_BOX.nextval,
-    #{post_seq},
-    #{LOCATION},
-    #{ORI_NAME},
-    #{SAVE_NAME}
-  )
+	<![CDATA[
+		INSERT
+		INTO BOX_H
+		  (
+		    SEQ,
+		    POST_SEQ,
+		    LOCATION,
+		    ORI_NAME,
+		    SAVE_NAME
+		  )
+		  VALUES
+		  (
+		    SEQ_BOX.nextval,
+		    #{post_seq},
+		    '1',
+		    #{ori_name},
+		    #{save_name}
+		  )
+	 ]]> 
 </insert>
 
 </mapper>

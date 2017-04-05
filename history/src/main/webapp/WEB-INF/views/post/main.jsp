@@ -287,7 +287,7 @@ function go_delete(){
 								class="glyphicon glyphicon-arrow-right"></span></td>
 							<td width=10%>
 								<!-- 사진  --> <img src="<%=commentdata.get("PF_IMAGE")%>"
-								width="40px" height="40px">
+								width="40px" height="40px" onerror="src='/resources/image/noimg.png'">
 							</td>
 
 							<%
@@ -357,7 +357,7 @@ function go_delete(){
 							<!--댓글  -->
 							<td width=11% colspan=2 align="left">
 								<!-- 사진  --> <img src="<%=commentdata.get("PF_IMAGE")%>"
-								width="40px" height="40px">
+								width="40px" height="40px" onerror="src='/resources/image/noimg.png'">
 							</td>
 
 							<%

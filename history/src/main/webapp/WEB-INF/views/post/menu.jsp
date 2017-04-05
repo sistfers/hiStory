@@ -98,7 +98,7 @@
 <br>
 
 <!-- 블로그 주인의 프로필사진을 넣습니다 -->
-<img src="<%=userDto.getPf_image() %>" width="150" height="150"><br>
+<img src="<%=userDto.getPf_image() %>" width="150" height="150" onerror="src='/resources/image/noimg.png'"><br>
 
 <!-- 블로그 주인의 닉네임을 넣습니다 -->
 <h3><%=userDto.getName() %></h3>

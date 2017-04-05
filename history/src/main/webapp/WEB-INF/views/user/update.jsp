@@ -49,22 +49,30 @@
 
         });
 
-        function pwCheck() {
-	        if ($("#password").val() == "" && $("#passwordCheck").val() == "") {
-		        $("#pwCheckFail").hide();
-		        $("#pwCheckSuccess").hide();
-		        passwordCheck = false;
-		        return;
-	        }
-
-	        if ($("#password").val() == $("#passwordCheck").val()) {
-		        $("#pwCheckFail").hide();
-		        $("#pwCheckSuccess").show();
-		        passwordCheck = true;
+        function pwLengthCheck() {
+	        if ($("#password").val().length >= 4 && $("#password").val().length <= 12) {
+		        $("#pwLengthFail").hide();
+		        return true;
 	        } else {
+		        $("#pwLengthFail").show();
+		        $("#pwCheckFail").hide();
 		        $("#pwCheckSuccess").hide();
-		        $("#pwCheckFail").show();
 		        passwordCheck = false;
+		        return false;
+	        }
+        }
+
+        function pwCheck() {
+	        if (pwLengthCheck()) {
+		        if ($("#password").val() == $("#passwordCheck").val()) {
+			        $("#pwCheckFail").hide();
+			        $("#pwCheckSuccess").show();
+			        passwordCheck = true;
+		        } else {
+			        $("#pwCheckSuccess").hide();
+			        $("#pwCheckFail").show();
+			        passwordCheck = false;
+		        }
 	        }
         }
 
@@ -196,7 +204,8 @@
 				<label for="divPassword" class="col-lg-2 control-label">패스워드</label>
 				<div class="col-lg-10">
 					<input type="password" class="form-control" id="password" style="font-family: 'Nanum Gothic', sans-serif;"
-					       name="password" data-rule-required="true" placeholder="패스워드" maxlength="20" value="<%=user_password%>">
+					       name="password" data-rule-required="true" placeholder="패스워드" maxlength="12" value="<%=user_password%>"
+					<p style="color: red" hidden="hidden" id="pwLengthFail"> 패스워드의 길이는 4자 이상 12자 이내로 해주세요. </p>
 				</div>
 			</div>
 
@@ -205,7 +214,7 @@
 					확인</label>
 				<div class="col-lg-10">
 					<input type="password" class="form-control" id="passwordCheck" style="font-family: 'Nanum Gothic', sans-serif;"
-					       data-rule-required="true" placeholder="패스워드 확인" maxlength="20" value="<%=user_password%>">
+					       data-rule-required="true" placeholder="패스워드 확인" maxlength="12" value="<%=user_password%>">
 					<p style="color: green" hidden="hidden" id="pwCheckSuccess"> 패스워드가 일치합니다. </p>
 					<p style="color: red" hidden="hidden" id="pwCheckFail"> 패스워드와 패스워드 확인이 서로 다릅니다. </p>
 				</div>
@@ -235,7 +244,7 @@
 						<%
 							for (String area : areaList) {
 						%>
-						<option <%if(user_area.equals(area)){%> selected="selected"<%} %>><%=area%></option>
+								<option <%if(user_area.equals(area)){%> selected="selected"<%} %>><%=area%></option>
 						<%
 							}
 						%>

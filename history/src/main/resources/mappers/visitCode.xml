@@ -11,7 +11,7 @@
 		     UPDATE SET T1.SEX = #{sex}
 		WHEN NOT MATCHED THEN
 		      INSERT (SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH)
-		      VALUES (SEQ_VISIT.NEXTVAL,  #{id}, #{vid}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}))
+		      VALUES (SEQ_VISIT.NEXTVAL,  #{id}, #{vid}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}, 'YYYY-MM-DD'))
 		
 	</insert>
 	<select id="hi_getToday" parameterType="String" resultType="int">
@@ -36,7 +36,7 @@
 	SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 
 	FROM
 	  (
-	  SELECT TO_CHAR((TO_DATE(#{enddate}, 'yy/mm/dd')-LEVEL), 'yy/mm/dd') AS CUR_DATE,
+	  SELECT TO_CHAR((TO_DATE(#{enddate}, 'YYYY-MM-DD')-LEVEL), 'YYYY-MM-DD') AS CUR_DATE,
 	  0 AS CNT 
 	  FROM DUAL
 	  CONNECT BY LEVEL <=7
@@ -46,7 +46,7 @@
 	  SELECT TO_CHAR(VDATE, 'yy/mm/dd') AS CUR_DATE,COUNT(*) AS CNT
 	  FROM VISIT_H
 	  WHERE V_ID = #{id}
-	  AND VDATE BETWEEN TO_DATE(#{enddate}, 'yy/mm/dd')-7 AND TO_DATE(#{enddate}, 'yy/mm/dd')
+	  AND VDATE BETWEEN TO_DATE(#{enddate}, 'YYYY-MM-DD')-7 AND TO_DATE(#{enddate}, 'YYYY-MM-DD')
 	  GROUP BY TO_CHAR(VDATE, 'yy/mm/dd')
 	  
 	)B

@@ -235,7 +235,7 @@ public class BlogControl {
 		
 		
 		// view에서 넘어온값 받기
-	    /*Map<String, Object> map = new HashMap<String, Object>();
+	    Map<String, Object> map = new HashMap<String, Object>();
 	    
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
 		String id		= request.getParameter("id");
@@ -264,7 +264,7 @@ public class BlogControl {
 			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
 		}else{
 			// 입력 실패했을때 어떻게 해야할지 모르겠다
-		}*/
+		}
 		
 		return null;
 	}

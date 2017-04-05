@@ -15,12 +15,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("fileUtils")
 public class FileUtils {
-	private static final String filePath = "../resources/uploadImages";
+	private String filePath = "";
     
     public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-         
+        
+        filePath = request.getSession().getServletContext().getRealPath("/");
+        
         MultipartFile multipartFile = null;
         String originalFileName = null;
         String originalFileExtension = null;

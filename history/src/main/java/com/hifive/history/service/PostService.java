@@ -17,11 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hifive.history.model.BoxDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.BoxDao;
 import com.hifive.history.repository.PostDao;
@@ -37,8 +35,8 @@ public class PostService implements iService {
 	@Autowired
 	private BoxDao boxDao;
 	
-	/*@Resource(name="fileUtils")
-    private FileUtils fileUtils;*/
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
 	
 	static String FILE_URL = "";	//저장할 경로
 	static final String SAVE_URL = "../resources/uploadImages";	// 불러올 경로
@@ -89,10 +87,10 @@ public class PostService implements iService {
 	public int hi_insertMap(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		int flag = postDao.hi_insertMap(map);
 		
-		/*List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
         
-		hi_insertList(list);	//첨부파일 인설트 (트랜잭션 적용)
-*/		
+		hi_insertList(list);	//첨부파일 인설트 (트랜잭션 미적용)
+	
 		return flag;
 	}
 
@@ -148,7 +146,7 @@ public class PostService implements iService {
 		return postDao.hi_selectSearchList(condition);
 	}
 	
-	/*@Transactional
+	
 	public int hi_insertList(List<Map<String, Object>> boxList) throws SQLException{
 		int flagCnt = 0;
 		for(Map<String, Object> map:boxList){
@@ -156,7 +154,7 @@ public class PostService implements iService {
 			flagCnt += flag;
 		}
 		return flagCnt;
-	}*/
+	}
 	
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
 	      return postDao.getLovePost(dto);

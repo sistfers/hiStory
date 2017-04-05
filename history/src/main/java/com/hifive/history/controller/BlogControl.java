@@ -87,13 +87,15 @@ public class BlogControl {
 		int	   seq 	= request.getParameter("seq")==null ? 0 : Integer.parseInt(request.getParameter("seq"));
 		HashMap<String,String> dto = new HashMap<>();
 		
-		dto.put("id", userDto.getId());
-		dto.put("vid", ID);
-		dto.put("sex", userDto.getSex());
-		dto.put("area", userDto.getArea());
-		dto.put("birth", userDto.getBirth());
-		
-		visitService.hi_upsert(dto);
+		if(userDto != null){		// 로그인정보 없으면 방문자수 못올림 
+			dto.put("id", userDto.getId());
+			dto.put("vid", ID);
+			dto.put("sex", userDto.getSex());
+			dto.put("area", userDto.getArea());
+			dto.put("birth", userDto.getBirth());
+			
+			visitService.hi_upsert(dto);
+		}
 		
 		BlogDto blogdto = blogSvc.getMyBlog(ID);
 		mav.addObject("blogdto",blogdto);

@@ -164,7 +164,7 @@ if(session.getAttribute("user") != null) {
                             "<li>" +
                             "   <div class=\"navbar-login\">" +
                             "       <div class=\"row\">" +
-                            "           <div class=\"col-sm-8\" style=\"text-align:right;color: black; font-size: 14px\">" +
+                            "           <div class=\"col-sm-8\" style=\"text-align:right;color: black; font-size: 13px\">" +
                             "               <p>" + followList[i].NAME +" § "+ followList[i].TITLE  +
                             "               </p>" +
                             "           </div>" +

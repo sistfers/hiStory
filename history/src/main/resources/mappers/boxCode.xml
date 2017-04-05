@@ -24,4 +24,5 @@ INTO BOX_H
     #{SAVE_NAME}
   )
 </insert>
+
 </mapper>

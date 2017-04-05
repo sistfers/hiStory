@@ -27,6 +27,12 @@ public class BoxDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.insert(statement,dto);
 	}
+	
+	public int hi_insert(Map<String, Object> map) {
+		String statement = namespace +".hi_insert";
+	
+		return sqlSession.insert(statement,map);
+	}
 
 	@Override
 	public int hi_update(iDto dto) {

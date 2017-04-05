@@ -1,14 +1,10 @@
 package com.hifive.history.service;
 
-import com.hifive.history.model.PostDto;
-import com.hifive.history.model.iDto;
-import com.hifive.history.repository.PostDao;
-import com.hifive.history.util.FileUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +17,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.hifive.history.model.BoxDto;
+import com.hifive.history.model.iDto;
+import com.hifive.history.repository.BoxDao;
+import com.hifive.history.repository.PostDao;
+import com.hifive.history.util.FileUtils;
 
 @Service
 public class PostService implements iService {
@@ -30,6 +33,12 @@ public class PostService implements iService {
 
 	@Autowired
 	private PostDao postDao;
+	
+	@Autowired
+	private BoxService boxService;
+	
+	@Autowired
+	private BoxDao boxDao;
 	
 	@Resource(name="fileUtils")
     private FileUtils fileUtils;
@@ -78,6 +87,16 @@ public class PostService implements iService {
 	public int hi_insert(iDto dto) {
 		logger.debug("PostService.dto.toString() = "+dto.toString());
 		return postDao.hi_insert(dto);
+	}
+	
+	public int hi_insert(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		int flag = postDao.hi_insert(map);
+		
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
+        
+		hi_insertList(list);	//첨부파일 인설트 (트랜잭션 적용)
+		
+		return flag;
 	}
 
 	@Override
@@ -130,6 +149,16 @@ public class PostService implements iService {
 	public List<Map<String, Object>> hi_selectSearchList(Map<String, Object> condition) throws Exception {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectSearchList(condition);
+	}
+	
+	@Transactional
+	public int hi_insertList(List<Map<String, Object>> boxList) throws SQLException{
+		int flagCnt = 0;
+		for(Map<String, Object> map:boxList){
+			int flag = boxDao.hi_insert(map);
+			flagCnt += flag;
+		}
+		return flagCnt;
 	}
 	
 }

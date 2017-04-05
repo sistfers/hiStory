@@ -45,14 +45,4 @@ public class BoxService implements iService {
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return boxDao.hi_selectList(condition);
 	}
-	
-	@Transactional
-	public int hi_insertList(List<BoxDto> boxList) throws SQLException{
-		int flagCnt = 0;
-		for(BoxDto box:boxList){
-			int flag = boxDao.hi_insert(box);
-			flagCnt += flag;
-		}
-		return flagCnt;
-	}
 }

@@ -95,6 +95,14 @@ public class BlogControl {
 			dto.put("birth", userDto.getBirth());
 			
 			visitService.hi_upsert(dto);
+		}else if(session.getAttribute("ip")!=null){
+			dto.put("id", (String)session.getAttribute("ip"));
+			dto.put("vid", ID);
+			dto.put("sex", "0");
+			dto.put("area", "경인");
+			dto.put("birth", "17/04/05");
+			
+			visitService.hi_upsert(dto);
 		}
 		
 		BlogDto blogdto = blogSvc.getMyBlog(ID);

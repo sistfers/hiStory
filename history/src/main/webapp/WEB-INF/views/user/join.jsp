@@ -230,7 +230,7 @@
 				<div class="form-group" id="divPassword">
 					<label for="divPassword" class="col-lg-2 control-label">패스워드</label>
 					<div class="col-lg-10">
-						<input type="password" class="form-control" id="password"
+						<input type="password" class="form-control" id="password" style="font-family: 'Nanum Gothic', sans-serif;"
 							name="password" data-rule-required="true" placeholder="패스워드"
 							maxlength="20">
 					</div>
@@ -240,7 +240,7 @@
 					<label for="divPasswordCheck" class="col-lg-2 control-label">패스워드
 						확인</label>
 					<div class="col-lg-10">
-						<input type="password" class="form-control" id="passwordCheck"
+						<input type="password" class="form-control" id="passwordCheck" style="font-family: 'Nanum Gothic', sans-serif;"
 							data-rule-required="true" placeholder="패스워드 확인" maxlength="20">
 					</div>
 				</div>

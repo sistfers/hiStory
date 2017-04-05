@@ -51,12 +51,13 @@ border-radius: 15px;
 	        <div class="col-xs-10">
 		        <!-- 포스트-->
 		        <div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-top:20px; padding-top: 20px; margin-bottom: 20px">
-		 			<p style="font-size: 25px; margin-top: 20px">나의 팔로우 보기</p>
+		 			<p style="font-size: 25px; margin-top: 20px">내가 공감한 글</p>
 					<table class="table" style="margin-top: 20px" id="neighbor">
 					<tr class="info">
 						<th>No</th>
 						<th>ID</th>
 						<th>제목</th>
+						<th>공감일</th>
 					</tr>
 					<%
 						if(lovepostList!=null && lovepostList.size()!=0){
@@ -67,9 +68,10 @@ border-radius: 15px;
 							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>">
 							<%=lovepostList.get(i).get("POSTID")+" "%></a>
 							</td>
-							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>">
+							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>&seq=<%=lovepostList.get(i).get("POST_SEQ")%>">
 							<%=lovepostList.get(i).get("TITLE") %></a>
 							</td>
+							<td><%=lovepostList.get(i).get("LDATE") %></td>
 						</tr>
 					<%
 							}
@@ -92,7 +94,7 @@ border-radius: 15px;
 						}else{
 					%>
 						<tr class="active">
-						<td colspan="4" style="text-align: center;">회원님을 팔로우하는 회원이 없습니다.</td> 
+						<td colspan="4" style="text-align: center;">회원님이 공감하신 글이 없습니다.</td> 
 						</tr>
 						
 					<%

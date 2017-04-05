@@ -1,3 +1,5 @@
+<%@page import="com.hifive.history.model.BlogDto"%>
+<%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
@@ -20,6 +22,13 @@
 	date.setDate(date.getDate()-7);
 	String comment1 = sd.format(date);
 	
+	//블로그 테마색 불러오기
+	if(session.getAttribute("user")!=null){
+		UserDto user = (UserDto)session.getAttribute("user");
+	}
+	
+	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
+	
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,6 +36,7 @@
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawVisualization);
@@ -57,7 +67,7 @@ function drawVisualization() {
 }
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>:::::::::::블로그 관리:::::::::::::::</title>
+<title>블로그 관리/통계</title>
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -80,13 +90,13 @@ border-radius: 15px;
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
-      <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
+       <div class="col-xs-2 mydiv" style="background-color: <%=blogdto.getTheme() %>; border-radius: 15px">
          <jsp:include page="menu.jsp"/>
       </div>
       <!--내용 START -->
-        <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
+        <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
         	<div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
 		       	<p style="font-size: 25px; margin-top: 20px;"> 방문자수</p><hr>
 		       	<form class="form-horizontal" method="post" action="visit.hi">
 		       	<div class="form-group" id="startdate" style="margin-top: 10px">

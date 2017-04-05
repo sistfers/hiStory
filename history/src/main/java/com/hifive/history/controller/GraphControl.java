@@ -66,6 +66,11 @@ public class GraphControl {
 		List<Map<String,Object>> visitList = visitService.hi_getTodayVisit(dto);
 		mav.addObject("visitList", visitList);
 		
+		
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
+		
 		return mav;
 	}
 	@RequestMapping("chart/age.hi")
@@ -99,6 +104,10 @@ public class GraphControl {
 		mav.addObject("visitAgeList", visitAgeList);
 		mav.addObject("comment2", startdate);
 		mav.addObject("comment1", enddate);
+		
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
 		
 		return mav;
 	}
@@ -134,6 +143,10 @@ public class GraphControl {
 		
 		mav.addObject("followIncList", followIncList);
 		mav.addObject("followDecList", followDecList);
+		
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
 		
 		return mav;
 	}
@@ -224,6 +237,10 @@ public class GraphControl {
 				
 		mav.addObject("loveSelectRank", loveSelectRank);
 		
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
+		
 		return mav;
 	}
 	@RequestMapping("chart/comment.hi")
@@ -259,6 +276,10 @@ public class GraphControl {
 		
 		List<HashMap<String, Object>> postTodayList = postService.hi_selectTodayCommentRank(map);
 		mav.addObject("postTodayList", postTodayList);
+		
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
 		
 		return mav;
 	}

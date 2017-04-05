@@ -5,7 +5,33 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%!
+	// 해시태그 잘라서 보여주기
+	public String[] split(String str){
+		int count = 0;
+		for(int i = 0; i < str.length(); ++i){
+			if(str.charAt(i)=='#'){
+				++count;
+			}
+		}
+		if(count!=0){
+			count = count-1;
+		}
+		String hashString[] = new String[count];
+		for(int i = 0; i < hashString.length; ++i){
+			hashString[i]="";
+		}
+		int start = 0;
+		for(int i = 1; i < str.length(); ++i){
+			if(str.charAt(i)!='#'){
+				hashString[start]+=str.charAt(i);
+			}else{
+				++start;
+			}
+		}
+		return hashString;
+	}
+%>
 <%
 	List<CategoryDto> categoryList = ((List<CategoryDto>)request.getAttribute("categoryList"));
 	List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100
@@ -22,37 +48,7 @@
 	// 포스트 내용 1건 보여주기
 	PostDto DTO = (PostDto)request.getAttribute("DTO");
 	
-	
- 	// 해시태그 부르기
-	if (DTO.getHashtag() != null){
-		String hash = DTO.getHashtag();
-		// 태그 갯수 확인하기
-		int count = 0;
-		for(int i = 0; i < hash.length()-1; ++i){
-			if(hash.charAt(i)=='#'){
-				++count;
-			}
-		}
-		
-		// 배열 초기화
-		String tag[] = new String[count];
-		int start = 0;
-		for(int i = 0; i < count; ++i){
-			tag[i] = "";
-		}
-		
-		// 배열에 태그 잘라서 넣기
-		for(int i = 1; i < hash.length()-1; ++i){
-			if(hash.charAt(i)!='#'){
-				tag[start]+=hash.charAt(i);
-			}else{
-				++start;
-			}
-			System.out.println("해시태그="+tag[start]);
-		}
-		int init = 0;
-	} 
-	
+
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -160,7 +156,19 @@
 	
 	<!-- 태그 뿌려지는 부분 -->
 	<div id="after_tag" class="col-xs-12">
-	<%=DTO.getHashtag() %>
+
+				<%
+					if (DTO.getHashtag() != null) {
+						String str[] = split(DTO.getHashtag());
+						for (int i = 0; i < str.length; ++i) {
+				%>
+				<span class='before_tag' id='tag_<%=i %>' style='margin-left:7px;'>#<b><%=str[i]%></b>
+				<a href='javascript:deltag(<%=i %>)' style='margin-left:7px; color:red;'><b>x</b></a></span>
+				<%
+					}
+					}
+				%>
+
 	</div>
     <input type="hidden" name="tag" id="tag"/>
 	<!--연결된 태그값 넘기기  -->

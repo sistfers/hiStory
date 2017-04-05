@@ -1,5 +1,6 @@
 package com.hifive.history.repository;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +114,12 @@ public class PostDao implements iDao {
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
+	}
+	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
+		String statement = namespace +".getLovePost";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+dto.toString());
+		return sqlSession.selectList(statement,dto);
 	}
 	
 }

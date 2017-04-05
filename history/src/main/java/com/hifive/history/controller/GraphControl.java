@@ -216,8 +216,8 @@ public class GraphControl {
 		map.put("PAGE_SIZE", "10");
 		map.put("PAGE_NUM", PAGE_NUM);
 		
-		List<Map<String, Object>> neighborList = followService.hi_getNeighborList(map);
-		mav.addObject("neighborList", neighborList);
+		List<Map<String, Object>> lovepostList = postService.getLovePost(map);
+		mav.addObject("lovepostList", lovepostList);
 		return mav;
 		
 	}

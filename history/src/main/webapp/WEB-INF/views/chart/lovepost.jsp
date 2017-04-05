@@ -8,8 +8,8 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%
-	List<Map<String, Object>> neighborList = new ArrayList<>();
-	neighborList = (List<Map<String, Object>>)request.getAttribute("neighborList");
+	List<Map<String, Object>> lovepostList = new ArrayList<>();
+	lovepostList = (List<Map<String, Object>>)request.getAttribute("lovepostList");
 %>
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -54,24 +54,21 @@ border-radius: 15px;
 		 			<p style="font-size: 25px; margin-top: 20px">나의 팔로우 보기</p>
 					<table class="table" style="margin-top: 20px" id="neighbor">
 					<tr class="info">
-						<th> <input type="checkbox"> </th>
-						<th>ID [ 닉네임 ]</th>
-						<th>블로그타이틀</th>
-						<th style="text-align: center;">상태</th>
+						<th>No</th>
+						<th>ID</th>
+						<th>제목</th>
 					</tr>
 					<%
-						if(neighborList!=null && neighborList.size()!=0){
-							for(int i = 0; i < neighborList.size(); ++i){
+						if(lovepostList!=null && lovepostList.size()!=0){
+							for(int i = 0; i < lovepostList.size(); ++i){
 					%>
 						<tr class="active">
-							<td><input type="checkbox"></td>
-							<td><a href="/post/main.hi?id=<%=neighborList.get(i).get("MY_ID")%>">
-							<%=neighborList.get(i).get("MY_ID")+" "%> [ <%=neighborList.get(i).get("NAME")+" "%> ]</a>
+							<td><%=i+1 %></td>
+							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>">
+							<%=lovepostList.get(i).get("POSTID")+" "%></a>
 							</td>
-							<td><%=neighborList.get(i).get("TITLE") %></td>
-							<td style="text-align: center;">
-							<button type="button" class="btn-xs btn-info" id="addNeighbor" onclick="do_add('<%=neighborList.get(i).get("MY_ID")%>')">이웃추가</button>
-							<button type="button" class="btn-xs btn-danger" id="delNeighbor" onclick="do_del('<%=neighborList.get(i).get("MY_ID")%>')">차단</button>
+							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>">
+							<%=lovepostList.get(i).get("TITLE") %></a>
 							</td>
 						</tr>
 					<%
@@ -80,7 +77,7 @@ border-radius: 15px;
 						<tr>
 							<td colspan="4" style="text-align: center;">
 							<%
-							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/10+1;
+							int tot = Integer.parseInt(lovepostList.get(0).get("TOT_CNT").toString())/10+1;
 							for(int i = 1; i<= tot; ++i){							
 							%>
 								<a href="" id="PAGE_NUM">

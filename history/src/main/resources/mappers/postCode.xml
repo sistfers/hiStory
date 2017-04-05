@@ -749,5 +749,26 @@ SELECT TT2.*
 WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
 </select>
+<select id="getLovePost" parameterType="map" resultType="map">
+	SELECT TT2.*							
+	FROM(							
+      SELECT T1.*, T2.TOT_CNT							
+      FROM(	  
+        SELECT ROWNUM RNUM, A.POST_SEQ, A.ID, A.LDATE, B.ID POSTID, B.TITLE
+        FROM LOVE_H A INNER JOIN POST_H B
+          ON A.POST_SEQ = B.SEQ
+       WHERE A.ID = #{id}
+       ) T1 
+       NATURAL JOIN
+       (
+        SELECT COUNT(*) TOT_CNT
+        FROM LOVE_H A INNER JOIN POST_H B
+          ON A.POST_SEQ = B.SEQ
+        WHERE A.ID = #{id}
+        )T2							
+    )TT2							
+	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
+	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+</select>
 </mapper>
 

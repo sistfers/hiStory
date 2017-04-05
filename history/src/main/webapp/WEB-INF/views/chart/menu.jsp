@@ -17,7 +17,7 @@
 		<!-- <li class="list-group-item" style="color: #F15F5F; background-color: #F6F6F6;"><b>관리</b></li> -->
 		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("control")) out.println("active");%>" href="control.hi">블로그관리</a>
 		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("neighbor")) out.println("active");%>" href="neighbor.hi">나를 추가한 이웃</a>
-		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("lovepost")) out.println("active");%>" href="lovepost.hi">내가공감한 글</a>
+		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("lovepost")) out.println("active");%>" href="lovepost.hi">내가 공감한 글</a>
 	</div>
 </div>
 
@@ -41,7 +41,7 @@
 	    <h3 class="panel-title">순위</h3>
 	</div>
 	<div class="list-group">
-		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("love")) out.println("active");%>" href="love.hi">공감수 순위</a>
+		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("love.")) out.println("active");%>" href="love.hi">공감수 순위</a>
 		<a class="list-group-item  <%if(request.getRequestURL().toString().contains("comment")) out.println("active");%>" href="comment.hi">댓글수 순위</a>
 	</div>
 </div>

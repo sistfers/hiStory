@@ -198,6 +198,29 @@ public class GraphControl {
 		return mav;
 		
 	}
+	@RequestMapping("chart/lovepost.hi")
+	public ModelAndView lovepost(HttpServletRequest request, HttpSession session) throws Exception {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
+		
+		String PAGE_NUM = "1";
+		if(request.getParameter("PAGE_NUM")!=null){
+			PAGE_NUM = request.getParameter("PAGE_NUM");
+		}
+		ModelAndView mav = new ModelAndView("chart/lovepost");
+		
+		HashMap<String,String> map = new HashMap<>();
+		map.put("id", user.getId());
+		map.put("PAGE_SIZE", "10");
+		map.put("PAGE_NUM", PAGE_NUM);
+		
+		List<Map<String, Object>> neighborList = followService.hi_getNeighborList(map);
+		mav.addObject("neighborList", neighborList);
+		return mav;
+		
+	}
 	@RequestMapping("chart/love.hi")
 	public ModelAndView love(HttpServletRequest request, HttpSession session) throws Exception{
 		UserDto user = new UserDto();;

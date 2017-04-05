@@ -7,7 +7,7 @@
 <br>
 
 <!-- 카테고리 -->
-<div class="panel panel-danger">
+<div class="panel panel-info">
 <div class="panel-heading">
     <h3 class="panel-title">관리</h3>
   </div>
@@ -35,7 +35,7 @@
 </div>
 
 
-<div class="panel panel-warning">
+<div class="panel panel-info">
 	<div class="panel-heading">
 	    <h3 class="panel-title">순위</h3>
 	</div>

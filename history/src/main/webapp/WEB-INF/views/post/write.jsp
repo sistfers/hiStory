@@ -40,7 +40,7 @@
 
 <!-- 중간 START -->
 <div class="container" >
-	<form class="form-horizontal postForm" action="writeInsert.hi" method="post">
+	<form class="form-horizontal postForm" action="writeInsert.hi" method="post" enctype="multipart/form-data">
 	
 	<input type="hidden" name="id" value="<%=id%>"/>
 <!-- 카테고리 -->
@@ -73,7 +73,16 @@
 			}); 
 		</script>
 		</div>
+		<br>
+		<div class="col-xs-9">
+<!-- 첨부 파일 업로드 시작  -->
+		<input type="file" id="file" name="file">		
+		</div>
 		
+		<div class="col-xs-3">
+		<label for="field"> 파일 선택 </label>
+		</div>
+<!-- 첨부 파일 업로드 끝  -->		
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="FIELD" name="field">

@@ -3,6 +3,7 @@ package com.hifive.history.service;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.PostDao;
+import com.hifive.history.util.FileUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,8 +31,11 @@ public class PostService implements iService {
 	@Autowired
 	private PostDao postDao;
 	
+	@Resource(name="fileUtils")
+    private FileUtils fileUtils;
+	
 	static String FILE_URL = "";	//저장할 경로
-	static final String SAVE_URL = "http://localhost:8190/resources/uploadImages";	// 불러올 경로
+	static final String SAVE_URL = "../resources/uploadImages";	// 불러올 경로
 	
 	public PostService() {
 	}

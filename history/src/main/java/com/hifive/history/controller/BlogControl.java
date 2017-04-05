@@ -3,6 +3,7 @@ package com.hifive.history.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -212,6 +214,24 @@ public class BlogControl {
 	@RequestMapping("post/writeInsert.hi")
 	public String postwriteInsert(HttpServletRequest request, HttpSession session) throws Exception{
 		//ModelAndView mav = new ModelAndView();
+		
+		//첨부 파일!!!
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+	    Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+	    MultipartFile multipartFile = null;
+	    while(iterator.hasNext()){
+	        multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+	        if(multipartFile.isEmpty() == false){
+	            logger.debug("------------- file start -------------");
+	            logger.debug("name : "+multipartFile.getName());
+	            logger.debug("filename : "+multipartFile.getOriginalFilename());
+	            logger.debug("size : "+multipartFile.getSize());
+	            logger.debug("-------------- file end --------------\n");
+	        }
+	    }
+		//끄읕--첨부파일
+		
+		
 		
 		// view에서 넘어온값 받기
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));

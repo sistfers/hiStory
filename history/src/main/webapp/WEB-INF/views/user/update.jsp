@@ -15,6 +15,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
         var emailCheck = true;
+        var passwordCheck = true;
 
         $(document).ready(function () {
 
@@ -28,7 +29,44 @@
                 }
             });
 
+	        $("#password").on({
+		        keyup: function () {
+			        pwCheck();
+		        },
+		        change: function () {
+			        pwCheck();
+		        }
+	        });
+
+	        $("#passwordCheck").on({
+		        keyup: function () {
+			        pwCheck();
+		        },
+		        change: function () {
+			        pwCheck();
+		        }
+	        });
+
         });
+
+        function pwCheck() {
+	        if ($("#password").val() == "" && $("#passwordCheck").val() == "") {
+		        $("#pwCheckFail").hide();
+		        $("#pwCheckSuccess").hide();
+		        passwordCheck = false;
+		        return;
+	        }
+
+	        if ($("#password").val() == $("#passwordCheck").val()) {
+		        $("#pwCheckFail").hide();
+		        $("#pwCheckSuccess").show();
+		        passwordCheck = true;
+	        } else {
+		        $("#pwCheckSuccess").hide();
+		        $("#pwCheckFail").show();
+		        passwordCheck = false;
+	        }
+        }
 
         function joinCheck() {
             if ($("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
@@ -36,11 +74,11 @@
                 alert("빈칸이 존재합니다");
                 return false;
             }
-            if ($("#password").val() != $("#passwordCheck").val()) {
-                alert("패스워드가 일치하지 않습니다.");
+            if (!passwordCheck) {
+                alert("패스워드를 확인해주세요");
                 return false;
             }
-            if (emailCheck == false) {
+            if (!emailCheck) {
                 alert("이메일이 인증되지 않았습니다.");
                 return false;
             }
@@ -83,6 +121,11 @@
             }
 
         }
+
+        // 사진찾기를 클릭시 파일인풋클릭되게 하는 스크립트
+        document.querySelector('#upload_btn').addEventListener('click', function(e) {
+	        document.querySelector('#fileInput').click();
+        }, false);
 	</script>
 </head>
 <body>
@@ -152,7 +195,7 @@
 			<div class="form-group" id="divPassword">
 				<label for="divPassword" class="col-lg-2 control-label">패스워드</label>
 				<div class="col-lg-10">
-					<input type="password" class="form-control" id="password"
+					<input type="password" class="form-control" id="password" style="font-family: 'Nanum Gothic', sans-serif;"
 					       name="password" data-rule-required="true" placeholder="패스워드" maxlength="20" value="<%=user_password%>">
 				</div>
 			</div>
@@ -161,8 +204,10 @@
 				<label for="divPasswordCheck" class="col-lg-2 control-label">패스워드
 					확인</label>
 				<div class="col-lg-10">
-					<input type="password" class="form-control" id="passwordCheck"
+					<input type="password" class="form-control" id="passwordCheck" style="font-family: 'Nanum Gothic', sans-serif;"
 					       data-rule-required="true" placeholder="패스워드 확인" maxlength="20" value="<%=user_password%>">
+					<p style="color: green" hidden="hidden" id="pwCheckSuccess"> 패스워드가 일치합니다. </p>
+					<p style="color: red" hidden="hidden" id="pwCheckFail"> 패스워드와 패스워드 확인이 서로 다릅니다. </p>
 				</div>
 			</div>
 
@@ -171,7 +216,7 @@
 				<div class="col-lg-10">
 					<input type="text" class="form-control onlyHangul" id="name"
 					       name="name" data-rule-required="true" placeholder="사용할 닉네임을 입력하세요"
-					       maxlength="20" value="<%=user_name%>">
+					       maxlength="10" value="<%=user_name%>">
 				</div>
 			</div>
 
@@ -224,7 +269,8 @@
 				<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 				<div class="col-lg-10">
 					<img src="<%=user_pf_img%>" width="130" name="previewimg" id="previewimg" alt="">
-					<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg', '<%=user_pf_img%>')" >
+					<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg', '<%=user_pf_img%>')"   style="display:none;">
+					<input type="button" value="사진찾기"  class="btn btn-default" id="upload_btn">
 				</div>
 			</div>
 
@@ -233,7 +279,7 @@
 				<div class="col-lg-10">
 					<input type="text" class="form-control" id="profile"
 						name="profileCon" data-rule-required="true" placeholder="안녕하세요."
-						maxlength="20" value="<%=user_pf_con%>">
+						maxlength="50" value="<%=user_pf_con%>">
 				</div>
 			</div>
 			<hr>		<!-- 구분선 -->
@@ -244,7 +290,7 @@
 			<!-- 회원가입/취소 버튼 -->
 			<div class="form-group" align="center">
 				<button type="button" class="btn btn-info" id="update">수정완료</button>
-				<button type="reset" class="btn btn-default">취소</button>
+				<a href="/"><input type="button" class="btn btn-default" id="cancel" value="취소" /></a>
 			</div>
 		</form>
 	</div>

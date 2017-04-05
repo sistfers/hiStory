@@ -111,20 +111,6 @@
 		</choose>
 	</select>
 
-	<!--페이징-->
-	<!--<select id="hi_selectList" parameterType="hashmap" resultMap="followMap">-->
-		<!--SELECT TT2.*-->
-		<!--FROM(-->
-		<!--SELECT ROWNUM RNUM, T1.*, T2.TOT_CNT-->
-		<!--FROM(-->
-		<!--<include refid="BaseCondition"></include>-->
-		<!--)T2-->
-		<!--)TT2-->
-		<!--WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)-->
-		<!--AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})-->
-		<!--ORDER BY TT2.RNUM DESC-->
-	<!--</select>-->
-
 	<select id="hi_getFollowList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 									
@@ -190,7 +176,7 @@
 		DELETE WHERE MY_ID = #{my_id} AND YOU_ID = #{you_id} AND TO_CHAR(FDATE, 'YYYY/MM/DD') = TO_CHAR(SYSDATE, 'YYYY/MM/DD')
 		WHEN NOT MATCHED THEN
 		INSERT ( f1.SEQ, f1.MY_ID, f1.YOU_ID, f1.FDATE, f1.SEX, f1.AREA, f1.BIRTH, f1.STATE)
-		VALUES ( SEQ_FOLLOW.NEXTVAL, #{my_id}, #{you_id}, SYSDATE, #{sex}, #{area}, #{birth}, #{state} )
+		VALUES ( SEQ_FOLLOW.NEXTVAL, #{my_id}, #{you_id}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}), #{state} )
 	</update>
 
 	<select id="hi_detail" parameterType="com.hifive.history.model.FollowDto" resultType="com.hifive.history.model.FollowDto">

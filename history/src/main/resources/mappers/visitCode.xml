@@ -11,7 +11,7 @@
 		     UPDATE SET T1.SEX = #{sex}
 		WHEN NOT MATCHED THEN
 		      INSERT (SEQ, ID, V_ID, VDATE, SEX, AREA, BIRTH)
-		      VALUES (SEQ_VISIT.NEXTVAL,  #{id}, #{vid}, SYSDATE, #{sex}, #{area}, #{birth})
+		      VALUES (SEQ_VISIT.NEXTVAL,  #{id}, #{vid}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}))
 		
 	</insert>
 	<select id="hi_getToday" parameterType="String" resultType="int">

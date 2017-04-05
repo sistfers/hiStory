@@ -20,7 +20,7 @@ INTO LOVE_H
     #{id},
     #{sex},
     #{area},
-    #{birth}
+    TO_DATE(#{birth})
   )
 </insert>
 

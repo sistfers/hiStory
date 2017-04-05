@@ -87,7 +87,6 @@ if(session.getAttribute("user") != null) {
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃 <span class="caret"></span></a>
 					<ul class="dropdown-menu scrollable-menu" role="menu" id="followUl" ></ul>
 				</li>
-				<li><a href="/chart/control.hi">공감글</a></li>
 				<li><a href="javascript:do_message(); ">쪽지함(0)</a></li>
 				<li><a href="/chart/control.hi">블로그관리</a></li>
 

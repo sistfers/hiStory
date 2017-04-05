@@ -1,3 +1,5 @@
+<%@page import="com.hifive.history.model.UserDto"%>
+<%@page import="com.hifive.history.model.BlogDto"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
@@ -24,6 +26,13 @@
 		comment1 = (String)request.getAttribute("comment1");
 		comment2 = (String)request.getAttribute("comment2");
 	}
+	
+	//블로그 테마색 불러오기
+	if(session.getAttribute("user")!=null){
+		UserDto user = (UserDto)session.getAttribute("user");
+	}
+	
+	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,6 +40,7 @@
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawVisualization);
@@ -48,7 +58,7 @@ function drawVisualization() {
 ]);
 
 var options = {
-title : 'haengtion님의 성별 분석',
+title : '성별 분석',
 vAxis: {title: '방문수'},
 hAxis: {title: '<%=comment2%> ~ <%=comment1%>'},
 seriesType: 'bars',
@@ -73,7 +83,7 @@ chart.draw(data, options);
         ]);
 
         var options = {
-          title: 'haengtion님의 연령별 분석',
+          title: '연령별 분석',
           pieHole: 0.4,
         };
 
@@ -82,7 +92,7 @@ chart.draw(data, options);
       }
     </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>:::::::::::블로그 관리:::::::::::::::</title>
+<title>블로그 관리/통계</title>
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -105,21 +115,29 @@ border-radius: 15px;
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
-      <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
+      <div class="col-xs-2 mydiv" style="background-color: <%=blogdto.getTheme() %>; border-radius: 15px">
          <jsp:include page="menu.jsp"/>
       </div>
       <!--내용 START -->
-        <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
+        <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: rgb(255, 230, 230);">
-		       	<p style="font-size: 25px; margin-top: 20px">방문자수</p>
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
+		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
+		       	
+		       	<fieldset>
+		       	<legend><i class="icon-bar-chart"></i> 연령별/성별 방문자수 통계</legend></fieldset>
+		       	
+		       	<!-- <p style="font-size: 25px; margin-top: 20px">방문자수</p> -->
+		       	
 		       	<form class="form-horizontal" method="post" action="age.hi">
 		       	<div class="form-group" id="startdate" style="margin-top: 10px">
-					<div class="col-xs-1">
-					</div>
+						<div class="col-xs-1" style="text-align: right;margin-right: 0">
+							<i class="icon-calendar" style="font-size: 35px; margin-top: 5px"></i>
+						</div>
 					<div class="col-xs-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
 					</div>
+					<div class="col-xs-1"><i class="icon-ellipsis-horizontal"></i></div>
 					<div class="col-xs-4">
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
@@ -128,15 +146,21 @@ border-radius: 15px;
 					</div>
 				</div>
 				</form>
-		       	<div class="col-xs-12" id="chart_div" style="height: 500px;">
-		       	</div>
+				
+				<!--차트1  -->
+		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
+		       	
+		       	<!--차트2  -->
 		       	<div class="col-xs-12" id="donutchart" style="height: 500px;"></div>
+		       	
+		       	</div>
+		       	
 			<div class="col-xs-1"></div>
   		</div>
-</div>
+	</div>
 
 <!--중간 END -->
-</div>
+	</div>
 
 <!--중간 END -->
 

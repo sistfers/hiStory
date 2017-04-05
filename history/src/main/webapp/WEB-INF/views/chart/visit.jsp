@@ -32,11 +32,6 @@
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Bootstrap CSS -->
-<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawVisualization);
@@ -55,7 +50,7 @@ function drawVisualization() {
 ]);
 
 	var options = {
-	title : 'haengtion님의 방문자 분석',
+	title : '방문자 분석',
 	vAxis: {title: '방문수'},
 	hAxis: {title: '<%=comment1%> ~ <%=comment2%>'},
 	seriesType: 'bars',
@@ -68,6 +63,12 @@ function drawVisualization() {
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>블로그 관리/통계</title>
+<!-- Bootstrap CSS -->
+<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -97,40 +98,47 @@ border-radius: 15px;
         <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
         	<div class="col-xs-1"></div>
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
-		       	<p style="font-size: 25px; margin-top: 20px;"> 방문자수</p><hr>
+		       	<!-- <p style="font-size: 25px; margin-top: 20px;"> 방문자수</p><hr> -->
+		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
+		       	<fieldset>
+		       	<legend><i class="icon-bar-chart"></i> 방문자수 통계</legend></fieldset>
+		       	
 		       	<form class="form-horizontal" method="post" action="visit.hi">
-		       	<div class="form-group" id="startdate" style="margin-top: 10px">
-					<div class="col-xs-1">
+			       	<div class="form-group" id="startdate" style="margin-top: 10px">
+						<div class="col-xs-4" style="text-align: right;margin-right: 0">
+							<i class="icon-calendar" style="font-size: 35px; margin-top: 5px"></i>
+						</div>
+						
+						<div class="col-xs-4" style="margin-left: 0; text-align: left">
+							<input type="date" class="form-control" id="enddate" name="enddate">
+						</div>
+						<div class="col-xs-4">
+							<button type="submit" class="btn btn-danger"> 조회 </button>
+						</div>
 					</div>
-					<div class="col-xs-4">
-						<input type="date" class="form-control" id="enddate" name="enddate">
-					</div>
-					<div class="col-xs-2">
-						<button type="submit" class="btn btn-primary"> 조회 </button>
-					</div>
-					<div class="col-xs-5">
-						* 7일간의 데이터를 불러옵니다.
-					</div>
+				<div class="form-group">
+				<p style="color: red; font-size: 13px; text-align: center;">* 선택한 날짜로부터 7일전까지의 데이터를 확인할 수 있습니다.</p>
 				</div>
+				
 				</form>
-		       	<div class="col-xs-12" id="chart_div" style="height: 400px;"></div>
+		       	<div class="col-xs-12" id="chart_div" style="height: 500px"></div>
 		       	<div class="col-xs-12">
-		       		<table class="table" style="margin-top: 10px">
-		        	<tr class="warning">
-		        		<th colspan="8" style="text-align: center;">방문자수</td>
-		        	</tr>
-		        	<tr class="active">
-						<td>날짜</td>
+		       	
+		       	<br>
+		       	<h5>일별 방문자수</h5>
+		       		<table class="table table-bordered" style="margin-top: 10px;">
+		        	<tr class="info">
+						<td style="font-size: 11px">날짜</td>
 						<%
 							for(int i =0; i < visitList.size(); ++i){
 						%>
-						<td><%=visitList.get(i).get("CUR_DATE") %></td>
+						<td style="font-size: 11px"><%=visitList.get(i).get("CUR_DATE") %></td>
 						<%
 							}
 						%>
 		        	</tr>
-		        	<tr class="active">
-		        		<td>방문</td>
+		        	<tr>
+		        		<td style="font-size: 11px;vertical-align: center">방문</td>
 		        		<%
 							for(int i =0; i < visitList.size(); ++i){
 						%>
@@ -140,6 +148,7 @@ border-radius: 15px;
 						%>
 		        	</tr>
 		        	</table>
+		       	</div>
 		       	</div>
 			<div class="col-xs-1"></div>
   		</div>

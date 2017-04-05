@@ -31,7 +31,7 @@ if(session.getAttribute("user") != null) {
 
 <style type="text/css">
 	img#logo{		/* 로고 윗부분 마진 */
-		margin-top: 10px;
+		margin-top: 15px;
 	}
 	.navbar-login
 	{
@@ -66,7 +66,7 @@ if(session.getAttribute("user") != null) {
 				<span class="icon-bar"></span>
 			</button>
 			<!-- 왼쪽로고. 클릭시 첫화면으로 이동함 -->
-			<a href="/"><img src="/resources/image/logo_sm.png" width="150" id="logo"></a>
+			<a href="/"><img src="/resources/image/logo_sm.png" width="120" id="logo"></a>
 		</div>
 
 		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
@@ -83,13 +83,22 @@ if(session.getAttribute("user") != null) {
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="javascript:go_myblog();">내블로그</a></li>
 				<li class="dropdown" id="followDropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃</a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃 <span class="caret"></span></a>
 					<ul class="dropdown-menu scrollable-menu" role="menu" id="followUl" ></ul>
 				</li>
-				<li><a href="/chart/control.hi">블로그관리</a></li>
+				<li><a href="/chart/control.hi">공감글</a></li>
 				<li><a href="javascript:do_message(); ">쪽지함(0)</a></li>
-				<li><a href="javascript:do_update()">내정보</a></li>
-				<li><a href="javascript:do_logout();" > [${sessionScope.user.name}님] 로그아웃</a></li>
+				<li><a href="/chart/control.hi">블로그관리</a></li>
+
+				<li class="dropdown">
+		          <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown" style="color: #D9418C;">
+		       	   [<b>${sessionScope.user.name}</b>]님<span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="javascript:do_update()">내정보수정</a></li>
+		            <li class="divider"></li>
+		            <li><a href="javascript:do_logout();" >로그아웃</a></li>
+		          </ul>
+				
 			</ul>
 			<% } %>
 		</div>
@@ -155,19 +164,41 @@ if(session.getAttribute("user") != null) {
                             "<li>" +
                             "   <div class=\"navbar-login\">" +
                             "       <div class=\"row\">" +
-                            "           <div class=\"col-sm-8\">" +
-                            "               <p class=\"text-center\">" +
-                            "                   <a href=\"#\">" + followList[i].NAME + "</a> " +
-                            "                   <a href=\"#\">" + followList[i].TITLE + "</a> " +
+                            "           <div class=\"col-sm-8\" style=\"text-align:right;color: black; font-size: 13px\">" +
+                            "               <p>" + followList[i].NAME +" § "+ followList[i].TITLE  +
                             "               </p>" +
                             "           </div>" +
                             "           <div class=\"col-sm-4\">" +
-                            "                   <a href=\"" + followBlogUrl + "\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-home\"></span></a> " +
-                            "                   <a href=\"" + followMessageUrl + "\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-envelope\"></span></a> " +
+                            "                   <a href=\"" + followBlogUrl + "\" class=\"btn btn-info btn-sm\" style=\"font-size: 13px\"><span class=\"glyphicon glyphicon-home\" ></span></a> " +
+                            "                   <a href=\"" + followMessageUrl + "\" class=\"btn btn-warning btn-sm\" style=\"font-size: 13px\"><span class=\"glyphicon glyphicon-envelope\"></span></a> " +
                             "           </div>" +
                             "       </div>" +
                             "   </div>" +
                             "</li>");
+                        
+/*                         
+                        $("#followUl").append("" +
+                                "<li>" +
+                                "   <div class=\"navbar-login\">" +
+                                "       <div class=\"row\">" +
+                                "           <div class=\"col-sm-8\">" +
+                                "               <p class=\"text-center\">" +
+                                "                   <a href=\"#\">" + followList[i].NAME + "</a> " +
+                                "                   <a href=\"#\">" + followList[i].TITLE + "</a> " +
+                                "               </p>" +
+                                "           </div>" +
+                                "           <div class=\"col-sm-4\">" +
+                                "                   <a href=\"" + followBlogUrl + "\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-home\"></span></a> " +
+                                "                   <a href=\"" + followMessageUrl + "\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-envelope\"></span></a> " +
+                                "           </div>" +
+                                "       </div>" +
+                                "   </div>" +
+                                "</li>"); */
+                        
+                        
+                        
+                        
+                        
                     }
 
                 }

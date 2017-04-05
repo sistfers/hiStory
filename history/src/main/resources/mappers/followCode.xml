@@ -116,7 +116,7 @@
 		SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 									
 		FROM									
 		  (									
-		    SELECT TO_CHAR((TO_DATE(#{enddate}, 'YY/MM/DD')-LEVEL), 'YY/MM/DD') AS CUR_DATE,									
+		    SELECT TO_CHAR((TO_DATE(#{enddate}, 'YYYY-MM-DD')-LEVEL), 'YY/MM/DD') AS CUR_DATE,
 		    0 AS CNT 									
 		    FROM DUAL									
 		    CONNECT BY LEVEL <=7									
@@ -125,7 +125,7 @@
 		  (									
 		    SELECT TO_CHAR(FDATE, 'YY/MM/DD') AS CUR_DATE,COUNT(*) AS CNT									
 		    FROM FOLLOW_H									
-		    WHERE FDATE BETWEEN TO_DATE(#{enddate}, 'YY/MM/DD')-7 AND TO_DATE(#{enddate}, 'YY/MM/DD')									
+		    WHERE FDATE BETWEEN TO_DATE(#{enddate}, 'YYYY-MM-DD')-7 AND TO_DATE(#{enddate}, 'YYYY-MM-DD')
 		    AND YOU_ID= #{id}
 		    AND STATE=#{state}									
 		    GROUP BY TO_CHAR(FDATE, 'YY/MM/DD')  									
@@ -176,7 +176,7 @@
 		DELETE WHERE MY_ID = #{my_id} AND YOU_ID = #{you_id} AND TO_CHAR(FDATE, 'YYYY/MM/DD') = TO_CHAR(SYSDATE, 'YYYY/MM/DD')
 		WHEN NOT MATCHED THEN
 		INSERT ( f1.SEQ, f1.MY_ID, f1.YOU_ID, f1.FDATE, f1.SEX, f1.AREA, f1.BIRTH, f1.STATE)
-		VALUES ( SEQ_FOLLOW.NEXTVAL, #{my_id}, #{you_id}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}), #{state} )
+		VALUES ( SEQ_FOLLOW.NEXTVAL, #{my_id}, #{you_id}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}, 'YYYY-MM-DD'), #{state} )
 	</update>
 
 	<select id="hi_detail" parameterType="com.hifive.history.model.FollowDto" resultType="com.hifive.history.model.FollowDto">

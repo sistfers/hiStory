@@ -319,11 +319,7 @@ function viewAll() {
 	 		<!-- 버튼 -->	
 	 		<div class="col-xs-3" align="left">
 				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
-<<<<<<< HEAD
-				<input type="button" value="답장" onclick="replyAction();"  class="btn btn-danger" />
-=======
             	<span onclick="replyAction();"  class="btn btn-danger"><span class="glyphicon glyphicon-envelope" style="font-size: 22px"></span></span>
->>>>>>> origin/master
 			</div>
 			<div class="col-xs-7" align="left">
 				<div class="input-group"> 

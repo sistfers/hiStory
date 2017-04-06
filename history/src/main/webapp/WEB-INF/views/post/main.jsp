@@ -280,26 +280,29 @@ function go_delete(){
 <!-- 포스트 내용 -->
 				<%=postDto.getContent() %>
 				</div>
-			
-<!-- 첨부파일 -->
+
+		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
+				<!-- 첨부파일 -->
 				<div class="col-xs-12" style="word-wrap : break-word;" >
 					<table width="100%" >
 				        <tr>
 		                <th scope="row">첨부파일</th>
 		                <td colspan="3">
 <%
-							for(Map<String, Object> map : ((PostDto)DTO).getFileList()){
+						for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
 %>
 	                        <input type="hidden" id="IDX" value="<%=map.get("POST_SEQ")%>">
 	                        <a href="#this" name="file"><%=map.get("ORI_NAME")%></a>
 	                        (<%=map.get("FILE_SIZE")%>kb)
 <%
-							}
+						}
 %>
 		                </td>
 		            	</tr>
 	            	</table>
-            	</div>				
+            	</div>
+		        <% } %>
+
 <!-- 해시태그 부분 -->
 				<div class="col-xs-12" style="margin-bottom: 10px" >
 				<hr>

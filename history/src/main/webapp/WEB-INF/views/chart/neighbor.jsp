@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.BlogDto"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,6 +11,8 @@
 <%
 	List<Map<String, Object>> neighborList = new ArrayList<>();
 	neighborList = (List<Map<String, Object>>)request.getAttribute("neighborList");
+	
+	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 %>
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -67,15 +70,15 @@ function do_del(id) {
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
-      <div class="col-xs-2 mydiv" style="background-color: rgb(255, 191, 191); border-radius: 15px">
+      <div class="col-xs-2 mydiv" style="background-color: <%=blogdto.getTheme() %>; border-radius: 15px">
          <jsp:include page="menu.jsp"/>
       </div>
       <!--내용 START -->
-        <div class="col-xs-10 mydiv2" style="background-color: rgb(255, 191, 191);">
+        <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10">
 		        <!-- 포스트-->
-		        <div class="col-xs-12" style="background-color: rgb(255, 230, 230); margin-top:20px; padding-top: 20px; margin-bottom: 20px">
+		        <div class="col-xs-12" style="background-color: #f2f7ff; margin-top:20px; padding-top: 20px; margin-bottom: 20px">
 		 			<p style="font-size: 25px; margin-top: 20px">나의 팔로우 보기</p>
 					<table class="table" style="margin-top: 20px" id="neighbor">
 					<tr class="info">
@@ -108,7 +111,7 @@ function do_del(id) {
 							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/10+1;
 							for(int i = 1; i<= tot; ++i){							
 							%>
-								<a href="" id="PAGE_NUM">
+								<a href="neighbor.hi?PAGE_NUM=<%=i %>" id="PAGE_NUM">
 								<%=i %>
 								</a>
 							<%

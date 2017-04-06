@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.BlogDto;
@@ -190,15 +191,19 @@ public class GraphControl {
 		
 		HashMap<String,String> map = new HashMap<>();
 		map.put("id", user.getId());
-		map.put("PAGE_SIZE", "10");
+		map.put("PAGE_SIZE", "5");
 		map.put("PAGE_NUM", PAGE_NUM);
 		
 		List<Map<String, Object>> neighborList = followService.hi_getNeighborList(map);
 		mav.addObject("neighborList", neighborList);
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
+		
 		return mav;
 		
 	}
-	@RequestMapping("chart/lovepost.hi")
+	@RequestMapping(value="chart/lovepost.hi", method = RequestMethod.GET)
 	public ModelAndView lovepost(HttpServletRequest request, HttpSession session) throws Exception {
 		UserDto user = new UserDto();;
 		if(session.getAttribute("user")!=null){
@@ -213,11 +218,16 @@ public class GraphControl {
 		
 		HashMap<String,String> map = new HashMap<>();
 		map.put("id", user.getId());
-		map.put("PAGE_SIZE", "10");
+		map.put("PAGE_SIZE", "5");
 		map.put("PAGE_NUM", PAGE_NUM);
 		
 		List<Map<String, Object>> lovepostList = postService.getLovePost(map);
 		mav.addObject("lovepostList", lovepostList);
+		
+		//블로그 타이틀
+		BlogDto blogdto = blogService.getMyBlog(user.getId());
+		mav.addObject("blogdto", blogdto);
+		
 		return mav;
 		
 	}

@@ -328,7 +328,7 @@ function renderPaging(
 
 	// >>
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\">  ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "'," + maxPageNo + ",'" + take_id + "','" + words + "');\">  ";
 		html +="&raquo;     ";
 		html +="</a></li>    ";
 	}

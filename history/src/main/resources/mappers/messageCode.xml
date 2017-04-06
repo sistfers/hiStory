@@ -42,7 +42,10 @@
 	<select id="hi_detail" parameterType="int" resultType="com.hifive.history.model.MessageDto">
 		SELECT A.*, B.NAME
 		FROM(
-		SELECT *
+		SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, 
+				TO_CHAR(WDATE, 'YYYY-MM-DD') WDATE,
+				TO_CHAR(RDATE, 'YYYY-MM-DD') RDATE,
+				STATE, SEND_VIEW, TAKE_VIEW
 		FROM MESSAGE_H
 		WHERE SEQ=#{seq}) A JOIN USER_H B 
 		              	 ON (A.SEND_ID=B.ID)

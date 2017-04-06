@@ -46,7 +46,9 @@ $(document).ready(function() {
 		var words = $('#searchbox').val();
 		var id	  = $('#My_ID').val();
         
-		$.ajax({
+		do_search_for_filtered('filtered.hi', 1, id, words);
+		
+		<%-- $.ajax({
 			type : "POST",
 			url : "filtered.hi",
 			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
@@ -103,8 +105,8 @@ $(document).ready(function() {
 							contents = contents.substring(0, 25) + '...';
 							// alert(contents);
 						}
-						<%--
-						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
+						
+						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
 						
 						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
 						filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
@@ -147,7 +149,7 @@ $(document).ready(function() {
 			error : function(xhr, status, error) {
 				alert("에러 발생");
 			}
-		});		
+		});		 --%>
 	});	
 });
 

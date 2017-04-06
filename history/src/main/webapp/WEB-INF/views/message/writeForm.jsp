@@ -52,14 +52,14 @@
 <script type="text/javascript">
 	/* 글자 수 체크 */
 	$(document).ready(function() {
-		$(function() {
+		//$(function() {
 		    $('#realNote').keyup(function (e){
 		        var content = $(this).val();
 		        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
 		        $('#counter').html(content.length + '/300');
 		    });
 		    $('#realNote').keyup();
-		});
+		//});
 
 	    $("#TAKE_ID_CK").on("click", function () {
 	        modalSet(1);
@@ -181,6 +181,19 @@
     }
 
 	function in_follow(followId) {
+		var alreadyinputIds = '';
+		alreadyinputIds = $("#TAKE_ID").val();
+		
+		
+		// 검사
+		var index = alreadyinputIds.indexOf(followId);		
+		
+		if(index != -1) {			
+			followId = alreadyinputIds;
+		} else {
+			followId = alreadyinputIds + ',' + followId;
+		}
+		
 		$("#TAKE_ID").val(followId);
         $("#myModal").modal('toggle');
     }

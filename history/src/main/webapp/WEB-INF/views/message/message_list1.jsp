@@ -99,16 +99,16 @@ $(document).ready(function() {
 						if(take == '-1') 
 							continue;
 						
-						if(contents.length > 15) {
-							contents = contents.substring(0, 15) + '...';
+						if(contents.length > 25) {
+							contents = contents.substring(0, 25) + '...';
 							// alert(contents);
 						}
-						<%-- <td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
-						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td> --%>
+						<%--
+						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
 						
 						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
-						
-						filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
+						filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
+						// filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
 						filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
 						filteredForm = filteredForm + '<td>'+wdate+'</td>';						
 
@@ -211,13 +211,14 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 					if(take == '-1') 
 						continue;
 					
-					if(contents.length > 15) {
-						contents = contents.substring(0, 15) + '...';
+					if(contents.length > 25) {
+						contents = contents.substring(0, 25) + '...';
 						// alert(contents);
 					}
 					
 					filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
-					filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
+					filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
+					//filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
 					filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
 					filteredForm = filteredForm + '<td>'+wdate+'</td>';						
 
@@ -371,7 +372,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-	// alert('삭제 ' +checkRow);	
+	alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){
 		alert("삭제할 대상을 선택하세요.");
@@ -409,7 +410,7 @@ function replyAction() {
 	
 		  변경 후
 	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
-	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td> --%>
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
 	
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); 
 	alert('답장 대상 ' +checkRow);
@@ -499,8 +500,8 @@ function viewAll() {
 					
 					String subContents = (String) item.get("CONTENTS");
 					
-					if(subContents.length() > 15) {
-						subContents = subContents.substring(0, 15) + "...";
+					if(subContents.length() > 25) {
+						subContents = subContents.substring(0, 25) + "...";
 						
 					} else {
 						
@@ -508,7 +509,7 @@ function viewAll() {
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
-					<td><%=item.get("NAME") %> <span id="si" style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
+					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
 				

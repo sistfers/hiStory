@@ -24,6 +24,7 @@ import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.BoxDao;
 import com.hifive.history.repository.PostDao;
+import com.hifive.history.util.CommonUtils;
 import com.hifive.history.util.FileUtils;
 
 @Service
@@ -48,17 +49,20 @@ public class PostService implements iService {
 	@SuppressWarnings("resource")
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
 		FILE_URL = request.getSession().getServletContext().getRealPath("/")+"resources\\uploadImages\\";
-		System.out.println("getContextPath() : " + request.getContextPath());
-		System.out.println("getRealPath(\"/\") : " + request.getSession().getServletContext().getRealPath("/"));
-		System.out.println("catalina home : " + FILE_URL);
+		String originalFileExtension = null;
+		String storedFileName = null;
+		
 		OutputStream out = null;
 		PrintWriter printWriter = null;	
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
-		String fileName = file.getOriginalFilename();
+		String originalFileName = file.getOriginalFilename();
+		originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+		
 		byte[] bytes = file.getBytes();
-		String uploadPath = FILE_URL + fileName; //저장 경로
+		String uploadPath = FILE_URL + storedFileName; //저장 경로
 		
 		System.out.println(uploadPath);
 		out = new FileOutputStream(new File(uploadPath));
@@ -66,7 +70,7 @@ public class PostService implements iService {
 		String callback = request.getParameter("CKEditorFuncNum");
 		
 		printWriter = response.getWriter();
-		String fileUrl = SAVE_URL + "/" +fileName; //url 경로
+		String fileUrl = SAVE_URL + "/" +storedFileName; //url 경로
 		
 		printWriter.println("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
 	               + callback
@@ -90,7 +94,9 @@ public class PostService implements iService {
 		
 		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
         
-		hi_insertList(list);	//첨부파일 인설트 (트랜잭션 미적용)
+		if(list != null && list.size() != 0){
+			hi_insertList(list);	//첨부파일 인설트 (트랜잭션 미적용)
+		}
 	
 		return flag;
 	}

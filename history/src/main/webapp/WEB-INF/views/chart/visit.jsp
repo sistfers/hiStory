@@ -17,7 +17,7 @@
 	visitList = (List<Map<String,Object>>)request.getAttribute("visitList");
 	
 	Date date = new Date();
-	SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+	SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 	String comment2 = sd.format(date);
 	date.setDate(date.getDate()-7);
 	String comment1 = sd.format(date);
@@ -59,7 +59,7 @@ function drawVisualization() {
 	var options = {
 	title : '방문자 분석',
 	vAxis: {title: '방문수'},
-	hAxis: {title: '<%=comment1%> ~ <%=comment2%>'},
+	hAxis: {title: '선택기간 방문자'},
 	seriesType: 'bars',
 	series: {7: {type: 'line'}}
 	};

@@ -56,12 +56,16 @@ public class GraphControl {
 		ModelAndView mav = new ModelAndView("chart/visit");
 		
 		Date date = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		date.setDate(date.getDate()+1);
 		String enddate = sd.format(date);
 		
 		if(request.getParameter("enddate")!=null){
-			enddate = request.getParameter("enddate");
+			enddate  = request.getParameter("enddate");
+			Date end = sd.parse(enddate);
+			end.setDate(end.getDate()+1);
+			
+			enddate = sd.format(end);
 		}
 		
 		HashMap<String,String> dto = new HashMap<>();

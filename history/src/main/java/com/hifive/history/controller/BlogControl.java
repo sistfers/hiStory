@@ -141,12 +141,15 @@ public class BlogControl {
 		if(DTO != null){
 			// 해당글의 댓글 보여주기
 			Map<String, Object> comment_con = new HashMap<String, Object>();
-			String  co_PAGE_NUM = request.getParameter("co_PAGE_NUM")==null||request.getParameter("co_PAGE_NUM").equals("")?"1":request.getParameter("co_PAGE_NUM");         //댓글페이지NUM
+			String  CO_PAGE_NUM = request.getParameter("CO_PAGE_NUM")==null||request.getParameter("CO_PAGE_NUM").equals("")?"1":request.getParameter("CO_PAGE_NUM");         //댓글페이지NUM
+			String  CO_PAGE_SIZE = request.getParameter("CO_PAGE_SIZE")==null||request.getParameter("CO_PAGE_SIZE").equals("")?"5":request.getParameter("CO_PAGE_SIZE"); // 댓글 페이지 사이즈
 			comment_con.put("POST_SEQ",DTO.getSeq());
-			comment_con.put("PAGE_NUM",co_PAGE_NUM);
-			
-			ArrayList commentList = (ArrayList)commentSve.hi_selectList(comment_con);
+			comment_con.put("PAGE_NUM",CO_PAGE_NUM);
+			comment_con.put("PAGE_SIZE",CO_PAGE_SIZE);
+
+			List<Map<String, Object>> commentList = commentSve.hi_selectList(comment_con);
 			mav.addObject("commentList",commentList);
+			mav.addObject("CO_PAGE_NUM", CO_PAGE_NUM);
 			
 			
 			// 아래 5개 목록 리스트 보여주기
@@ -159,9 +162,9 @@ public class BlogControl {
 			List<Map<String, Object>> lists = postSvc.hi_selectList(condition);
 			logger.debug("BlogControl.lists.toString() = "+lists.toString());
 		
-			mav.addObject("lists",lists);
-			mav.addObject("PAGE_NUM"   ,PAGE_NUM);
-			
+			mav.addObject("lists", lists);
+			mav.addObject("PAGE_NUM", PAGE_NUM);
+
 			if(userDto != null){
 			//글 공감 확인하기
 				LoveDto loveDto = new LoveDto();

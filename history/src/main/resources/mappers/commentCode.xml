@@ -86,12 +86,12 @@ FROM
        order by PARENT, SEQ                         
     )T1 NATURAL JOIN                                   
     (                                                  
-      SELECT COUNT(*)                                  
+      SELECT COUNT(*) as TOT_CNT
       FROM COMMENT_H                        
       WHERE POST_SEQ = #{POST_SEQ}                           
     )T2                                                
   )TT1                                                 
-WHERE RNUM BETWEEN (20 * (#{PAGE_NUM}-1)+1) AND ((20 * (#{PAGE_NUM}-1))+20)
+WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1) AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
 </select>
 
 

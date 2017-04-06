@@ -55,32 +55,44 @@
 	Date today = new Date();
 	
 	// 포스트 내용 1건 보여주기
-	PostDto DTO = (PostDto)request.getAttribute("DTO");
+	PostDto postDto = (PostDto)request.getAttribute("DTO");
 	
-	// 해당글의 댓글 보여주기
-	ArrayList commentList = (ArrayList)request.getAttribute("commentList");
-	//System.out.println("commentList"+commentList.toString());
-	
+
 	int intTotalCount 	= 0;	// 총글수
-	int page_num 		= 1;	// 선택된 페이지
-	
-	List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-	data 	   = (ArrayList<HashMap<String, Object>>)request.getAttribute("lists");
-	HashMap<String, Object> dataCnt = null;
-	
-	if(DTO != null){
-		String PAGE_NUM 	= "1";	// 선택된 페이지
-		PAGE_NUM 	= request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
+	int intTotalCommentCount 	= 0;	// 총댓글수
+	int page_num 		= 1;	// 선택된 글 페이지
+	int co_page_num 		= 1;	// 선택된 댓글 페이지
+
+	// 포스트 목록 가져오기
+	List<HashMap<String, Object>> totalPostList = new ArrayList<HashMap<String, Object>>();
+	totalPostList = (ArrayList<HashMap<String, Object>>)request.getAttribute("lists");
+	HashMap<String, Object> postCnt = null;
+
+	// 댓글 리스트 가져오기
+	List<HashMap<String, Object>> commentList = new ArrayList<HashMap<String, Object>>();
+	commentList = (ArrayList<HashMap<String, Object>>)request.getAttribute("commentList");
+	HashMap<String, Object> commentCnt = null;
+
+	if(postDto != null){
+		String PAGE_NUM = (request.getAttribute("PAGE_NUM").toString() == null) ? "1" : request.getAttribute("PAGE_NUM").toString();	// 선택된 페이지
+
+		String COMMENT_PAGE_NUM = (request.getAttribute("CO_PAGE_NUM").toString() == null) ? "1" : request.getAttribute("CO_PAGE_NUM").toString();	// 선택된 댓글 페이지
 		
-		if(PAGE_NUM != null)  page_num  = Integer.parseInt(PAGE_NUM);
-		
-		if(data != null && data.size()>0){
-			dataCnt = data.get(0);
-			intTotalCount = Integer.parseInt(dataCnt.get("TOT_CNT").toString());
+		page_num  = Integer.parseInt(PAGE_NUM);
+		co_page_num  = Integer.parseInt(COMMENT_PAGE_NUM);
+
+		if(totalPostList != null && totalPostList.size() > 0){
+			postCnt = totalPostList.get(0);
+			intTotalCount = Integer.parseInt(postCnt.get("TOT_CNT").toString());
+
+			if(commentList != null && commentList.size() > 0) {
+				commentCnt = commentList.get(0);
+				intTotalCommentCount = Integer.parseInt(commentCnt.get("TOT_CNT").toString());
+			}
 		}	
-	}else{
-		DTO = new PostDto();
-		DTO.setSeq(0);
+	} else{
+		postDto = new PostDto();
+		postDto.setSeq(0);
 	}
 	
 	//해당 포스트에 공감을 했는지 체크
@@ -139,7 +151,16 @@ function do_search_page(url, page_num)
 	  frm.action = url;
 	  frm.submit();
 }
-</script>	
+
+function do_comment_page(url, co_page_num) {
+	console.log(url+"\t"+co_page_num);
+
+	var frm = document.commentForm;
+	frm.CO_PAGE_NUM.value = co_page_num;
+	frm.action = url;
+	frm.submit();
+}
+</script>
 
 <script type="text/javascript">
 /* 글 수정 */
@@ -185,7 +206,7 @@ function go_delete(){
 <!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	
 		        
 				<%
-				if(DTO.getSeq() == 0){	// 글 내용 없을때 
+				if(postDto.getSeq() == 0){	// 글 내용 없을때
 				%>	
 					<div class="col-xs-12">
 							<br><br><br><br><br><br><br><br><br><br><br><br>
@@ -195,18 +216,24 @@ function go_delete(){
 				<%}else{  %>
 	
 				<form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
-					<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">  
+					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 					<input type="hidden" name="id" value="<%=id%>">
 				</form> 
 				<form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
-					<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">
+					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 					<input type="hidden" name="id" value="<%=id%>">  
 				</form> 
 				<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
 					<input type="hidden" name="PAGE_NUM" value="">  
-					<input type="hidden" name="id" value="<%=id%>">  
-					<input type="hidden" name="seq" value="<%=DTO.getSeq()%>">    
+					<input type="hidden" name="id" value="<%=id%>">
+					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 				</form> 
+				<form name="commentForm" action="main.hi" method="get">						<!-- 댓글 누를때  -->
+					<input type="hidden" name="PAGE_NUM" value="<%=page_num%>">
+					<input type="hidden" name="CO_PAGE_NUM" value="">
+					<input type="hidden" name="id" value="<%=id%>">
+					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
+				</form>
 
 
 		        <div class="col-xs-12" style="word-wrap : break-word;" >
@@ -214,7 +241,7 @@ function go_delete(){
 		        <tr>
 <!-- 포스트 제목 -->
 		        <td width="80%" align="left" >
-		        <h2 style="word-wrap : break-word; width: 500px"><%=DTO.getTitle() %></h2>
+		        <h2 style="word-wrap : break-word; width: 500px"><%=postDto.getTitle() %></h2>
 		        </td>
 		        
 		        
@@ -243,14 +270,14 @@ function go_delete(){
 		        
 <!-- 포스트 작성일 -->
 		        <tr>
-		        <td align="left"><h6>&nbsp;&nbsp;<%=DTO.getWdate() %></h6></td>
+		        <td align="left"><h6>&nbsp;&nbsp;<%=postDto.getWdate() %></h6></td>
 		        <td></td>
 		        </tr>
 		        </table>
 		        
 				<hr>		        
 <!-- 포스트 내용 -->
-				<%=DTO.getContent() %>
+				<%=postDto.getContent() %>
 				</div>
 				
 				
@@ -262,8 +289,8 @@ function go_delete(){
         		</button>&nbsp;&nbsp;&nbsp;&nbsp;
         		
         		<%
-        			if (DTO.getHashtag() != null) {
-        				String str[] = split(DTO.getHashtag());
+        			if (postDto.getHashtag() != null) {
+        				String str[] = split(postDto.getHashtag());
         				for(int i = 0; i < str.length; ++i){
         		%>
         					<a href="#"><%="#" + str[i] %></a>
@@ -273,7 +300,7 @@ function go_delete(){
         		%>
 				</div>
 				
-<!-- 댓글 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->
+				<!-- 댓글 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->
 				<div class="col-xs-12">
 					<h5>댓글</h5>
 
@@ -286,173 +313,102 @@ function go_delete(){
 						%>
 						<tr id="r1" name="commentParentCode">
 							<%
+								// 댓글, 대댓글 구분
 								if (!commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {
 							%>
-							<!--대댓글  -->
-							<td style="width: 1%"><span
-								class="glyphicon glyphicon-arrow-right"></span></td>
-							<td width=10%>
-								<!-- 사진  --> <img src="<%=commentdata.get("PF_IMAGE")%>"
-								width="40px" height="40px" onerror="src='/resources/image/noimg.png'">
-							</td>
-
-							<%
-								if (commentdata.get("STATE").equals("0")) {
-							%>
-							<!-- if(commentdata.get("STATE").equals("0") || (userDto != null && userDto.getId().equals(commentdata.get("ID"))) ) {%> -->
-							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
-							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
-							</td>
-
-							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-								<%
-									if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
-								%>
-								<button class="btn btn-default btn-xs" style="font-size: 12px"
-									name="pUp">수정</button>
-								<button class="btn btn-default btn-xs" style="font-size: 12px"
-									name="pDel">삭제</button> <%
-							 	}
-							%>
-							</td>
-							<%
-								} else if (commentdata.get("STATE").equals("1")) {
-													if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
-							%>
-							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
-							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span
-								class="glyphicon glyphicon-lock"></span><span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
-							</td>
-
-							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-
-								<%
-									if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
-								%>
-								<button class="btn btn-default btn-xs" style="font-size: 12px"
-									name="pUp">수정</button>
-								<button class="btn btn-default btn-xs" style="font-size: 12px"
-									name="pDel">삭제</button> <%
-							 	}
-							 %>
-							</td>
-
+									<!--대댓글  -->
+									<td style="width: 1%"><span class="glyphicon glyphicon-arrow-right"></span></td>
+									<td width=10%>
 							<%
 								} else {
 							%>
-							<td colspan="2" align="left" style="color: #8C8C8C;"><span
-								class="glyphicon glyphicon-lock"></span> 비밀글입니다</td>
+									<!--댓글-->
+									<td width=11% colspan=2 align="left">
 							<%
 								}
 							%>
+									<!-- 사진  -->
+									<img src="<%=commentdata.get("PF_IMAGE")%>"
+								          width="40px" height="40px" onerror="src='/resources/image/noimg.png'">
+									</td>
 							<%
-								} else if (commentdata.get("STATE").equals("2")) { //if end
-							%>
-							<td colspan="2" align="left" style="color: #BDBDBD;"><span
-								class="glyphicon glyphicon-fire"></span> 삭제된 댓글입니다</td>
-							<%
-								} //if end
-							%>
-
-
-							<%
-								} else {
-							%>
-							<!--댓글  -->
-							<td width=11% colspan=2 align="left">
-								<!-- 사진  --> <img src="<%=commentdata.get("PF_IMAGE")%>"
-								width="40px" height="40px" onerror="src='/resources/image/noimg.png'">
-							</td>
-
-							<%
+								// 내용부분 시작
+								// 정상일 때
 								if (commentdata.get("STATE").equals("0")) {
 							%>
-
-							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
-							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
-							</td>
-
+								<!-- 작성자/작성일 -->
+								<td width="69%" style="text-align: left;" name="contentsTd">
+									<a href="#"> <%=commentdata.get("NAME")%></a>
+									<%=commentdata.get("WDATE")%><br>
+									<!-- 댓글내용 -->
+									<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+								</td>
+							<%
+								// 댓글, 대댓글 부분 끝
+								// 비밀글일때
+							} else if (commentdata.get("STATE").equals("1")) {
+									// 내용이 보이는 사람일 때
+									if (userDto != null && userDto.getId().equals(commentdata.get("ID"))
+											|| userDto != null && userDto.getId().equals(id)) {
+							%>
+											<!-- 작성자/작성일 -->
+											<td width="69%" style="text-align: left;" name="contentsTd">
+												<a href="#"> <%=commentdata.get("NAME")%></a>
+												<%=commentdata.get("WDATE")%><br>
+												<!-- 댓글내용 -->
+												<span class="glyphicon glyphicon-lock"></span>
+												<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+											</td>
+							<%
+									} else {
+							%>
+									<td align="left" style="color: #8C8C8C;">
+										<span class="glyphicon glyphicon-lock"></span>
+										비밀글입니다
+									</td>
+							<%
+									}
+								// 삭제된 글일때
+							} else if (commentdata.get("STATE").equals("2")) { //if end
+							%>
+								<td align="left" style="color: #BDBDBD;">
+									<span class="glyphicon glyphicon-fire"></span>
+									삭제된 댓글입니다
+								</td>
+							<%
+							} // 내용부분 끝
+							// 버튼부분 시작
+							%>
 							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-								<c:set var='login' value="${sessionScope.user}" /> <c:if
-									test="${!empty login}">
-									<!-- 로그인정보 없으면 안보임 -->
-									<button class="btn btn-default btn-xs" style="font-size: 12px"
-										name="pAdd">답글</button>
-									<%
-										if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
-									%>
-									<button class="btn btn-default btn-xs" style="font-size: 12px"
-										name="pUp">수정</button>
-									<button class="btn btn-default btn-xs" style="font-size: 12px"
-										name="pDel">삭제</button>
-									<%
-										}
-									%>
-								</c:if>
+								<!-- 로그인정보 없으면 안보임 -->
+								<% if (userDto != null) { %>
+									<% if ( commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())
+											&& commentdata.get("STATE").equals("0")
+											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))
+											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(id)) { %>
+										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
+									<% } %>
+									<% if (commentdata.get("STATE").equals("0") && userDto.getId().equals(commentdata.get("ID"))
+											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))) { %>
+										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+									<% } %>
+								<% } %>
 							</td>
-							<%
-								} else if (commentdata.get("STATE").equals("1")) {
-													if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
-							%>
-							<!-- 작성자/작성일 -->
-							<td width="69%" style="text-align: left;" name="contentsTd"><a href="#"> <%=commentdata.get("NAME")%>
-							</a> <%=commentdata.get("WDATE")%><br> <!-- 댓글내용 --> <span
-								class="glyphicon glyphicon-lock"></span><span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
-							</td>
-
-							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
-
-								<%
-									if (userDto != null && userDto.getId().equals(commentdata.get("ID"))) {
-								%>
-								<button class="btn btn-default btn-xs" style="font-size: 12px"
-									name="pUp">수정</button>
-								<button class="btn btn-default btn-xs" style="font-size: 12px"
-									name="pDel">삭제</button> <%
- 	}
- %>
-							</td>
-
-							<%
-								} else {
-							%>
-							<td colspan="2" align="left" style="color: #8C8C8C;"><span
-								class="glyphicon glyphicon-lock"></span> 비밀글입니다</td>
-							<%
-								}
-							%>
-							<%
-								} else if (commentdata.get("STATE").equals("2")) { //if end
-							%>
-							<td colspan="2" align="left" style="color: #BDBDBD;"><span
-								class="glyphicon glyphicon-fire"></span> 삭제된 댓글입니다</td>
-							<%
-								} //if end
-							%>
-
-
-
-
-
+							<%--버튼부분 끝--%>
 						</tr>
-						<%
-							}
-						%>
-						<%
-							} //for end 
-								} // if end
-						%>
+						<%--for문 닫음--%>
+						<% } %>
+					<%--if문 닫음--%>
+					<% } %>
 					</table>
-					<%-- <center> 우선 페이징 없이 20개씩 보여주기 했는데... 댓글 페이징은 천천히 합시다 
-<!-- Paging Area Start -->
-<%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
-<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-</center> --%>
 
-
+					<%--댓글페이징--%>
+					<center>
+						<!-- Paging Area Start -->
+						<%=PagingUtil.renderPaging(intTotalCommentCount, co_page_num, 5, 5, "main.hi", "do_comment_page")%>
+						<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->
+					</center>
 
 					<!-- 로그인 정보 없으면 댓글창 안보여줌 -->
 					<c:set var='login' value="${sessionScope.user}" />
@@ -486,19 +442,18 @@ function go_delete(){
 					</tr>
 
 					<%
-						if (data != null) {
+						if (totalPostList != null) {
 					
-							for (int i = 0; i < data.size(); i++) {
+							for (int i = 0; i < totalPostList.size(); i++) {
 					
-								HashMap<String, Object> mapdatas = (HashMap<String, Object>) (data.get(i));
+								HashMap<String, Object> mapdatas = (HashMap<String, Object>) (totalPostList.get(i));
 								String wdate = ((mapdatas.get("WDATE")).toString()).substring(0, 10);
 					%>
 					<tr>
 						<td><%=i+1 %></td>
 						<td align="left">
 						<div style="text-overflow : ellipsis; width: 400px; overflow: hidden;">
-							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>"> <%=mapdatas.get("TITLE") %></a>
-							<%--style="cursor:pointer; --%>
+							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
 						</div></td>
 						<td><%=wdate %></td>
 					</tr>
@@ -561,7 +516,7 @@ $(function(){
 			url:loveState,			// 컨트롤러에 보낼 이름
 			dataType:"html",
 			data:{
-				"seq" 	: <%=DTO.getSeq()%>,
+				"seq" 	: <%=postDto.getSeq()%>,
 				
 			},
 			success:function(data){
@@ -630,7 +585,7 @@ $(function(){
 			url:"replyInsert.hi",			// 컨트롤러에 보낼 이름
 			dataType:"html",
 			data:{
-				"POST_SEQ" 	: <%=DTO.getSeq()%>,
+				"POST_SEQ" 	: <%=postDto.getSeq()%>,
  				"STATE"	 	: stateYN,
 				"CONTENT" 	: pText.val()
 			},
@@ -640,14 +595,14 @@ $(function(){
 				
 				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
 					//테이블의 tr자식이 있으면 tr 뒤에 붙인다. 없으면 테이블 안에 tr을 붙인다.
-			        if($('#commentTable tr').size()==0){
-			            $('#commentTable').append(commentParentText);
-			        }else{
-			            $('#commentTable tr:last').after(commentParentText);
-			        }
-			           
-			        $("#commentParentText").val("");
-			        //location.reload();
+//			        if($('#commentTable tr').size()==0){
+//			            $('#commentTable').append(commentParentText);
+//			        }else{
+//			            $('#commentTable tr:last').after(commentParentText);
+//			        }
+//
+//			        $("#commentParentText").val("");
+			        location.reload();
 				} else {
 					alert("댓글등록 실패");
 				}
@@ -708,7 +663,7 @@ $(function(){
 			url:"rereInsert.hi",			// 컨트롤러에 보낼 이름
 			dataType:"html",
 			data:{
-				"POST_SEQ" 	: <%=DTO.getSeq()%>,
+				"POST_SEQ" 	: <%=postDto.getSeq()%>,
 				"PARENT"	: $(this).parent().attr('id'),
  				"STATE"	 	: stateYN,
 				"CONTENT" 	: cText.val()
@@ -792,14 +747,15 @@ $(function(){
         				
         				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
 
-        	                //댓글(depth1)의 댓글(depth2_1)이 있는지 검사하여 삭제
-        	                while(nextTr.attr("name")=="commentCode"){
-        	                    nextTr = nextTr.next();
-        	                    delTr = nextTr.prev();//삭제하고 넘기면 삭제되서 없기 때문에 다음값을 가져오기 어려워 다시 앞으로 돌려서 찾은 다음 삭제
-        	                    delTr.remove();
-        	                }
-        	                   
-        	                delComment.remove();
+//        	                //댓글(depth1)의 댓글(depth2_1)이 있는지 검사하여 삭제
+//        	                while(nextTr.attr("name")=="commentCode"){
+//        	                    nextTr = nextTr.next();
+//        	                    delTr = nextTr.prev();//삭제하고 넘기면 삭제되서 없기 때문에 다음값을 가져오기 어려워 다시 앞으로 돌려서 찾은 다음 삭제
+//        	                    delTr.remove();
+//        	                }
+//
+//        	                delComment.remove();
+					        location.reload();
         				} else {
         					alert("댓글삭제 실패");
         				}
@@ -840,31 +796,31 @@ $(function(){
                                    
             parentElement.after(commentEditor); 
         }else if($(this).attr("name")=="pUp"){
-            //자기 부모의 tr을 알아낸다.
-            var parentElement = $(this).parent().parent();
-            
-            console.log("본인댓글번호 ="+$(this).parent().attr('id'));
-            var thisContents = parentElement.find("[name=contentsTd]").find("[name=contentsSpan]").html();
-            console.log("댓글 내용 = " + thisContents);
-            
-            //댓글달기 창을 없앤다.
-            $("#commentEditor").remove();
-            	
-            //부모의 하단에 댓글달기 창을 삽입
-            var commentEditor = '<tr id="commentEditor">'+
-                                '<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+
-                                '<td style="width:10%">'+
-                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+
-                                '<td width="69%">'+
-                                '<textarea rows="2" class="form-control" style="resize: none" id="commentChildText">' + thisContents + '</textarea>'+
-                                '</td>'+
-                                '<td width="20%" align="left" id="'+$(this).parent().attr('id')+'">'+
-                                '<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+
-                                '<button type="button" id="commentChildSubmit" name="commentChildSubmit" class="btn btn-warning">수정</button>'+
-                                '</td>'+
-                                '</tr>';
-                                   
-            parentElement.after(commentEditor); 
+            <%--//자기 부모의 tr을 알아낸다.--%>
+            <%--var parentElement = $(this).parent().parent();--%>
+            <%----%>
+            <%--console.log("본인댓글번호 ="+$(this).parent().attr('id'));--%>
+            <%--var thisContents = parentElement.find("[name=contentsTd]").find("[name=contentsSpan]").html();--%>
+            <%--console.log("댓글 내용 = " + thisContents);--%>
+            <%----%>
+            <%--//댓글달기 창을 없앤다.--%>
+            <%--$("#commentEditor").remove();--%>
+            	<%----%>
+            <%--//부모의 하단에 댓글달기 창을 삽입--%>
+            <%--var commentEditor = '<tr id="commentEditor">'+--%>
+                                <%--'<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+--%>
+                                <%--'<td style="width:10%">'+--%>
+                                <%--'<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+--%>
+                                <%--'<td width="69%">'+--%>
+                                <%--'<textarea rows="2" class="form-control" style="resize: none" id="commentChildText">' + thisContents + '</textarea>'+--%>
+                                <%--'</td>'+--%>
+                                <%--'<td width="20%" align="left" id="'+$(this).parent().attr('id')+'">'+--%>
+                                <%--'<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+--%>
+                                <%--'<button type="button" id="commentChildSubmit" name="commentChildSubmit" class="btn btn-warning">수정</button>'+--%>
+                                <%--'</td>'+--%>
+                                <%--'</tr>';--%>
+                                   <%----%>
+            <%--parentElement.after(commentEditor); --%>
         }
            
     });

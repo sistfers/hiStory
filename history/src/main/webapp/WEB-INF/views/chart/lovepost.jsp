@@ -82,16 +82,33 @@ border-radius: 15px;
 					%>
 						<tr>
 							<td colspan="4" style="text-align: center;">
+							<ul class="pagination pagination-sm">
+							 <li class="disabled"><a href="#">&laquo;</a></li>
 							<%
 							int tot = Integer.parseInt(lovepostList.get(0).get("TOT_CNT").toString())/10+1;
-							for(int i = 1; i<= tot; ++i){							
-							%>
-								<a href="lovepost.hi?PAGE_NUM=<%=i %>" id="PAGE_NUM">
-								<%=i %>
-								</a>
-							<%
+							if(request.getParameter("PAGE_NUM")==null){
+								for(int i = 1; i<= tot; ++i){
+									if(i==1){
+								%>
+									<li class="active"><a href="lovepost.hi?PAGE_NUM=<%=i %>"><%=i %></a></li>
+								<%
+									}else{
+								%>
+									<li><a href="lovepost.hi?PAGE_NUM=<%=i %>"><%=i %></a></li>
+								<%
+									}
+								}
+							}else{
+								for(int i = 1; i<= tot; ++i){
+								%>
+									<li <%if((Integer.parseInt(request.getParameter("PAGE_NUM"))==i)){%>class="active"<%} %>><a href="lovepost.hi?PAGE_NUM=<%=i %>">
+									<%=i %></a></li>
+								<%
+								}
 							}
-							%>
+								%>
+							<li><a href="#">&raquo;</a></li>
+							</ul>
 							</td>
 						</tr>
 					<%

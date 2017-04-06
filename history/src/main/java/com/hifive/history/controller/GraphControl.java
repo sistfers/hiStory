@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,8 @@ public class GraphControl {
 	VisitService visitService;
 	@Autowired
 	FollowService followService;
+	
+	Logger loger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("chart/visit.hi")
 	public ModelAndView visit(HttpServletRequest request, HttpSession session) throws Exception {
@@ -115,18 +119,27 @@ public class GraphControl {
 	
 	/*
 	 * 이웃 증감 
-	 * Based on : 조윤행
-	 * made  by : 박성우
-	 * date		: 17. 4. 6(목)
-	 * 
-	 * 
+	 * Based on  : 조윤행
+	 * Commented : 박성우
+	 * date		 : 17. 4. 6(목)
+	 * code		 : followService.hi_getFollowList
+	 * 			 : followDao.hi_getFollowList
+	 * params	 : "state", "0"/"1"(증/감)
+	 * return	 : List<Map<String, Object>>
+	 * xml		 : com.hifive.history.repository.mappers.followCode .hi_getFollowList 
 	 */
 	@RequestMapping("chart/follow.hi")
 	public ModelAndView follow(HttpServletRequest request, HttpSession session) throws Exception {
+		
+		loger.debug("----------------------------------------------------------");
+		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: chart/follow.hi");	
+		
+		
 		UserDto user = new UserDto();;
 		if(session.getAttribute("user")!=null){
 			user = (UserDto)session.getAttribute("user");
 		}
+		loger.debug("session.getAttribute(user)  ->  " + user);
 		
 		ModelAndView mav = new ModelAndView("chart/follow");
 		
@@ -134,22 +147,26 @@ public class GraphControl {
 		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
 		date.setDate(date.getDate()+1);
 		String enddate = sd.format(date);
+		loger.debug("String enddate              ->  " + enddate);
 		
 		if(request.getParameter("endday")!=null){
 			enddate = request.getParameter("endday");
 		}
+		loger.debug("String endday               ->  " + enddate);
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("id", user.getId());
 		map.put("enddate", enddate);
 		map.put("state", "0");
 		List<Map<String, Object>> followIncList = followService.hi_getFollowList(map);
+		loger.debug("List followIncList          ->  " + followIncList);
 		
 		HashMap<String,String> map2 = new HashMap<String,String>();
 		map2.put("id", user.getId());
 		map2.put("enddate", enddate);
 		map2.put("state", "1");
 		List<Map<String, Object>> followDecList = followService.hi_getFollowList(map2);
+		loger.debug("List followDecList          ->  " + followDecList);
 		
 		mav.addObject("followIncList", followIncList);
 		mav.addObject("followDecList", followDecList);
@@ -157,6 +174,10 @@ public class GraphControl {
 		//블로그 타이틀
 		BlogDto blogdto = blogService.getMyBlog(user.getId());
 		mav.addObject("blogdto", blogdto);
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: chart/follow.hi");
+		loger.debug("----------------------------------------------------------");
 		
 		return mav;
 	}

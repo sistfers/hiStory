@@ -113,11 +113,13 @@ public class PostService implements iService {
 		PostDto postDto = (PostDto)postDao.hi_detail(dto);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("IDX", postDto.getSeq());
-		try{
-			postDto.setFileList(boxDao.hi_selectList(map));
-		}catch(Exception e){
-			e.getMessage();
+		if (postDto != null) {
+			map.put("IDX", postDto.getSeq());
+			try{
+				postDto.setFileList(boxDao.hi_selectList(map));
+			}catch(Exception e){
+				e.getMessage();
+			}
 		}
 		
 		return postDto;

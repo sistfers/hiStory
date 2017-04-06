@@ -475,6 +475,38 @@ public class BlogControl {
 
 		return gson.toJson(jsonObject);
 	}
+
+	// 댓글 수정 (ajax)
+	@RequestMapping(value = "post/replyUpdate.hi", method = RequestMethod.POST)
+	@ResponseBody
+	public String replyUpdate(HttpServletRequest request, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("user");
+
+		int POST_SEQ = Integer.parseInt(request.getParameter("POST_SEQ"));
+		String ID = userDto.getId();
+		String NAME = userDto.getName();
+		String CONTENT = request.getParameter("CONTENT");
+		int PARENT = Integer.parseInt(request.getParameter("PARENT"));
+		String STATE = request.getParameter("STATE").equals("false") ? "0" : "1";
+
+		/*
+		 * int seq, int post_seq, String id, String name, String content, int
+		 * parent, String state
+		 */
+		CommentDto commentDto = new CommentDto();
+
+		int flag = commentSve.hi_update(commentDto);
+
+		JsonObject jsonObject = new JsonObject();
+		if (flag > 0) {
+			jsonObject = new JsonParser().parse("{\"msg\":\"true\"}").getAsJsonObject();
+		} else {
+			jsonObject = new JsonParser().parse("{\"msg\":\"false\"}").getAsJsonObject();
+		}
+		Gson gson = new Gson();
+
+		return gson.toJson(jsonObject);
+	}
 	
 	// 댓글 삭제 (ajax)
 	@RequestMapping(value = "post/replyDelete.hi", method = RequestMethod.POST)

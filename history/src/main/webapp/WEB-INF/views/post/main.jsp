@@ -333,7 +333,7 @@ function go_delete(){
 									for (int i = 0; i < commentList.size(); i++) {
 										HashMap<String, Object> commentdata = (HashMap<String, Object>) (commentList.get(i));
 						%>
-						<tr id="r1" name="commentParentCode">
+						<tr name="commentParentCode">
 							<%
 								// 댓글, 대댓글 구분
 								if (!commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {
@@ -378,7 +378,7 @@ function go_delete(){
 												<a href="#"> <%=commentdata.get("NAME")%></a>
 												<%=commentdata.get("WDATE")%><br>
 												<!-- 댓글내용 -->
-												<span class="glyphicon glyphicon-lock"></span>
+												<span class="glyphicon glyphicon-lock" name="lockImg"></span>
 												<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
 											</td>
 							<%
@@ -412,7 +412,7 @@ function go_delete(){
 									<% } %>
 									<% if (commentdata.get("STATE").equals("0") && userDto.getId().equals(commentdata.get("ID"))
 											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))) { %>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp">수정</button>
+										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp" value="<%=commentdata.get("STATE")%>">수정</button>
 										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 									<% } %>
 								<% } %>
@@ -425,12 +425,19 @@ function go_delete(){
 					<% } %>
 					</table>
 
+
 					<%--댓글페이징--%>
+					<%
+						if (intTotalCommentCount != 0) {
+					%>
 					<center>
 						<!-- Paging Area Start -->
 						<%=PagingUtil.renderPaging(intTotalCommentCount, co_page_num, 5, 5, "main.hi", "do_comment_page")%>
 						<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->
 					</center>
+					<%
+						}
+					%>
 
 					<!-- 로그인 정보 없으면 댓글창 안보여줌 -->
 					<c:set var='login' value="${sessionScope.user}" />
@@ -438,14 +445,15 @@ function go_delete(){
 						<table class="table table-condensed">
 							<!-- 기본 댓글 입력창(맨아래) -->
 							<tr>
-								<td width="11%"><img src="${sessionScope.user.pf_image}"
-									width="40px" height="40px"></td>
-								<td width="69%"><textarea rows="2" class="form-control"
-										style="resize: none" id="commentParentText"></textarea></td>
-								<td width="20%" align="left"><input type="checkbox"
-									id="STATE" name="STATE" value="1"> 비밀글<br>
-									<button type="button" id="commentParentSubmit"
-										name="commentParentSubmit" class="btn btn-danger">댓글입력</button>
+								<td width="11%">
+									<img src="${sessionScope.user.pf_image}" width="40px" height="40px">
+								</td>
+								<td width="69%">
+									<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>
+								</td>
+								<td width="20%" align="left">
+									<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>
+									<button type="button" id="commentParentSubmit" name="commentParentSubmit" class="btn btn-danger">댓글입력</button>
 								</td>
 							</tr>
 						</table>
@@ -637,7 +645,8 @@ $(function(){
 			}
 		});  
     });
-       
+
+
 //댓글의 댓글을 다는 이벤트 ====================================================================================
     $(document).on("click","#commentChildSubmit", function(){
            
@@ -742,7 +751,70 @@ $(function(){
            
            
     });
-       
+
+    // 댓글 수정
+	$("#commentUpdate").on("click", function () {
+		<%--var pText = $("#commentParentText");--%>
+		<%--// true면 비밀글임(상태 1로 넣어야 함)--%>
+		<%--var stateYN = $("input[name='STATE']").is(":checked")==true;--%>
+
+		<%--console.log("true면 비밀글임 stateYN = " + stateYN);--%>
+
+		<%--if($.trim(pText.val())==""){--%>
+			<%--alert("내용을 입력하세요.");--%>
+			<%--pText.focus();--%>
+			<%--return;--%>
+		<%--}--%>
+		<%--var d = new Date();--%>
+		<%--var today =    d.getFullYear() + "-" +--%>
+			<%--("00" + (d.getMonth() + 1)).slice(-2) + "-" +--%>
+			<%--("00" + d.getDate()).slice(-2) +--%>
+			<%--("00" + d.getHours()).slice(-2) + ":" +--%>
+			<%--("00" + d.getMinutes()).slice(-2) + ":" +--%>
+			<%--("00" + d.getSeconds()).slice(-2)--%>
+
+		<%--// 댓글로 들어갈 내용--%>
+		<%--var commentParentText = '<tr id="r1" name="commentParentCode">'+--%>
+			<%--'<td colspan=2 width=11% align="left">'+--%>
+			<%--'<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+--%>
+			<%--'</td>'+--%>
+			<%--'<td width="69%" style="text-align: left;" name="contentsTd">'+--%>
+			<%--'</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+--%>
+			<%--pText.val().replace(/\n/g, "<br>")+'</td>'+--%>
+			<%--'<td width="20%" align="right">'+--%>
+			<%--'<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+--%>
+			<%--'<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pUp">수정</button>'+--%>
+			<%--'<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+--%>
+			<%--'</td>'+--%>
+			<%--'</tr>';--%>
+
+		<%--$.ajax({--%>
+			<%--type:"POST",--%>
+			<%--url:"replyInsert.hi",			// 컨트롤러에 보낼 이름--%>
+			<%--dataType:"html",--%>
+			<%--data:{--%>
+				<%--"POST_SEQ" 	: <%=postDto.getSeq()%>,--%>
+				<%--"STATE"	 	: stateYN,--%>
+				<%--"CONTENT" 	: pText.val()--%>
+			<%--},--%>
+			<%--success:function(data){--%>
+				<%--console.log("data"+data);--%>
+				<%--var flag = $.parseJSON(data);--%>
+
+				<%--if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기--%>
+					<%--location.reload();--%>
+				<%--} else {--%>
+					<%--alert("댓글등록 실패");--%>
+				<%--}--%>
+			<%--},--%>
+			<%--complete : function(data) {--%>
+				<%--// 실패, 성공 상관없이 무조건 수행--%>
+			<%--},--%>
+			<%--error:function(){--%>
+				<%--alert("에러냐아아앙!!! ");--%>
+			<%--}--%>
+		<%--});--%>
+	});
        
     //답글 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
     $(document).on("click","table#commentTable button", function(){//동적으로 버튼이 생긴 경우 처리 방식
@@ -818,45 +890,28 @@ $(function(){
                                    
             parentElement.after(commentEditor); 
         }else if($(this).attr("name")=="pUp"){
-            <%--//자기 부모의 tr을 알아낸다.--%>
-            <%--var parentElement = $(this).parent().parent();--%>
-            <%----%>
-            <%--console.log("본인댓글번호 ="+$(this).parent().attr('id'));--%>
-            <%--var thisContents = parentElement.find("[name=contentsTd]").find("[name=contentsSpan]").html();--%>
-            <%--console.log("댓글 내용 = " + thisContents);--%>
-            <%----%>
-            <%--//댓글달기 창을 없앤다.--%>
-            <%--$("#commentEditor").remove();--%>
-            	<%----%>
-            <%--//부모의 하단에 댓글달기 창을 삽입--%>
-            <%--var commentEditor = '<tr id="commentEditor">'+--%>
-                                <%--'<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+--%>
-                                <%--'<td style="width:10%">'+--%>
-                                <%--'<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+--%>
-                                <%--'<td width="69%">'+--%>
-                                <%--'<textarea rows="2" class="form-control" style="resize: none" id="commentChildText">' + thisContents + '</textarea>'+--%>
-                                <%--'</td>'+--%>
-                                <%--'<td width="20%" align="left" id="'+$(this).parent().attr('id')+'">'+--%>
-                                <%--'<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>'+--%>
-                                <%--'<button type="button" id="commentChildSubmit" name="commentChildSubmit" class="btn btn-warning">수정</button>'+--%>
-                                <%--'</td>'+--%>
-                                <%--'</tr>';--%>
-                                   <%----%>
-            <%--parentElement.after(commentEditor); --%>
+	        var parentTr = $(this).parent().parent();
+	        var parentTd = $(this).parent();
+	        var thisContent = parentTr.find("[name=contentsTd]").find("[name=contentsSpan]").html();
+	        var secret = $(this).val();
+	        if (secret == '1')
+	            var changeHtml = '<input type="checkbox" id="updateSTATE" name="updateSTATE" value="1" checked> 비밀글<br>';
+	        else
+		        var changeHtml = '<input type="checkbox" id="updateSTATE" name="updateSTATE" value="0"> 비밀글<br>';
+	        var buttonHtml = '<button type="button" id="updateSubmit" name="updateSubmit" class="btn btn-warning">수정</button>';
+	        parentTr.find("[name=contentsTd]").find("[name=lockImg]").remove();
+	        parentTr.find("[name=contentsTd]").find("[name=contentsSpan]").html('<textarea rows="2" class="form-control" style="resize: none" id="commentChildText">' + thisContent + '</textarea>');
+			parentTd.append(changeHtml + buttonHtml);
         }
            
     });
        
 });
-
 </script>
 
+<span id="commentUpdateForm">
 
-
-
-
-
-
+</span>
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>
 <!--푸터 START -->

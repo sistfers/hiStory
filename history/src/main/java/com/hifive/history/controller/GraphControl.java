@@ -112,6 +112,15 @@ public class GraphControl {
 		
 		return mav;
 	}
+	
+	/*
+	 * 이웃 증감 
+	 * Based on : 조윤행
+	 * made  by : 박성우
+	 * date		: 17. 4. 6(목)
+	 * 
+	 * 
+	 */
 	@RequestMapping("chart/follow.hi")
 	public ModelAndView follow(HttpServletRequest request, HttpSession session) throws Exception {
 		UserDto user = new UserDto();;

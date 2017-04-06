@@ -17,7 +17,7 @@
 	visitAgeList = (List<Map<String,Object>>)request.getAttribute("visitAgeList");
 	
 	Date date = new Date();
-	SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+	SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 	String comment2 = sd.format(date);
 	date.setDate(date.getDate()-7);
 	String comment1 = sd.format(date);

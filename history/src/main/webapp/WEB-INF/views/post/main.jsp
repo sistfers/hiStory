@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.net.InetAddress"%>
 <%@page import="com.hifive.history.model.BlogDto"%>
 <%@page import="com.hifive.history.model.LoveDto"%>
@@ -279,8 +280,26 @@ function go_delete(){
 <!-- 포스트 내용 -->
 				<%=postDto.getContent() %>
 				</div>
-				
-				
+			
+<!-- 첨부파일 -->
+				<div class="col-xs-12" style="word-wrap : break-word;" >
+					<table width="100%" >
+				        <tr>
+		                <th scope="row">첨부파일</th>
+		                <td colspan="3">
+<%
+							for(Map<String, Object> map : ((PostDto)DTO).getFileList()){
+%>
+	                        <input type="hidden" id="IDX" value="<%=map.get("POST_SEQ")%>">
+	                        <a href="#this" name="file"><%=map.get("ORI_NAME")%></a>
+	                        (<%=map.get("FILE_SIZE")%>kb)
+<%
+							}
+%>
+		                </td>
+		            	</tr>
+	            	</table>
+            	</div>				
 <!-- 해시태그 부분 -->
 				<div class="col-xs-12" style="margin-bottom: 10px" >
 				<hr>

@@ -391,6 +391,7 @@ function replyAction() {
 		if(index != -1) {
 			
 		} else {
+			// alert($(this).closest('td').find('span:first')html());
 			checkRow = checkRow + $(this).closest('td').next().html()+",";
 		}
 	});

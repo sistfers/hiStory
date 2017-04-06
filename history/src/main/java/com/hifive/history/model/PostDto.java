@@ -1,6 +1,8 @@
 package com.hifive.history.model;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 public class PostDto implements iDto, Serializable {
 
@@ -15,6 +17,7 @@ public class PostDto implements iDto, Serializable {
 	private	String	hashtag;
 	private	String	state;
 	private String	co_state;
+	private List<Map<String,Object>> fileList;
 
 	public PostDto() {
 	}
@@ -31,6 +34,16 @@ public class PostDto implements iDto, Serializable {
 		this.hashtag = hashtag;
 		this.state = state;
 		this.co_state = co_state;
+	}
+	
+	
+
+	public List<Map<String, Object>> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<Map<String, Object>> fileList) {
+		this.fileList = fileList;
 	}
 
 	public int getSeq() {

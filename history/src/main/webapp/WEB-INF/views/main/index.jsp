@@ -765,7 +765,12 @@ function do_search_page(url, page_num) {
 			for(int i=0; i<bloggerRank.size(); ++i){
 %>
 			<div class="col-xs-3 text-center">
-                <center><img class="img-circle img-responsive img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" width="150px" onerror='src="/resources/image/noimg.png"'></center>
+                <center>
+                <a href="post/main.hi?id=<%=bloggerRank.get(i).get("ID")%>">
+                <img class="img-circle img-responsive img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" width="150px" onerror='src="/resources/image/noimg.png"'>
+                </a>
+                </center>
+                
                 <h4><%=bloggerRank.get(i).get("NAME") %>
                     <br><small><%=bloggerRank.get(i).get("TITLE") %></small>
                 </h4>

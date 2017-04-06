@@ -111,6 +111,7 @@
 		</choose>
 	</select>
 
+	<!-- 팔로우 증가, 감소(일간) -->
 	<select id="hi_getFollowList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 									

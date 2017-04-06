@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.hifive.history.model.MessageDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.MessageService;
+import com.hifive.history.service.UserService;
 
 /**
  * Created by Admin on 2017-03-24.
@@ -30,6 +31,9 @@ import com.hifive.history.service.MessageService;
 public class MessageControl {
 	
 	Logger loger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	private MessageService messageService; 
@@ -144,32 +148,31 @@ public class MessageControl {
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/write.hi");
 		
 		
-		String SENDID ="";
-		String TAKEID ="";
-		String note   ="";
+		String SENDID = "";
+		String TAKEID = "";
+		String note   = "";
 		
 		SENDID = res.getParameter("SEND_ID");
-		TAKEID	 = res.getParameter("TAKE_ID");		
-		note = res.getParameter("NOTE");
+		TAKEID = res.getParameter("TAKE_ID");		
+		note   = res.getParameter("NOTE");
 		loger.debug("SENDID -> " + SENDID);
 		loger.debug("TAKEID -> " + TAKEID);
 		loger.debug("note   -> " + note);
 		
 		
-		/*
-		private	int		seq;
-		private	String	send_id;
-		private	String	take_id;
-		private String  contents;
-		private	String	wdate;
-		private	String	rdate;
-		private	String	state;
-		private String  nick;	*/
-		
 		ModelAndView mav = new ModelAndView();
-		if(TAKEID.matches(".*,*.")) {	
+		String[] arrIdx = TAKEID.split(",");
+		for(int i = 0; i < arrIdx.length; i++) {
+			loger.debug("arrIdx - > " + arrIdx[i]);
+		}
+		
+		StringBuffer blackIds = new StringBuffer();
+		int result[] = new int[arrIdx.length];
+		
+		if(arrIdx.length > 1) {	
+//		if(true) {	
 			loger.debug("전체  쪽지");
-			String[] arrIdx = TAKEID.split(",");
+//			
 			
 			for (int i = 0; i < arrIdx.length; i++) {
 				MessageDto dto = new MessageDto();
@@ -184,12 +187,38 @@ public class MessageControl {
 				dto.setSend_view("");
 				dto.setTake_view("");
 				
-				int result = messageService.hi_insert(dto);
+				// 아이디 유효 검사
+				Map<String, Object> condition = new HashMap<String, Object>();
+				condition.put("SEARCH_CON", "idcheck");
+//				condition.put("id", TAKEID);
+				condition.put("id", arrIdx[i]);
 				
-				if(result == 1) {
-					mav.setView(new RedirectView(("send.hi")));
+				int flag   = userService.hi_usercheck(condition);				
+				
+				if(flag == 1) {
+					// 유효 아이디
+					result[i] = messageService.hi_insert(dto);										
+				} else {
+					result[i] = -1;
+					blackIds.append(arrIdx[i]+", ");
 				}	
-			}			
+			}	
+			
+			mav.setView(new RedirectView(("send.hi")));
+			for(int i = 0; i < arrIdx.length; i++) {
+				if(result[i] == -1) {
+					String str = blackIds.toString();
+					str = str.substring(0, str.length() - 1);
+					
+					loger.debug("String str  -> " + str);
+					mav.addObject("blackIds", str);	
+					loger.debug("mav    ->    ", mav);
+					
+//					mav.setView(new RedirectView(("writeForm.hi")));
+					mav.setViewName("/message/writeForm");
+					break;
+				}					
+			}	
 		} else {
 			loger.debug("단일  쪽지");
 			
@@ -205,11 +234,33 @@ public class MessageControl {
 			dto.setSend_view("");
 			dto.setTake_view("");
 			
-			int result = messageService.hi_insert(dto);
+			Map<String, Object> condition = new HashMap<String, Object>();
+			condition.put("SEARCH_CON", "idcheck");
+//			condition.put("id", TAKEID);
+			condition.put("id", arrIdx[0]);
 			
-			if(result == 1) {
-				mav.setView(new RedirectView(("send.hi")));
+			int flag   = userService.hi_usercheck(condition);	
+			loger.debug("flag        ->            " + flag);
+			
+			if(flag == 1) {
+				// 유효 아이디
+				result[0] = messageService.hi_insert(dto);										
+			} else {
+				result[0] = -1;
+				blackIds.append(arrIdx[0]);
 			}	
+			
+			if(result[0] == 1) {
+				mav.setView(new RedirectView(("send.hi")));
+			} else {
+				String str = blackIds.toString();
+				loger.debug("String str  -> " + str);
+				mav.addObject("blackIds", str);	
+				loger.debug("mav    ->    ", mav);
+				
+//				mav.setView(new RedirectView(("writeForm.hi")));
+				mav.setViewName("/message/writeForm");
+			}
 		}						
 		
 		

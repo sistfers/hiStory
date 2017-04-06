@@ -49,7 +49,15 @@
 		FROM  USER_H
 		WHERE ID = #{id} AND PASSWORD = #{password}
 	</select>
-
-
-
+	<select id="checkGradeCondition" parameterType="String" resultType="map">
+		SELECT couNt(*) CNT
+		FROM POST_H A INNER JOIN LOVE_H B
+		ON A.SEQ = B.POST_SEQ
+		WHERE A.ID = #{id}
+	</select>
+	<update id="upGrade" parameterType="map">
+		UPDATE USER_H
+		SET GRADE = #{grade}
+		WHERE ID = #{id}
+	</update>
 </mapper>

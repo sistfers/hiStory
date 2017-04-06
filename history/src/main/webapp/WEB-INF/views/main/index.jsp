@@ -578,8 +578,7 @@ $(document).ready(function () {
 <!-- 이웃새글 END -->
 <script type="text/javascript">
 $(document).ready(function () {
-	$("tr[name=follow_detail]").click(function(){
-		
+	$("[name=follow_detail]").click(function(){
 		var frm = document.do_detail;
 		frm.id.value = $(this).eq(0).find("td").eq(0).attr('id');	//id
 		frm.seq.value = $(this).eq(0).find("td").eq(1).attr('id');	//seq
@@ -589,6 +588,16 @@ $(document).ready(function () {
 		frm.submit();
 		
 	});
+	
+	 $(document).on("click","[name=follow_detail]", function() {
+		 var frm = document.do_detail;
+		frm.id.value = $(this).eq(0).find("td").eq(0).attr('id');	//id
+		frm.seq.value = $(this).eq(0).find("td").eq(1).attr('id');	//seq
+		console.log("frm.id.value=" + frm.id.value);
+		console.log("frm.seq.value=" + frm.seq.value);
+		frm.action = "/post/main.hi";
+		frm.submit();
+	 });
 
  });
 
@@ -652,13 +661,13 @@ function do_search_page(url, page_num) {
         			html +="</div></td></tr>";
       			
                 }
-                $('#followTable > tbody:last').append(html);
+                $('#followTable > tbody').append(html);
                 var pageHtml ="";
                 
                 pageHtml +="<tr><td style=\"text-align: center;\">";
                 pageHtml += renderPaging(followList[0].TOT_CNT, followList[followList.length-1].PAGE_NUM, 5, 5, "/main/followPost.hi", "do_search_page");
                 pageHtml +="</td></tr>";
-                $('#pageTable > tbody:last').append(pageHtml);
+                $('#pageTable > tbody').append(pageHtml);
                 
                
             } 

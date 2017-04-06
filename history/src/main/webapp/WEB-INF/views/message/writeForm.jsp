@@ -12,8 +12,17 @@
 	String TAKEID = request.getParameter("TAKEID");
 	String NAME   = "";
 
-	HttpSession sesson =request.getSession(false);
-	UserDto dto = (UserDto) sesson.getAttribute("user");
+	HttpSession sesson = request.getSession(false);
+	UserDto dto 	   = (UserDto) sesson.getAttribute("user");
+	
+	// 쪽지 실패 한 경우
+	String blackIds = null;
+	blackIds 		= (String) request.getAttribute("blackIds");
+	loger.debug("blackIds  -> " + blackIds);
+	
+	if(blackIds != null) {
+		out.println("<script>alert('쪽지 전달을 실패하였습니다. " + blackIds + " 아이디가 존재하지 않습니다. 쪽지 수신자 아이디를 확인해 주세요.');</script>");
+	}
 	
 	if(dto != null) {
 		SENDID = dto.getId();
@@ -26,6 +35,7 @@
 	} else {
 		
 	}	
+
 %>
 
 

@@ -105,9 +105,9 @@ public class MessageControl {
 			String ids = "";
 //			Map<String, String> ids = new HashMap<String, String>();
 			for(int i = 0; i < values.length; i++) {
-				int startIdx = values[i].indexOf('(');
-				loger.debug("values list -> "+ values[i].substring(0, startIdx));
-				ids = ids + values[i].substring(0, startIdx) + ",";
+				int lastIdx = values[i].indexOf(')');
+				loger.debug("values list -> "+ values[i].substring(0, lastIdx));
+				ids = ids + values[i].substring(1, lastIdx) + ",";
 //				ids.put(i + "", values[i].substring(0, startIdx));
 				loger.debug("ids list -> " + ids);
 			}

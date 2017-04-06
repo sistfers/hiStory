@@ -385,28 +385,30 @@ function deleteAction(){
 /* 답장(체크박스된 것 전부) */
 function replyAction() {
 	var checkRow = "";
-	$( "input[name='checkRow']:checked" ).each (function (){		
-		var index = checkRow.indexOf($(this).closest('td').next().html());
+	$( "input[name='checkRow']:checked" ).each (function (){	
+		// 아이디 중복 검사
+		// var index = checkRow.indexOf($(this).closest('td').next().html());
+		var index = checkRow.indexOf($(this).closest('td').next().find('span:first').html());
+		// alert($(this).closest('td').next().find('span:first').html());
 		
 		if(index != -1) {
 			
 		} else {
-			// alert($(this).closest('td').find('span:first')html());
-			checkRow = checkRow + $(this).closest('td').next().html()+",";
+			// checkRow = checkRow + $(this).closest('td').next().html()+",";
+			checkRow = checkRow + $(this).closest('td').next().find('span:first').html()+",";
 		}
 	});
 	
-	<%-- <tr>
+	<%-- 변경 전
+	<tr>
 	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 	<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
-	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
 	
+		  변경 후
+	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td> --%>
 	
-	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
-	<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
-	<td><%=item.get("WDATE") %></td> --%>
-	
-	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ","));  
+	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); 
 	alert('답장 대상 ' +checkRow);
 	
 	if(checkRow == ''){
@@ -503,7 +505,7 @@ function viewAll() {
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
-					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
+					<td><%=item.get("NAME") %> <span id="si" style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
 				

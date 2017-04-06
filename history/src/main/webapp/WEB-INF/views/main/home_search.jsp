@@ -1,3 +1,5 @@
+<%@page import="java.util.regex.Matcher"%>
+<%@page import="java.util.regex.Pattern"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.Map"%>
@@ -16,6 +18,20 @@
  */
 	public String removeTag(String html) throws Exception {
 		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+	}
+
+	public String get_img(String content){
+		Pattern p = Pattern.compile("\\<img(.*?)\\>");
+		Matcher m = p.matcher(content);
+		while(m.find()){
+			
+			
+			int start = m.group(1).indexOf("src=")+5;
+			int end = m.group(1).indexOf("\"", start+1);
+			String result = m.group(1).substring(start, end);
+			return result;
+		}
+		return null;
 	}
 
 %>
@@ -42,6 +58,8 @@
 		pageCount++;
 	if (PAGE_NUM != null && PAGE_NUM != "")
 		page_num = Integer.parseInt(PAGE_NUM);
+	
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -156,7 +174,7 @@
 	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=searchList.get(i).get("SAVE_NAME") %>' width="100%" height="130px" onerror="src='/resources/image/noimg.png'">
+		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>' width="100%" height="130px" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>
@@ -239,6 +257,7 @@ $(document).ready(function () {
 		frm.action = "/post/main.hi";
 		frm.submit();
 	});
+	
 
  });
  

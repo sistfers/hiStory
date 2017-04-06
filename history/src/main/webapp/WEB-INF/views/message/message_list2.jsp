@@ -59,7 +59,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-	alert(checkRow);
+	// alert(checkRow);
 	
 	
 	if(checkRow == ''){

@@ -71,17 +71,17 @@ $(document).ready(function() {
 							', name:'+value.NAME+', TOTAL:'+value.TOTAL);
 				});	 */			
 				
-				if (item.length == 0) {
-					alert('item.length ' +item.length);
-					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="20%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
+				if (item.length == 1) {
+					// alert('item.length ' +item.length);
+					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="25%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th></tr><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr></table>');
 				}
 				else {
 					var filteredForm = '<table id="filteredForm" class="table"><tr class="warning" >';
 					filteredForm = filteredForm + '<th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
 					filteredForm = filteredForm + '<th width="25%" style="text-align: center;">보낸사람</th>';
 					filteredForm = filteredForm + '<th width="40%" style="text-align: center;">내용</th>';
-					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">날짜</th>';
-					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">읽음</th>';
+					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">받은날짜</th>';
+					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">수신확인</th>';
 											
 					for (var i = 0; i < item.length - 1; i++) {
 						var idx		 = item[i].IDX;
@@ -99,20 +99,23 @@ $(document).ready(function() {
 						if(take == '-1') 
 							continue;
 						
-						if(contents.length > 15) {
-							contents = contents.substring(0, 15) + '...';
+						if(contents.length > 25) {
+							contents = contents.substring(0, 25) + '...';
 							// alert(contents);
 						}
+						<%--
+						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
 						
 						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
-						filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
+						filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
+						// filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
 						filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
 						filteredForm = filteredForm + '<td>'+wdate+'</td>';						
 
 						if(state == '0') {
-							filteredForm = filteredForm + '<td>읽지 않음</td></tr>';
+							filteredForm = filteredForm + '<td align="center">미확인</td></tr>';
 						} else {
-							filteredForm = filteredForm + '<td>'+rdate+'</td></tr>';
+							filteredForm = filteredForm + '<td align="center">읽음</td></tr>';
 						}						
 					}
 					filteredForm = filteredForm + '</table>';
@@ -208,13 +211,14 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 					if(take == '-1') 
 						continue;
 					
-					if(contents.length > 15) {
-						contents = contents.substring(0, 15) + '...';
+					if(contents.length > 25) {
+						contents = contents.substring(0, 25) + '...';
 						// alert(contents);
 					}
 					
 					filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
-					filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
+					filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
+					//filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
 					filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
 					filteredForm = filteredForm + '<td>'+wdate+'</td>';						
 
@@ -291,18 +295,18 @@ function renderPaging(
 	html +="<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">";
 	html +="<tr>";
 	html +="<td class=\"list_num\">";
-	html +="<ul class=\"pagination pagination-sm\">";
+	html +="<ul class=\"pagination pagination-sm\">";	
 	
 	// <<
 	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  ";
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\">  ";
 			html +="&laquo;   ";
 			html +="</a></li>      ";
 	}
 
 	// <
 	if (startPageNo > bottomCount) {
-		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ",'" + take_id+ "','" + words+ "');\"> ";
 		html +="<        ";
 		html +="</a></li>     ";
 	}
@@ -321,14 +325,14 @@ function renderPaging(
 
 	// >
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> ";
+		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ",'" + take_id+ "','" + words+ "');\"> ";
 		html +=">                       ";
 		html +="</a></li>              ";
 	}
 
 	// >>
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "'," + maxPageNo + ",'" + take_id + "','" + words + "');\">  ";
 		html +="&raquo;     ";
 		html +="</a></li>    ";
 	}
@@ -385,28 +389,30 @@ function deleteAction(){
 /* 답장(체크박스된 것 전부) */
 function replyAction() {
 	var checkRow = "";
-	$( "input[name='checkRow']:checked" ).each (function (){		
-		var index = checkRow.indexOf($(this).closest('td').next().html());
+	$( "input[name='checkRow']:checked" ).each (function (){	
+		// 아이디 중복 검사
+		// var index = checkRow.indexOf($(this).closest('td').next().html());
+		var index = checkRow.indexOf($(this).closest('td').next().find('span:first').html());
+		// alert($(this).closest('td').next().find('span:first').html());
 		
 		if(index != -1) {
 			
 		} else {
-			// alert($(this).closest('td').find('span:first')html());
-			checkRow = checkRow + $(this).closest('td').next().html()+",";
+			// checkRow = checkRow + $(this).closest('td').next().html()+",";
+			checkRow = checkRow + $(this).closest('td').next().find('span:first').html()+",";
 		}
 	});
 	
-	<%-- <tr>
+	<%-- 변경 전
+	<tr>
 	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 	<td><%=item.get("SEND_ID") %>(<%=item.get("NAME") %>)</td>
-	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
 	
+		  변경 후
+	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
 	
-	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
-	<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
-	<td><%=item.get("WDATE") %></td> --%>
-	
-	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ","));  
+	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); 
 	alert('답장 대상 ' +checkRow);
 	
 	if(checkRow == ''){
@@ -494,8 +500,8 @@ function viewAll() {
 					
 					String subContents = (String) item.get("CONTENTS");
 					
-					if(subContents.length() > 15) {
-						subContents = subContents.substring(0, 15) + "...";
+					if(subContents.length() > 25) {
+						subContents = subContents.substring(0, 25) + "...";
 						
 					} else {
 						
@@ -503,7 +509,7 @@ function viewAll() {
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
-					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td>
+					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
 				

@@ -96,6 +96,7 @@ border-radius: 15px;
 			    		       		<td><%=loveRank.get(i).get("WDATE") %></td>
 			    		       		</tr>
 			    		<%
+			    				if(i==4)break;
 			        			}		    		
 			        		}else{
 			        	%>
@@ -153,6 +154,7 @@ border-radius: 15px;
 			        		<td><%=loveRank.get(i).get("WDATE") %></td>
 			        		</tr>
 		        	<%
+		        			if(i==4)break;
 		        			}
 		        		}else{
 		        	%>

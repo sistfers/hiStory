@@ -1,3 +1,5 @@
+<%@page import="java.util.regex.Matcher"%>
+<%@page import="java.util.regex.Pattern"%>
 <%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
@@ -14,6 +16,21 @@
  */
 	public String removeTag(String html) throws Exception {
 		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+	}
+
+	//포스트 내용에서 이미지 하나 추출 함수
+	public String get_img(String content){
+		Pattern p = Pattern.compile("\\<img(.*?)\\>");
+		Matcher m = p.matcher(content);
+		while(m.find()){
+			
+			
+			int start = m.group(1).indexOf("src=")+5;
+			int end = m.group(1).indexOf("\"", start+1);
+			String result = m.group(1).substring(start, end);
+			return result;
+		}
+		return null;
 	}
 
 %>
@@ -396,7 +413,7 @@ $(document).ready(function () {
     				  if(k<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/life.jpg"'
+	    				<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/life.jpg"'
 	    				style="height: 270px"/>
 	    				<div class="mask" style="padding-bottom: 15px;">
 	      				<h2>
@@ -426,7 +443,7 @@ $(document).ready(function () {
     				<%}else{%>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
     					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
-	    				<img src="<%=themeList.get(j).get("SAVE_NAME") %>" onerror='this.src="/resources/image/noimg.png"'
+	    				<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/noimg.png"'
 	    				style="height: 270px"/>
 	    				<div class="mask" style="padding-top: 15px">
 	      				<h2>
@@ -508,7 +525,7 @@ $(document).ready(function () {
 					<td id="<%=followList.get(i).get("ID")%>" width="20%">
 						<div>
 							<a href="#" class="pull-left">
-							<img src="<%=followList.get(i).get("SAVE_NAME") %>" width="130px" height="90px" onerror='src="/resources/image/noimg.png"'>
+							<img src="<%=get_img(followList.get(i).get("CONTENT")+"") %>" width="130px" height="90px" onerror='src="/resources/image/noimg.png"'>
 							</a>
 						</div>
 					</td>
@@ -578,8 +595,7 @@ $(document).ready(function () {
 <!-- 이웃새글 END -->
 <script type="text/javascript">
 $(document).ready(function () {
-	$("tr[name=follow_detail]").click(function(){
-		
+	$("[name=follow_detail]").click(function(){
 		var frm = document.do_detail;
 		frm.id.value = $(this).eq(0).find("td").eq(0).attr('id');	//id
 		frm.seq.value = $(this).eq(0).find("td").eq(1).attr('id');	//seq
@@ -589,6 +605,16 @@ $(document).ready(function () {
 		frm.submit();
 		
 	});
+	
+	 $(document).on("click","[name=follow_detail]", function() {
+		 var frm = document.do_detail;
+		frm.id.value = $(this).eq(0).find("td").eq(0).attr('id');	//id
+		frm.seq.value = $(this).eq(0).find("td").eq(1).attr('id');	//seq
+		console.log("frm.id.value=" + frm.id.value);
+		console.log("frm.seq.value=" + frm.seq.value);
+		frm.action = "/post/main.hi";
+		frm.submit();
+	 });
 
  });
 
@@ -619,7 +645,8 @@ function do_search_page(url, page_num) {
                     html +="<td id=\"" +followList[i].ID +"\" width=\"20%\">";
         			html +="<div>";
         			html +="<a href=\"#\" class=\"pull-left\">";
-        			html +="<img src=\""+followList[i].SAVE_NAME+ "\" width=\"130px\" height=\"90px\" onerror='src=" +"\"/resources/image/noimg.png\"'>";
+        				var post_img = get_img(followList[i].CONTENT);
+        			html +="<img src=\""+post_img+ "\" width=\"130px\" height=\"90px\" onerror='src=" +"\"/resources/image/noimg.png\"'>";
         			html +="</a>";
         			html +="</div>";
         			html +="</td>";
@@ -652,13 +679,13 @@ function do_search_page(url, page_num) {
         			html +="</div></td></tr>";
       			
                 }
-                $('#followTable > tbody:last').append(html);
+                $('#followTable > tbody').append(html);
                 var pageHtml ="";
                 
                 pageHtml +="<tr><td style=\"text-align: center;\">";
                 pageHtml += renderPaging(followList[0].TOT_CNT, followList[followList.length-1].PAGE_NUM, 5, 5, "/main/followPost.hi", "do_search_page");
                 pageHtml +="</td></tr>";
-                $('#pageTable > tbody:last').append(pageHtml);
+                $('#pageTable > tbody').append(pageHtml);
                 
                
             } 
@@ -670,7 +697,13 @@ function do_search_page(url, page_num) {
 			alert("에러발생");
 		}
 	});
-        			
+    function get_img(content){
+    	start = parseInt(content.indexOf("src=")+5);
+    	end = parseInt(content.indexOf("\"", start+1));
+    	
+    	return content.substring(start, end);	
+    }
+    
 	function removeTag( html ) {
 		html = html.replace(/<br\/>/ig, "");
 		html = html.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-z]*=[^>]*)?(\s)*(\/)?>/ig, "");

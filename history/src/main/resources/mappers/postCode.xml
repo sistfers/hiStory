@@ -27,16 +27,16 @@
 <sql id="searchCondition">
 	<choose>
 		<when test="SEARCH_WORD == '' ">
-			WHERE STATE = 0
+			WHERE STATE = '0'
 		</when>
 		<otherwise></otherwise>
 	</choose>
 	<choose>
 		<when test="SEARCH_WORD != '' ">
-			WHERE STATE = 0
-            AND TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
+			WHERE STATE = '0'
+            AND (TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
             OR CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
-            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
+            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR})
 		</when>
 		<otherwise></otherwise>
 	</choose>
@@ -754,7 +754,7 @@ WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	FROM(							
       SELECT T1.*, T2.TOT_CNT							
       FROM(	  
-        SELECT ROWNUM RNUM, A.POST_SEQ, A.ID, A.LDATE, B.ID POSTID, B.TITLE
+        SELECT ROWNUM RNUM, A.POST_SEQ, A.ID, TO_CHAR(A.LDATE, 'YYYY-MM-DD') LDATE, B.ID POSTID, B.TITLE
         FROM LOVE_H A INNER JOIN POST_H B
           ON A.POST_SEQ = B.SEQ
        WHERE A.ID = #{id}

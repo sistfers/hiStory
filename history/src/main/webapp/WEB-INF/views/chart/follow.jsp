@@ -113,22 +113,21 @@ border-radius: 15px;
 				</form>
 				<div id="chart_div" style="width: 100%; height: 500px;"></div><hr>
 					<div class="col-xs-12">
-		       		<table class="table" style="margin-top: 10px">
-		        	<tr class="warning">
-		        		<th colspan="8" style="text-align: center;">이웃증감</td>
-		        	</tr>
-		        	<tr class="active">
-						<td>날짜</td>
+		       		
+		        	<h5>이웃증감</h5>
+		       		<table class="table table-bordered" style="margin-top: 10px;">
+		        	<tr class="info">
+						<td style="font-size: 11px">날짜</td>
 						<%
 							for(int i =0; i < followIncList.size(); ++i){
 						%>
-						<td><%=followIncList.get(i).get("CUR_DATE") %></td>
+						<td style="font-size: 11px"><%=followIncList.get(i).get("CUR_DATE") %></td>
 						<%
 							}
 						%>
 		        	</tr>
-		        	<tr class="active">
-		        		<td>증가</td>
+		        	<tr>
+		        		<td style="font-size: 11px;vertical-align: center">증가</td>
 		        		<%
 							for(int i =0; i < followIncList.size(); ++i){
 						%>
@@ -137,10 +136,10 @@ border-radius: 15px;
 							}
 						%>
 		        	</tr>
-		        	<tr class="active">
-		        		<td>감소</td>
+		        	<tr>
+		        		<td style="font-size: 11px;vertical-align: center">감소</td>
 		        		<%
-							for(int i =0; i < followIncList.size(); ++i){
+							for(int i =0; i < followDecList.size(); ++i){
 						%>
 						<td style="text-align: center; "><%=followDecList.get(i).get("CNT") %>명</td>
 						<%
@@ -148,6 +147,7 @@ border-radius: 15px;
 						%>
 		        	</tr>
 		        	</table>
+		        	
 		       	</div>
 		       	</div>
 			<div class="col-xs-1"></div>

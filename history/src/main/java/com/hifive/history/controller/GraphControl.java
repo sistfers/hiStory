@@ -92,7 +92,7 @@ public class GraphControl {
 		ModelAndView mav = new ModelAndView("chart/age");
 		
 		Date date = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		date.setDate(date.getDate()+1);
 		String enddate = sd.format(date);
 		date.setDate(date.getDate()-6);
@@ -148,7 +148,7 @@ public class GraphControl {
 		ModelAndView mav = new ModelAndView("chart/follow");
 		
 		Date date = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		date.setDate(date.getDate()+1);
 		String enddate = sd.format(date);
 		loger.debug("String enddate              ->  " + enddate);
@@ -275,8 +275,8 @@ public class GraphControl {
 		ModelAndView mav = new ModelAndView();
 		
 		Date date = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
-		String startdate = "17/03/01";
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+		String startdate = "2017-03-01";
 		date.setDate(date.getDate()+1);
 		String enddate = sd.format(date);
 		
@@ -318,10 +318,10 @@ public class GraphControl {
 		}
 		
 		Date date = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		date.setDate(date.getDate()+1);
 		
-		String startdate = "17/03/01";
+		String startdate = "2017-03-01";
 		String enddate = sd.format(date);
 		
 		ModelAndView mav = new ModelAndView();

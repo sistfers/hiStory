@@ -27,16 +27,16 @@
 <sql id="searchCondition">
 	<choose>
 		<when test="SEARCH_WORD == '' ">
-			WHERE STATE = 0
+			WHERE STATE = '0'
 		</when>
 		<otherwise></otherwise>
 	</choose>
 	<choose>
 		<when test="SEARCH_WORD != '' ">
-			WHERE STATE = 0
-            AND TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
+			WHERE STATE = '0'
+            AND (TITLE LIKE  #{SEARCH_WORD, jdbcType=VARCHAR}
             OR CONTENT LIKE #{SEARCH_WORD, jdbcType=VARCHAR}
-            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR}
+            OR HASHTAG = #{SEARCH_TAG, jdbcType=VARCHAR})
 		</when>
 		<otherwise></otherwise>
 	</choose>

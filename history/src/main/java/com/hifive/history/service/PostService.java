@@ -166,6 +166,7 @@ public class PostService implements iService {
 	}
 	
 	
+	
 	public int hi_insertList(List<Map<String, Object>> boxList) throws SQLException{
 		int flagCnt = 0;
 		for(Map<String, Object> map:boxList){

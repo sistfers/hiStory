@@ -112,7 +112,7 @@ $(document).ready(function() {
 						if(state == '0') {
 							filteredForm = filteredForm + '<td>읽지 않음</td></tr>';
 						} else {
-							filteredForm = filteredForm + '<td>'+rdate+'</td></tr>';
+							filteredForm = filteredForm + '<td>읽음</td></tr>';
 						}						
 					}
 					filteredForm = filteredForm + '</table>';

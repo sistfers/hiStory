@@ -137,15 +137,15 @@
 		  )
 		  VALUES
 		  (
-		    #{IDX},
-		    #{ct_seq},
-		    #{id},
-		    #{field},
-		    #{title},
-		    #{content},
-		    #{hashtag},
-		    #{state},
-		    #{co_state}
+		    #{IDX, jdbcType=VARCHAR},
+		    #{ct_seq, jdbcType=VARCHAR},
+		    #{id, jdbcType=VARCHAR},
+		    #{field, jdbcType=VARCHAR},
+		    #{title, jdbcType=VARCHAR},
+		    #{content, jdbcType=CLOB},
+		    #{hashtag, jdbcType=VARCHAR},
+		    #{state, jdbcType=VARCHAR},
+		    #{co_state, jdbcType=VARCHAR}
 		  )
 	  ]]>
 </insert>

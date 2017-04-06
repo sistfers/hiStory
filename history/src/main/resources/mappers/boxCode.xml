@@ -14,7 +14,9 @@
 		    POST_SEQ,
 		    LOCATION,
 		    ORI_NAME,
-		    SAVE_NAME
+		    SAVE_NAME,
+		    FILE_SIZE,
+		    DEL_GB
 		  )
 		  VALUES
 		  (
@@ -22,9 +24,25 @@
 		    #{BOARD_IDX},
 		    '1',
 		    #{ORIGINAL_FILE_NAME},
-		    #{STORED_FILE_NAME}
+		    #{STORED_FILE_NAME},
+		    #{FILE_SIZE},
+		    '0'
 		  )
 	 ]]> 
 </insert>
+
+<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+    <![CDATA[
+        SELECT
+            POST_SEQ,
+            ORI_NAME,
+            ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+        FROM
+            BOX_H
+        WHERE
+            POST_SEQ = #{IDX}
+            AND DEL_GB = '0'
+    ]]>
+</select>
 
 </mapper>

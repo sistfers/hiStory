@@ -31,7 +31,7 @@
 	 ]]> 
 </insert>
 
-<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
     <![CDATA[
         SELECT
             POST_SEQ,

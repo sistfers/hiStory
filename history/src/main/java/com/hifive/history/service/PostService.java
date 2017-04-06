@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
 import com.hifive.history.repository.BoxDao;
 import com.hifive.history.repository.PostDao;
@@ -103,7 +104,17 @@ public class PostService implements iService {
 	@Override
 	public iDto hi_detail(iDto dto) {
 		logger.debug("PostService.dto.toString() = "+dto.toString());
-		return postDao.hi_detail(dto);
+		PostDto postDto = (PostDto)postDao.hi_detail(dto);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("IDX", postDto.getSeq());
+		try{
+			postDto.setFileList(boxDao.hi_selectList(map));
+		}catch(Exception e){
+			e.getMessage();
+		}
+		
+		return postDto;
 	}
 
 	@Override

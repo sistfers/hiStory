@@ -62,7 +62,7 @@ border-radius: 15px;
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
 		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 		       	<fieldset>
-		       	<legend><i class="icon-bar-chart"></i> 방문자수 통계</legend></fieldset>
+		       	<legend><i class="icon-bar-chart"></i> 잔체</legend></fieldset>
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">전체</p> -->
 		        <table class="table" style="margin-top: 10px">
 		        	<tr class="info">

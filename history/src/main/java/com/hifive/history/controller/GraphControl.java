@@ -318,10 +318,10 @@ public class GraphControl {
 		}
 		
 		Date date = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YY/MM/dd");
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		date.setDate(date.getDate()+1);
 		
-		String startdate = "17/03/01";
+		String startdate = "2017-03-01";
 		String enddate = sd.format(date);
 		
 		ModelAndView mav = new ModelAndView();

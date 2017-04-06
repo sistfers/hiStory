@@ -72,7 +72,7 @@ $(document).ready(function() {
 				});	 */			
 				
 				if (item.length == 1) {
-					alert('item.length ' +item.length);
+					// alert('item.length ' +item.length);
 					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="25%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th></tr><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr></table>');
 				}
 				else {
@@ -103,8 +103,11 @@ $(document).ready(function() {
 							contents = contents.substring(0, 15) + '...';
 							// alert(contents);
 						}
+						<%-- <td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
+						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000 ">(<%=item.get("SEND_ID") %>)</span> </td> --%>
 						
 						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
+						
 						filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
 						filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
 						filteredForm = filteredForm + '<td>'+wdate+'</td>';						
@@ -368,7 +371,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-	alert('삭제 ' +checkRow);	
+	// alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){
 		alert("삭제할 대상을 선택하세요.");

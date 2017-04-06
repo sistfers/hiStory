@@ -85,10 +85,10 @@ border-radius: 15px;
 							<ul class="pagination pagination-sm">
 							 <li class="disabled"><a href="#">&laquo;</a></li>
 							<%
-							int tot = Integer.parseInt(lovepostList.get(0).get("TOT_CNT").toString())/10+1;
+							int tot = Integer.parseInt(lovepostList.get(0).get("TOT_CNT").toString())/5+1;
 							if(request.getParameter("PAGE_NUM")==null){
 								for(int i = 1; i<= tot; ++i){
-									if(i==1){
+									if(i==0){
 								%>
 									<li class="active"><a href="lovepost.hi?PAGE_NUM=<%=i %>"><%=i %></a></li>
 								<%
@@ -101,8 +101,7 @@ border-radius: 15px;
 							}else{
 								for(int i = 1; i<= tot; ++i){
 								%>
-									<li <%if((Integer.parseInt(request.getParameter("PAGE_NUM"))==i)){%>class="active"<%} %>><a href="lovepost.hi?PAGE_NUM=<%=i %>">
-									<%=i %></a></li>
+									<li <%if((Integer.parseInt(request.getParameter("PAGE_NUM"))==i)){%>class="active"<%} %>><a href="lovepost.hi?PAGE_NUM=<%=i %>"><%=i %></a></li>
 								<%
 								}
 							}

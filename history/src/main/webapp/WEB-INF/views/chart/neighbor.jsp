@@ -110,7 +110,7 @@ function do_del(id) {
 							<ul class="pagination pagination-sm">
 							 <li class="disabled"><a href="#">&laquo;</a></li>
 							<%
-							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/10+1;
+							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/5+1;
 							if(request.getParameter("PAGE_NUM")==null){
 								for(int i = 1; i<= tot; ++i){
 									if(i==1){

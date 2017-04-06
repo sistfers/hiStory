@@ -282,21 +282,30 @@ function go_delete(){
 				</div>
 
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
-				<!-- 첨부파일 -->
+<!-- 첨부파일 -->
 				<div class="col-xs-12" style="word-wrap : break-word;" >
-					<table width="100%" >
+					<table class="board_view">
+					<colgroup>
+	            		<col width="25%"/>
+		            	<col width="35%"/>
+	    	        	<col width="10%"/>
+	        		    <col width="30%"/>
+       				</colgroup>
 				        <tr>
 		                <th scope="row">첨부파일</th>
 		                <td colspan="3">
+						<form name="download" method="post">					
 <%
 						for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
 %>
-	                        <input type="hidden" id="IDX" value="<%=map.get("POST_SEQ")%>">
-	                        <a href="#this" name="file"><%=map.get("ORI_NAME")%></a>
+	                        <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
+	                        <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
 	                        (<%=map.get("FILE_SIZE")%>kb)
+	                        
 <%
 						}
 %>
+					</form> 
 		                </td>
 		            	</tr>
 	            	</table>
@@ -534,7 +543,21 @@ function go_delete(){
 
 
 <script type="text/javascript">
+function fn_downloadFile(obj){
+	var frm = document.download;
+	//var idx = obj.parent().find("#IDX").val();
+	
+	
+    frm.action = "downloadFile.hi";
+    
+    frm.submit();
+    
+}//파일다운로드
 $(function(){
+	$("[name='file']").on("click", function(e){ //파일 이름
+		e.preventDefault();
+        fn_downloadFile($(this));
+    });
 	
 // 글 공감 ajax
 	$("#postLove").bind("click", function() {

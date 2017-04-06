@@ -1,5 +1,6 @@
 package com.hifive.history.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +51,27 @@ public class UserService implements iService {
 	}
 
 	public iDto hi_login(iDto dto) {
+		//등업 충족여부 확인
+		HashMap<String, Object> map 
+			= (HashMap<String, Object>)userDao.checkGradeCondition(((UserDto)dto).getId());
+		//등급나누기
+		if(map!=null){
+			if( Integer.parseInt( (map.get("CNT")).toString() ) >= 15 ){
+				Map<String, String> condition = new HashMap<>();
+				condition.put("id", ((UserDto)dto).getId());
+				condition.put("grade", "2");
+				userDao.upGrade(condition);
+			}else if( Integer.parseInt( (map.get("CNT")).toString() ) >= 10 ){
+				Map<String, String> condition = new HashMap<>();
+				condition.put("id", ((UserDto)dto).getId());
+				condition.put("grade", "1");
+				userDao.upGrade(condition);
+			}
+		}
+		
 		return userDao.hi_login(dto);
 	}
+	
 	
 	public int hi_throwToken(iDto dto, String token) {		
 		

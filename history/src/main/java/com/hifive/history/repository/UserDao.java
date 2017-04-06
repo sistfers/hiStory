@@ -102,4 +102,16 @@ public class UserDao implements iDao {
 //		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.update(statement, id);
 	}
+	public Map<String, Object> checkGradeCondition(String id){
+		String statement = namespace +".checkGradeCondition";
+		logger.debug("statement"+statement);
+		logger.debug("id = " + id);
+		return sqlSession.selectOne(statement,id);
+	}
+	public int upGrade(Map<String, String> condition){
+		String statement = namespace +".upGrade";
+		logger.debug("statement"+statement);
+		logger.debug("condition.toString() = " + condition.toString());
+		return sqlSession.update(statement,condition);
+	}
 }

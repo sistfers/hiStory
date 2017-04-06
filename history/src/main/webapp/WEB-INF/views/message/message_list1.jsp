@@ -73,15 +73,15 @@ $(document).ready(function() {
 				
 				if (item.length == 0) {
 					alert('item.length ' +item.length);
-					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="20%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
+					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="25%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
 				}
 				else {
 					var filteredForm = '<table id="filteredForm" class="table"><tr class="warning" >';
 					filteredForm = filteredForm + '<th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
 					filteredForm = filteredForm + '<th width="25%" style="text-align: center;">보낸사람</th>';
 					filteredForm = filteredForm + '<th width="40%" style="text-align: center;">내용</th>';
-					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">날짜</th>';
-					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">읽음</th>';
+					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">받은날짜</th>';
+					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">수신확인</th>';
 											
 					for (var i = 0; i < item.length - 1; i++) {
 						var idx		 = item[i].IDX;
@@ -110,9 +110,9 @@ $(document).ready(function() {
 						filteredForm = filteredForm + '<td>'+wdate+'</td>';						
 
 						if(state == '0') {
-							filteredForm = filteredForm + '<td>읽지 않음</td></tr>';
+							filteredForm = filteredForm + '<td align="center">미확인</td></tr>';
 						} else {
-							filteredForm = filteredForm + '<td>읽음</td></tr>';
+							filteredForm = filteredForm + '<td align="center">읽음</td></tr>';
 						}						
 					}
 					filteredForm = filteredForm + '</table>';

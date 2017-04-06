@@ -291,18 +291,18 @@ function renderPaging(
 	html +="<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">";
 	html +="<tr>";
 	html +="<td class=\"list_num\">";
-	html +="<ul class=\"pagination pagination-sm\">";
+	html +="<ul class=\"pagination pagination-sm\">";	
 	
 	// <<
 	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  ";
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\">  ";
 			html +="&laquo;   ";
 			html +="</a></li>      ";
 	}
 
 	// <
 	if (startPageNo > bottomCount) {
-		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ",'" + take_id+ "','" + words+ "');\"> ";
 		html +="<        ";
 		html +="</a></li>     ";
 	}
@@ -321,14 +321,14 @@ function renderPaging(
 
 	// >
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> ";
+		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ",'" + take_id+ "','" + words+ "');\"> ";
 		html +=">                       ";
 		html +="</a></li>              ";
 	}
 
 	// >>
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\">  ";
 		html +="&raquo;     ";
 		html +="</a></li>    ";
 	}

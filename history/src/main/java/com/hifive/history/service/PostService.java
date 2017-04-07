@@ -104,6 +104,7 @@ public class PostService implements iService {
 	@Override
 	public int hi_update(iDto dto) {
 		logger.debug("PostService.dto.toString() = "+dto.toString());
+		 
 		return postDao.hi_update(dto);
 	}
 

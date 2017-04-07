@@ -46,7 +46,7 @@
 	int	   seq 	= Integer.parseInt(request.getParameter("seq"));
 	
 	// 포스트 내용 1건 보여주기
-	PostDto DTO = (PostDto)request.getAttribute("DTO");
+	PostDto postDto = (PostDto)request.getAttribute("DTO");
 	
 
 %>
@@ -81,7 +81,7 @@
 			<select class="form-control" id="category" name="ct_seq">
 			       <%if(categoryList.size() != 0){
 			       		for(int i=0; i<categoryList.size(); ++i){%>
-			       <option value="<%=categoryList.get(i).getSeq()%>" <%if((DTO.getCt_seq() == categoryList.get(i).getSeq())) { out.print("selected"); }%>>
+			       <option value="<%=categoryList.get(i).getSeq()%>" <%if((postDto.getCt_seq() == categoryList.get(i).getSeq())) { out.print("selected"); }%>>
 			       <%=categoryList.get(i).getName() %></option>
 			       
 			       <%	}
@@ -93,12 +93,12 @@
 	    
 <!--제목  -->	    
 		<div class="col-xs-9">
-			<input type="text" name="title" id="TITLE" class="form-control" value="<%=DTO.getTitle() %>">
-		</div>
+			<input type="text" name="title" id="TITLE" class="form-control" value="<%=postDto.getTitle() %>">
+		</div>		
 		
 <!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="content" rows="500"><%=DTO.getContent() %></textarea>
+		<textarea name="content" rows="500"><%=postDto.getContent() %></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
 				height : '400px',
@@ -106,13 +106,51 @@
 			}); 
 		</script>
 		</div>
-		
+		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
+		        <input type="hidden" name="fileCnt" id="fileCnt" value="<%=postDto.getFileList().size()%>">
+<!-- 첨부파일 -->
+				<div class="col-xs-12" style="word-wrap : break-word;" >
+					<table class="board_view">
+					<colgroup>
+	            		<col width="25%"/>
+		            	<col width="35%"/>
+	    	        	<col width="10%"/>
+	        		    <col width="30%"/>
+       				</colgroup>
+				        <tr>
+		                <th scope="row">첨부파일</th>
+		                <td>			
+<%
+						for(Map<String, Object> map : postDto.getFileList()){
+%>
+							<p>
+	                        <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
+	                        <a href="#" id="name_<%=map.get("POST_SEQ")%>" name="name_<%=map.get("POST_SEQ")%>">
+	                        <%=map.get("ORI_NAME")%></a>
+	                        <input type="file" id="file_<%=map.get("POST_SEQ")%>" name="file_<%=map.get("POST_SEQ")%>">
+	                        (<%=map.get("FILE_SIZE")%>kb)
+	                        <a href="#" class="btn" id="delete_<%=map.get("POST_SEQ")%>" name="delete_<%=map.get("POST_SEQ")%>">삭제</a>
+	                        </p>
+<%
+						}
+%>
+		                </td>
+		            	</tr>
+		            	<tr>
+		            	<td></td>
+		            	<td></td>
+		            	<td></td>
+		            	<td><a href="#this" class="btn" id="addFile">파일 추가</a></td>
+		            	</tr>
+	            	</table>
+            	</div>
+		        <% } %>
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="FIELD" name="field">
 			       <%if(themeCode.size() != 0){
 			       		for(int i=0; i<themeCode.size(); ++i){%>
-			       <option value="<%=themeCode.get(i).get("CD_D_NM") %>" <%if((DTO.getField().equals(themeCode.get(i).get("CD_D_NM")))) { out.print("selected"); }%>>
+			       <option value="<%=themeCode.get(i).get("CD_D_NM") %>" <%if((postDto.getField().equals(themeCode.get(i).get("CD_D_NM")))) { out.print("selected"); }%>>
 			       <%=themeCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
@@ -125,7 +163,7 @@
 			<select class="form-control" id="CO_STATE" name="co_state">
 			       <%if(reviewCode.size() != 0){
 			       		for(int i=0; i<reviewCode.size(); ++i){%>
-			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>" <%if((DTO.getCo_state() == reviewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
+			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getCo_state() == reviewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
 			       <%=reviewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
@@ -138,7 +176,7 @@
 			<select class="form-control" id="STATE" name="state">
 			       <%if(postViewCode.size() != 0){
 			       		for(int i=0; i<postViewCode.size(); ++i){%>
-			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((DTO.getState() == postViewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
+			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getState() == postViewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
 			       <%=postViewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
@@ -158,8 +196,8 @@
 	<div id="after_tag" class="col-xs-12">
 
 				<%
-					if (DTO.getHashtag() != null) {
-						String str[] = split(DTO.getHashtag());
+					if (postDto.getHashtag() != null) {
+						String str[] = split(postDto.getHashtag());
 						for (int i = 0; i < str.length; ++i) {
 				%>
 				<span class='before_tag' id='tag_<%=i %>' style='margin-left:7px;'>#<b><%=str[i]%></b>
@@ -186,8 +224,19 @@
 </div>
 
 <script>
+var gfv_count = $('#fileCnt').val()+1;
 /* 태그 달기 js입니다 */
 	$(document).ready(function(){
+		$("#addFile").on("click", function(e){ //파일 추가 버튼
+			e.preventDefault();
+			fn_addFile();
+		});
+		
+		$("[name='delete']").on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+		
 		$("input:text").keydown(function(evt) 
 				{ 
 			if (evt.keyCode == 13) return false;
@@ -258,7 +307,21 @@
 	    console.log("해시태그 ="+$("#tag").val(ts).val());
 	}
 	
-
+	function fn_addFile(){
+		var str = "<p>" +
+				"<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
+				"<a href='#' class='btn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
+			"</p>";
+		$("#fileDiv").append(str);
+		$("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	}
+	
+	function fn_deleteFile(obj){
+		obj.parent().remove();
+	}
 </script>
 	
 <script type="text/javascript">

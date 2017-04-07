@@ -306,7 +306,7 @@ public class MessageControl {
 		loger.debug("NOTE	-> ", note);
 		
 		if(note.getState().equals("0")) {
-			messageService.hi_detail_state(note.getSeq());
+			messageService.hi_detail_state(note.getSeq(), bt_yn);
 			
 		} else {
 			

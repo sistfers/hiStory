@@ -39,10 +39,21 @@
 				              	       ON (A.SEND_ID=B.ID)
 	</select>	
 	
+	<sql id="BaseConditionFords">
+		<choose>
+			<when test="bt_yn == 'bty'">
+				SET STATE=1,
+			</when>
+			<when test="bt_yn == 'btn'">
+				SET 
+			</when>
+		</choose>
+	</sql>
+	
 	<!-- 쪽지 읽고 나서 -->
-	<update id="hi_detail_state" parameterType="int">
+	<update id="hi_detail_state" parameterType="hashmap">
 		UPDATE MESSAGE_H 
-		   SET STATE = 1,
+	  <include refid="BaseConditionFords" />
 		 RDATE = SYSDATE
 		 WHERE SEQ = #{seq}
 	</update>

@@ -59,14 +59,23 @@ public class MessageDao implements iDao {
 	}
 	
 	// 쪽지 읽고 나서
-	public int hi_detail_state(int seq) {
+	public int hi_detail_state(int seq, String bt_yn) {
 		
 		String statement = namespace +".hi_detail_state";
 		logger.debug("----------------------------------------------------------");
 		logger.debug("[[[statement      ]]] "+statement);
 		logger.debug("[[[seq            ]]] "+seq);
+		logger.debug("[[[bt_yn          ]]] "+bt_yn);
 		
-		return sqlSession.update(statement, seq);
+		/*
+		 * seq	 : 번호
+		 * bt_yn : bty/btn
+		 */
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("seq", Integer.toString(seq));
+		data.put("bt_yn", bt_yn);
+		
+		return sqlSession.update(statement, data);
 	} 
 	
 	// 읽지 않은 쪽지
@@ -104,8 +113,8 @@ public class MessageDao implements iDao {
 		logger.debug("[[[seq            ]]] "+seq);
 		 
 		/*
-		 * destination params : 받은(receive) / 보낸(send)
-		 * 		   seq params : 쪽지 번호
+		 * destination : 받은(receive) / 보낸(send)
+		 * 		   seq : 쪽지 번호
 		 */
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("dest", dest);

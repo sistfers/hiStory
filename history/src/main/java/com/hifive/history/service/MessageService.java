@@ -43,9 +43,9 @@ public class MessageService implements iService {
 	}
 	
 	// 쪽지 읽고 나서
-	public int hi_detail_state(int seq) {
+	public int hi_detail_state(int seq, String bt_yn) {
 		
-		return messageDao.hi_detail_state(seq);
+		return messageDao.hi_detail_state(seq, bt_yn);
 	}
 	
 	// 읽지 않은 쪽지

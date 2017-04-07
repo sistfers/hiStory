@@ -14,6 +14,7 @@ datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
 int intTotalCount = 0;
 int page_num = 1;
 String my_id = "";
+int unReadNotes = 0;
 
 
 if((String) request.getAttribute("PAGE_NUM") != null) {
@@ -24,6 +25,10 @@ if((String) request.getAttribute("My_Id") != null) {
 	my_id = (String) request.getAttribute("My_Id");
 } else {
 	
+}
+
+if(request.getAttribute("unReadNotes") != null) {
+	unReadNotes = (Integer) request.getAttribute("unReadNotes");
 }
 %>
 
@@ -458,19 +463,25 @@ function viewAll() {
 		<input type="hidden" id="My_ID" value="<%=my_id %>" />
 	<div class="col-xs-11" >
 		<div class="form-group">
-	 		<!-- 버튼 -->	
+	 		<!-- 삭제, 답장 버튼 -->	
 	 		<div class="col-xs-3" align="left">
 				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
             	<span onclick="replyAction();"  class="btn btn-danger"><span class="glyphicon glyphicon-envelope" style="font-size: 22px"></span></span>
 			</div>
-			<div class="col-xs-7" align="left">
+			<!-- 미확인 쪽지 -->
+			<div class="col-xs-1" align="left">
+			(<%=unReadNotes %>)
+			</div>
+			
+			<!-- 입력창 -->
+			<div class="col-xs-6" align="left">
 				<div class="input-group"> 
 			 	<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
 				<input type="text" id="searchbox" class="form-control" placeholder="검색어를 입력하삼"/>
 				<span class="input-group-btn"><input type="button" id="words" value="검색" class="btn btn-info" /></span>
 				</div>
 			</div>
-			
+			<!-- 전체보기 -->
 			<div class="col-xs-2" align="right">	
 				<input type="button" id="viewall" value="전체보기" onclick="viewAll();" class="btn btn-default" />
 			</div>		

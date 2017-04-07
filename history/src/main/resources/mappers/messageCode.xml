@@ -65,7 +65,6 @@
 		FROM MESSAGE_H
 		WHERE TAKE_ID=#{id} 
 		AND STATE='0'
-		AND TAKE_VIEW='-1'
 	</select>	
 	
 	<!-- 쪽지 삭제 -->

@@ -16,7 +16,7 @@
 	</insert>
 	
 	<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
-	SELECT A.ID, B.TITLE, MAX(A.VDATE) AS VDATE
+	SELECT A.ID, B.TITLE, TO_CHAR(MAX(A.VDATE),'YYYY-MM-DD') AS VDATE
 		FROM VISIT_H A JOIN BLOG_H B
        	 	ON A.ID = B.ID
 			WHERE V_ID = #{id} 

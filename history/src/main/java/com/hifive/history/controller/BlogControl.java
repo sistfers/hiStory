@@ -34,6 +34,7 @@ import com.hifive.history.model.FollowDto;
 import com.hifive.history.model.LoveDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
+import com.hifive.history.model.VisitDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.BoxService;
 import com.hifive.history.service.CategoryService;
@@ -408,7 +409,9 @@ public class BlogControl {
 	    condition.put("id", id);
 	    condition.put("isAll", "false");
 	    List<CategoryDto> categoryList = categoryService.hi_selectCategory(condition);
-	      
+	    
+
+	    
 	    UserDto dto = new UserDto();
 	    dto.setId(id);
 	    UserDto userDto =  (UserDto) userSvc.hi_detail(dto);
@@ -416,6 +419,12 @@ public class BlogControl {
 	    Map<String, Integer> visit = new HashMap<>();
 	    int today = visitService.hi_getToday(id);
 	    int total = visitService.hi_getTotal(id);
+	    
+	    // 최근 방문자 정보
+	    Map<String, Object> visit_con = new HashMap<>();
+	    visit_con.put("id", id);
+	    List<Map<String, Object>> visitList =  visitService.hi_selectList(visit_con);
+	    
 	      
 	    visit.put("today", today);
 	    visit.put("total", total);
@@ -436,6 +445,7 @@ public class BlogControl {
 	    mav.addObject("userDto", userDto);
 	    mav.addObject("categoryList", categoryList);
 		mav.addObject("follow", follow);
+		mav.addObject("visitList", visitList);
 
 	    return mav;
 	}

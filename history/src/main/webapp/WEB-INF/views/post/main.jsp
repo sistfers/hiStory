@@ -119,6 +119,7 @@
     <!-- jquery -->
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 
 <title><%=blogdto.getTitle()%></title>
 

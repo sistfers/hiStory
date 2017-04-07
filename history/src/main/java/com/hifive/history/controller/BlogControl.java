@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,9 +202,6 @@ public class BlogControl {
 			}
 			
 		}
-		//카테고리 갯수 뿌리기
-		List<HashMap<String, Object>> cateCount = categoryService.getCategoryCount(ID);
-		mav.addObject("cateCount", cateCount);
 		
 		mav.setViewName("post/main");
 		
@@ -301,9 +299,9 @@ public class BlogControl {
 	
 	//블로그 글 수정
 	@RequestMapping("post/update.hi")
-	public String postUpdate(HttpServletRequest request) {
+	public String postUpdate(HttpServletRequest request) throws Exception{
 		// view에서 넘어온값 받기
-		int	   seq 		= Integer.parseInt(request.getParameter("seq"));
+		/*int	   seq 		= Integer.parseInt(request.getParameter("seq"));
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
 		String id		= request.getParameter("id");
 		String field	= request.getParameter("field");   
@@ -311,14 +309,29 @@ public class BlogControl {
 		String content	= request.getParameter("content"); 
 		String hashtag	= request.getParameter("tag"); 
 		String state	= request.getParameter("state");   
-		String co_state= request.getParameter("co_state");
+		String co_state= request.getParameter("co_state");*/
+		Map<String,Object> parameterMap = new HashMap<String,Object>();
+		Enumeration enums = request.getParameterNames();
+		while(enums.hasMoreElements()){
+			String paramName = (String)enums.nextElement();
+			String[] parameters = request.getParameterValues(paramName);
+			// Parameter가 배열일 경우
+			if(parameters.length > 1){
+			parameterMap.put(paramName, parameters);
+			// Parameter가 배열이 아닌 경우
+			}else{
+			parameterMap.put(paramName, parameters[0]);
+			}
+		}
 		
-		PostDto postDto = new PostDto(seq,ct_seq,id,field,title,content,null,hashtag,state,co_state);
-		logger.debug("BlogControl.postWrite.postDto.toString() = "+postDto.toString());
+		//PostDto postDto = new PostDto(seq,ct_seq,id,field,title,content,null,hashtag,state,co_state);
+		logger.debug("BlogControl.postWrite.parameterMap.getTitle() = "+parameterMap.get("title"));
 		
-		int flag = postSvc.hi_update(postDto);
+		
+		
+		int flag = postSvc.hi_updateBoardnFile(parameterMap, request);
 		if(flag > 0){
-			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
+			return "redirect:/post/main.hi?ct_seq="+parameterMap.get("ct_seq")+"&id="+parameterMap.get("id"); 
 		}else{
 			// 실패했을때 어떻게 해야할지 모르겠다
 		}
@@ -400,15 +413,25 @@ public class BlogControl {
 	//왼쪽menu 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
+		UserDto loginuser = new UserDto();
+		if (session.getAttribute("user") != null)
+			loginuser = (UserDto) session.getAttribute("user");
 	    ModelAndView mav = new ModelAndView();
 	    String id = request.getParameter("id");
 		Boolean follow = false;
+		String isAll = (request.getParameter("id").equals(loginuser.getId())) ? "true" : "false";
 
 	    Map<String, String> condition = new HashMap<>();
 	    condition.put("id", id);
-	    condition.put("isAll", "false");
+	    condition.put("isAll", isAll);
 	    List<CategoryDto> categoryList = categoryService.hi_selectCategory(condition);
-	      
+
+		//카테고리 갯수 뿌리기
+		List<HashMap<String, Object>> cateCount = categoryService.getCategoryCount(condition);
+		mav.addObject("cateCount", cateCount);
+	    
+
+	    
 	    UserDto dto = new UserDto();
 	    dto.setId(id);
 	    UserDto userDto =  (UserDto) userSvc.hi_detail(dto);
@@ -416,12 +439,17 @@ public class BlogControl {
 	    Map<String, Integer> visit = new HashMap<>();
 	    int today = visitService.hi_getToday(id);
 	    int total = visitService.hi_getTotal(id);
+	    
+	    // 최근 방문자 정보
+	    Map<String, Object> visit_con = new HashMap<>();
+	    visit_con.put("id", id);
+	    List<Map<String, Object>> visitList =  visitService.hi_selectList(visit_con);
+	    
 	      
 	    visit.put("today", today);
 	    visit.put("total", total);
 
-	    UserDto loginuser = (UserDto)session.getAttribute("user");
-	    if (loginuser != null) {
+	    if (loginuser != null && loginuser.getId() != null) {
 		    FollowDto followCon = new FollowDto();
 		    followCon.setMy_id(loginuser.getId());
 		    followCon.setYou_id(id);
@@ -436,6 +464,7 @@ public class BlogControl {
 	    mav.addObject("userDto", userDto);
 	    mav.addObject("categoryList", categoryList);
 		mav.addObject("follow", follow);
+		mav.addObject("visitList", visitList);
 
 	    return mav;
 	}

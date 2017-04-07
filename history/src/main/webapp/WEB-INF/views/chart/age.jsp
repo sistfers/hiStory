@@ -40,6 +40,7 @@
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
@@ -90,7 +91,19 @@ chart.draw(data, options);
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
       }
-    </script>
+</script>
+
+<script>
+	function search() {
+		if($("#startdate").val()<$("#enddate").val()){
+			var frm = document.agechart;
+			frm.submit();
+		}else{
+			alert("기간을 확인하세요");
+		}
+	}
+</script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>블로그 관리/통계</title>
 <style type="text/css">
@@ -129,8 +142,8 @@ border-radius: 15px;
 		       	
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">방문자수</p> -->
 		       	
-		       	<form class="form-horizontal" method="post" action="age.hi">
-		       	<div class="form-group" id="startdate" style="margin-top: 10px">
+		       	<form class="form-horizontal" method="post" action="age.hi" name="agechart">
+		       	<div class="form-group" id="" style="margin-top: 10px">
 						<div class="col-xs-1" style="text-align: right;margin-right: 0">
 							<i class="icon-calendar" style="font-size: 35px; margin-top: 5px"></i>
 						</div>
@@ -142,7 +155,7 @@ border-radius: 15px;
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
 					<div class="col-xs-2">
-						<button type="submit" class="btn btn-primary"> 조회 </button>
+						<button type="button" class="btn btn-primary" onclick="search()"> 조회 </button>
 					</div>
 				</div>
 				</form>

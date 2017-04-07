@@ -82,6 +82,18 @@ public class GraphControl {
 		
 		return mav;
 	}
+	@RequestMapping("chart/visitdown.hi")
+	public ModelAndView visitdown(HttpServletRequest request, HttpSession session) throws Exception {
+		UserDto user = new UserDto();;
+		if(session.getAttribute("user")!=null){
+			user = (UserDto)session.getAttribute("user");
+		}
+		
+		ModelAndView mav = new ModelAndView("chart/visitdown");
+		List<Map<String,Object>> excelList = visitService.getExcel(user.getId());
+		mav.addObject("excelList", excelList);
+		return mav;
+	}
 	@RequestMapping("chart/age.hi")
 	public ModelAndView age(HttpServletRequest request, HttpSession session) throws Exception {
 		UserDto user = new UserDto();;

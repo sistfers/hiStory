@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.InetAddress"%>
 <%@page import="com.hifive.history.model.BlogDto"%>
@@ -96,6 +97,9 @@
 		postDto.setSeq(0);
 	}
 	
+	String ct_seq = request.getParameter("ct_seq");	
+	if(ct_seq == null) ct_seq = "0";
+	
 	//해당 포스트에 공감을 했는지 체크
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
 	
@@ -119,6 +123,7 @@
     <!-- jquery -->
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 
 <title><%=blogdto.getTitle()%></title>
 
@@ -226,6 +231,7 @@ function go_delete(){
 				<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
 					<input type="hidden" name="PAGE_NUM" value="">  
 					<input type="hidden" name="id" value="<%=id%>">
+					<input type="hidden" name="ct_seq" value="<%=ct_seq%>">
 					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 				</form> 
 				<form name="commentForm" action="main.hi" method="get">						<!-- 댓글 누를때  -->
@@ -236,12 +242,12 @@ function go_delete(){
 				</form>
 
 
-		        <div class="col-xs-12" style="word-wrap : break-word;" >
+		        <div class="col-xs-12" style="word-wrap:break-word;word-break:break-all;">
 		        <table width="100%" >
 		        <tr>
 <!-- 포스트 제목 -->
 		        <td width="80%" align="left" >
-		        <h2 style="word-wrap : break-word; width: 500px"><%=postDto.getTitle() %></h2>
+		        <h2 style="word-wrap:break-word;word-break:break-all;"><%=postDto.getTitle() %></h2>
 		        </td>
 		        
 		        
@@ -371,7 +377,7 @@ function go_delete(){
 									<a href="#"> <%=commentdata.get("NAME")%></a>
 									<%=commentdata.get("WDATE")%><br>
 									<!-- 댓글내용 -->
-									<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+									<span name="contentsSpan" style="word-wrap:break-word;word-break:break-all;"><%=commentdata.get("CONTENT")%></span>
 									<span name="contentsInput" hidden="hidden">
 										<textarea rows="2" class="form-control" style="resize: none"><%=commentdata.get("CONTENT")%></textarea>
 									</span>
@@ -390,7 +396,7 @@ function go_delete(){
 												<%=commentdata.get("WDATE")%><br>
 												<!-- 댓글내용 -->
 												<span class="glyphicon glyphicon-lock" name="lockImg"></span>
-												<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+												<span name="contentsSpan" style="word-wrap:break-word;word-break:break-all;"><%=commentdata.get("CONTENT")%></span>
 												<%--댓글 수정시 나타나야할 textarea--%>
 												<span name="contentsInput" hidden="hidden">
 													<textarea rows="2" class="form-control" style="resize: none"><%=commentdata.get("CONTENT")%></textarea>
@@ -485,8 +491,8 @@ function go_delete(){
 				<div class="col-xs-12">
 					<table class="table table-hover tbList">
 					<tr class="warning">
-						<th width="10%">글번호</th>
-						<th width="70%" >제목</th>
+						<!-- <th width="10%">글번호</th> -->
+						<th width="80%" >제목</th>
 						<th width="20%">작성일</th>
 					</tr>
 
@@ -499,9 +505,9 @@ function go_delete(){
 								String wdate = ((mapdatas.get("WDATE")).toString()).substring(0, 10);
 					%>
 					<tr>
-						<td><%=i+1 %></td>
+						<%-- <td><%=i+1 %></td> --%>
 						<td align="left">
-						<div style="text-overflow : ellipsis; width: 400px; overflow: hidden;">
+						<div style="word-wrap:break-word;word-break:break-all;">
 							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
 						</div></td>
 						<td><%=wdate %></td>
@@ -823,7 +829,7 @@ $(function(){
             console.log("댓글부모번호 ="+$(this).parent().attr('id'));
             
             //댓글달기 창을 없앤다.
-            $("#commentEditor").remove(); 
+            $("#commentEditor").remove();
             	
             //부모의 하단에 댓글달기 창을 삽입
             var commentEditor = '<tr id="commentEditor">'+

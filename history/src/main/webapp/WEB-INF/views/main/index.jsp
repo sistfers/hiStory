@@ -6,7 +6,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%!
 /**
  * 모든 HTML 태그를 제거하고 반환한다.
@@ -309,8 +309,6 @@ $(document).ready(function () {
              style: {
                "font-size": "12px",
                "font-style": "italic",
-//                "font-family": "Source Sans Pro, sans-serif",
-               //"font-weight": "700",
                "text-anchor": "middle",
                "fill": "white"
              },
@@ -328,7 +326,6 @@ $(document).ready(function () {
                  classed: {count: true},
                  style: {
                    "font-size": "28px",
-//                    "font-family": "Source Sans Pro, sans-serif",
                    "text-anchor": "middle",
                    fill: "white"
                  },
@@ -343,7 +340,6 @@ $(document).ready(function () {
                  classed: {text: true},
                  style: {
                    "font-size": "14px",
-//                    "font-family": "Source Sans Pro, sans-serif",
                    "text-anchor": "middle",
                    fill: "white"
                  },
@@ -386,21 +382,24 @@ $(document).ready(function () {
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
 <center>
-
-<div class="container">
-  <h3>테마별보기</h3>
-  
+<div style="background-color: #F7F9F9;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
+ <h3 class="text-primary"><i class="icon-coffee"></i> 테마별보기</h3>  
   <%if(themeCode != null) {%>
   <ul class="nav nav-pills">
-    <li class="active" style="width: 100px"><a data-toggle="pill" href="#menu1" style="font-weight: bold;"><%=themeCode.get(0).get("CD_D_NM") %></a></li>
+    <li class="active" style="width: 110px">
+    <a data-toggle="pill" href="#menu1" style="font-weight: bold;margin-left: 15px">
+    <%=themeCode.get(0).get("CD_D_NM") %></a></li>
+    
+<!-- 테마 목록 -->
     <%for(int i=1; i<themeCode.size(); ++i){ %>
-    <li style="width: 100px"><a data-toggle="tab" href="#menu<%=i+1%>" style="font-weight: bold;"><%=themeCode.get(i).get("CD_D_NM") %></a></li>
+  	  <li style="width: 110px"><a data-toggle="tab" href="#menu<%=i+1%>" style="font-weight: bold;">
+  	  <%=themeCode.get(i).get("CD_D_NM") %></a></li>
     <%} %>
   </ul>
-	
+	</div>
+<!-- 테마 선택시 내용보이기 -->
   <div class="tab-content">
     <br>
-    
 	
     <%for(int i=0; i<themeCode.size(); ++i){
     	if(i==0) {%>
@@ -415,8 +414,10 @@ $(document).ready(function () {
     				  if(k<=3){ %>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
 	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
+	    				
 	    				<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/life.jpg"'
-	    				style="height: 270px"/>
+	    				style="height: 230px"/>
+	    				
 	    				<div class="mask" style="padding-bottom: 15px;">
 	      				<h2>
 	      				<%
@@ -446,7 +447,7 @@ $(document).ready(function () {
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
     					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
 	    				<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/noimg.png"'
-	    				style="height: 270px"/>
+	    				style="height: 230px"/>
 	    				<div class="mask" style="padding-top: 15px">
 	      				<h2>
 	      				<%
@@ -491,12 +492,7 @@ $(document).ready(function () {
 
 	</center>
 	<br>
-
-
-
-  
 	<div class="clearfix"></div><br>
-</div>
 </div>
 <!-- 테마별보기 END -->
 
@@ -516,7 +512,9 @@ $(document).ready(function () {
 		<br><br>
 		<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
 		<div class="col-xs-12">
-		 <h3 style="text-align: center;">이웃새글</h3>
+		<div style="background-color: #F9FFF7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
+		 <h3 style="text-align: center;" class="text-success"><i class="icon-bullhorn"></i>  이웃새글</h3>
+		 </div>
 		 <div class="clearfix"></div><br>
 		
 		<table class="table table-hover" id="followTable">
@@ -532,7 +530,7 @@ $(document).ready(function () {
 						</div>
 					</td>
 					<td valign="top" id="<%=followList.get(i).get("SEQ")%>"  width="60%">
-						<div style="display: block; word-wrap : break-word; max-width: 600px;">
+						<div style="word-wrap:break-word;word-break:break-all;">
 							<h5 class="title">
 <%								String tempTitle = followList.get(i).get("TITLE")+"";
 								String title = tempTitle;
@@ -548,7 +546,7 @@ $(document).ready(function () {
 									content = tempContent.substring(0,100) + "...";
 								}
 %>
-							<p class="summary" style="word-wrap : break-word;"> <%= content%></p>
+							<p class="summary" style="word-wrap:break-word;word-break:break-all;"> <%= content%></p>
 						</div>
 					</td>
 					<td align="right" valign="middle" width="10%">
@@ -793,33 +791,42 @@ function do_search_page(url, page_num) {
 <!-- BEST 블로거 START -->
 <br><br>
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
-            <div class="col-xs-12">
-                <h3 style="text-align: center;">:: BEST 블로거 :: </h3>
+<div class="col-xs-12">
+            <div style="background-color: #FCF8F7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
+                <h3 style="text-align: center;" class="text-danger"><i class="icon-thumbs-up"></i> BEST 블로거 </h3>
             </div>
+            <br>
 <%
 			for(int i=0; i<bloggerRank.size(); ++i){
 %>
+
 			<div class="col-xs-3 text-center">
                 <center>
                 <a href="post/main.hi?id=<%=bloggerRank.get(i).get("ID")%>">
-                <img class="img-circle img-responsive img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" width="150px" onerror='src="/resources/image/noimg.png"'>
+                <img height="150px"  class="img-circle img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" onerror='src="/resources/image/noimg.png"'>
                 </a>
                 </center>
                 
                 <h4><%=bloggerRank.get(i).get("NAME") %>
                     <br><small><%=bloggerRank.get(i).get("TITLE") %></small>
                 </h4>
-                <p><%=bloggerRank.get(i).get("PF_CONTENT") %></p>
+                <p style="word-wrap:break-word;word-break:break-all;"><%=bloggerRank.get(i).get("PF_CONTENT") %></p>
             </div>
 <%
 			}
 %>
 </div>
-
+</div>
+</div>
+</div>
+</div>
 <!-- BEST 블로거 END -->
 </div><!-- 컨테이너 -->
-</div>
+
 <!--내용 END -->
+
+
+
 <!--푸터 START -->
 <jsp:include page="footer.jsp"/>
 <!--푸터 START -->

@@ -13,8 +13,7 @@
 	// 해당블로그 유저id 받아오기
 	
 	String ct_seq = request.getParameter("ct_seq");	
-	System.out.println("ct_seq==========================="+ct_seq);
-	if(ct_seq == null) ct_seq = "All";
+	if(ct_seq == null) ct_seq = "0";
 	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 
@@ -28,32 +27,30 @@
 	String user_grade = userDto.getGrade();
 	String grades[] = {"몽땅연필", "색연필", "만년필"};
 	
-	
-	
-
 	Map<String, Integer> visit = new HashMap<>();
 	visit = (Map<String, Integer>)request.getAttribute("visit");
+	// 방문자 정보
+	List<Map<String, Object>> visitList = (List<Map<String, Object>>)request.getAttribute("visitList");
 
 	boolean follow = (Boolean)request.getAttribute("follow");
-//	boolean follow = false;
 	List<HashMap<String, Object>> cateCount = (List<HashMap<String, Object>>)request.getAttribute("cateCount");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+
 	<!-- 이웃추가버튼 스타일 -->
 	<style type="text/css">
 	.btn-glyphicon {
-		padding: 8px;
+		padding: 5px;
 		background: #ffffff;
 		margin-right: 4px;
 	}
 
-	.icon-btn {
+/* 	.icon-btn {
 		padding: 1px 15px 3px 2px;
 		border-radius: 50px;
-	}
+	} */
 	</style>
 
 	<script type="text/javascript">
@@ -120,7 +117,7 @@
 <img src="/resources/image/level<%=userDto.getGrade()%>.png" height="20px"> }</h5>
 
 <!-- 블로그 주인의 블로그소개를 넣습니다 -->
-<div style="word-wrap:vreak-word;;word-break:break-all; font-size: 13px;color: #747474">
+<div style="word-wrap:break-word; word-break:break-all; font-size: 13px; color: #747474">
 <%=userDto.getPf_content() %>
 </div>
 <br>
@@ -133,12 +130,12 @@
 			</a>
 		<% } else if(follow){ %>
 			<a class="btn icon-btn btn-warning btn-sm" href="javascript:delete_follow('<%=loginuser.getId()%>', '<%=id%>')">
-				<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+				<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning" style="font-size: 8px"></span>
 				이웃삭제
 			</a>
 		<% } else { %>
 			<a class="btn icon-btn btn-warning btn-sm" href="javascript:insert_follow('<%=loginuser.getId()%>', '<%=id%>')">
-				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>
+				<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning" style="font-size: 8px"></span>
 				이웃추가
 			</a>
 		<% } %>
@@ -156,8 +153,8 @@
   	for(int i = 0 ; i < categoryList.size(); ++i){
   %>
     <a class="list-group-item <%if(ct_seq.equals(categoryList.get(i).getSeq()+"")) out.println("active");%>" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" >
-    <span class="badge"><%=cateCount.get(i).get("TOTAL") %></span>		<!-- 카테고리별 글 갯수  -->
-    <%=categoryList.get(i).getName() %>
+	    <span class="badge"><%=cateCount.get(i).get("TOTAL") %></span>		<!-- 카테고리별 글 갯수  -->
+	    <%=categoryList.get(i).getName() %>
     </a>
   <%
   	}
@@ -171,23 +168,28 @@
 <div class="list-group">
       <div class="list-group-item" style="color: #4374D9; background-color: #F6F6F6;"><h6>방문자정보 <i class="icon-info-sign"></i> </h6></div>
       
-      <div class="list-group-item">
-		<span style="font-size: 10px">[열글자되나테스트해해]</span> <!--닉네임  -->
-		<span style="font-size: 13px"> <a href="/post/main.hi?id=" >그게나의일악장커모니카</a> </span><!--블로그제목  -->
-		<span style="font-size: 10px">2017-04-07</span><!--최근방문일  -->
-	</div>
-	<div class="list-group-item">
-		미현 | 어쩌구 블로그 <br>
-	</div>
-	<div class="list-group-item">		
-		미현 | 어쩌구 블로그 <br>
-      </div>
+        <%
+		  	for(int i = 0 ; i < visitList.size(); ++i){
+		  	  if(!visitList.get(i).get("ID").equals(id)){
+		 %>
+      
+	      <div class="list-group-item">
+			<span style="font-size: 10px"><%=visitList.get(i).get("ID") %></span> <!--닉네임  -->
+			<span style="font-size: 13px"> <a href="/post/main.hi?id=<%=visitList.get(i).get("ID") %>" ><%=visitList.get(i).get("TITLE") %></a> </span><!--블로그제목  -->
+			<br><span style="font-size: 10px"><%=visitList.get(i).get("VDATE") %></span><!--최근방문일  -->
+		 </div>
+
+		  <%
+				  	}
+				  	if (i ==4) break;
+		  	}
+		  %>
 </div>
 
 
 <!-- 방문자수 -->
 <div class="panel panel-info">
-      <div class="panel-heading">방문자수 <i class="icon-group"></i></div>
+      <div class="panel-heading"><h6>방문자수 <i class="icon-group"></i></h6></div>
       <div class="panel-body">
       	<strong>Today  <span style="font-size: 20px; color: red;"><%=visit.get("today") %></span></strong>
       	<br>

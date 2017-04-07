@@ -61,4 +61,7 @@ public class VisitService implements iService {
 	public int hi_upsert(HashMap<String, String> dto) throws Exception{
 		return visitDao.hi_upsert(dto);
 	}
+	public List<Map<String,Object>> getExcel(String id){
+		return visitDao.getExcel(id);
+	}
 }

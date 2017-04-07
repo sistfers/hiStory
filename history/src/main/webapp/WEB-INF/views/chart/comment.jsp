@@ -28,8 +28,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>블로그 관리/통계</title>
 <!-- Bootstrap CSS -->
-<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <style type="text/css">
 .mydiv{
@@ -43,6 +44,17 @@ margin-left:0.5%;
 border-radius: 15px;
 }
 </style>
+
+<script>
+	function search() {
+		if($("#startdate").val()<$("#enddate").val()){
+			var frm = document.commentchart;
+			frm.submit();
+		}else{
+			alert("기간을 확인하세요");
+		}
+	}
+</script>
 
 </head>
 <body>
@@ -103,11 +115,11 @@ border-radius: 15px;
 			        <hr style="border:2px dashed">
 			        <br>
 			        <div class="col-xs-12" style="background-color: white; padding-top: 20px;">
-		        <form class="form-horizontal" method="post" action="comment.hi">
+		        <form class="form-horizontal" method="post" action="comment.hi" name="commentchart">
 		        	<fieldset>
 			       	<legend><i class="icon-bar-chart"></i> 기간별 조회</legend></fieldset>
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">기간별 조회</p> -->
-		       	<div class="form-group" id="startdate">
+		       	<div class="form-group" id="">
 					<div class="col-xs-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
 					</div>
@@ -118,7 +130,7 @@ border-radius: 15px;
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
 					<div class="col-xs-3">
-						<button type="submit" class="btn btn-primary"> 조회 </button>
+						<button type="button" class="btn btn-primary" onclick="search()"> 조회 </button>
 					</div>
 				</div>
 		        <table class="table" style="margin-top: 10px">

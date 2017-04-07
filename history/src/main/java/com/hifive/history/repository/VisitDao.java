@@ -95,4 +95,10 @@ public class VisitDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.insert(statement,dto);
 	}
+	public List<Map<String,Object>> getExcel(String id){
+		String statement = namespace +".getExcel";
+		logger.debug("statement"+statement);
+		logger.debug("id = " + id);
+		return sqlSession.selectList(statement,id);
+	}
 }

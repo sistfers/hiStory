@@ -16,7 +16,7 @@
 	</insert>
 	
 	<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
-	SELECT A.ID, B.TITLE, MAX(A.VDATE) AS VDATE
+	SELECT A.ID, B.TITLE, TO_CHAR(MAX(A.VDATE),'YYYY-MM-DD') AS VDATE
 		FROM VISIT_H A JOIN BLOG_H B
        	 	ON A.ID = B.ID
 			WHERE V_ID = #{id} 
@@ -175,6 +175,29 @@
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
     )T11											
+	]]>
+	</select>
+	<select id="getExcel" parameterType="String" resultType="map">
+	<![CDATA[
+	SELECT A.CUR_DATE AS CUR_DATE, NVL(A.CNT+B.CNT,0) AS CNT 
+	FROM
+	  (
+	  SELECT TO_CHAR((TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD'), 'YYYY-MM-DD')-LEVEL), 'YYYY-MM-DD') AS CUR_DATE,
+	  0 AS CNT 
+	  FROM DUAL
+	  CONNECT BY LEVEL <=30
+	  ) A
+	LEFT OUTER JOIN
+	(
+	  SELECT TO_CHAR(VDATE, 'YYYY-MM-DD') AS CUR_DATE,COUNT(*) AS CNT
+	  FROM VISIT_H
+	  WHERE V_ID = #{id}
+	  AND VDATE BETWEEN TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD'), 'YYYY-MM-DD')-30 AND TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD'), 'YYYY-MM-DD')
+	  GROUP BY TO_CHAR(VDATE, 'YYYY-MM-DD')
+	  
+	)B
+	ON A.CUR_DATE = B.CUR_DATE
+	ORDER BY CUR_DATE ASC
 	]]>
 	</select>
 </mapper>

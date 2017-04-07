@@ -63,7 +63,7 @@
 	<!-- ckeditor -->
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	
+	<script src="/resources/js/common.js"></script>
 </head>
 <body>
 <!--헤더 START-->
@@ -73,7 +73,7 @@
 
 <!-- 중간 START -->
 <div class="container" >
-	<form class="form-horizontal postForm" action="update.hi" method="post">
+	<form class="form-horizontal postForm" id = "postForm" name="postForm" enctype="multipart/form-data">
 	<input type="hidden" name="seq" value="<%=seq%>"/>
 	<input type="hidden" name="id" value="<%=id%>"/>
 <!-- 카테고리 -->
@@ -98,7 +98,7 @@
 		
 <!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="content" rows="500"><%=postDto.getContent() %></textarea>
+		<textarea name="content" id="CONTENT" rows="500"><%=postDto.getContent() %></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
 				height : '400px',
@@ -119,7 +119,7 @@
        				</colgroup>
 				        <tr>
 		                <th scope="row">첨부파일</th>
-		                <td>			
+		                <td id="fileTr">			
 <%
 						for(Map<String, Object> map : postDto.getFileList()){
 %>
@@ -232,7 +232,7 @@ var gfv_count = $('#fileCnt').val()+1;
 			fn_addFile();
 		});
 		
-		$("[name='delete']").on("click", function(e){ //삭제 버튼
+		$("a[name^='delete']").on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
 		});
@@ -312,7 +312,7 @@ var gfv_count = $('#fileCnt').val()+1;
 				"<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
 				"<a href='#' class='btn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
 			"</p>";
-		$("#fileDiv").append(str);
+		$("#fileTr").append(str);
 		$("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
@@ -330,14 +330,25 @@ $("#save").click(function(){
 	
 	tag_post();
 	
-	var frm = document.postForm;
+	//var frm = document.postForm;
 	
    if(!$("#TITLE").val()){
        alert('제목을 입력해주세요.');
        $("#TITLE").focus();
        return false;
    }
-   frm.submit();
+   
+   if(!$("#CONTENT").val()){
+       alert('내용을 입력해주세요.');
+       $("#CONTENT").focus();
+       return false;
+   }
+   
+   var comSubmit = new ComSubmit("postForm");
+	comSubmit.setUrl("update.hi");
+	comSubmit.submit();
+   
+   //frm.submit();
 });
 
 /* 취소버튼 */

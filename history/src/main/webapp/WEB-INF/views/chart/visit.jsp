@@ -7,8 +7,11 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
+<%-- <%@ page language="java" contentType="application/vnd.ms-excel;charset=UTF-8" %> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%
@@ -30,6 +33,7 @@
 	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 	
 %>
+
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,6 +42,7 @@
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
@@ -124,7 +129,11 @@ border-radius: 15px;
 		       	<div class="col-xs-12">
 		       	
 		       	<br>
-		       	<h5>일별 방문자수</h5>
+		       	
+		       	<form class="form-horizontal" action="visitdown.hi">
+			
+		       		<h5>일별 방문자수</h5> 
+		       		<button type="submit" class="btn btn-danger"> 엑셀로 저장 </button>
 		       		<table class="table table-bordered" style="margin-top: 10px;">
 		        	<tr class="info">
 						<td style="font-size: 11px">날짜</td>
@@ -147,6 +156,7 @@ border-radius: 15px;
 						%>
 		        	</tr>
 		        	</table>
+		        </form>
 		       	</div>
 		       	</div>
 			<div class="col-xs-1"></div>

@@ -169,11 +169,12 @@
 
 <!--최근방문자  -->		
 <div class="list-group">
-      <div class="list-group-item" style="color: #4374D9; background-color: #F6F6F6;"><h6>방문자정보 <i class="icon-flag"></i></h6></div>
+      <div class="list-group-item" style="color: #4374D9; background-color: #F6F6F6;"><h6>방문자정보 <i class="icon-info-sign"></i> </h6></div>
+      
       <div class="list-group-item">
-		<span style="font-size: 10px">[열글자되나테스트해해]</span> 
-		<span style="font-size: 13px"> <a href="#" >그게나의일악장커모니카</a> </span>
-		<span style="font-size: 10px">2017-04-07</span>
+		<span style="font-size: 10px">[열글자되나테스트해해]</span> <!--닉네임  -->
+		<span style="font-size: 13px"> <a href="/post/main.hi?id=" >그게나의일악장커모니카</a> </span><!--블로그제목  -->
+		<span style="font-size: 10px">2017-04-07</span><!--최근방문일  -->
 	</div>
 	<div class="list-group-item">
 		미현 | 어쩌구 블로그 <br>
@@ -186,7 +187,7 @@
 
 <!-- 방문자수 -->
 <div class="panel panel-info">
-      <div class="panel-heading">방문자수</div>
+      <div class="panel-heading">방문자수 <i class="icon-group"></i></div>
       <div class="panel-body">
       	<strong>Today  <span style="font-size: 20px; color: red;"><%=visit.get("today") %></span></strong>
       	<br>

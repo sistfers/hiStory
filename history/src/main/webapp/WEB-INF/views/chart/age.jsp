@@ -13,11 +13,14 @@
 <html>
 <%
 	Calendar cal = Calendar.getInstance();
+	//성별, 연령별 데이버 받아오는 부분
 	List<Map<String,Object>> visitAgeList = new ArrayList<Map<String,Object>>();
 	visitAgeList = (List<Map<String,Object>>)request.getAttribute("visitAgeList");
 	
 	Date date = new Date();
 	SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+	
+	// 시작일과 종료일이 Defaul로 오늘 날짜로 부터 일주일간의 데이터를 불러옴
 	String comment2 = sd.format(date);
 	date.setDate(date.getDate()-7);
 	String comment1 = sd.format(date);

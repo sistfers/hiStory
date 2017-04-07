@@ -45,6 +45,17 @@ border-radius: 15px;
 }
 </style>
 
+<script>
+	function search() {
+		if($("#startdate").val()<$("#enddate").val()){
+			var frm = document.commentchart;
+			frm.submit();
+		}else{
+			alert("기간을 확인하세요");
+		}
+	}
+</script>
+
 </head>
 <body>
 <!--헤더 START-->
@@ -104,11 +115,11 @@ border-radius: 15px;
 			        <hr style="border:2px dashed">
 			        <br>
 			        <div class="col-xs-12" style="background-color: white; padding-top: 20px;">
-		        <form class="form-horizontal" method="post" action="comment.hi">
+		        <form class="form-horizontal" method="post" action="comment.hi" name="commentchart">
 		        	<fieldset>
 			       	<legend><i class="icon-bar-chart"></i> 기간별 조회</legend></fieldset>
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">기간별 조회</p> -->
-		       	<div class="form-group" id="startdate">
+		       	<div class="form-group" id="">
 					<div class="col-xs-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
 					</div>
@@ -119,7 +130,7 @@ border-radius: 15px;
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
 					<div class="col-xs-3">
-						<button type="submit" class="btn btn-primary"> 조회 </button>
+						<button type="button" class="btn btn-primary" onclick="search()"> 조회 </button>
 					</div>
 				</div>
 		        <table class="table" style="margin-top: 10px">

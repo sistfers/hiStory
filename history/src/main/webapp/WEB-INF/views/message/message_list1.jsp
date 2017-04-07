@@ -267,12 +267,12 @@ function renderPaging(
 		maxNum_i, currPageNoIn_i, rowsPerPage_i, bottomCount_i,
 		url_i, scriptName_i, take_id_i, words_i) {
 	
-	var maxNum      = parseInt("0"); // 총 갯수
-	var currPageNo  = parseInt("1"); // 현재 페이지 번호 : page_num
+	var maxNum      = parseInt("0");  // 총 갯수
+	var currPageNo  = parseInt("1");  // 현재 페이지 번호 : page_num
 	var rowPerPage  = parseInt("10"); // 한페이지에 보여질 행수 : page_size
 	var bottomCount = parseInt("10"); // 바닥에 보여질 페이지 수: 10
-	var take_id     = take_id_i;
-	var words		= words_i;
+	var take_id     = take_id_i;	  // 
+	var words		= words_i;		  // 
 
 	maxNum = parseInt(maxNum_i);
 	currPageNo = parseInt(currPageNoIn_i);
@@ -301,16 +301,16 @@ function renderPaging(
 	
 	// <<
 	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\">  ";
-			html +="&laquo;   ";
-			html +="</a></li>      ";
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\"> ";
+			html +="&laquo;";
+			html +="</a></li>";
 	}
 
 	// <
 	if (startPageNo > bottomCount) {
 		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ",'" + take_id+ "','" + words+ "');\"> ";
-		html +="<        ";
-		html +="</a></li>     ";
+		html +="<";
+		html +="</a></li>";
 	}
 
 	// 1 2 3 ... 10	(숫자보여주기)
@@ -321,28 +321,28 @@ function renderPaging(
 		} else {								
 			html +="<li><a href=\"javascript:" + scriptName + "";
 			html +="('" + url + "'," + inx+ ",'" + take_id+ "','" + words+ "')";
-			html +="\" class=\"num_text\">" + inx + "</a></li> ";
+			html +="\" class=\"num_text\">" + inx + "</a></li>";
 		}															
 	}
 
 	// >
 	if (maxPageNo >= inx) {
 		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ",'" + take_id+ "','" + words+ "');\"> ";
-		html +=">                       ";
-		html +="</a></li>              ";
+		html +=">";
+		html +="</a></li>";
 	}
 
 	// >>
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "'," + maxPageNo + ",'" + take_id + "','" + words + "');\">  ";
-		html +="&raquo;     ";
-		html +="</a></li>    ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "'," + maxPageNo + ",'" + take_id + "','" + words + "');\"> ";
+		html +="&raquo;";
+		html +="</a></li>";
 	}
 	
-	html +="</ul>		";
-	html +="</td>  	";
-	html +="</tr>  	";
-	html +="</table>   ";
+	html +="</ul>";
+	html +="</td>";
+	html +="</tr>";
+	html +="</table>";
 
 	return html;
 }
@@ -350,7 +350,7 @@ function renderPaging(
 // 페이징
 function do_search_page(url, page_num) 
 {
-	  console.log(url+"\t"+page_num);
+	  // alert(url+" "+page_num);
 	 
 	  var frm = document.searchForm;
 	  frm.PAGE_NUM.value = page_num;

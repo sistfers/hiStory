@@ -50,6 +50,23 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+	$(document).ready(function () {
+		$("#sending").on("click", function () {
+		    if (sendCheck()) {
+		        $("#textNote").submit();
+		    }
+		});
+	});
+	
+	function sendCheck() {
+	    if ($("#TAKE_ID").val()=="" || $("#realNote").val()=="") {
+	        alert("필수 입력 사항을 모두 입력해 주세요.");
+	        return false;
+	    }
+	    
+		return true;
+    }
+
 	/* 글자 수 체크 */
 	$(document).ready(function() {
 		//$(function() {
@@ -238,7 +255,7 @@
 			<br>
 			<div class="col-xs-1"></div>
 			<div class="col-xs-8">
-				<form action="write.hi" method="post" class="form-horizontal">
+				<form id="textNote" action="write.hi" method="post" class="form-horizontal">
 					<input type="hidden" name="SEND_ID" value="<%=SENDID %>" />
 					<div class="form-group">
 						<label class="col-lg-2 control-label">받는사람</label>
@@ -291,12 +308,10 @@
 							<span id="counter">###</span>
 						</div>
 					</div>
-
+					
 					<div class="form-group">
-						<button class="btn btn-danger col-lg-3 col-md-offset-3"
-							type="submit">보내기</button>
-						<button class="btn btn-default col-lg-3 col-md-offset-1"
-							type="reset">Cancel</button>
+						<button id="sending" class="btn btn-danger col-lg-3 col-md-offset-3" type="button">보내기</button>
+						<button class="btn btn-default col-lg-3 col-md-offset-1" type="reset">Cancel</button>
 					</div>
 
 				</form>

@@ -100,6 +100,15 @@
 	String ct_seq = request.getParameter("ct_seq");	
 	if(ct_seq == null) ct_seq = "0";
 	
+	// 공감갯수
+	int loveCount = 0;
+	List<Map<String, Object>> loveList = (List<Map<String, Object>>)request.getAttribute("loveCount");
+	
+	System.out.println("loveList"+loveList.toString());
+	if(loveList != null && loveList.size() >0){
+		loveCount = Integer.parseInt(loveList.get(0).get("TOT_CNT")+"");
+	}
+	
 	//해당 포스트에 공감을 했는지 체크
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
 	
@@ -257,12 +266,13 @@ function go_delete(){
 		        <%
 		       	 	if (loveCheck != null) {
 		        %>
-		        	<button class="btn btn-default btn-sm" style="color: red" id="postLove"><h6>♥ 공감취소</h6> </button> 
+		        	
+		        	<button class="btn btn-default btn-sm" style="color: red" id="postLove">♥ (<span id="postLoveCount"><%=loveCount %></span>) 공감취소</button> 
 		        	<input type="hidden" id="loveState" value="loveDelete.hi">
 		        <%
 		       	 	}else{
 		        %>
-		       	 	<button class="btn btn-default btn-sm" style="color: red" id="postLove"><h6>♡ 공감</h6> </button>
+		       	 	<button class="btn btn-default btn-sm" style="color: red" id="postLove">♡ (<span id="postLoveCount"><%=loveCount %></span>) 공감</button>
 		       	 	<input type="hidden" id="loveState" value="loveInsert.hi">
 		        <%} %>
 <!--글 수정/삭제 버튼  -->
@@ -578,7 +588,9 @@ $(function(){
 	$("#postLove").bind("click", function() {
 		 
 		var loveState = document.getElementById('loveState').value;
-
+		var postLoveCount = Number($('#postLoveCount').text());
+		console.log("postLoveCount = "+$('#postLoveCount').text());
+		
 		$.ajax({
 			type:"POST",
 			url:loveState,			// 컨트롤러에 보낼 이름
@@ -592,10 +604,10 @@ $(function(){
 				var flag = $.parseJSON(data);
 				
 				if (flag.msg=="intrue") {	
-					document.getElementById('postLove').innerHTML ="<h6>♥ 공감취소</h6>";
+					document.getElementById('postLove').innerHTML ="♥ (<span id=\"postLoveCount\">"+(postLoveCount+1)+"</span>) 공감취소";
 					document.getElementById('loveState').value = "loveDelete.hi";
 				}else if(flag.msg=="deltrue") {	
-					document.getElementById('postLove').innerHTML ="<h6>♡ 공감</h6>";
+					document.getElementById('postLove').innerHTML ="♡ (<span id=\"postLoveCount\">"+(postLoveCount-1)+"</span>) 공감";
 					document.getElementById('loveState').value = "loveInsert.hi";
 				}
 

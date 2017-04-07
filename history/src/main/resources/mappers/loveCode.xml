@@ -26,7 +26,9 @@ INTO LOVE_H
 
 <!-- 공감한 사람 목록 보기(글별) -->
 <select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
-SELECT POST_SEQ, ID, LDATE, SEX, AREA, BIRTH FROM LOVE_H WHERE POST_SEQ=#{post_seq}
+    SELECT POST_SEQ, ID, LDATE, SEX, AREA, BIRTH,
+    (SELECT COUNT(*) FROM LOVE_H WHERE POST_SEQ=#{post_seq}) AS TOT_CNT
+    FROM LOVE_H WHERE POST_SEQ=#{post_seq}
 </select>
 
 <!-- 내가 공감한 글 목록 확인 -->

@@ -191,7 +191,10 @@ public class BlogControl {
 		
 			mav.addObject("lists", lists);
 			mav.addObject("PAGE_NUM", PAGE_NUM);
-
+			
+			condition.put("post_seq", DTO.getSeq());
+			List<Map<String, Object>> loveCount = loveSvc.hi_selectList(condition);
+			mav.addObject("loveCount",loveCount);
 			if(userDto != null){
 			//글 공감 확인하기
 				LoveDto loveDto = new LoveDto();

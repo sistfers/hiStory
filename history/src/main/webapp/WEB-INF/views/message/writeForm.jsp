@@ -1,41 +1,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="org.slf4j.LoggerFactory"%>
-<%@page import="org.slf4j.Logger"%>
 <%@page import="com.hifive.history.model.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-	Logger loger = LoggerFactory.getLogger(this.getClass());
 
-	String SENDID = "";
-	String TAKEID = request.getParameter("TAKEID");
-	String NAME   = "";
+String SENDID = "";
+String TAKEID = "";
+String NAME   = "";
 
-	HttpSession sesson = request.getSession(false);
-	UserDto dto 	   = (UserDto) sesson.getAttribute("user");
+HttpSession sesson = null;
+UserDto dto 	   = null;
+String blackIds    = null;
 	
-	// 쪽지 실패 한 경우
-	String blackIds = null;
+if(session.getAttribute("user") != null) {
+	sesson = request.getSession(false);
+	dto    = (UserDto) sesson.getAttribute("user");
+	
+	SENDID = dto.getId();
+	TAKEID = (String) request.getAttribute("TAKEID");
+	NAME   = (String) request.getAttribute("NAME");
+	
 	blackIds 		= (String) request.getAttribute("blackIds");
-	loger.debug("blackIds  -> " + blackIds);
 	
 	if(blackIds != null) {
 		out.println("<script>alert('쪽지 전달을 실패하였습니다. " + blackIds + " 아이디가 존재하지 않습니다. 쪽지 수신자 아이디를 확인해 주세요.');</script>");
 	}
 	
-	if(dto != null) {
-		SENDID = dto.getId();
-		TAKEID = (String) request.getAttribute("TAKEID");
-		NAME   = (String) request.getAttribute("NAME");
-		
-		loger.debug("TAKEID  -> " + TAKEID);
-		loger.debug("NAME    -> " + NAME);
-		
-	} else {
-		
-	}	
-
+} else {
+	response.sendRedirect("../main/login");
+}
+	
 %>
 
 
@@ -264,7 +259,7 @@
 						if(TAKEID != null) {
 						%>
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID"
-									placeholder="<%=TAKEID %>(<%=NAME %>)" value="<%=TAKEID %>" maxlength="30">
+									placeholder="<%=TAKEID %>" value="<%=TAKEID %>" maxlength="30">
 						<%	
 						} else {
 						%>	
@@ -275,8 +270,8 @@
 						%>
 						</div>
 						<div class="col-lg-3">
-							<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal" id="TAKE_ID_CK"
-							        name="TAKE_ID_CK">
+							<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal" 
+								id="TAKE_ID_CK"	name="TAKE_ID_CK">
 								이웃목록보기
 							</button>
 
@@ -313,9 +308,7 @@
 						<button id="sending" class="btn btn-danger col-lg-3 col-md-offset-3" type="button">보내기</button>
 						<button class="btn btn-default col-lg-3 col-md-offset-1" type="reset">Cancel</button>
 					</div>
-
 				</form>
-
 			</div>
 			<div class="col-xs-3"></div>
 		</div>

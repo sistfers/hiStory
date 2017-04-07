@@ -88,7 +88,7 @@
                             var digit = flag.digit;
                             $('#hiddenDigit').val(digit);
                             alert("인증메일이 전송되었습니다.");
-                            // $('#divEmailConfirm').show(); -> 75번 라인으로
+                            // $('#divEmailConfirm').show(); -> 75번 라인으로  
                         }
                     },
                     complete: function (data) {

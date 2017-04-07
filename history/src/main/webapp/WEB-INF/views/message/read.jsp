@@ -6,10 +6,13 @@
 <%
 
 MessageDto data = new MessageDto();
+String bt_yn 	= "";
 
 if(session.getAttribute("user") != null) {
 	if(request.getAttribute("NOTE") != null) {
 		data = (MessageDto) request.getAttribute("NOTE");
+		
+		bt_yn = (String) request.getAttribute("BT_YN");
 		
 	} else {
 		// javascript:history.back()
@@ -83,7 +86,15 @@ if(session.getAttribute("user") != null) {
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-danger col-lg-3 col-md-offset-3">답장</button>
+					<%
+						if(bt_yn.equals("bty")) {
+					%>
+							<button type="submit" class="btn btn-danger col-lg-3 col-md-offset-3">답장</button>
+					<%							
+						} else {
+						
+						}
+					%>						
 						<button type="reset" class="btn btn-default col-lg-3 col-md-offset-1">Cancel</button>
 					</div>
 				</form>

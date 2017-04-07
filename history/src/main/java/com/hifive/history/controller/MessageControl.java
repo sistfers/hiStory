@@ -96,6 +96,8 @@ public class MessageControl {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		HttpSession session = res.getSession(false); 	
+		if(session.getAttribute("user") != null) {
 		/*
 		 * 사용자로부터 답장(1개 이상) 요청
 		 * jsp	: message_list1.jsp 
@@ -137,6 +139,10 @@ public class MessageControl {
 			mav.setViewName("/message/writeForm");
 //			mav.addObject("TAKEID", TAKEID);
 //			mav.addObject("NAME", NAME);
+		}
+		} else {
+			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
+			mav.setViewName("/main/login");
 		}
 		
 		
@@ -271,13 +277,18 @@ public class MessageControl {
 	}
 	
 	@RequestMapping("message/read.hi")
-	public ModelAndView do_read(
-			@RequestParam(value = "note", required=true) int seq) {
+	public ModelAndView do_read(HttpServletRequest res,
+			@RequestParam(value = "note", required=true) int seq,
+			@RequestParam(value = "show", required=true) String bt_yn) {
 	
 		loger.debug("----------------------------------------------------------");
 		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
 		
 		
+		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = res.getSession(false); 	
+		if(session.getAttribute("user") != null) {
 		MessageDto dto = new MessageDto();
 		dto.setSeq(seq);
 		dto.setSend_id("");
@@ -299,15 +310,20 @@ public class MessageControl {
 			
 		} else {
 			
-		}
+		}		
 		
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/message/read");
-		mav.addObject("NOTE", note);		
+		mav.addObject("NOTE", note);	
+		mav.addObject("BT_YN", bt_yn);
 		
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
 		loger.debug("----------------------------------------------------------");
+		
+		} else {
+			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
+			mav.setViewName("/main/login");
+		}
 		
 		return mav;
 	}

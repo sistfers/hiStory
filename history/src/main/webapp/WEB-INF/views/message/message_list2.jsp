@@ -106,7 +106,8 @@ function deleteAction(){
 		<div class="form-group col-xs-12">
 			<!-- 버튼 -->	
 			<div> <!-- class="form-group"> -->			
-				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
+				<span onclick="deleteAction();" class="btn btn-danger">
+				<span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
 	    	</div>
     	</div>
 		<table class="table">
@@ -144,7 +145,7 @@ function deleteAction(){
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
 					<td><%=item.get("NAME") %>  <span style="font-size: 11px; color :#670000 ">(<%=item.get("TAKE_ID") %>)</span></td>
-					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=btn'><%=subContents %></a></td>
 					
 					
 					<td><%=item.get("WDATE") %></td>
@@ -173,14 +174,15 @@ function deleteAction(){
 			%>	
 		</table>
 		<center>
-<table><tr><td style="text-align: center;">
-			<!-- Paging Area Start -->
-			<%=PagingUtil.renderPaging(
-					intTotalCount, page_num, 10, 10, "send.hi", "do_search_page")%>
-			<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-	</td></tr>
-</table>
-</center>
+		<table>
+			<tr><td style="text-align: center;">
+				<!-- Paging Area Start -->
+				<%=PagingUtil.renderPaging(
+						intTotalCount, page_num, 10, 10, "send.hi", "do_search_page")%>
+				<!-- Paging Area end //--> 	<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+			</td></tr>
+		</table>
+		</center>
 	</div>
 	</form>
 </div>

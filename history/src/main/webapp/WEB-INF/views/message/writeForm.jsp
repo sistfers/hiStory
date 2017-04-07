@@ -7,7 +7,6 @@
 
 String SENDID = "";
 String TAKEID = "";
-String NAME   = "";
 
 HttpSession sesson = null;
 UserDto dto 	   = null;
@@ -19,7 +18,6 @@ if(session.getAttribute("user") != null) {
 	
 	SENDID = dto.getId();
 	TAKEID = (String) request.getAttribute("TAKEID");
-	NAME   = (String) request.getAttribute("NAME");
 	
 	blackIds 		= (String) request.getAttribute("blackIds");
 	
@@ -45,38 +43,38 @@ if(session.getAttribute("user") != null) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		$("#sending").on("click", function () {
-		    if (sendCheck()) {
-		        $("#textNote").submit();
-		    }
-		});
-	});
-	
-	function sendCheck() {
-	    if ($("#TAKE_ID").val()=="" || $("#realNote").val()=="") {
-	        alert("필수 입력 사항을 모두 입력해 주세요.");
-	        return false;
+$(document).ready(function () {
+	$("#sending").on("click", function () {
+	    if (sendCheck()) {
+	        $("#textNote").submit();
 	    }
-	    
-		return true;
-    }
-
-	/* 글자 수 체크 */
-	$(document).ready(function() {
-		//$(function() {
-		    $('#realNote').keyup(function (e){
-		        var content = $(this).val();
-		        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
-		        $('#counter').html(content.length + '/300');
-		    });
-		    $('#realNote').keyup();
-		//});
-
-	    $("#TAKE_ID_CK").on("click", function () {
-	        modalSet(1);
-	    });
 	});
+});
+	
+function sendCheck() {
+    if ($("#TAKE_ID").val()=="" || $("#realNote").val()=="") {
+        alert("필수 입력 사항을 모두 입력해 주세요.");
+        return false;
+    }
+    
+	return true;
+   }
+
+/* 글자 수 체크 */
+$(document).ready(function() {
+	//$(function() {
+	    $('#realNote').keyup(function (e){
+	        var content = $(this).val();
+	        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
+	        $('#counter').html(content.length + '/300');
+	    });
+	    $('#realNote').keyup();
+	//});
+
+    $("#TAKE_ID_CK").on("click", function () {
+        modalSet(1);
+    });
+});
 
 	function modalSet(pagenum) {
         <c:if test="${!empty sessionScope.user.id }">

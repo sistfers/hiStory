@@ -426,7 +426,7 @@ function viewAll() {
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
-					<td><a href='read.hi?note=<%=item.get("SEQ") %>'><%=subContents %></a></td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=bty'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
 				
 				<% 

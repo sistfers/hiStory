@@ -11,8 +11,8 @@ import com.hifive.history.model.UserDto;
 @Component
 public class IssueAnTokenUtil {	
 	
-	@Autowired
-	EncodeTokenUtil encodeTokenUtil;
+//	@Autowired
+//	EncodeTokenUtil encodeTokenUtil;
 
 	public String tokenMaker(UserDto dto) {		
 		

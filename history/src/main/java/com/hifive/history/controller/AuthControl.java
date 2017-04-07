@@ -3,15 +3,9 @@ package com.hifive.history.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hifive.history.model.TokenDto;
 import com.hifive.history.service.UserService;
-import com.hifive.history.util.DecodeTokenUtil;
 
 @Controller
 public class AuthControl {	
-	
-	@Autowired
-	DecodeTokenUtil decodeTokenUtil;
-	
+			
 	@Autowired
 	UserService userService;
 	

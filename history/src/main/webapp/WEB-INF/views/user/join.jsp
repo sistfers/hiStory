@@ -19,16 +19,13 @@
 		var emailCheck = false;
 		var verifiedEmail = "";
 		var passwordCheck = false;
-
 		$(document).ready(function () {
-
             $("#id").on({
 				focus: function () {
 				    idCheck = false;
                     $("#idCheckSuccess").hide();
                     $("#idCheckFail").hide();
                 },
-
 	            blur: function () {
                     var id = $("#id").val();
                     if (id != "") {
@@ -50,7 +47,6 @@
                                     $("#idCheckFail").show();
                                     idCheck = false;
                                 }
-
                             },
                             complete: function (data) {
                                 // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
@@ -62,7 +58,6 @@
                     }
                 }
             });
-
             $("#email").on("blur", function () {
                 if ($(this).val() != verifiedEmail) {
                     $("#emailCheckSuccess").hide();
@@ -71,14 +66,14 @@
                     $("#emailCheckFail").show();
                 }
             });
-
             $("#emailCk").on("click", function () {
                 var email = $('#email').val();
                 if (!validateEmail(email)) {
                     alert("이메일 주소 형식이 틀립니다.")
 	                return;
+                } else {
+                	$('#divEmailConfirm').show();
                 }
-
                 $.ajax({
                     type: "POST",
                     url: "/user/generated.hi",
@@ -89,13 +84,11 @@
                     success: function (data) {
                         // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
                         var flag = $.parseJSON(data);
-
                         if (flag.msg == "true") {
                             var digit = flag.digit;
                             $('#hiddenDigit').val(digit);
                             alert("인증메일이 전송되었습니다.");
-                            $('#divEmailConfirm').show();
-
+                            // $('#divEmailConfirm').show(); -> 75번 라인으로
                         }
                     },
                     complete: function (data) {
@@ -106,9 +99,7 @@
                     }
                 });
             });
-
             $("#emailCkaf").on("click", function () {
-
                 if($('#hiddenDigit').val() == $('#cknum').val()) {
                     alert('인증되었습니다.');
                     $('#divEmailConfirm').hide();
@@ -116,23 +107,18 @@
 					emailCheck = true;
 					$("#emailCheckFail").hide();
 					$("#emailCheckSuccess").show();
-
                 } else {
                     alert('인증 번호를 다시 확인해주세요.');
                     emailCheck = false;
                     $("#emailCheckSuccess").hide();
                     $("#emailCheckFail").show();
                 }
-
-
             });
-
             $("#join").on("click", function () {
                 if (joinCheck()) {
                     $("#joinForm").submit();
                 }
             });
-
 			$("#password").on({
 				keyup: function () {
 					pwCheck();
@@ -141,7 +127,6 @@
 					pwCheck();
 				}
 			});
-
 			$("#passwordCheck").on({
 				keyup: function () {
 					pwCheck();
@@ -150,14 +135,11 @@
 					pwCheck();
 				}
 			});
-
 			// 사진찾기를 클릭시 파일인풋클릭되게 하는 스크립트
 			document.querySelector('#upload_btn').addEventListener('click', function(e) {
 				document.querySelector('#fileInput').click();
 			}, false);
-
         });
-
 		function pwLengthCheck() {
 			if ($("#password").val().length >= 4 && $("#password").val().length <= 12) {
 				$("#pwLengthFail").hide();
@@ -170,7 +152,6 @@
 				return false;
 			}
 		}
-
 		function pwCheck() {
 			if (pwLengthCheck()) {
 				if ($("#password").val() == $("#passwordCheck").val()) {
@@ -184,7 +165,6 @@
 				}
 			}
 		}
-
 		function joinCheck() {
 		    if ($("#id").val()=="" || $("#email").val()=="" || $("#password").val()=="" || $("#passwordCheck").val()==""
 			    || $("#name").val()=="" || $("#birthday").val()=="") {
@@ -205,19 +185,16 @@
 		    }
 			return true;
         }
-
         function validateEmail(email) {
             var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
             return re.test(email);
         }
-
 		function loadname(img, previewName){
 			var isIE = (navigator.appName=="Microsoft Internet Explorer");
 			var path = img.value;
 			var default_path = "/resources/image/girl.png";
 			var ext = path.substring(path.lastIndexOf('.') + 1).toLowerCase();
 			var incorrect = "";
-
 			if (ext == "gif" || ext == "jpeg" || ext == "jpg" ||  ext == "png" ) {
 				if (isIE) {
 					$('#'+ previewName).attr('src', path);
@@ -230,7 +207,6 @@
 						reader.readAsDataURL(img.files[0]);
 					}
 				}
-
 			} else if (ext != "") {
 				$('#'+ previewName).attr('src', default_path);
 				if (isIE) {
@@ -240,14 +216,11 @@
 				}
 				incorrect += "파일 형식이 올바르지 않습니다.";
 				alert(incorrect);
-
 			} else {
 				$('#'+ previewName).attr('src', default_path);
 				incorrect += "incorrect file type";
 			}
-
 		}
-
 	</script>
 </head>
 <body>

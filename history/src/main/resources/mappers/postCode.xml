@@ -151,16 +151,16 @@
 </insert>
 
 <!--포스트수정  -->
-<update id="hi_updateMap" parameterType="hashmap">
+<update id="hi_updateBoardnFile" parameterType="hashmap">
 	UPDATE POST_H
-	SET   CT_SEQ  = #{ct_seq},
-	      FIELD   = #{field},
-	      TITLE   = #{title},
-	      CONTENT = #{content},
-	      HASHTAG = #{tag},
-	      STATE   = #{state},
-	      CO_STATE= #{co_state}
-	WHERE SEQ     = #{seq}
+	SET   CT_SEQ  = #{ct_seq, jdbcType=VARCHAR},
+	      FIELD   = #{field, jdbcType=VARCHAR},
+	      TITLE   = #{title, jdbcType=VARCHAR},
+	      CONTENT = #{content, jdbcType=VARCHAR},
+	      HASHTAG = #{tag, jdbcType=VARCHAR},
+	      STATE   = #{state, jdbcType=VARCHAR},
+	      CO_STATE= #{co_state, jdbcType=VARCHAR}
+	WHERE SEQ     = #{seq, jdbcType=VARCHAR}
 </update>
 
 <!--최신 포스트 1건 읽기  -->

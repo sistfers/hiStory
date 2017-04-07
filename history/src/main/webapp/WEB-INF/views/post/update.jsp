@@ -107,7 +107,8 @@
 		</script>
 		</div>
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
-		        <input type="hidden" name="fileCnt" id="fileCnt" value="<%=postDto.getFileList().size()%>">
+		        <input type="hidden" name="fileCnt" id="fileCnt" value='<%=postDto.getFileList().size()%>'>
+		        <input type="hidden" name="IDX" value='<%=postDto.getFileList().get(0).get("POST_SEQ")%>'>
 <!-- 첨부파일 -->
 				<div class="col-xs-12" style="word-wrap : break-word;" >
 					<table class="board_view">
@@ -124,12 +125,13 @@
 						for(Map<String, Object> map : postDto.getFileList()){
 %>
 							<p>
-	                        <input type="hidden" name="IDX_<%=map.get("SEQ") %>" id="IDX" value="<%=map.get("POST_SEQ")%>">
-	                        <a href="#" id="name_<%=map.get("SEQ")%>" name="name_<%=map.get("SEQ")%>">
+	                        <input type="hidden" name='IDX_<%=map.get("SEQ") %>' id="IDX" value='<%=map.get("SEQ")%>'>
+	                        <a href="#" id='name_<%=map.get("SEQ")%>' name='name_<%=map.get("SEQ")%>'>
 	                        <%=map.get("ORI_NAME")%></a>
-	                        <input type="file" id="file_<%=map.get("SEQ")%>" name="file_<%=map.get("SEQ")%>">
+	                        file_<%=map.get("SEQ")%>
+	                        <input type="file" id='file_<%=map.get("SEQ")%>' name='file_<%=map.get("SEQ")%>'>
 	                        (<%=map.get("FILE_SIZE")%>kb)
-	                        <a href="#" class="btn" id="delete_<%=map.get("SEQ")%>" name="delete_<%=map.get("SEQ")%>">삭제</a>
+	                        <a href="#" class="btn" id='delete_<%=map.get("SEQ")%>' name='delete_<%=map.get("SEQ")%>'>삭제</a>
 	                        </p>
 <%
 						}

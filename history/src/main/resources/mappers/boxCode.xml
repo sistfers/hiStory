@@ -40,7 +40,7 @@
         FROM
             BOX_H
         WHERE
-            POST_SEQ = #{IDX}
+            POST_SEQ = #{IDX, jdbcType=NUMERIC}
             AND DEL_GB = '0'
     ]]>
 </select>
@@ -53,25 +53,25 @@
         FROM
             BOX_H
         WHERE
-            POST_SEQ = #{IDX}
+            POST_SEQ = #{IDX, jdbcType=NUMERIC}
     ]]>
 </select>
 
 <update id="hi_deleteFileList" parameterType="hashmap">
     <![CDATA[
         UPDATE BOX_H SET
-            DEL_GB = 'Y'
+            DEL_GB = '1'
         WHERE
-            POST_SEQ = #{IDX} 
+            POST_SEQ = #{IDX, jdbcType=NUMERIC} 
     ]]>
 </update>
  
 <update id="hi_updateFile" parameterType="hashmap">
     <![CDATA[
         UPDATE BOX_H SET
-            DEL_GB = 'N'
+            DEL_GB = '0'
         WHERE
-            SEQ = #{FILE_IDX}  
+            SEQ = #{FILE_IDX, jdbcType=NUMERIC}  
     ]]>
 </update>
 

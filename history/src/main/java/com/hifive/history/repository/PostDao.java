@@ -121,5 +121,9 @@ public class PostDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectList(statement,dto);
 	}
+	public List<Map<String, Object>> getHashTag()throws SQLException{
+		String statement = namespace +".getHashTag";
+		return sqlSession.selectList(statement);
+	}
 	
 }

@@ -779,5 +779,10 @@ WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
 </select>
+<select id="getHashTag" resultType="map">
+SELECT HASHTAG
+FROM POST_H
+WHERE TO_DATE(WDATE,'YYYY-MM-DD') = TO_DATE(SYSDATE,'YYYY-MM-DD')
+</select>
 </mapper>
 

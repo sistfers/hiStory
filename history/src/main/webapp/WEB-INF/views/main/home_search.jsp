@@ -171,56 +171,57 @@
 <tr name="search_detail" style="cursor:pointer;">
 
 <!--이미지  -->
-	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
+	<td id="<%=searchList.get(i).get("ID")%>" width="10%" align="center">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>'height="100px" onerror="src='/resources/image/noimg.png'">
+		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>'height="90px" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>
 	
-	<td valign="top" id="<%=searchList.get(i).get("SEQ")%>" width="60%">
-		<div class="media-body" style="word-wrap : break-word; max-width: 600px" >
+	<td valign="top" id="<%=searchList.get(i).get("SEQ")%>" width="70%">
+		<div class="media-body" style="word-wrap:break-word;word-break:break-all;" >
 <!--글제목  -->
-		<h5 class="title">
+		<h5 class="title" style="color: #87003A">
 		<%String tempTitle = searchList.get(i).get("TITLE")+"";
 			String title = tempTitle;
-			if(tempTitle.length() >40){
-				title = tempTitle.substring(0,40) + "...";
+			if(tempTitle.length() >50){
+				title = tempTitle.substring(0,50) + "...";
 			}
+			title = title.replace(search_word, "<mark>" + search_word + "</mark>");
 		%>
 		<%= title%>
 		</h5>
 <!--글내용 -->		
 		<%String tempContent = removeTag(searchList.get(i).get("CONTENT")+"");
 			String content = tempContent;
-			if(tempContent.length() >100){
-				content = tempContent.substring(0,100) + "...";
+			if(tempContent.length() >150){
+				content = tempContent.substring(0,150) + "...";
 			}
-			content = content.replace(search_word, "<span style='color:red;'>" + search_word + "</span>");
+			content = content.replace(search_word, "<mark>" + search_word + "</mark>");
 		%>
-		<p class="summary" style="word-wrap : break-word;" > <%= content%></p>
+		<p style="font-size: 12px;"><%= content%></p>
 		
 		
 		
 		<%if(searchList.get(i).get("HASHTAG")!=null){ 
 			String hashtag = (String)searchList.get(i).get("HASHTAG");
 			hashtag = hashtag.substring(0, hashtag.length()-1);
-			hashtag = hashtag.replace("#" + search_word, "#" + "<span style='color:red;'>" + search_word + "</span>");
+			hashtag = hashtag.replace("#" + search_word, "#" + "<mark>" + search_word + "</mark>");
 			%>
 			<!--해시태그  -->
-			<div style="color: #86a0c9"><%= hashtag%></div>
+			<div style="color: #2457BD;font-size: 13px"><%= hashtag%></div>
 		<%} %>
 		</div>
 		
 	</td>
 <!--블로그이름  -->	
-	<td align="right" valign="middle" width="10%">
+	<td align="right" valign="middle" width="10%" style="font-size: 12px">
 	<%=searchList.get(i).get("BLOG_TITLE") %>
 	</td>
 <!-- 작성일 -->	
 	<td align="right" valign="top" width="10%">
-	<div class="media-body">
+	<div class="media-body" style="font-size: 12px;color:#747474 ">
 	<%=searchList.get(i).get("WDATE") %>
 	</div>
 	</td>
@@ -311,22 +312,23 @@ function do_search_page(url, page_num) {
 				<table  class="table table-hover">		
 					<c:forEach var="item" items="${blogItem}">
 					 	<tr name="api_search_detail" style="cursor:pointer;">	
-					 		<td valign="top" id="${item.link }" width="70%">
+					 		<td valign="top" id="${item.link }" width="80%">
 							<div class="media-body">
 		
-							<h5 class="title">
+							<h5 class="title" style="color: #003E00">
 							${item.title }
 							</h5>
 							
-							<p class="summary">${item.description}</p>
+							<!--내용  -->
+							<p class="summary" style="font-size: 12px">${item.description}</p>
 							</div>
 						
 							</td>
-							<td align="right" valign="middle" width="20%">
+							<td align="right" valign="middle" width="10%" style="font-size: 12px">
 							${item.bloggername }
 							</td>
 							<td align="right" valign="top" width="10%">
-							<div class="media-body">
+							<div class="media-body" style="font-size: 12px">
 							<fmt:parseDate var="dateString" value="${item.postdate }" pattern="yyyyMMdd"/>
 							<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd"/>
 							</div>

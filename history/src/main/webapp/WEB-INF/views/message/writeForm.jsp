@@ -151,20 +151,6 @@
         html = html + "<td class=\"list_num\">\n";
         html = html + "<ul class=\"pagination pagination-sm\">\n";
 
-//        // <<
-//        if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-//            html = html + "<li><a href=\"javascript:" + scriptName + "( 1 );\">\n";
-//            html = html + "&laquo;\n";
-//            html = html + "</a></li>\n";
-//        }
-//
-//        // <
-//        if (startPageNo > bottomCount) {
-//            html = html + "<li><a href=\"javascript:" + scriptName + "( " + (startPageNo - 1)+ ");\"> \n";
-//            html = html + "<        \n";
-//            html = html + "</a></li>     \n";
-//        }
-
         // 1 2 3 ... 10	(숫자보여주기)
         for (inx = 1; inx <= maxPageNo && inx <= endPageNo; inx++) {
 
@@ -174,20 +160,6 @@
                 html = html + "<li><a href=\"javascript:" + scriptName + "(" + inx+ ");\" class=\"num_text\">" + inx + "</a></li> \n";
             }
         }
-
-//        // >
-//        if (maxPageNo >= inx) {
-//            html = html + "<li><a href=\"javascript:" + scriptName + "("+ ((nowBlockNo * bottomCount) + 1) + ");\"> \n";
-//            html = html + ">                       \n";
-//            html = html + "</a></li>              \n";
-//        }
-//
-//        // >>
-//        if (maxPageNo >= inx) {
-//            html = html + "<li><a href=\"javascript:" + scriptName + "(" + maxPageNo+ ");\">      \n";
-//            html = html + "&raquo;     \n";
-//            html = html + "</a></li>    \n";
-//        }
 
         html = html + "</ul>		\n";
         html = html + "</td>  	\n";

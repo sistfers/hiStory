@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.CategoryDto"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.InetAddress"%>
 <%@page import="com.hifive.history.model.BlogDto"%>
@@ -95,6 +96,9 @@
 		postDto = new PostDto();
 		postDto.setSeq(0);
 	}
+	
+	String ct_seq = request.getParameter("ct_seq");	
+	
 	
 	//해당 포스트에 공감을 했는지 체크
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
@@ -227,6 +231,7 @@ function go_delete(){
 				<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
 					<input type="hidden" name="PAGE_NUM" value="">  
 					<input type="hidden" name="id" value="<%=id%>">
+					<input type="hidden" name="ct_seq" value="<%=ct_seq%>">
 					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 				</form> 
 				<form name="commentForm" action="main.hi" method="get">						<!-- 댓글 누를때  -->
@@ -242,7 +247,7 @@ function go_delete(){
 		        <tr>
 <!-- 포스트 제목 -->
 		        <td width="80%" align="left" >
-		        <h2 style="word-wrap : break-word; width: 500px"><%=postDto.getTitle() %></h2>
+		        <h2 style="word-wrap:vreak-word;;word-break:break-all;"><%=postDto.getTitle() %></h2>
 		        </td>
 		        
 		        

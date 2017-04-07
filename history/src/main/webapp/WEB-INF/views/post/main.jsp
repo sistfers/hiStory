@@ -189,8 +189,8 @@ function go_delete(){
 
 
 <!-- 메인내용 START -->
-   <br><br>
-   <div class="container" style="margin-top: 30px">
+   <br><br><br><br>
+   <div class="container">
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">

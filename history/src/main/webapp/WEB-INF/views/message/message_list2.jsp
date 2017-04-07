@@ -7,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%
+<% 
 
 List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
 int page_num 		= 1;

@@ -201,7 +201,7 @@ function go_delete(){
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: <%=THEME %>">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px">
+	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px;min-height: 1200px">
 	        
 	        
 <!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	
@@ -212,7 +212,6 @@ function go_delete(){
 					<div class="col-xs-12">
 							<br><br><br><br><br><br><br><br><br><br><br><br>
 							<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
-							<br><br><br><br><br><br><br><br><br><br><br><br>
 					</div>
 				<%}else{  %>
 	

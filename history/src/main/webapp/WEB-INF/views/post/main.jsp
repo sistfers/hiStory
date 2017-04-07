@@ -98,7 +98,7 @@
 	}
 	
 	String ct_seq = request.getParameter("ct_seq");	
-	
+	if(ct_seq == null) ct_seq = "0";
 	
 	//해당 포스트에 공감을 했는지 체크
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
@@ -377,7 +377,7 @@ function go_delete(){
 									<a href="#"> <%=commentdata.get("NAME")%></a>
 									<%=commentdata.get("WDATE")%><br>
 									<!-- 댓글내용 -->
-									<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+									<span name="contentsSpan" style="word-wrap:vreak-word;;word-break:break-all;"><%=commentdata.get("CONTENT")%></span>
 									<span name="contentsInput" hidden="hidden">
 										<textarea rows="2" class="form-control" style="resize: none"><%=commentdata.get("CONTENT")%></textarea>
 									</span>
@@ -396,7 +396,7 @@ function go_delete(){
 												<%=commentdata.get("WDATE")%><br>
 												<!-- 댓글내용 -->
 												<span class="glyphicon glyphicon-lock" name="lockImg"></span>
-												<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+												<span name="contentsSpan" style="word-wrap:vreak-word;;word-break:break-all;"><%=commentdata.get("CONTENT")%></span>
 												<%--댓글 수정시 나타나야할 textarea--%>
 												<span name="contentsInput" hidden="hidden">
 													<textarea rows="2" class="form-control" style="resize: none"><%=commentdata.get("CONTENT")%></textarea>
@@ -491,8 +491,8 @@ function go_delete(){
 				<div class="col-xs-12">
 					<table class="table table-hover tbList">
 					<tr class="warning">
-						<th width="10%">글번호</th>
-						<th width="70%" >제목</th>
+						<!-- <th width="10%">글번호</th> -->
+						<th width="80%" >제목</th>
 						<th width="20%">작성일</th>
 					</tr>
 
@@ -505,9 +505,9 @@ function go_delete(){
 								String wdate = ((mapdatas.get("WDATE")).toString()).substring(0, 10);
 					%>
 					<tr>
-						<td><%=i+1 %></td>
+						<%-- <td><%=i+1 %></td> --%>
 						<td align="left">
-						<div style="text-overflow : ellipsis; width: 400px; overflow: hidden;">
+						<div style="word-wrap:vreak-word;;word-break:break-all;">
 							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
 						</div></td>
 						<td><%=wdate %></td>

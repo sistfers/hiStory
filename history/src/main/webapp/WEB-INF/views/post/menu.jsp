@@ -13,7 +13,7 @@
 	// 해당블로그 유저id 받아오기
 	
 	String ct_seq = request.getParameter("ct_seq");	
-	if(ct_seq == null) ct_seq = "All";
+	if(ct_seq == null) ct_seq = "0";
 	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 

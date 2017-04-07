@@ -169,7 +169,7 @@
       <div class="list-group-item" style="color: #4374D9; background-color: #F6F6F6;"><h6>방문자정보 <i class="icon-info-sign"></i> </h6></div>
       
         <%
-		  	for(int i = 0 ; i < 5; ++i){
+		  	for(int i = 0 ; i < visitList.size(); ++i){
 		  	  if(!visitList.get(i).get("ID").equals(id)){
 		 %>
       
@@ -180,7 +180,8 @@
 		 </div>
 
 		  <%
-				  	}
+				}
+		  	  if(i==4)break;
 		  	}
 		  %>
 </div>

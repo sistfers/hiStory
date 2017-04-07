@@ -193,7 +193,7 @@
       <div class="panel-body">
       	<strong>Today  <span style="font-size: 20px; color: red;"><%=visit.get("today") %></span></strong>
       	<br>
-      	Total  <%=visit.get("total") %>
+      	Total  <%=visit.get("total") %> 
       </div>
 </div>
 

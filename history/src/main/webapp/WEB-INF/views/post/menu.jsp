@@ -23,6 +23,13 @@
 
 	// 블로그 주인
 	UserDto userDto = (UserDto)request.getAttribute("userDto");
+	
+	// 등급 보여주기
+	String user_grade = userDto.getGrade();
+	String grades[] = {"몽땅연필", "색연필", "만년필"};
+	
+	
+	
 
 	Map<String, Integer> visit = new HashMap<>();
 	visit = (Map<String, Integer>)request.getAttribute("visit");
@@ -32,6 +39,9 @@
 	List<HashMap<String, Object>> cateCount = (List<HashMap<String, Object>>)request.getAttribute("cateCount");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 	<!-- 이웃추가버튼 스타일 -->
 	<style type="text/css">
 	.btn-glyphicon {
@@ -98,13 +108,22 @@
 <br>
 
 <!-- 블로그 주인의 프로필사진을 넣습니다 -->
-<img src="<%=userDto.getPf_image() %>" width="150" height="150" onerror="src='/resources/image/noimg.png'"><br>
+<!-- class="img-responsive" 반응형 이미지 -->
+<img src="<%=userDto.getPf_image() %>" class="img-responsive img-thumbnail" onerror="src='/resources/image/noimg.png'">
+<br>
 
 <!-- 블로그 주인의 닉네임을 넣습니다 -->
-<h3><%=userDto.getName() %></h3>
+<h4><%=userDto.getName() %></h4>
+
+<!-- 레벨 -->
+<h5 style="color: #670000">{ <%=grades[Integer.parseInt(user_grade)]%>  
+<img src="/resources/image/level<%=userDto.getGrade()%>.png" height="20px"> }</h5>
 
 <!-- 블로그 주인의 블로그소개를 넣습니다 -->
-<h5><%=userDto.getPf_content() %></h5>
+<div style="word-wrap:vreak-word;;word-break:break-all; font-size: 13px;color: #747474">
+<%=userDto.getPf_content() %>
+</div>
+<br>
 
 <%
 	if(loginuser != null){
@@ -145,21 +164,35 @@
   %>
 </div>
 
-<%-- 선택된 메뉴 색깔 바뀌게 하는것... 나중에 해야함.. 
 
- <a class="list-group-item" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" <%if(ct_seq.equals(categoryList.get(i).getSeq())) out.println("style='color:red'");%>> --%> 
+
+
+<!--최근방문자  -->		
+<div class="list-group">
+      <div class="list-group-item" style="color: #4374D9; background-color: #F6F6F6;"><h6>방문자정보 <i class="icon-flag"></i></h6></div>
+      <div class="list-group-item">
+		<span style="font-size: 10px">[열글자되나테스트해해]</span> 
+		<span style="font-size: 13px"> <a href="#" >그게나의일악장커모니카</a> </span>
+		<span style="font-size: 10px">2017-04-07</span>
+	</div>
+	<div class="list-group-item">
+		미현 | 어쩌구 블로그 <br>
+	</div>
+	<div class="list-group-item">		
+		미현 | 어쩌구 블로그 <br>
+      </div>
+</div>
 
 
 <!-- 방문자수 -->
 <div class="panel panel-info">
       <div class="panel-heading">방문자수</div>
       <div class="panel-body">
-      	Today <%=visit.get("today") %><br>
-      	Total <%=visit.get("total") %>
+      	<strong>Today  <span style="font-size: 20px; color: red;"><%=visit.get("today") %></span></strong>
+      	<br>
+      	Total  <%=visit.get("total") %>
       </div>
 </div>
-		
-
 
 </center>
 </body>

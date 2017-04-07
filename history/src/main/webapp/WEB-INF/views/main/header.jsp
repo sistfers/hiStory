@@ -5,27 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<%
-/* jsp에서 스프링 서비스 호출하기 */
-/* 일단 보류
-
-ServletContext servletContext = getServletContext();
-
-WebApplicationContext waContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
-
-ExamService examService = (ExamService) waContext.getBean("ExamService");
-출처: http://blog.taeseong.me/337 [사과 냄새나는 IT이야기 TAESTORY,]
-
-int unread = 0;
-
-if(session.getAttribute("user") != null) {
-	UserDto dto = (UserDto) session.getAttribute("user");
-	
-	MessageService messageService = new MessageService(); 
-	unread = messageService.hi_unread_note(dto.getId());
-} */
-%>
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -57,7 +36,7 @@ if(session.getAttribute("user") != null) {
 
 <!-- 네이게이션 바.. 상단고정 -->
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container container-fluid">		<!-- 양 옆에 공백 -->
+	<div class="container">		<!-- 양 옆에 공백 -->
 
 		<div class="navbar-header" style="vertical-align: center">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -87,7 +66,7 @@ if(session.getAttribute("user") != null) {
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">이웃 <span class="caret"></span></a>
 					<ul class="dropdown-menu scrollable-menu" role="menu" id="followUl" ></ul>
 				</li>
-				<li><a href="javascript:do_message(); ">쪽지함(0)</a></li>
+				<li><a href="javascript:do_message(); ">쪽지함</a></li>
 				<li><a href="/chart/control.hi">블로그관리</a></li>
 
 				<li class="dropdown">

@@ -68,6 +68,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Cache-Control" content="No-Cache"> 
 <meta http-equiv="Pragma" content="No-Cache"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title> ★ hiStory ★ </title>
     <!-- Bootstrap CSS -->
     
@@ -75,12 +77,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<style type="text/css">
-	.table-filter {
+/* 	.table-filter {
 	background-color: #fff;
 	border-bottom: 1px solid #eee;
-}
-.table-filter tbody tr td {
-	/* padding: 10px; */
+} */
+/* .table-filter tbody tr td {
 	vertical-align: middle;
 	border-top-color: #eee;
 }
@@ -89,32 +90,31 @@
 }
 .table-filter tr td:first-child {
 	width: 38px;
-}
+} 
 .table-filter tr td:nth-child(2) {
 	width: 35px;
 }
 .table-filter .media-photo {
 	width: 35px;
-}
+} */
 .table-filter .media-body {
     display: block;
     /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
 }
 .table-filter .media-meta {
-	font-size: 11px;
+	font-size: 10px;
 	color: #999;
 }
 .table-filter .media .title {
 	color: #2BBCDE;
-	font-size: 14px;
+	font-size: 10px;
 	font-weight: bold;
 	line-height: normal;
-	/* margin: 0; */
 }
-.table-filter .media .title span {
+/* .table-filter .media .title span {
 	font-size: .8em;
 	margin-right: 20px;
-}
+} */
 .table-filter .media .title span.pagado {
 	color: #5cb85c;
 }
@@ -125,7 +125,7 @@
 	color: #d9534f;
 }
 .table-filter .media .summary {
-	font-size: 14px;
+	font-size: 13px;
 }
 	</style>
 </head>
@@ -174,7 +174,7 @@
 	<td id="<%=searchList.get(i).get("ID")%>" width="20%">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>' width="100%" height="130px" onerror="src='/resources/image/noimg.png'">
+		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>'height="100px" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>
@@ -197,18 +197,22 @@
 			if(tempContent.length() >100){
 				content = tempContent.substring(0,100) + "...";
 			}
-			content = content.replace(search_word, "<b>" + search_word + "</b>");
+			content = content.replace(search_word, "<span style='color:red;'>" + search_word + "</span>");
 		%>
 		<p class="summary" style="word-wrap : break-word;" > <%= content%></p>
+		
+		
+		
 		<%if(searchList.get(i).get("HASHTAG")!=null){ 
 			String hashtag = (String)searchList.get(i).get("HASHTAG");
 			hashtag = hashtag.substring(0, hashtag.length()-1);
-			hashtag = hashtag.replace("#" + search_word, "<b>" + "#" + search_word + "</b>");
+			hashtag = hashtag.replace("#" + search_word, "#" + "<span style='color:red;'>" + search_word + "</span>");
 			%>
+			<!--해시태그  -->
 			<div style="color: #86a0c9"><%= hashtag%></div>
 		<%} %>
 		</div>
-		<br>
+		
 	</td>
 <!--블로그이름  -->	
 	<td align="right" valign="middle" width="10%">
@@ -316,7 +320,7 @@ function do_search_page(url, page_num) {
 							
 							<p class="summary">${item.description}</p>
 							</div>
-							<br>
+						
 							</td>
 							<td align="right" valign="middle" width="20%">
 							${item.bloggername }
@@ -330,10 +334,11 @@ function do_search_page(url, page_num) {
 					 	</tr>
 					</c:forEach>
 				</table>
+				</div>
     </c:otherwise> 
 </c:choose>
 
-</div>
+
 
 <!-- 네이버 검색결과 END -->
 </div>

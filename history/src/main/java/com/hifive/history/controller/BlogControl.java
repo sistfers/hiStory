@@ -1,6 +1,8 @@
 package com.hifive.history.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,7 @@ import com.hifive.history.model.LoveDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.BlogService;
+import com.hifive.history.service.BoxService;
 import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.CommentService;
@@ -69,6 +73,8 @@ public class BlogControl {
 	private FollowService followService;
 	@Autowired
 	private BlogService blogSvc;
+	@Autowired
+	private BoxService boxService;
 	
 	
 	@RequestMapping(value="post/ckeditorImageUpload.hi", method=RequestMethod.POST)
@@ -87,7 +93,27 @@ public class BlogControl {
 			e.printStackTrace();
 		}
 	}
-	
+	@RequestMapping(value="post/downloadFile.hi")
+	public void downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("IDX", request.getParameter("IDX"));
+	    System.out.println("영차영차영차영차영차영차영차영차영차영차영차영차영차영차영차영차 : " + condition.get("IDX"));
+		
+		Map<String,Object> map = boxService.hi_selectFileInfo(condition);
+	    String storedFileName = (String)map.get("SAVE_NAME");
+	    String originalFileName = (String)map.get("ORI_NAME");
+	     
+	    byte fileByte[] = FileUtils.readFileToByteArray(new File(storedFileName));
+	     
+	    response.setContentType("application/octet-stream");
+	    response.setContentLength(fileByte.length);
+	    response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName,"UTF-8")+"\";");
+	    response.setHeader("Content-Transfer-Encoding", "binary");
+	    response.getOutputStream().write(fileByte);
+	     
+	    response.getOutputStream().flush();
+	    response.getOutputStream().close();
+	}
 	
 	//블로그 메인(글 보여주기)
 	@RequestMapping("post/main.hi")

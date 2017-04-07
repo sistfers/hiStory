@@ -189,8 +189,8 @@ function go_delete(){
 
 
 <!-- 메인내용 START -->
-   <br><br>
-   <div class="container" style="margin-top: 30px">
+   <br><br><br><br>
+   <div class="container">
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">
@@ -284,21 +284,28 @@ function go_delete(){
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
 				<!-- 첨부파일 -->
 				<div class="col-xs-12" style="word-wrap : break-word;" >
-					<table width="100%" >
+					<table class="board_view">
+						<colgroup>
+							<col width="25%"/>
+							<col width="35%"/>
+							<col width="10%"/>
+							<col width="30%"/>
+						</colgroup>
 				        <tr>
 		                <th scope="row">첨부파일</th>
 		                <td colspan="3">
-<%
-						for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
-%>
-			                <p>
-		                        <input type="hidden" id="IDX" value="<%=map.get("POST_SEQ")%>">
-		                        <a href="#this" name="file"><%=map.get("ORI_NAME")%></a>
-		                        (<%=map.get("FILE_SIZE")%>kb)
-			                </p>
-<%
-						}
-%>
+			                <form name="download" method="post">
+				                <%
+					                for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
+				                %>
+				                <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
+				                <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
+				                (<%=map.get("FILE_SIZE")%>kb)
+
+				                <%
+					                }
+				                %>
+			                </form>
 		                </td>
 		            	</tr>
 	            	</table>
@@ -413,17 +420,17 @@ function go_delete(){
 							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>" name="buttonsTd">
 								<!-- 로그인정보 없으면 안보임 -->
 								<% if (userDto != null) { %>
-									<% if ( commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {
-										if ( commentdata.get("STATE").equals("0")
+								<% if ( commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {
+									if ( commentdata.get("STATE").equals("0")
 											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))
 											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(id)) { %>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-									<% }} %>
-									<% if (commentdata.get("STATE").equals("0") && userDto.getId().equals(commentdata.get("ID"))
-											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))) { %>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp" value="<%=commentdata.get("STATE")%>">수정</button>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
-									<% } %>
+								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
+								<% }} %>
+								<% if (commentdata.get("STATE").equals("0") && userDto.getId().equals(commentdata.get("ID"))
+										|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))) { %>
+								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp" value="<%=commentdata.get("STATE")%>">수정</button>
+								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
+								<% } %>
 								<% } %>
 								<div name="updateButtons" hidden="hidden">
 									<input type="checkbox" name="secretUpdate" value="<%=commentdata.get("STATE")%>" <%if(commentdata.get("STATE").equals("1")){%>checked<%}%>> 비밀글<br>
@@ -547,8 +554,21 @@ function go_delete(){
 
 
 <script type="text/javascript">
+	function fn_downloadFile(obj){
+		var frm = document.download;
+		//var idx = obj.parent().find("#IDX").val();
+
+
+		frm.action = "downloadFile.hi";
+
+		frm.submit();
+
+	}//파일다운로드
 $(function(){
-	
+	$("[name='file']").on("click", function(e){ //파일 이름
+		e.preventDefault();
+		fn_downloadFile($(this));
+	});
 // 글 공감 ajax
 	$("#postLove").bind("click", function() {
 		 
@@ -755,7 +775,6 @@ $(function(){
 				alert("에러남");
 			}
 		});
-
 	});
        
     //답글 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
@@ -823,19 +842,19 @@ $(function(){
                                    
             parentElement.after(commentEditor); 
         }else if($(this).attr("name")=="pUp"){
-        	var already = $(this).html();
+	        var already = $(this).html();
 
 	        // 모든 글을 원래대로
 	        $("[name=pUp]").html("수정");
-        	$("[name=lockImg]").show();
-        	$("[name=contentsSpan]").show();
-        	$("[name=pAdd]").show();
-        	$("[name=contentsInput]").hide();
-        	$("[name=updateButtons]").hide();
+	        $("[name=lockImg]").show();
+	        $("[name=contentsSpan]").show();
+	        $("[name=pAdd]").show();
+	        $("[name=contentsInput]").hide();
+	        $("[name=updateButtons]").hide();
 
 	        if( already == "수정취소") return;
 
-        	// 수정 버튼 누른 tr 변경
+	        // 수정 버튼 누른 tr 변경
 	        var parentTr = $(this).parent().parent();
 	        parentTr.find("[name=contentsTd]").find("[name=lockImg]").hide();
 	        parentTr.find("[name=contentsTd]").find("[name=contentsSpan]").hide();
@@ -845,7 +864,7 @@ $(function(){
 	        $(this).html("수정취소");
 
         }
-           
+
     });
        
 });

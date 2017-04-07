@@ -14,6 +14,7 @@ datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
 int intTotalCount = 0;
 int page_num = 1;
 String my_id = "";
+int unReadNotes = 0;
 
 
 if((String) request.getAttribute("PAGE_NUM") != null) {
@@ -24,6 +25,10 @@ if((String) request.getAttribute("My_Id") != null) {
 	my_id = (String) request.getAttribute("My_Id");
 } else {
 	
+}
+
+if(request.getAttribute("unReadNotes") != null) {
+	unReadNotes = (Integer) request.getAttribute("unReadNotes");
 }
 %>
 
@@ -46,7 +51,9 @@ $(document).ready(function() {
 		var words = $('#searchbox').val();
 		var id	  = $('#My_ID').val();
         
-		$.ajax({
+		do_search_for_filtered('filtered.hi', 1, id, words);
+		
+		<%-- $.ajax({
 			type : "POST",
 			url : "filtered.hi",
 			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
@@ -103,8 +110,8 @@ $(document).ready(function() {
 							contents = contents.substring(0, 25) + '...';
 							// alert(contents);
 						}
-						<%--
-						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
+						
+						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
 						
 						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
 						filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
@@ -147,7 +154,7 @@ $(document).ready(function() {
 			error : function(xhr, status, error) {
 				alert("에러 발생");
 			}
-		});		
+		});		 --%>
 	});	
 });
 
@@ -265,12 +272,12 @@ function renderPaging(
 		maxNum_i, currPageNoIn_i, rowsPerPage_i, bottomCount_i,
 		url_i, scriptName_i, take_id_i, words_i) {
 	
-	var maxNum      = parseInt("0"); // 총 갯수
-	var currPageNo  = parseInt("1"); // 현재 페이지 번호 : page_num
+	var maxNum      = parseInt("0");  // 총 갯수
+	var currPageNo  = parseInt("1");  // 현재 페이지 번호 : page_num
 	var rowPerPage  = parseInt("10"); // 한페이지에 보여질 행수 : page_size
 	var bottomCount = parseInt("10"); // 바닥에 보여질 페이지 수: 10
-	var take_id     = take_id_i;
-	var words		= words_i;
+	var take_id     = take_id_i;	  // 
+	var words		= words_i;		  // 
 
 	maxNum = parseInt(maxNum_i);
 	currPageNo = parseInt(currPageNoIn_i);
@@ -299,16 +306,16 @@ function renderPaging(
 	
 	// <<
 	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\">  ";
-			html +="&laquo;   ";
-			html +="</a></li>      ";
+			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\"> ";
+			html +="&laquo;";
+			html +="</a></li>";
 	}
 
 	// <
 	if (startPageNo > bottomCount) {
 		html +="<li><a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ",'" + take_id+ "','" + words+ "');\"> ";
-		html +="<        ";
-		html +="</a></li>     ";
+		html +="<";
+		html +="</a></li>";
 	}
 
 	// 1 2 3 ... 10	(숫자보여주기)
@@ -319,28 +326,28 @@ function renderPaging(
 		} else {								
 			html +="<li><a href=\"javascript:" + scriptName + "";
 			html +="('" + url + "'," + inx+ ",'" + take_id+ "','" + words+ "')";
-			html +="\" class=\"num_text\">" + inx + "</a></li> ";
+			html +="\" class=\"num_text\">" + inx + "</a></li>";
 		}															
 	}
 
 	// >
 	if (maxPageNo >= inx) {
 		html +="<li><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ",'" + take_id+ "','" + words+ "');\"> ";
-		html +=">                       ";
-		html +="</a></li>              ";
+		html +=">";
+		html +="</a></li>";
 	}
 
 	// >>
 	if (maxPageNo >= inx) {
-		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "'," + maxPageNo + ",'" + take_id + "','" + words + "');\">  ";
-		html +="&raquo;     ";
-		html +="</a></li>    ";
+		html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "'," + maxPageNo + ",'" + take_id + "','" + words + "');\"> ";
+		html +="&raquo;";
+		html +="</a></li>";
 	}
 	
-	html +="</ul>		";
-	html +="</td>  	";
-	html +="</tr>  	";
-	html +="</table>   ";
+	html +="</ul>";
+	html +="</td>";
+	html +="</tr>";
+	html +="</table>";
 
 	return html;
 }
@@ -348,7 +355,7 @@ function renderPaging(
 // 페이징
 function do_search_page(url, page_num) 
 {
-	  console.log(url+"\t"+page_num);
+	  // alert(url+" "+page_num);
 	 
 	  var frm = document.searchForm;
 	  frm.PAGE_NUM.value = page_num;
@@ -456,19 +463,25 @@ function viewAll() {
 		<input type="hidden" id="My_ID" value="<%=my_id %>" />
 	<div class="col-xs-11" >
 		<div class="form-group">
-	 		<!-- 버튼 -->	
+	 		<!-- 삭제, 답장 버튼 -->	
 	 		<div class="col-xs-3" align="left">
 				<span onclick="deleteAction();" class="btn btn-danger"><span class="glyphicon glyphicon-trash" style="font-size: 22px"></span></span>
             	<span onclick="replyAction();"  class="btn btn-danger"><span class="glyphicon glyphicon-envelope" style="font-size: 22px"></span></span>
 			</div>
-			<div class="col-xs-7" align="left">
+			<!-- 미확인 쪽지 -->
+			<div class="col-xs-1" align="left">
+			(<%=unReadNotes %>)
+			</div>
+			
+			<!-- 입력창 -->
+			<div class="col-xs-6" align="left">
 				<div class="input-group"> 
 			 	<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
 				<input type="text" id="searchbox" class="form-control" placeholder="검색어를 입력하삼"/>
 				<span class="input-group-btn"><input type="button" id="words" value="검색" class="btn btn-info" /></span>
 				</div>
 			</div>
-			
+			<!-- 전체보기 -->
 			<div class="col-xs-2" align="right">	
 				<input type="button" id="viewall" value="전체보기" onclick="viewAll();" class="btn btn-default" />
 			</div>		

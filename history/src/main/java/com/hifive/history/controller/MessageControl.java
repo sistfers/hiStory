@@ -430,13 +430,18 @@ public class MessageControl {
 			
 			// 리스트 가져오기
 			List<Map<String, Object>> getList = messageService.hi_select_getlist(search_info);		
-			loger.debug("getlist size -> " + getList.size());			
+			loger.debug("getlist size -> " + getList.size());	
+			
+			// 미확인 쪽지
+			int unReadNotes = messageService.hi_unread_note(dto.getId());
+			loger.debug("unReadNotes -> " + unReadNotes);	
 			
 			mav.setViewName("/message/message_list1");
 			mav.addObject("getList", getList);
 			mav.addObject("PAGE_NUM", PAGE_NUM);
 			///////////////////////////////////////////////////<--////////////////////////////////
 			mav.addObject("My_Id", dto.getId());
+			mav.addObject("unReadNotes", unReadNotes);
 			
 		} else {
 			loger.debug("session.getAttribute(user) -> null");

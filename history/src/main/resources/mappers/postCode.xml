@@ -256,7 +256,10 @@ WHERE SEQ     = #{SEQ}
 	]]>
 </select>
 <select id="hi_selectCommentRank" parameterType="String" resultType="hashmap">
-	SELECT *
+	SELECT T1.POST_SEQ, T1.TOTAL_CNT, 
+			T2.SEQ, T2.CT_SEQ, T2.ID, T2.FIELD, T2.TITLE, T2.CONTENT, 
+			TO_CHAR(T2.WDATE, 'YYYY-MM-DD') WDATE,
+			T2.HASHTAG, T2.STATE, T2.CO_STATE
 	FROM
 	(
 	  SELECT POST_SEQ, COUNT(*) AS TOTAL_CNT
@@ -271,7 +274,10 @@ WHERE SEQ     = #{SEQ}
 </select>
 <select id="hi_selectTodayCommentRank" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
-	SELECT *
+	SELECT T1.POST_SEQ, T1.TOTAL_CNT, 
+			T2.SEQ, T2.CT_SEQ, T2.ID, T2.FIELD, T2.TITLE, T2.CONTENT, 
+			TO_CHAR(T2.WDATE, 'YYYY-MM-DD') WDATE,
+			T2.HASHTAG, T2.STATE, T2.CO_STATE
 	  FROM
 		(
 		  SELECT POST_SEQ, COUNT(*) AS TOTAL_CNT
@@ -291,7 +297,10 @@ WHERE SEQ     = #{SEQ}
 	<![CDATA[ 
 	SELECT *
 	FROM
-	(SELECT *
+	(SELECT T1.POST_SEQ, T1.TOTAL_CNT, 
+          T2.SEQ, T2.CT_SEQ, T2.ID, T2.FIELD, T2.TITLE, T2.CONTENT, 
+          TO_CHAR(T2.WDATE, 'YYYY-MM-DD') WDATE,
+          T2.HASHTAG, T2.STATE, T2.CO_STATE
 	FROM
 	  (SELECT POST_SEQ,
 	          COUNT(*) AS TOTAL_CNT
@@ -769,6 +778,11 @@ WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
     )TT2							
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+</select>
+<select id="getHashTag" resultType="map">
+SELECT HASHTAG
+FROM POST_H
+WHERE TO_DATE(WDATE,'YYYY-MM-DD') = TO_DATE(SYSDATE,'YYYY-MM-DD')
 </select>
 </mapper>
 

@@ -45,4 +45,16 @@
     ]]>
 </select>
 
+<select id="hi_selectFileInfo" parameterType="hashmap" resultType="hashmap">
+    <![CDATA[
+        SELECT
+            SAVE_NAME,
+            ORI_NAME
+        FROM
+            BOX_H
+        WHERE
+            POST_SEQ = #{IDX}
+    ]]>
+</select>
+
 </mapper>

@@ -44,8 +44,7 @@ public class VisitService implements iService {
 
 	@Override
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return visitDao.hi_selectList(condition);
 	}
 	public int hi_getToday(String id){
 		return visitDao.hi_getToday(id);

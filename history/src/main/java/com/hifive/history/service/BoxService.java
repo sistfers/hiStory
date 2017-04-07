@@ -39,4 +39,9 @@ public class BoxService implements iService {
 	public List<Map<String, Object>> hi_selectList(Map<String, Object> condition) throws Exception {
 		return boxDao.hi_selectList(condition);
 	}
+	
+	public Map<String, Object> hi_selectFileInfo(Map<String, Object> map) throws Exception {
+	    return boxDao.hi_selectFileInfo(map);
+	}
+
 }

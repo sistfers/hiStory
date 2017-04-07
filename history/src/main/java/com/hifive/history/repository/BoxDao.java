@@ -66,5 +66,10 @@ public class BoxDao implements iDao {
 		return sqlSession.selectList(statement,dto);
 	}
 	
-	
+	public Map<String, Object> hi_selectFileInfo(Map<String, Object> map) throws Exception{
+		String statement = namespace +".hi_selectFileInfo";
+		
+		return sqlSession.selectOne(statement, map);
+	}
+
 }

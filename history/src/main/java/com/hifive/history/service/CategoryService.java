@@ -48,13 +48,13 @@ public class CategoryService implements iService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public List<CategoryDto> hi_selectCategory(Map<String, String> dto){
-		return categoryDao.hi_selectCategory(dto);
+	public List<CategoryDto> hi_selectCategory(Map<String, String> map){
+		return categoryDao.hi_selectCategory(map);
 	}
 	public int updateCategory(Map<String, String> map){
 		return categoryDao.updateCategory(map);
 	}
-	public List<HashMap<String, Object>> getCategoryCount(String id){
-		return categoryDao.getCategoryCount(id);
+	public List<HashMap<String, Object>> getCategoryCount(Map<String, String> map){
+		return categoryDao.getCategoryCount(map);
 	}
 }

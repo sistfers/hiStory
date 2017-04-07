@@ -56,17 +56,17 @@ public class CategoryDao implements iDao {
 		return sqlSession.update(statement,cnt);
 	}
 	@Override
-	public List<Map<String, Object>> hi_selectList(Map<String, Object> dto) throws Exception {
+	public List<Map<String, Object>> hi_selectList(Map<String, Object> map) throws Exception {
 		String statement = namespace +".hi_selectList";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectList(statement,dto);
+		logger.debug("dto.toString() = "+map.toString());
+		return sqlSession.selectList(statement,map);
 	}
-	public List<CategoryDto> hi_selectCategory(Map<String, String> dto){
+	public List<CategoryDto> hi_selectCategory(Map<String, String> map){
 		String statement = namespace +".hi_selectCategory";
 		logger.debug("statement"+statement);
-		logger.debug("dto.toSting() = " + dto.toString());
-		return sqlSession.selectList(statement,dto);
+		logger.debug("dto.toSting() = " + map.toString());
+		return sqlSession.selectList(statement,map);
 	}
 	public int updateCategory(Map<String, String> map){
 		String statement = namespace +".updateCategory";
@@ -74,10 +74,10 @@ public class CategoryDao implements iDao {
 		logger.debug("map.toString() = "+map.toString());
 		return sqlSession.update(statement,map);
 	}
-	public List<HashMap<String, Object>> getCategoryCount(String id){
+	public List<HashMap<String, Object>> getCategoryCount(Map<String, String> map){
 		String statement = namespace +".getCategoryCount";
 		logger.debug("statement"+statement);
-		logger.debug("id = " + id);
-		return sqlSession.selectList(statement,id);
+		logger.debug("map.toString() = "+map.toString());
+		return sqlSession.selectList(statement,map);
 	}
 }

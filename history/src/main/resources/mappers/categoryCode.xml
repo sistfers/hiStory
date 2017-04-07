@@ -40,22 +40,40 @@
 		DELETE FROM CATEGORY_H
 		WHERE SEQ = #{cnt}
 	</delete>
-	<select id="getCategoryCount" parameterType="String" resultType="map">
+	<!--<select id="getCategoryCount" parameterType="String" resultType="map">-->
+		<!--SELECT SEQ, NVL(TOTAL,0) TOTAL-->
+		 <!--FROM(-->
+		      <!--SELECT * -->
+		      <!--FROM CATEGORY_H-->
+		      <!--WHERE ID = #{id}-->
+		      <!--ORDER BY SEQ-->
+		  <!--)A LEFT OUTER JOIN-->
+		  <!--(-->
+		  <!--SELECT CT_SEQ, COUNT(*) TOTAL-->
+		    <!--FROM POST_H -->
+		   <!--WHERE ID = #{id}-->
+		   <!--GROUP BY CT_SEQ-->
+		   <!--ORDER BY CT_SEQ-->
+		  <!--) B-->
+		  <!--ON A.SEQ = B.CT_SEQ-->
+	<!--</select>-->
+
+	<select id="getCategoryCount" parameterType="hashmap" resultType="map">
 		SELECT SEQ, NVL(TOTAL,0) TOTAL
-		 FROM(
-		      SELECT * 
-		      FROM CATEGORY_H 
-		      WHERE ID = #{id} 
-		      ORDER BY SEQ
-		  )A LEFT OUTER JOIN
-		  (
-		  SELECT CT_SEQ, COUNT(*) TOTAL
-		    FROM POST_H 
-		   WHERE ID = #{id}
-		   GROUP BY CT_SEQ
-		   ORDER BY CT_SEQ
-		  ) B
-		  ON A.SEQ = B.CT_SEQ
+		FROM(
+		SELECT *
+		FROM CATEGORY_H
+		<include refid="BaseCondition"/>
+		ORDER BY SEQ
+		)A LEFT OUTER JOIN
+		(
+		SELECT CT_SEQ, COUNT(*) TOTAL
+		FROM POST_H
+		WHERE ID = #{id}
+		GROUP BY CT_SEQ
+		ORDER BY CT_SEQ
+		) B
+		ON A.SEQ = B.CT_SEQ
 	</select>
-	
+
 </mapper>

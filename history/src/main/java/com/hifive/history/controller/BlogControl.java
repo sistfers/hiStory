@@ -202,9 +202,6 @@ public class BlogControl {
 			}
 			
 		}
-		//카테고리 갯수 뿌리기
-		List<HashMap<String, Object>> cateCount = categoryService.getCategoryCount(ID);
-		mav.addObject("cateCount", cateCount);
 		
 		mav.setViewName("post/main");
 		
@@ -401,14 +398,22 @@ public class BlogControl {
 	//왼쪽menu 카테고리
 	@RequestMapping("post/menu.hi")
 	public ModelAndView postMenu(HttpServletRequest request, HttpSession session) throws Exception{
+		UserDto loginuser = new UserDto();
+		if (session.getAttribute("user") != null)
+			loginuser = (UserDto) session.getAttribute("user");
 	    ModelAndView mav = new ModelAndView();
 	    String id = request.getParameter("id");
 		Boolean follow = false;
+		String isAll = (request.getParameter("id").equals(loginuser.getId())) ? "true" : "false";
 
 	    Map<String, String> condition = new HashMap<>();
 	    condition.put("id", id);
-	    condition.put("isAll", "false");
+	    condition.put("isAll", isAll);
 	    List<CategoryDto> categoryList = categoryService.hi_selectCategory(condition);
+
+		//카테고리 갯수 뿌리기
+		List<HashMap<String, Object>> cateCount = categoryService.getCategoryCount(condition);
+		mav.addObject("cateCount", cateCount);
 	    
 
 	    
@@ -429,8 +434,7 @@ public class BlogControl {
 	    visit.put("today", today);
 	    visit.put("total", total);
 
-	    UserDto loginuser = (UserDto)session.getAttribute("user");
-	    if (loginuser != null) {
+	    if (loginuser != null && loginuser.getId() != null) {
 		    FollowDto followCon = new FollowDto();
 		    followCon.setMy_id(loginuser.getId());
 		    followCon.setYou_id(id);

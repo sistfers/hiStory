@@ -382,7 +382,7 @@ $(document).ready(function () {
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
 <center>
-<div style="background-color: #F7F9F9;border-radius: 15px;padding-top: 5px;padding-bottom: 5px;margin-top: 10px">
+<div style="background-color: #F7F9F9;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
  <h3 class="text-primary"><i class="icon-coffee"></i> 테마별보기</h3>  
   <%if(themeCode != null) {%>
   <ul class="nav nav-pills">
@@ -512,7 +512,7 @@ $(document).ready(function () {
 		<br><br>
 		<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
 		<div class="col-xs-12">
-		<div style="background-color: #F9FFF7;border-radius: 15px;padding-top: 5px;padding-bottom: 5px;margin-top: 10px">
+		<div style="background-color: #F9FFF7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
 		 <h3 style="text-align: center;" class="text-success"><i class="icon-star"></i>  이웃새글</h3>
 		 </div>
 		 <div class="clearfix"></div><br>
@@ -792,7 +792,7 @@ function do_search_page(url, page_num) {
 <br><br>
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 <div class="col-xs-12">
-            <div style="background-color: #FCF8F7;border-radius: 15px;padding-top: 5px;padding-bottom: 5px;margin-top: 10px">
+            <div style="background-color: #FCF8F7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
                 <h3 style="text-align: center;" class="text-danger"><i class="icon-thumbs-up"></i> BEST 블로거 </h3>
             </div>
             <br>

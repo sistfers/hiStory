@@ -8,16 +8,24 @@
     pageEncoding="UTF-8"%>
 
 <%
+
 List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
-datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
+int page_num 		= 1;
+int intTotalCount	= 0;
 
-int intTotalCount = 0;
-int page_num = 1;
+if(session.getAttribute("user") != null) {
+	
+	if(request.getAttribute("GETLIST") != null) {
+		datas = (ArrayList<Map<String, Object>>) request.getAttribute("GETLIST");
+	}
+	
+	if(request.getAttribute("PAGE_NUM") != null) {
+		page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM"));
+	} 
+} else {
+	response.sendRedirect("../main/login");
+}
 
-
-if((String) request.getAttribute("PAGE_NUM") != null) {
-	page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM"));
-} 
 %>
 
 

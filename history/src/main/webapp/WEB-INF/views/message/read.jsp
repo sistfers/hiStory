@@ -4,8 +4,20 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	MessageDto data = new MessageDto();
-	data = (MessageDto) request.getAttribute("note");
+
+MessageDto data = new MessageDto();
+
+if(session.getAttribute("user") != null) {
+	if(request.getAttribute("NOTE") != null) {
+		data = (MessageDto) request.getAttribute("NOTE");
+		
+	} else {
+		// javascript:history.back()
+	}	
+} else {
+	response.sendRedirect("../main/login");
+}
+
 %>
 
 
@@ -22,7 +34,7 @@
 <body>
 
 	<!--헤더 START-->
-<jsp:include page="/header.hi"/>
+	<jsp:include page="/header.hi"/>
 	<!--헤더 END-->
 	<div class="container">
 		<br> <br> <br> <br>
@@ -44,22 +56,21 @@
 				<form action="writeForm.hi" method="post" class="form-horizontal">
 					<input type="hidden" name="SENDID" value="Patricia" /> 
 					<input type="hidden" name="TAKEID" value="<%=data.getSend_id() %>"  />
-					<input type="hidden" name="NAME" value="<%=data.getName() %>"/>
+					<input type="hidden" name="NAME"   value="<%=data.getName() %>"/>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸사람</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
-								value="<%=data.getSend_id()%>(<%=data.getName()%>)"
-								maxlength="30">
+								value="<%=data.getSend_id()%>(<%=data.getName()%>)" maxlength="30">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸날짜</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
-								value="<%=data.getWdate()%>" maxlength="30">
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" 
+								readonly="readonly" value="<%=data.getWdate()%>" maxlength="30">
 						</div>
 					</div>
 
@@ -72,10 +83,8 @@
 					</div>
 
 					<div class="form-group">
-						<button class="btn btn-danger col-lg-3 col-md-offset-3"
-							type="submit">답장</button>
-						<button class="btn btn-default col-lg-3 col-md-offset-1"
-							type="reset">Cancel</button>
+						<button type="submit" class="btn btn-danger col-lg-3 col-md-offset-3">답장</button>
+						<button type="reset" class="btn btn-default col-lg-3 col-md-offset-1">Cancel</button>
 					</div>
 				</form>
 			</div>

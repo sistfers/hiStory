@@ -18,8 +18,9 @@ import com.hifive.history.model.iDto;
 @Repository
 public class MessageDao implements iDao {
 	
-	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final String namespace="com.hifive.history.repository.mappers.messageCode";
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());	
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
@@ -63,7 +64,7 @@ public class MessageDao implements iDao {
 		String statement = namespace +".hi_detail_state";
 		logger.debug("----------------------------------------------------------");
 		logger.debug("[[[statement      ]]] "+statement);
-		logger.debug("[[[seq	        ]]] "+seq);
+		logger.debug("[[[seq            ]]] "+seq);
 		
 		return sqlSession.update(statement, seq);
 	} 
@@ -74,7 +75,7 @@ public class MessageDao implements iDao {
 		String statement = namespace +".hi_unread_note";
 		logger.debug("----------------------------------------------------------");
 		logger.debug("[[[statement      ]]] "+statement);
-		logger.debug("[[[id	            ]]] "+id);
+		logger.debug("[[[id             ]]] "+id);
 		
 		String cnt = sqlSession.selectOne(statement, id);
 		
@@ -87,8 +88,8 @@ public class MessageDao implements iDao {
 				
 		String statement = namespace +".hi_delete";
 		logger.debug("----------------------------------------------------------");
-		logger.debug("[[[statement  ]]] "+statement);
-		logger.debug("[[[cnt		]]] "+cnt);		
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[cnt            ]]] "+cnt);		
 		
 		return sqlSession.delete(statement, cnt);
 	}
@@ -98,10 +99,14 @@ public class MessageDao implements iDao {
 			
 		String statement = namespace +".hi_update_view";
 		logger.debug("----------------------------------------------------------");
-		logger.debug("[[[statement  ]]] "+statement);
-		logger.debug("[[[dest       ]]] "+dest);
-		logger.debug("[[[seq        ]]] "+seq);
-		
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[destination    ]]] "+dest);
+		logger.debug("[[[seq            ]]] "+seq);
+		 
+		/*
+		 * destination params : 받은(receive) / 보낸(send)
+		 * 		   seq params : 쪽지 번호
+		 */
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("dest", dest);
 		data.put("seq", Integer.toString(seq));
@@ -121,8 +126,8 @@ public class MessageDao implements iDao {
 					
 		String statement = namespace +".hi_select_GETlist";
 		logger.debug("----------------------------------------------------------");
-		logger.debug("[[[statement    ]]] "+statement);
-		logger.debug("[[[search_info  ]]] "+search_info.toString());
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[search_info    ]]] "+search_info.toString());
 		
 		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
 				
@@ -134,8 +139,8 @@ public class MessageDao implements iDao {
 				
 		String statement = namespace +".hi_select_SENDlist";
 		logger.debug("----------------------------------------------------------");
-		logger.debug("[[[statement    ]]] "+statement);
-		logger.debug("[[[search_info  ]]] "+search_info.toString());
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[search_info    ]]] "+search_info.toString());
 			
 		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
 		
@@ -147,8 +152,8 @@ public class MessageDao implements iDao {
 		
 		String statement = namespace +".hi_select_filtered";
 		logger.debug("----------------------------------------------------------");
-		logger.debug("[[[statement    ]]] "+statement);
-		logger.debug("[[[search_info  ]]] "+search_info.toString());
+		logger.debug("[[[statement      ]]] "+statement);
+		logger.debug("[[[search_info    ]]] "+search_info.toString());
 			
 		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
 		

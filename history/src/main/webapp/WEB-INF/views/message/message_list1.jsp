@@ -1,3 +1,4 @@
+<%@page import="com.hifive.history.model.UserDto"%>
 <%@page import="com.hifive.history.util.PagingUtil"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -8,28 +9,35 @@
     pageEncoding="UTF-8"%>
 
 <%
+
 List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
-datas = (ArrayList<Map<String, Object>>) request.getAttribute("getList");
+int page_num 		= 1;
+int unReadNotes 	= 0;
+int intTotalCount 	= 0;
 
-int intTotalCount = 0;
-int page_num = 1;
-String my_id = "";
-int unReadNotes = 0;
+String my_id 		= "";
 
-
-if((String) request.getAttribute("PAGE_NUM") != null) {
-	page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM"));
-} 
-
-if((String) request.getAttribute("My_Id") != null) {
-	my_id = (String) request.getAttribute("My_Id");
-} else {
+if(session.getAttribute("user") != null) {
 	
+	// 로그인한 세션정보
+	UserDto userDto = (UserDto) session.getAttribute("user");
+	my_id = userDto.getId();
+	
+	if(request.getAttribute("GETLIST") != null) {
+		datas = (ArrayList<Map<String, Object>>) request.getAttribute("GETLIST");
+	}
+	
+	if(request.getAttribute("PAGE_NUM") != null) {
+		page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM")); 
+	} 
+	
+	if(request.getAttribute("UNREADNOTES") != null) {
+		unReadNotes = (Integer) request.getAttribute("UNREADNOTES");
+	}
+} else {
+	response.sendRedirect("../main/login");
 }
 
-if(request.getAttribute("unReadNotes") != null) {
-	unReadNotes = (Integer) request.getAttribute("unReadNotes");
-}
 %>
 
 
@@ -52,109 +60,6 @@ $(document).ready(function() {
 		var id	  = $('#My_ID').val();
         
 		do_search_for_filtered('filtered.hi', 1, id, words);
-		
-		<%-- $.ajax({
-			type : "POST",
-			url : "filtered.hi",
-			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-			data : {
-				"condi" : 'receiver',
-				"words" : words,
-				"id"	: id
-			},
-			success : function(data) {
-				// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-				
-				$('#filteredForm').remove();
-				$('#pagiForm').remove();				
-				// alert('success ' +data);
-				
-				var item = $.parseJSON(data);
-				/* $.each(item,function(key,value) {
-					alert('key:'+key+', idx:'+value.IDX+', seq:'+value.SEQ+
-							', send_id:'+value.SEND_ID+', take_id:'+value.TAKE_ID+
-							', contents:'+value.CONTENTS+', wdate:'+value.WDATE+
-							', rdate:'+value.RDATE+', state:'+value.STATE+
-							', name:'+value.NAME+', TOTAL:'+value.TOTAL);
-				});	 */			
-				
-				if (item.length == 1) {
-					// alert('item.length ' +item.length);
-					$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="25%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th></tr><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr></table>');
-				}
-				else {
-					var filteredForm = '<table id="filteredForm" class="table"><tr class="warning" >';
-					filteredForm = filteredForm + '<th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th>';
-					filteredForm = filteredForm + '<th width="25%" style="text-align: center;">보낸사람</th>';
-					filteredForm = filteredForm + '<th width="40%" style="text-align: center;">내용</th>';
-					filteredForm = filteredForm + '<th width="20%" style="text-align: center;">받은날짜</th>';
-					filteredForm = filteredForm + '<th width="10%" style="text-align: center;">수신확인</th>';
-											
-					for (var i = 0; i < item.length - 1; i++) {
-						var idx		 = item[i].IDX;
-						var seq		 = item[i].SEQ;
-						var send_id	 = item[i].SEND_ID;
-						var take_id	 = item[i].TAKE_ID;
-						var contents = item[i].CONTENTS;
-						var wdate	 = item[i].WDATE;
-						var rdate	 = item[i].RDATE;
-						var state	 = item[i].STATE;
-						var name	 = item[i].NAME;
-						var total	 = item[i].TOTAL;
-						var take	 = item[i].TAKE_VIEW;
-						
-						if(take == '-1') 
-							continue;
-						
-						if(contents.length > 25) {
-							contents = contents.substring(0, 25) + '...';
-							// alert(contents);
-						}
-						
-						<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
-						
-						filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
-						filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
-						// filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
-						filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
-						filteredForm = filteredForm + '<td>'+wdate+'</td>';						
-
-						if(state == '0') {
-							filteredForm = filteredForm + '<td align="center">미확인</td></tr>';
-						} else {
-							filteredForm = filteredForm + '<td align="center">읽음</td></tr>';
-						}						
-					}
-					filteredForm = filteredForm + '</table>';
-					// alert(filteredForm);
-					$("#wrapfilteredForm").append(filteredForm);
-					
-					// 내가 입력한 검색어 확인
-					var getWords = item[item.length-1].inputWords;
-					// alert('내가 입력한 검색어는 ? ' +getWords)
-					
-					var pagiForm = '<table id="pagiForm"><tr><td style="text-align: center;">';
-					
-					// 1 2 3 ..	 총 갯수		  현재 페이지 번호?		      페이지 크기	             바닥에 보여질 페이지 수?		URL				스크립트
-					// renderPaging(
-					//		int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i)
-					pagiForm = pagiForm + renderPaging(
-							item[0].TOTAL, 1, 10, 10, "filtered.hi", "do_search_for_filtered", item[0].TAKE_ID, getWords);					
-					
-					// 						params :    url,   받은이,   검색 단어
-					// function do_search_for_filtered(url_i, take_id, words)					
-										
-					pagiForm = pagiForm + '</td></tr></table>';					
-					
-					$("#wrapPagiForm").append(pagiForm);
-				}
-			},
-			complete : function(data) {
-			},
-			error : function(xhr, status, error) {
-				alert("에러 발생");
-			}
-		});		 --%>
 	});	
 });
 
@@ -166,7 +71,7 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 	
 	$.ajax({
 		type : "POST",
-		url : "filtered.hi",
+		url  : "filtered.hi",
 		dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
 		data : {
 			"condi" : 'receiver',
@@ -174,9 +79,7 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 			"id"	: id,
 			"page"  : page
 		},
-		success : function(data) {
-			// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-			
+		success : function(data) {	// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.		
 			$('#filteredForm').remove();
 			$('#pagiForm').remove();				
 			// alert('success ' +data);
@@ -225,7 +128,6 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 					
 					filteredForm = filteredForm + '<tr><td align="center"><input type="checkbox" name="checkRow" value='+seq+'</td>';
 					filteredForm = filteredForm + '<td>'+ name+' <span style="font-size: 11px; color :#670000">('+send_id+')</span></td>'
-					//filteredForm = filteredForm + '<td>'+send_id+'('+name+')</td>';
 					filteredForm = filteredForm + '<td><a href=read.hi?note='+seq+'>'+contents+'</a></td>';
 					filteredForm = filteredForm + '<td>'+wdate+'</td>';						
 
@@ -240,12 +142,12 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 				$("#wrapfilteredForm").append(filteredForm);
 				
 				// 내가 입력한 검색어 확인
-				var getWords = item[item.length-1].inputWords;
+				var getWords = item[item.length-1].INPUTWORDS;
 				// alert('내가 입력한 검색어는 ? ' +getWords)
 				
 				var pagiForm = '<table id="pagiForm"><tr><td style="text-align: center;">';
 				
-				// 1 2 3 ..	 총 갯수		  현재 페이지 번호?		      페이지 크기	             바닥에 보여질 페이지 수?		URL				스크립트
+				// 1 2 3 ..	 총 갯수		  현재 페이지 번호?		      페이지 크기	             바닥에 보여질 페이지 수		URL				스크립트
 				// renderPaging(
 				//		int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i)
 				pagiForm = pagiForm + renderPaging(
@@ -260,6 +162,7 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 			}
 		},
 		complete : function(data) {
+			
 		},
 		error : function(xhr, status, error) {
 			alert("에러 발생");

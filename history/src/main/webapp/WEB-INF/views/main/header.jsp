@@ -57,7 +57,7 @@ if(session.getAttribute("user") != null) {
 
 <!-- 네이게이션 바.. 상단고정 -->
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container container-fluid">		<!-- 양 옆에 공백 -->
+	<div class="container">		<!-- 양 옆에 공백 -->
 
 		<div class="navbar-header" style="vertical-align: center">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">

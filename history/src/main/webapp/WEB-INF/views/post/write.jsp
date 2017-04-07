@@ -74,13 +74,19 @@
 		</script>
 		</div>
 		<br>
-		<div class="col-xs-9">
-<!-- 첨부 파일 업로드 시작  -->
-		<input type="file" id="file" name="file">		
-		</div>
 		
+<!-- 첨부 파일 업로드 시작  -->
 		<div class="col-xs-3">
 		<label for="field"> 파일 선택 </label>
+		<a href="#" class="btn" id="addFile">파일 추가</a>
+		</div>
+		
+		<div id="fileDiv" class="col-xs-9">
+			<p>
+				<input type="file" id="file" name="file_0">
+			</p>		
+		</div>
+		<div class="col-xs-12">
 		</div>
 <!-- 첨부 파일 업로드 끝  -->		
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
@@ -144,8 +150,19 @@
 </div>
 
 <script>
+var gfv_count = 1;	//파일 추가 카운트를 위한 전역변수
 /* 태그 달기 js입니다 */       
 	$(document).ready(function(){
+		$("#addFile").on("click", function(e){ //파일 추가 버튼
+			e.preventDefault();
+			fn_addFile();
+		});
+		
+		$("[name='delete']").on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+		
 		$("input:text").keydown(function(evt) 
 				{ 
 			if (evt.keyCode == 13) return false;
@@ -217,6 +234,18 @@
 	    });
 	   	$("#tag").val(ts).val();			/* 태그들 다 연결되어 붙은 값 */
 	    console.log("해시태그 ="+$("#tag").val(ts).val());
+	}
+	function fn_addFile(){
+		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+		$("#fileDiv").append(str);
+		$("a[name='delete']").on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	}
+	
+	function fn_deleteFile(obj){
+		obj.parent().remove();
 	}
 </script>
 	

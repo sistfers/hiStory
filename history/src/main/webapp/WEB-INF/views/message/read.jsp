@@ -95,13 +95,23 @@ if(session.getAttribute("user") != null) {
 						
 						}
 					%>						
-						<button type="reset" class="btn btn-default col-lg-3 col-md-offset-1">Cancel</button>
+						<button type="button" onclick="historyBack()" class="btn btn-default col-lg-3 col-md-offset-1">Cancel</button>
 					</div>
 				</form>
 			</div>
 			<div class="col-xs-3"></div>
 		</div>
 		<br> <br> <br> <br> <br>
+		<script type="text/javascript">
+		function historyBack() {
+			if ( document.referrer && document.referrer.indexOf("http://localhost:8080") != -1 ) { 
+				history.back();
+			}
+			else {			
+				location.href = "http://hi-history.com/";
+			}
+		}
+		</script>
 	</div>
 	<!--푸터 START -->
 	<jsp:include page="../main/footer.jsp" />

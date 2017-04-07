@@ -96,6 +96,7 @@ public class HomeControl {
 			List<Map<String, Object>> followList = postSvc.hi_selectFollowerList(followCondition);
 			mav.addObject("followList", followList);
 		}
+		
 		//로그인 시 유저의 이웃새글 END
 		mav.setViewName("/main/index");
 		mav.addObject("searchRank", searchRank);
@@ -104,6 +105,7 @@ public class HomeControl {
 		mav.addObject("PAGE_NUM", PAGE_NUM);
 		mav.addObject("PAGE_SIZE", PAGE_SIZE);
 		mav.addObject("bloggerRank", bloggerRank);
+		
 		return mav;
 	}
 	

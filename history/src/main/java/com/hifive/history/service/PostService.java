@@ -180,4 +180,7 @@ public class PostService implements iService {
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
 	      return postDao.getLovePost(dto);
 	}
+	public List<Map<String, Object>> getHashTag()throws SQLException{
+		return postDao.getHashTag();
+	}
 }

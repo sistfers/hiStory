@@ -513,7 +513,7 @@ $(document).ready(function () {
 		<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
 		<div class="col-xs-12">
 		<div style="background-color: #F9FFF7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
-		 <h3 style="text-align: center;" class="text-success"><i class="icon-star"></i>  이웃새글</h3>
+		 <h3 style="text-align: center;" class="text-success"><i class="icon-bullhorn"></i>  이웃새글</h3>
 		 </div>
 		 <div class="clearfix"></div><br>
 		

@@ -117,7 +117,7 @@
 <img src="/resources/image/level<%=userDto.getGrade()%>.png" height="20px"> }</h5>
 
 <!-- 블로그 주인의 블로그소개를 넣습니다 -->
-<div style="word-wrap:vreak-word;;word-break:break-all; font-size: 13px;color: #747474">
+<div style="word-wrap:break-word; word-break:break-all; font-size: 13px; color: #747474">
 <%=userDto.getPf_content() %>
 </div>
 <br>
@@ -153,8 +153,8 @@
   	for(int i = 0 ; i < categoryList.size(); ++i){
   %>
     <a class="list-group-item <%if(ct_seq.equals(categoryList.get(i).getSeq()+"")) out.println("active");%>" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" >
-    <span class="badge"><%=cateCount.get(i).get("TOTAL") %></span>		<!-- 카테고리별 글 갯수  -->
-    <%=categoryList.get(i).getName() %>
+	    <span class="badge"><%=cateCount.get(i).get("TOTAL") %></span>		<!-- 카테고리별 글 갯수  -->
+	    <%=categoryList.get(i).getName() %>
     </a>
   <%
   	}
@@ -169,7 +169,7 @@
       <div class="list-group-item" style="color: #4374D9; background-color: #F6F6F6;"><h6>방문자정보 <i class="icon-info-sign"></i> </h6></div>
       
         <%
-		  	for(int i = 0 ; i < 5; ++i){
+		  	for(int i = 0 ; i < visitList.size(); ++i){
 		  	  if(!visitList.get(i).get("ID").equals(id)){
 		 %>
       
@@ -181,6 +181,7 @@
 
 		  <%
 				  	}
+				  	if (i ==4) break;
 		  	}
 		  %>
 </div>

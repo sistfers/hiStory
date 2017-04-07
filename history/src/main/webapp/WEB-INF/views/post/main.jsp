@@ -829,7 +829,7 @@ $(function(){
             console.log("댓글부모번호 ="+$(this).parent().attr('id'));
             
             //댓글달기 창을 없앤다.
-            $("#commentEditor").remove(); 
+            $("#commentEditor").remove();
             	
             //부모의 하단에 댓글달기 창을 삽입
             var commentEditor = '<tr id="commentEditor">'+

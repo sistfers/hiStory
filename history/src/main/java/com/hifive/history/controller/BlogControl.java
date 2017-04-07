@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,6 @@ import com.hifive.history.model.FollowDto;
 import com.hifive.history.model.LoveDto;
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.UserDto;
-import com.hifive.history.model.VisitDto;
 import com.hifive.history.service.BlogService;
 import com.hifive.history.service.BoxService;
 import com.hifive.history.service.CategoryService;
@@ -302,9 +302,9 @@ public class BlogControl {
 	
 	//블로그 글 수정
 	@RequestMapping("post/update.hi")
-	public String postUpdate(HttpServletRequest request) {
+	public String postUpdate(HttpServletRequest request) throws Exception{
 		// view에서 넘어온값 받기
-		int	   seq 		= Integer.parseInt(request.getParameter("seq"));
+		/*int	   seq 		= Integer.parseInt(request.getParameter("seq"));
 		int	   ct_seq 	= Integer.parseInt(request.getParameter("ct_seq"));
 		String id		= request.getParameter("id");
 		String field	= request.getParameter("field");   
@@ -312,14 +312,29 @@ public class BlogControl {
 		String content	= request.getParameter("content"); 
 		String hashtag	= request.getParameter("tag"); 
 		String state	= request.getParameter("state");   
-		String co_state= request.getParameter("co_state");
+		String co_state= request.getParameter("co_state");*/
+		Map<String,Object> parameterMap = new HashMap<String,Object>();
+		Enumeration enums = request.getParameterNames();
+		while(enums.hasMoreElements()){
+			String paramName = (String)enums.nextElement();
+			String[] parameters = request.getParameterValues(paramName);
+			// Parameter가 배열일 경우
+			if(parameters.length > 1){
+			parameterMap.put(paramName, parameters);
+			// Parameter가 배열이 아닌 경우
+			}else{
+			parameterMap.put(paramName, parameters[0]);
+			}
+		}
 		
-		PostDto postDto = new PostDto(seq,ct_seq,id,field,title,content,null,hashtag,state,co_state);
-		logger.debug("BlogControl.postWrite.postDto.toString() = "+postDto.toString());
+		//PostDto postDto = new PostDto(seq,ct_seq,id,field,title,content,null,hashtag,state,co_state);
+		logger.debug("BlogControl.postWrite.parameterMap.getTitle() = "+parameterMap.get("title"));
 		
-		int flag = postSvc.hi_update(postDto);
+		
+		
+		int flag = postSvc.hi_updateBoardnFile(parameterMap, request);
 		if(flag > 0){
-			return "redirect:/post/main.hi?ct_seq="+ct_seq+"&id="+id; 
+			return "redirect:/post/main.hi?ct_seq="+parameterMap.get("ct_seq")+"&id="+parameterMap.get("id"); 
 		}else{
 			// 실패했을때 어떻게 해야할지 모르겠다
 		}

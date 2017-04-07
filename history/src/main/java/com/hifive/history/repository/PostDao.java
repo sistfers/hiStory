@@ -45,7 +45,14 @@ public class PostDao implements iDao {
 		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.update(statement,dto);
 	}
-
+	
+	public int hi_updateBoardnFile(Map<String, Object> map) {
+		String statement = namespace +".hi_updateBoardnFile";
+		logger.debug("statement"+statement);
+		
+		return sqlSession.update(statement,map);
+	}
+	
 	@Override
 	public iDto hi_detail(iDto dto) {
 		String statement = namespace +".hi_detail";

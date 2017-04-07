@@ -100,11 +100,36 @@ public class PostService implements iService {
 	
 		return flag;
 	}
-
+	
 	@Override
 	public int hi_update(iDto dto) {
 		logger.debug("PostService.dto.toString() = "+dto.toString());
-		return postDao.hi_update(dto);
+		int flag = postDao.hi_update(dto);
+		PostDto pDto = (PostDto)dto;
+		
+		return flag;
+	}
+	
+	public int hi_updateBoardnFile(Map<String, Object> map, HttpServletRequest request) throws Exception{
+		int flag = postDao.hi_updateBoardnFile(map);
+		
+		boxDao.hi_deleteFileList(map);
+		List<Map<String,Object>> list = fileUtils.parseUpdateFileInfo(map, request);
+	    Map<String,Object> tempMap = null;
+	    for(int i=0, size=list.size(); i<size; i++){
+	        tempMap = list.get(i);
+	        if(tempMap.get("IS_NEW").equals("Y")){
+	        	boxDao.hi_insertMap(tempMap);
+	        }
+	        else{
+	        	boxDao.hi_updateFile(tempMap);
+	        }
+	    }
+
+
+	출처: http://addio3305.tistory.com/85 [흔한 개발자의 개발 노트]
+		
+		return flag;
 	}
 
 	@Override

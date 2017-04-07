@@ -151,13 +151,13 @@
 </insert>
 
 <!--포스트수정  -->
-<update id="hi_update" parameterType="com.hifive.history.model.PostDto">
+<update id="hi_updateMap" parameterType="hashmap">
 	UPDATE POST_H
 	SET   CT_SEQ  = #{ct_seq},
 	      FIELD   = #{field},
 	      TITLE   = #{title},
 	      CONTENT = #{content},
-	      HASHTAG = #{hashtag},
+	      HASHTAG = #{tag},
 	      STATE   = #{state},
 	      CO_STATE= #{co_state}
 	WHERE SEQ     = #{seq}

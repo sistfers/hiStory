@@ -72,4 +72,14 @@ public class BoxDao implements iDao {
 		return sqlSession.selectOne(statement, map);
 	}
 
+	public void hi_deleteFileList(Map<String, Object> map) throws Exception{
+		String statement = namespace +".hi_deleteFileList";
+		sqlSession.update(statement, map);
+	}
+	 
+	public void hi_updateFile(Map<String, Object> map) throws Exception{
+		String statement = namespace +".hi_updateFile";
+		sqlSession.update(statement, map);
+	}
+
 }

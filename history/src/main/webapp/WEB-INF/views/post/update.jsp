@@ -124,12 +124,12 @@
 						for(Map<String, Object> map : postDto.getFileList()){
 %>
 							<p>
-	                        <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
-	                        <a href="#" id="name_<%=map.get("POST_SEQ")%>" name="name_<%=map.get("POST_SEQ")%>">
+	                        <input type="hidden" name="IDX_<%=map.get("SEQ") %>" id="IDX" value="<%=map.get("POST_SEQ")%>">
+	                        <a href="#" id="name_<%=map.get("SEQ")%>" name="name_<%=map.get("SEQ")%>">
 	                        <%=map.get("ORI_NAME")%></a>
-	                        <input type="file" id="file_<%=map.get("POST_SEQ")%>" name="file_<%=map.get("POST_SEQ")%>">
+	                        <input type="file" id="file_<%=map.get("SEQ")%>" name="file_<%=map.get("SEQ")%>">
 	                        (<%=map.get("FILE_SIZE")%>kb)
-	                        <a href="#" class="btn" id="delete_<%=map.get("POST_SEQ")%>" name="delete_<%=map.get("POST_SEQ")%>">삭제</a>
+	                        <a href="#" class="btn" id="delete_<%=map.get("SEQ")%>" name="delete_<%=map.get("SEQ")%>">삭제</a>
 	                        </p>
 <%
 						}

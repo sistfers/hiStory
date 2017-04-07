@@ -57,4 +57,22 @@
     ]]>
 </select>
 
+<update id="hi_deleteFileList" parameterType="hashmap">
+    <![CDATA[
+        UPDATE BOX_H SET
+            DEL_GB = 'Y'
+        WHERE
+            POST_SEQ = #{IDX} 
+    ]]>
+</update>
+ 
+<update id="hi_updateFile" parameterType="hashmap">
+    <![CDATA[
+        UPDATE BOX_H SET
+            DEL_GB = 'N'
+        WHERE
+            SEQ = #{FILE_IDX}  
+    ]]>
+</update>
+
 </mapper>

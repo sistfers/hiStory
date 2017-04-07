@@ -505,21 +505,16 @@ public class BlogControl {
 	// 댓글 수정 (ajax)
 	@RequestMapping(value = "post/replyUpdate.hi", method = RequestMethod.POST)
 	@ResponseBody
-	public String replyUpdate(HttpServletRequest request, HttpSession session) {
-		UserDto userDto = (UserDto) session.getAttribute("user");
+	public String replyUpdate(HttpServletRequest request) {
 
-		int POST_SEQ = Integer.parseInt(request.getParameter("POST_SEQ"));
-		String ID = userDto.getId();
-		String NAME = userDto.getName();
-		String CONTENT = request.getParameter("CONTENT");
-		int PARENT = Integer.parseInt(request.getParameter("PARENT"));
-		String STATE = request.getParameter("STATE").equals("false") ? "0" : "1";
+		int commentSeq = Integer.parseInt(request.getParameter("commentSeq"));
+		String STATE = request.getParameter("STATE");
+		String content = request.getParameter("content");
 
-		/*
-		 * int seq, int post_seq, String id, String name, String content, int
-		 * parent, String state
-		 */
 		CommentDto commentDto = new CommentDto();
+		commentDto.setSeq(commentSeq);
+		commentDto.setState(STATE);
+		commentDto.setContent(content);
 
 		int flag = commentSve.hi_update(commentDto);
 

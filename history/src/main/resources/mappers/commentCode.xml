@@ -56,10 +56,10 @@ INTO COMMENT_H
 
 <!--댓글수정  -->
 <update id="hi_update" parameterType="com.hifive.history.model.CommentDto">
-UPDATE COMMENT_H
-SET   CONTENT = #{CONTENT},
-      STATE   = #{STATE}
-WHERE SEQ     = #{SEQ}
+  UPDATE COMMENT_H
+  SET   CONTENT = #{content},
+        STATE   = #{state}
+  WHERE SEQ     = #{seq}
 </update>
 
 <!-- 페이징 -->

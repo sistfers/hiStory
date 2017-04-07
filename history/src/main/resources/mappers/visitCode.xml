@@ -14,6 +14,18 @@
 		      VALUES (SEQ_VISIT.NEXTVAL,  #{id}, #{vid}, SYSDATE, #{sex}, #{area}, TO_DATE(#{birth}, 'YYYY-MM-DD'))
 		
 	</insert>
+	
+	<select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
+	SELECT A.ID, B.TITLE, MAX(A.VDATE) AS VDATE
+		FROM VISIT_H A JOIN BLOG_H B
+       	 	ON A.ID = B.ID
+			WHERE V_ID = #{id} 
+        	GROUP BY A.ID, B.TITLE
+        	ORDER BY VDATE DESC 	
+	</select>
+	
+	
+	
 	<select id="hi_getToday" parameterType="String" resultType="int">
 		SELECT COUNT(*) AS TOTAL_CNT
 	 	 FROM(

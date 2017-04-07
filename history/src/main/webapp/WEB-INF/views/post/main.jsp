@@ -189,8 +189,8 @@ function go_delete(){
 
 
 <!-- 메인내용 START -->
-   <br><br>
-   <div class="container" style="margin-top: 30px">
+   <br><br><br><br>
+   <div class="container">
    
    <!--좌측 메뉴 START  -->
       <div class="col-xs-2 mydiv" style="background-color: <%=THEME %>; border-radius: 15px">
@@ -282,30 +282,30 @@ function go_delete(){
 				</div>
 
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
-<!-- 첨부파일 -->
+				<!-- 첨부파일 -->
 				<div class="col-xs-12" style="word-wrap : break-word;" >
 					<table class="board_view">
-					<colgroup>
-	            		<col width="25%"/>
-		            	<col width="35%"/>
-	    	        	<col width="10%"/>
-	        		    <col width="30%"/>
-       				</colgroup>
+						<colgroup>
+							<col width="25%"/>
+							<col width="35%"/>
+							<col width="10%"/>
+							<col width="30%"/>
+						</colgroup>
 				        <tr>
 		                <th scope="row">첨부파일</th>
 		                <td colspan="3">
-						<form name="download" method="post">					
-<%
-						for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
-%>
-	                        <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
-	                        <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
-	                        (<%=map.get("FILE_SIZE")%>kb)
-	                        
-<%
-						}
-%>
-					</form> 
+			                <form name="download" method="post">
+				                <%
+					                for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
+				                %>
+				                <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
+				                <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
+				                (<%=map.get("FILE_SIZE")%>kb)
+
+				                <%
+					                }
+				                %>
+			                </form>
 		                </td>
 		            	</tr>
 	            	</table>
@@ -373,6 +373,9 @@ function go_delete(){
 									<%=commentdata.get("WDATE")%><br>
 									<!-- 댓글내용 -->
 									<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+									<span name="contentsInput" hidden="hidden">
+										<textarea rows="2" class="form-control" style="resize: none"><%=commentdata.get("CONTENT")%></textarea>
+									</span>
 								</td>
 							<%
 								// 댓글, 대댓글 부분 끝
@@ -389,6 +392,10 @@ function go_delete(){
 												<!-- 댓글내용 -->
 												<span class="glyphicon glyphicon-lock" name="lockImg"></span>
 												<span name="contentsSpan"><%=commentdata.get("CONTENT")%></span>
+												<%--댓글 수정시 나타나야할 textarea--%>
+												<span name="contentsInput" hidden="hidden">
+													<textarea rows="2" class="form-control" style="resize: none"><%=commentdata.get("CONTENT")%></textarea>
+												</span>
 											</td>
 							<%
 									} else {
@@ -410,21 +417,25 @@ function go_delete(){
 							} // 내용부분 끝
 							// 버튼부분 시작
 							%>
-							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>">
+							<td width="20%" align="right" id="<%=commentdata.get("SEQ")%>" name="buttonsTd">
 								<!-- 로그인정보 없으면 안보임 -->
 								<% if (userDto != null) { %>
-									<% if ( commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())
-											&& commentdata.get("STATE").equals("0")
+								<% if ( commentdata.get("PARENT").toString().equals(commentdata.get("SEQ").toString())) {
+									if ( commentdata.get("STATE").equals("0")
 											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))
 											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(id)) { %>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
-									<% } %>
-									<% if (commentdata.get("STATE").equals("0") && userDto.getId().equals(commentdata.get("ID"))
-											|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))) { %>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp" value="<%=commentdata.get("STATE")%>">수정</button>
-										<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
-									<% } %>
+								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pAdd">답글</button>
+								<% }} %>
+								<% if (commentdata.get("STATE").equals("0") && userDto.getId().equals(commentdata.get("ID"))
+										|| commentdata.get("STATE").equals("1") && userDto.getId().equals(commentdata.get("ID"))) { %>
+								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pUp" value="<%=commentdata.get("STATE")%>">수정</button>
+								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 								<% } %>
+								<% } %>
+								<div name="updateButtons" hidden="hidden">
+									<input type="checkbox" name="secretUpdate" value="<%=commentdata.get("STATE")%>" <%if(commentdata.get("STATE").equals("1")){%>checked<%}%>> 비밀글<br>
+									<button type="button" name="updateButton" class="btn btn-danger" value="<%=commentdata.get("SEQ")%>">수정</button>
+								</div>
 							</td>
 							<%--버튼부분 끝--%>
 						</tr>
@@ -461,7 +472,7 @@ function go_delete(){
 									<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>
 								</td>
 								<td width="20%" align="left">
-									<input type="checkbox" id="STATE" name="STATE" value="1"> 비밀글<br>
+									<input type="checkbox" id="STATE" name="STATE" value="1">비밀글<br>
 									<button type="button" id="commentParentSubmit" name="commentParentSubmit" class="btn btn-danger">댓글입력</button>
 								</td>
 							</tr>
@@ -543,22 +554,21 @@ function go_delete(){
 
 
 <script type="text/javascript">
-function fn_downloadFile(obj){
-	var frm = document.download;
-	//var idx = obj.parent().find("#IDX").val();
-	
-	
-    frm.action = "downloadFile.hi";
-    
-    frm.submit();
-    
-}//파일다운로드
+	function fn_downloadFile(obj){
+		var frm = document.download;
+		//var idx = obj.parent().find("#IDX").val();
+
+
+		frm.action = "downloadFile.hi";
+
+		frm.submit();
+
+	}//파일다운로드
 $(function(){
 	$("[name='file']").on("click", function(e){ //파일 이름
 		e.preventDefault();
-        fn_downloadFile($(this));
-    });
-	
+		fn_downloadFile($(this));
+	});
 // 글 공감 ajax
 	$("#postLove").bind("click", function() {
 		 
@@ -647,14 +657,6 @@ $(function(){
 				var flag = $.parseJSON(data);
 				
 				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
-					//테이블의 tr자식이 있으면 tr 뒤에 붙인다. 없으면 테이블 안에 tr을 붙인다.
-//			        if($('#commentTable tr').size()==0){
-//			            $('#commentTable').append(commentParentText);
-//			        }else{
-//			            $('#commentTable tr:last').after(commentParentText);
-//			        }
-//
-//			        $("#commentParentText").val("");
 			        location.reload();
 				} else {
 					alert("댓글등록 실패");
@@ -727,38 +729,6 @@ $(function(){
 				var flag = $.parseJSON(data);
 				
 				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
-
-	 				  //var prevTr = $(this).parent().parent().parent().parent().prev();
-// 				        //댓글 적는 에디터 삭제
-// 				        $("#commentEditor").remove();//여기에서 삭제를 해줘야 에디터tr을 안 찾는다.
-				           
-//  				        //댓글을 타고 올라가며 부모 tr을 찾음
-// 				        while(prevTr.attr("name")!="commentParentCode"){
-// 				            prevTr = prevTr.prev();
-// 				        } 
-				        
-// 				        //while를 타는지 체크
-// 				        var check = false;
-				        
-// 				        //다음 노드가 댓글(depth1)의 댓글인지 찾기위해 next
-// 				        var nextTr = prevTr.next();
-				        
-//  				        //뒤에 댓글(depth1)의 댓글(depth2_1)이 없다면 바로 붙인다.
-// 				        if(nextTr.attr("name")!="commentChildCode"){
-// 				            prevTr.after(commentChildText);
-// 				        }else{
-// 				            //댓글(depth1)의 댓글(depth2_n)이 있는경우 마지막까지 찾는다.
-// 				            while(nextTr.attr("name")=="commentChildCode"){
-// 				                nextTr = nextTr.next();
-// 				                check = true;
-// 				            }
-// 				        } 
-				           
-// 				        if(check){//댓글(depth1)의 댓글(depth2_n)이 있다면 그 댓글(depth2_n) 뒤에 댓글(depth2_n+1) 추가
-// 				            nextTr = nextTr.prev();//while문에서 검색하느라 next로 넘거갔던거 다시 앞으로 돌려줌
-// 				            nextTr.after(commentChildText);
-// 				        } 
-	 				 	
 					setTimeout(location.reload.bind(location), 1);
 				} else {
 					alert("댓글등록 실패");
@@ -776,67 +746,35 @@ $(function(){
     });
 
     // 댓글 수정
-	$("#commentUpdate").on("click", function () {
-		<%--var pText = $("#commentParentText");--%>
-		<%--// true면 비밀글임(상태 1로 넣어야 함)--%>
-		<%--var stateYN = $("input[name='STATE']").is(":checked")==true;--%>
+	$("[name=updateButton]").on("click", function () {
+		var content = $(this).parent().parent().parent().find("[name=contentsInput]").find("textarea").val();
+		var secret = "0";
+		if ($(this).parent().find("[name=secretUpdate]").is(":checked")==true)
+			secret = "1";
+		var commentSeq = $(this).val();
 
-		<%--console.log("true면 비밀글임 stateYN = " + stateYN);--%>
 
-		<%--if($.trim(pText.val())==""){--%>
-			<%--alert("내용을 입력하세요.");--%>
-			<%--pText.focus();--%>
-			<%--return;--%>
-		<%--}--%>
-		<%--var d = new Date();--%>
-		<%--var today =    d.getFullYear() + "-" +--%>
-			<%--("00" + (d.getMonth() + 1)).slice(-2) + "-" +--%>
-			<%--("00" + d.getDate()).slice(-2) +--%>
-			<%--("00" + d.getHours()).slice(-2) + ":" +--%>
-			<%--("00" + d.getMinutes()).slice(-2) + ":" +--%>
-			<%--("00" + d.getSeconds()).slice(-2)--%>
-
-		<%--// 댓글로 들어갈 내용--%>
-		<%--var commentParentText = '<tr id="r1" name="commentParentCode">'+--%>
-			<%--'<td colspan=2 width=11% align="left">'+--%>
-			<%--'<img src="${sessionScope.user.pf_image}" width="40px" height="40px">'+--%>
-			<%--'</td>'+--%>
-			<%--'<td width="69%" style="text-align: left;" name="contentsTd">'+--%>
-			<%--'</span> <a href="#">${sessionScope.user.name}</a> '+today+' <br> '+--%>
-			<%--pText.val().replace(/\n/g, "<br>")+'</td>'+--%>
-			<%--'<td width="20%" align="right">'+--%>
-			<%--'<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pAdd">답글</button>'+--%>
-			<%--'<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pUp">수정</button>'+--%>
-			<%--'<button class="btn btn-default btn-xs" style="font-size: 12px;margin-right:4px;" name="pDel">삭제</button>'+--%>
-			<%--'</td>'+--%>
-			<%--'</tr>';--%>
-
-		<%--$.ajax({--%>
-			<%--type:"POST",--%>
-			<%--url:"replyInsert.hi",			// 컨트롤러에 보낼 이름--%>
-			<%--dataType:"html",--%>
-			<%--data:{--%>
-				<%--"POST_SEQ" 	: <%=postDto.getSeq()%>,--%>
-				<%--"STATE"	 	: stateYN,--%>
-				<%--"CONTENT" 	: pText.val()--%>
-			<%--},--%>
-			<%--success:function(data){--%>
-				<%--console.log("data"+data);--%>
-				<%--var flag = $.parseJSON(data);--%>
-
-				<%--if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기--%>
-					<%--location.reload();--%>
-				<%--} else {--%>
-					<%--alert("댓글등록 실패");--%>
-				<%--}--%>
-			<%--},--%>
-			<%--complete : function(data) {--%>
-				<%--// 실패, 성공 상관없이 무조건 수행--%>
-			<%--},--%>
-			<%--error:function(){--%>
-				<%--alert("에러냐아아앙!!! ");--%>
-			<%--}--%>
-		<%--});--%>
+		$.ajax({
+			type: "POST",
+			url: "replyUpdate.hi",
+			datatype: "html",
+			data: {
+				"commentSeq" : commentSeq,
+				"STATE" : secret,
+				"content" : content
+			},
+			success: function (data) {
+				var flag = $.parseJSON(data);
+				if (flag.msg=="true") {
+					location.reload();
+				} else {
+					alert("댓글 수정 실패");
+				}
+			},
+			error: function () {
+				alert("에러남");
+			}
+		});
 	});
        
     //답글 눌렀을때 에디터 창을 뿌려주는 이벤트, 삭제링크를 눌렀을때 해당 댓글을 삭제하는 이벤트
@@ -863,15 +801,6 @@ $(function(){
         				var flag = $.parseJSON(data);
         				
         				if (flag.msg=="true") {			// 댓글이 정상적으로 insert되면 화면에 보여주기
-
-//        	                //댓글(depth1)의 댓글(depth2_1)이 있는지 검사하여 삭제
-//        	                while(nextTr.attr("name")=="commentCode"){
-//        	                    nextTr = nextTr.next();
-//        	                    delTr = nextTr.prev();//삭제하고 넘기면 삭제되서 없기 때문에 다음값을 가져오기 어려워 다시 앞으로 돌려서 찾은 다음 삭제
-//        	                    delTr.remove();
-//        	                }
-//
-//        	                delComment.remove();
 					        location.reload();
         				} else {
         					alert("댓글삭제 실패");
@@ -895,7 +824,7 @@ $(function(){
             console.log("댓글부모번호 ="+$(this).parent().attr('id'));
             
             //댓글달기 창을 없앤다.
-            $("#commentEditor").remove();
+            $("#commentEditor").remove(); 
             	
             //부모의 하단에 댓글달기 창을 삽입
             var commentEditor = '<tr id="commentEditor">'+
@@ -913,20 +842,29 @@ $(function(){
                                    
             parentElement.after(commentEditor); 
         }else if($(this).attr("name")=="pUp"){
+	        var already = $(this).html();
+
+	        // 모든 글을 원래대로
+	        $("[name=pUp]").html("수정");
+	        $("[name=lockImg]").show();
+	        $("[name=contentsSpan]").show();
+	        $("[name=pAdd]").show();
+	        $("[name=contentsInput]").hide();
+	        $("[name=updateButtons]").hide();
+
+	        if( already == "수정취소") return;
+
+	        // 수정 버튼 누른 tr 변경
 	        var parentTr = $(this).parent().parent();
-	        var parentTd = $(this).parent();
-	        var thisContent = parentTr.find("[name=contentsTd]").find("[name=contentsSpan]").html();
-	        var secret = $(this).val();
-	        if (secret == '1')
-	            var changeHtml = '<input type="checkbox" id="updateSTATE" name="updateSTATE" value="1" checked> 비밀글<br>';
-	        else
-		        var changeHtml = '<input type="checkbox" id="updateSTATE" name="updateSTATE" value="0"> 비밀글<br>';
-	        var buttonHtml = '<button type="button" id="updateSubmit" name="updateSubmit" class="btn btn-warning">수정</button>';
-	        parentTr.find("[name=contentsTd]").find("[name=lockImg]").remove();
-	        parentTr.find("[name=contentsTd]").find("[name=contentsSpan]").html('<textarea rows="2" class="form-control" style="resize: none" id="commentChildText">' + thisContent + '</textarea>');
-			parentTd.append(changeHtml + buttonHtml);
+	        parentTr.find("[name=contentsTd]").find("[name=lockImg]").hide();
+	        parentTr.find("[name=contentsTd]").find("[name=contentsSpan]").hide();
+	        $(this).parent().find("[name=pAdd]").hide();
+	        parentTr.find("[name=contentsTd]").find("[name=contentsInput]").show();
+	        parentTr.find("[name=buttonsTd]").find("[name=updateButtons]").show();
+	        $(this).html("수정취소");
+
         }
-           
+
     });
        
 });

@@ -61,6 +61,10 @@ $(document).ready(function() {
         
 		do_search_for_filtered('filtered.hi', 1, id, words);
 	});	
+	
+	$(".fuck").click(function(){
+		alert('클릭햇냐');
+	});
 });
 
 function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
@@ -346,14 +350,16 @@ function viewAll() {
 <body>
 
 <!--헤더 START-->
-<jsp:include page="/header.hi"/>
+<jsp:include page="/header.hi" />
 <!--헤더 END-->
 <div class="container" >
 <br><br><br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
 
 <!-- 좌측메뉴 -->
 <div class="col-xs-2">
-	<jsp:include page="menu.jsp"/>
+	<jsp:include page="menu.jsp" flush="false">
+		<jsp:param name="unReadNotes" value="<%=unReadNotes%>" />
+	</jsp:include>
 </div>
 
 <!--내용 START -->
@@ -372,12 +378,12 @@ function viewAll() {
             	<span onclick="replyAction();"  class="btn btn-danger"><span class="glyphicon glyphicon-envelope" style="font-size: 22px"></span></span>
 			</div>
 			<!-- 미확인 쪽지 -->
-			<div class="col-xs-1" align="left">
+			<%-- <div class="col-xs-1" align="left">
 			(<%=unReadNotes %>)
-			</div>
+			</div> --%>
 			
 			<!-- 입력창 -->
-			<div class="col-xs-6" align="left">
+			<div class="col-xs-5" align="left">
 				<div class="input-group"> 
 			 	<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
 				<input type="text" id="searchbox" class="form-control" placeholder="검색어를 입력하삼"/>
@@ -426,9 +432,9 @@ function viewAll() {
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
-					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=bty'><%=subContents %></a></td>
+					<td><a href='#' class="fuck"><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
-				
+			
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>
@@ -469,6 +475,12 @@ function viewAll() {
 </div>
 
 
+<!-- <br>
+<br>
+<br>
+<br><div class="col-xs-3" style="min-height: 600px; display:block;">
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+</div> -->
 <br><br><br><br><br>
 </div>
 <!--푸터 START -->

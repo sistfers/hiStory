@@ -96,7 +96,7 @@ public class MessageControl {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		HttpSession session = res.getSession(false); 	
+		HttpSession session = res.getSession(true); 	
 		if(session.getAttribute("user") != null) {
 		/*
 		 * 사용자로부터 답장(1개 이상) 요청
@@ -287,7 +287,7 @@ public class MessageControl {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		HttpSession session = res.getSession(false); 	
+		HttpSession session = res.getSession(true); 	
 		if(session.getAttribute("user") != null) {
 		MessageDto dto = new MessageDto();
 		dto.setSeq(seq);
@@ -437,7 +437,7 @@ public class MessageControl {
 					res.getParameter("PAGE_NUM").equals(""))
 						?"1":res.getParameter("PAGE_NUM");
 		
-		HttpSession session = res.getSession(false); 	
+		HttpSession session = res.getSession(true); 	
 		if(session.getAttribute("user") != null) {
 			loger.debug("SESSION INFO	-> " + session.toString());
 			
@@ -490,7 +490,7 @@ public class MessageControl {
 					res.getParameter("PAGE_NUM").equals(""))
 						?"1":res.getParameter("PAGE_NUM");
 		
-		HttpSession session = res.getSession(false); 
+		HttpSession session = res.getSession(true); 
 		if(session.getAttribute("user") != null) {
 			loger.debug("SESSION INFO	-> " + session.toString());
 			

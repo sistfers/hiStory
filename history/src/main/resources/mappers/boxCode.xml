@@ -34,6 +34,7 @@
 <select id="hi_selectList" parameterType="hashmap" resultType="hashmap">
     <![CDATA[
         SELECT
+        	SEQ,
             POST_SEQ,
             ORI_NAME,
             ROUND(FILE_SIZE/1024,1) AS FILE_SIZE

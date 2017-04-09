@@ -640,7 +640,6 @@ function do_search_page(url, page_num) {
             } else {
             	var html="";
                 for (var i = 0; i < followList.length-1; i++) {
-                	var followBlogUrl = "/post/main.hi?id=" + followList[i].ID+"&seq=" + followList[i].SEQ;
                 	html +="<tr name=\"follow_detail\" style=\"cursor:pointer;\">";
                     html +="<td id=\"" +followList[i].ID +"\" width=\"20%\">";
         			html +="<div>";
@@ -679,13 +678,13 @@ function do_search_page(url, page_num) {
         			html +="</div></td></tr>";
       			
                 }
-                $('#followTable > tbody').append(html);
+                $('#followTable > tbody:last').append(html);
                 var pageHtml ="";
                 
                 pageHtml +="<tr><td style=\"text-align: center;\">";
                 pageHtml += renderPaging(followList[0].TOT_CNT, followList[followList.length-1].PAGE_NUM, 5, 5, "/main/followPost.hi", "do_search_page");
                 pageHtml +="</td></tr>";
-                $('#pageTable > tbody').append(pageHtml);
+                $('#pageTable > tbody:last').append(pageHtml);
                 
                
             } 
@@ -705,9 +704,7 @@ function do_search_page(url, page_num) {
     }
     
 	function removeTag( html ) {
-		html = html.replace(/<br\/>/ig, "");
-		html = html.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-z]*=[^>]*)?(\s)*(\/)?>/ig, "");
-		return html;
+		return html.replace(/(<([^>]+)>)/gi, "");
 	}
 	
 	function renderPaging(maxNum_i, currPageNoIn_i, rowsPerPage_i, bottomCount_i,

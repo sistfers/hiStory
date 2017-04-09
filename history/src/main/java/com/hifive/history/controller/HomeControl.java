@@ -113,7 +113,8 @@ public class HomeControl {
 	@ResponseBody
 	public String followSearch(HttpServletRequest request) throws Exception {
 		List<Map<String, Object>> followList = null;
-		String PAGE_SIZE = (request.getParameter("PAGE_SIZE") == null) ? "5" : request.getParameter("PAGE_SIZE");
+		String PAGE_SIZE = (request.getParameter("PAGE_SIZE") == null 
+				|| request.getParameter("PAGE_SIZE").equals("")) ? "5" : request.getParameter("PAGE_SIZE");
 		String PAGE_NUM = (request.getParameter("PAGE_NUM") == null
 				|| request.getParameter("PAGE_NUM").equals("")) ? "1" : request.getParameter("PAGE_NUM");
 		

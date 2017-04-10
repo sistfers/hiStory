@@ -382,7 +382,7 @@ function viewAll() {
 			</div> --%>
 			
 			<!-- 입력창 -->
-			<div class="col-xs-5" align="left">
+			<div class="col-xs-7" align="left">
 				<div class="input-group"> 
 			 	<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
 				<input type="text" id="searchbox" class="form-control" placeholder="검색어를 입력하삼"/>

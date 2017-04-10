@@ -8,7 +8,8 @@ String unReadNotes = (String) request.getParameter("unReadNotes");
 
 <div class="list-group">
   <a class="list-group-item  <%if(request.getRequestURL().toString().contains("/WEB-INF/views/message/writeForm.jsp")) out.println("active");%>" href="writeForm.hi">쪽지쓰기 </a>
-  <a class="list-group-item <%if(request.getRequestURL().toString().contains("/WEB-INF/views/message/message_list1.jsp")) out.println("active");%>" href="receive.hi">받은쪽지확인(<%=unReadNotes %>) </a>
+  <a class="list-group-item <%if(request.getRequestURL().toString().contains("/WEB-INF/views/message/message_list1.jsp")) out.println("active");%>" href="receive.hi">
+  받은쪽지확인 <span style="font-weight: bold;font-size: 12px;color: red">(<%=unReadNotes %>)</span> </a>
   <a class="list-group-item <%if(request.getRequestURL().toString().contains("/WEB-INF/views/message/message_list2.jsp")) out.println("active");%>" href="send.hi">보낸쪽지확인 </a>
 </div>
 

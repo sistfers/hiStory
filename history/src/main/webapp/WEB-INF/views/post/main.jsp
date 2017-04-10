@@ -104,7 +104,7 @@
 	int loveCount = 0;
 	List<Map<String, Object>> loveList = (List<Map<String, Object>>)request.getAttribute("loveCount");
 	
-	System.out.println("loveList"+loveList.toString());
+	//System.out.println("loveList"+loveList.toString());
 	if(loveList != null && loveList.size() >0){
 		loveCount = Integer.parseInt(loveList.get(0).get("TOT_CNT")+"");
 	}
@@ -300,32 +300,25 @@ function go_delete(){
 
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
 				<!-- 첨부파일 -->
-				<div class="col-xs-12" style="word-wrap : break-word;" >
-					<table class="board_view">
-						<colgroup>
-							<col width="25%"/>
-							<col width="35%"/>
-							<col width="10%"/>
-							<col width="30%"/>
-						</colgroup>
-				        <tr>
-		                <th scope="row">첨부파일</th>
-		                <td colspan="3">
+				<div class="col-xs-12" style="word-wrap : break-word;" ><hr>
+						<div class="col-xs-3">
+		                <i class="icon-file"></i> 첨부파일
+		                </div>
+		                
+		                <div class="col-xs-9" style="font-size: 12px;text-align: left;">
 			                <form name="download" method="post">
 				                <%
 					                for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
 				                %>
 				                <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
 				                <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
-				                (<%=map.get("FILE_SIZE")%>kb)
+				                (<%=map.get("FILE_SIZE")%>kb)<br>
 
 				                <%
 					                }
 				                %>
 			                </form>
-		                </td>
-		            	</tr>
-	            	</table>
+					</div>
             	</div>
 		        <% } %>
 

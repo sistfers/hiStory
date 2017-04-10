@@ -11,6 +11,8 @@ String TAKEID = "";
 HttpSession sesson = null;
 UserDto dto 	   = null;
 String blackIds    = null;
+
+int unReadNotes    = 0;
 	
 if(session.getAttribute("user") != null) {
 	sesson = request.getSession(false);
@@ -25,6 +27,9 @@ if(session.getAttribute("user") != null) {
 		out.println("<script>alert('쪽지 전달을 실패하였습니다. " + blackIds + " 아이디가 존재하지 않습니다. 쪽지 수신자 아이디를 확인해 주세요.');</script>");
 	}
 	
+	if(request.getAttribute("UNREADNOTES") != null) {
+		unReadNotes = (Integer) request.getAttribute("UNREADNOTES");
+	}	
 } else {
 	response.sendRedirect("../main/login");
 }
@@ -209,7 +214,9 @@ $(document).ready(function() {
 
 		<!-- 좌측메뉴 -->
 		<div class="col-xs-2">
-			<jsp:include page="menu.jsp" />
+		<jsp:include page="menu.jsp" flush="false">
+			<jsp:param name="unReadNotes" value="<%=unReadNotes%>" />
+		</jsp:include>
 		</div>
 
 		<!--내용 START -->

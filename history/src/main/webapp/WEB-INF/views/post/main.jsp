@@ -104,7 +104,7 @@
 	int loveCount = 0;
 	List<Map<String, Object>> loveList = (List<Map<String, Object>>)request.getAttribute("loveCount");
 	
-	System.out.println("loveList"+loveList.toString());
+	//System.out.println("loveList"+loveList.toString());
 	if(loveList != null && loveList.size() >0){
 		loveCount = Integer.parseInt(loveList.get(0).get("TOT_CNT")+"");
 	}
@@ -300,32 +300,25 @@ function go_delete(){
 
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
 				<!-- 첨부파일 -->
-				<div class="col-xs-12" style="word-wrap : break-word;" >
-					<table class="board_view">
-						<colgroup>
-							<col width="25%"/>
-							<col width="35%"/>
-							<col width="10%"/>
-							<col width="30%"/>
-						</colgroup>
-				        <tr>
-		                <th scope="row">첨부파일</th>
-		                <td colspan="3">
+				<div class="col-xs-12" style="word-wrap : break-word;" ><hr>
+						<div class="col-xs-3">
+		                <i class="icon-file"></i> 첨부파일
+		                </div>
+		                
+		                <div class="col-xs-9" style="font-size: 12px;text-align: left;">
 			                <form name="download" method="post">
 				                <%
 					                for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
 				                %>
 				                <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
 				                <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
-				                (<%=map.get("FILE_SIZE")%>kb)
+				                (<%=map.get("FILE_SIZE")%>kb)<br>
 
 				                <%
 					                }
 				                %>
 			                </form>
-		                </td>
-		            	</tr>
-	            	</table>
+					</div>
             	</div>
 		        <% } %>
 
@@ -449,9 +442,9 @@ function go_delete(){
 								<button class="btn btn-default btn-xs" style="font-size: 12px" name="pDel">삭제</button>
 								<% } %>
 								<% } %>
-								<div name="updateButtons" hidden="hidden">
+								<div name="updateButtons" hidden="hidden" style="text-align: center;">
 									<input type="checkbox" name="secretUpdate" value="<%=commentdata.get("STATE")%>" <%if(commentdata.get("STATE").equals("1")){%>checked<%}%>> 비밀글<br>
-									<button type="button" name="updateButton" class="btn btn-danger" value="<%=commentdata.get("SEQ")%>">수정</button>
+									<button type="button" name="updateButton" class="btn btn-warning" value="<%=commentdata.get("SEQ")%>">수정</button>
 								</div>
 							</td>
 							<%--버튼부분 끝--%>
@@ -482,7 +475,7 @@ function go_delete(){
 						<table class="table table-condensed">
 							<!-- 기본 댓글 입력창(맨아래) -->
 							<tr>
-								<td width="11%">
+								<td width="11%" align="left">
 									<img src="${sessionScope.user.pf_image}" width="40px" height="40px">
 								</td>
 								<td width="69%">
@@ -503,8 +496,7 @@ function go_delete(){
 				<div class="col-xs-12">
 					<table class="table table-hover tbList">
 					<tr class="warning">
-						<!-- <th width="10%">글번호</th> -->
-						<th width="80%" >제목</th>
+						<th width="80%" >제목 <span style="font-size: 10px">(댓글갯수)</span></th>
 						<th width="20%">작성일</th>
 					</tr>
 
@@ -521,6 +513,7 @@ function go_delete(){
 						<td align="left">
 						<div style="word-wrap:break-word;word-break:break-all;">
 							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
+							<span style="color: #212121; font-weight: bold; font-size: 10px"> (<%=mapdatas.get("CO_CNT") %>)</span>
 						</div></td>
 						<td><%=wdate %></td>
 					</tr>

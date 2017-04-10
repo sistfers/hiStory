@@ -8,16 +8,18 @@
 <html>
 <head>
 <%
+	//현재 카테고리 리스트 받아오기
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
+	//비로그인시 블로그관리 접근 권한이 없긴하지만 한번 더 막아주기.
 	if(session.getAttribute("user")!=null){
 		UserDto user = (UserDto)session.getAttribute("user");
 	}
-	
 	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

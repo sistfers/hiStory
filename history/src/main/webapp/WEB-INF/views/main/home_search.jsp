@@ -179,7 +179,7 @@
 	</div>
 	</td>
 	
-	<td valign="top" id="<%=searchList.get(i).get("SEQ")%>" width="70%">
+	<td valign="top" id="<%=searchList.get(i).get("SEQ")%>" width="70%" style="word-wrap:break-word;word-break:break-all;">
 		<div class="media-body" style="word-wrap:break-word;word-break:break-all;" >
 <!--글제목  -->
 		<h5 class="title" style="color: #87003A">
@@ -188,7 +188,7 @@
 			if(tempTitle.length() >50){
 				title = tempTitle.substring(0,50) + "...";
 			}
-			title = title.replace(search_word, "<mark>" + search_word + "</mark>");
+			title = title.replace(search_word, "<b>" + search_word + "</b>");
 		%>
 		<%= title%>
 		</h5>
@@ -198,16 +198,17 @@
 			if(tempContent.length() >150){
 				content = tempContent.substring(0,150) + "...";
 			}
-			content = content.replace(search_word, "<mark>" + search_word + "</mark>");
+			// 줄바꿈 안되어서 검색어 굵은글씨는 뺐습니다 ㅠ
+			//content = content.replace(search_word, "<b>" + search_word + "</b>");
 		%>
-		<p style="font-size: 12px;"><%= content%></p>
+		<p style="font-size: 12px;word-wrap:break-word;word-break:break-all;"><%= content%></p>
 		
 		
 		
 		<%if(searchList.get(i).get("HASHTAG")!=null){ 
 			String hashtag = (String)searchList.get(i).get("HASHTAG");
 			hashtag = hashtag.substring(0, hashtag.length()-1);
-			hashtag = hashtag.replace("#" + search_word, "#" + "<mark>" + search_word + "</mark>");
+			hashtag = hashtag.replace("#" + search_word, "#" + "<b>" + search_word + "</b>");
 			%>
 			<!--해시태그  -->
 			<div style="color: #2457BD;font-size: 13px"><%= hashtag%></div>

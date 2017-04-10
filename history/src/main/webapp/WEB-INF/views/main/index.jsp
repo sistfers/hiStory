@@ -522,14 +522,14 @@ $(document).ready(function () {
 		<% if(followList.size() != 0) {
 			for(int i=0; i<followList.size(); ++i) { %>
 				<tr name="follow_detail" style="cursor:pointer;">
-					<td id="<%=followList.get(i).get("ID")%>" width="20%">
+					<td id="<%=followList.get(i).get("ID")%>" width="15%">
 						<div>
 							<a href="#" class="pull-left">
 							<img src="<%=get_img(followList.get(i).get("CONTENT")+"") %>" width="130px" height="90px" onerror='src="/resources/image/noimg.png"'>
 							</a>
 						</div>
 					</td>
-					<td valign="top" id="<%=followList.get(i).get("SEQ")%>"  width="60%">
+					<td valign="top" id="<%=followList.get(i).get("SEQ")%>"  width="65%">
 						<div style="word-wrap:break-word;word-break:break-all;">
 							<h5 class="title">
 <%								String tempTitle = followList.get(i).get("TITLE")+"";
@@ -546,13 +546,13 @@ $(document).ready(function () {
 									content = tempContent.substring(0,100) + "...";
 								}
 %>
-							<p class="summary" style="word-wrap:break-word;word-break:break-all;"> <%= content%></p>
+							<p class="summary" style="word-wrap:break-word;word-break:break-all;font-size: 12px;"> <%= content%></p>
 						</div>
 					</td>
-					<td align="right" valign="middle" width="10%">
+					<td align="right" valign="middle" width="10%" style="font-size: 12px">
 						<%=followList.get(i).get("NAME") %>
 					</td>
-					<td align="right" valign="top" width="10%">
+					<td align="right" valign="top" width="10%" style="font-size: 12px;color:#747474 ">
 						<div style="display: block;">
 							<%=followList.get(i).get("WDATE") %>
 						</div>
@@ -641,7 +641,7 @@ function do_search_page(url, page_num) {
             	var html="";
                 for (var i = 0; i < followList.length-1; i++) {
                 	html +="<tr name=\"follow_detail\" style=\"cursor:pointer;\">";
-                    html +="<td id=\"" +followList[i].ID +"\" width=\"20%\">";
+                    html +="<td id=\"" +followList[i].ID +"\" width=\"15%\">";
         			html +="<div>";
         			html +="<a href=\"#\" class=\"pull-left\">";
         				var post_img = get_img(followList[i].CONTENT);
@@ -649,8 +649,8 @@ function do_search_page(url, page_num) {
         			html +="</a>";
         			html +="</div>";
         			html +="</td>";
-        			html +="<td valign=\"top\" id=\""+followList[i].SEQ+"\" width=\"60%\">";
-        			html +="<div style=\"display: block; word-wrap : break-word; max-width: 600px;\">";
+        			html +="<td valign=\"top\" id=\""+followList[i].SEQ+"\" width=\"65%\">";
+        			html +="<div style=\"word-wrap:break-word;word-break:break-all;\">";
         			html +="<h5 class=\"title\">";	
         			
 	        			var tempTitle = followList[i].TITLE;
@@ -666,13 +666,13 @@ function do_search_page(url, page_num) {
 	        			if(tempContent.length >150){
 	        				content = tempContent.substring(0,150) + "...";
 	        			}
-	        		html +="<p class=\"summary\" style=\"word-wrap : break-word;\">"+ content + "</p>";
+	        		html +="<p class=\"summary\" style=\"word-wrap:break-word;word-break:break-all;font-size: 12px\">"+ content + "</p>";
 	        		html +="</div>";
 	        		html +="</td>";
-	        		html +="<td align=\"right\" valign=\"middle\" width=\"10%\">";
+	        		html +="<td align=\"right\" valign=\"middle\" width=\"10%\" style=\"font-size: 12px\">";
         			html += followList[i].NAME;
       				html +="</td>";
-        			html +="<td align=\"right\" valign=\"top\" width=\"10%\">";
+        			html +="<td align=\"right\" valign=\"top\" width=\"10%\" style=\"font-size: 12px\">";
         			html +="<div style=\"display: block;\">";
         			html +=followList[i].WDATE;
         			html +="</div></td></tr>";

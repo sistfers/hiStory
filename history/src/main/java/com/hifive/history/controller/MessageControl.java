@@ -98,6 +98,13 @@ public class MessageControl {
 		
 		HttpSession session = res.getSession(true); 	
 		if(session.getAttribute("user") != null) {
+			
+			UserDto dto = (UserDto) session.getAttribute("user");
+			
+			// 미확인 쪽지
+			int unReadNotes = messageService.hi_unread_note(dto.getId());
+			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			
 		/*
 		 * 사용자로부터 답장(1개 이상) 요청
 		 * jsp	: message_list1.jsp 
@@ -125,6 +132,7 @@ public class MessageControl {
 			
 			mav.setViewName("/message/writeForm");
 			mav.addObject("TAKEID", ids);	
+			mav.addObject("UNREADNOTES", unReadNotes);
 		
 		/*
 		 * 사용자로부터 쪽지 쓰기 요청(좌측 메뉴)
@@ -139,6 +147,7 @@ public class MessageControl {
 			mav.setViewName("/message/writeForm");
 //			mav.addObject("TAKEID", TAKEID);
 //			mav.addObject("NAME", NAME);
+			mav.addObject("UNREADNOTES", unReadNotes);
 		}
 		} else {
 			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
@@ -312,9 +321,14 @@ public class MessageControl {
 			
 		}		
 		
+		// 미확인 쪽지
+		int unReadNotes = messageService.hi_unread_note(note.getTake_id());
+		loger.debug("UNREADNOTES	-> " + unReadNotes);
+		
 		mav.setViewName("/message/read");
 		mav.addObject("NOTE", note);	
 		mav.addObject("BT_YN", bt_yn);
+		mav.addObject("UNREADNOTES", unReadNotes);
 		
 		
 		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
@@ -507,9 +521,14 @@ public class MessageControl {
 			List<Map<String, Object>> getList = messageService.hi_select_sendlist(search_info);
 			loger.debug("SENDLIST SIZE 	-> " + getList.size());
 			
+			// 미확인 쪽지
+			int unReadNotes = messageService.hi_unread_note(dto.getId());
+			loger.debug("UNREADNOTES	-> " + unReadNotes);	
+			
 			mav.setViewName("/message/message_list2");
 			mav.addObject("GETLIST", getList);
 			mav.addObject("PAGE_NUM", PAGE_NUM);
+			mav.addObject("UNREADNOTES", unReadNotes);
 			
 		} else {
 			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");

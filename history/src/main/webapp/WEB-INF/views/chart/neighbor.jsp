@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%
 	List<Map<String, Object>> neighborList = new ArrayList<>();
@@ -16,6 +17,7 @@
 %>
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -77,12 +79,12 @@ function do_del(id) {
         <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10">
-		        <!-- 포스트-->
-		        <div class="col-xs-12" style="background-color: #f2f7ff; margin-top:20px; padding-top: 20px; margin-bottom: 20px">
+		        <!-- 나의 팔로우 보기  -->
+		        <div class="col-xs-12" style="background-color: #ffffff; margin-top:20px; padding-top: 20px; margin-bottom: 20px">
 		 			<p style="font-size: 25px; margin-top: 20px">나의 팔로우 보기</p>
-					<table class="table" style="margin-top: 20px" id="neighbor">
+					<table class="table table-hover" style="margin-top: 20px" id="neighbor">
 					<tr class="info">
-						<th> <input type="checkbox"> </th>
+						<th>No</th>
 						<th>ID [ 닉네임 ]</th>
 						<th>블로그타이틀</th>
 						<th style="text-align: center;">상태</th>
@@ -91,8 +93,8 @@ function do_del(id) {
 						if(neighborList!=null && neighborList.size()!=0){
 							for(int i = 0; i < neighborList.size(); ++i){
 					%>
-						<tr class="active">
-							<td><input type="checkbox"></td>
+						<tr class="default">
+							<td><%=i+1 %></td>
 							<td><a href="/post/main.hi?id=<%=neighborList.get(i).get("MY_ID")%>">
 							<%=neighborList.get(i).get("MY_ID")+" "%> [ <%=neighborList.get(i).get("NAME")+" "%> ]</a>
 							</td>
@@ -105,9 +107,9 @@ function do_del(id) {
 					<%
 							}
 					%>
-						<tr>
-							<td colspan="4" style="text-align: center;">
-							<ul class="pagination pagination-sm">
+						</table>
+							<center>
+							<ul class="pagination pagination-sm" >
 							 <li class="disabled"><a href="#">&laquo;</a></li>
 							<%
 							int tot = Integer.parseInt(neighborList.get(0).get("TOT_CNT").toString())/5+1;
@@ -134,19 +136,19 @@ function do_del(id) {
 								%>
 							<li><a href="#">&raquo;</a></li>
 							</ul>
-							</td>
-						</tr>
+							</center>
 					<%
 						}else{
 					%>
 						<tr class="active">
 						<td colspan="4" style="text-align: center;">회원님을 팔로우하는 회원이 없습니다.</td> 
 						</tr>
+						</table>
 						
 					<%
 						}
 					%>
-					</table>
+					
 				</div>
 				
 	  		</div>

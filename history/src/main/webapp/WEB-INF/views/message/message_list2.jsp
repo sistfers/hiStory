@@ -11,6 +11,7 @@
 
 List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
 int page_num 		= 1;
+int unReadNotes 	= 0;
 int intTotalCount	= 0;
 
 if(session.getAttribute("user") != null) {
@@ -22,6 +23,10 @@ if(session.getAttribute("user") != null) {
 	if(request.getAttribute("PAGE_NUM") != null) {
 		page_num = Integer.parseInt((String) request.getAttribute("PAGE_NUM"));
 	} 
+	
+	if(request.getAttribute("UNREADNOTES") != null) {
+		unReadNotes = (Integer) request.getAttribute("UNREADNOTES");
+	}
 } else {
 	response.sendRedirect("../main/login");
 }
@@ -33,10 +38,12 @@ if(session.getAttribute("user") != null) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title> 보낸쪽지함 </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -93,11 +100,13 @@ function deleteAction(){
 
 <!-- 좌측메뉴 -->
 <div class="col-xs-2">
-	<jsp:include page="menu.jsp"/>
+	<jsp:include page="menu.jsp" flush="false">
+		<jsp:param name="unReadNotes" value="<%=unReadNotes%>" />
+	</jsp:include>
 </div>
 
 <!--내용 START -->
-<div class="col-xs-10" style="min-height: 600px">
+<div class="col-xs-10" style="min-height: 700px">
 <center><h2> :: 보낸쪽지함 ::</h2></center><br>
 	<div class="col-xs-1"></div>
 	<form name="searchForm" action="" method="POST">
@@ -153,7 +162,7 @@ function deleteAction(){
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>
-					<td align="center">미확인</td>
+					<td align="center"><b>미확인</b></td>
 				<%	
 				} else {
 				%>

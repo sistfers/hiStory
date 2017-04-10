@@ -334,7 +334,10 @@ function go_delete(){
         				String str[] = split(postDto.getHashtag());
         				for(int i = 0; i < str.length; ++i){
         		%>
-        					<a href="#"><%="#" + str[i] %></a>
+        					<form name="search_hashtag" method="post" action="">
+        					<input type="hidden" name="search_word" value="<%=str[i]%>">
+        					<a href="#" name="hashtag"><%="#" + str[i] %></a>
+        					</form>
         		<%
         				}
         			}
@@ -574,7 +577,14 @@ function go_delete(){
 		frm.submit();
 
 	}//파일다운로드
+	
 $(function(){
+	$("[name='hashtag']").on("click", function(e){ //파일 이름
+		var frm = $(this).parent();
+		frm.attr("action", "/main/do_search.hi");
+		frm.submit();
+	});
+	
 	$("[name='file']").on("click", function(e){ //파일 이름
 		e.preventDefault();
 		fn_downloadFile($(this));

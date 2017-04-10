@@ -38,6 +38,18 @@ public class MessageControl {
 	@Autowired
 	private MessageService messageService; 
 	
+	@RequestMapping(value="message/pooling.hi", produces = "application/json; charset=utf8")
+	public @ResponseBody String do_pooling(HttpServletRequest res) {
+		
+		Gson gson = new Gson();
+		
+		
+		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
+		loger.debug("----------------------------------------------------------");
+		
+		return gson.toJson("hi");
+	}
+	
 	// loger debug
 	@RequestMapping(value="message/filtered.hi", method=RequestMethod.POST,
 			produces = "application/json; charset=utf8")

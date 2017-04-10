@@ -56,9 +56,19 @@ public class MessageService implements iService {
 
 	// 쪽지 삭제
 	@Override
+//	@Transactional
 	public int hi_delete(int cnt) {
 		
 		return messageDao.hi_delete(cnt);
+		
+//		int result = 0;
+//		
+//		try {
+//			result = messageDao.hi_delete(cnt);
+//		} catch(Exception e) {
+//	        e.printStackTrace();
+//		}
+//		return result;
 	}
 	
 	// 쪽지 VIEW 변경

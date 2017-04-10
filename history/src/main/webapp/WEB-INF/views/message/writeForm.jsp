@@ -174,14 +174,17 @@ $(document).ready(function() {
 		var alreadyinputIds = '';
 		alreadyinputIds = $("#TAKE_ID").val();
 		
-		
-		// 검사
-		var index = alreadyinputIds.indexOf(followId);		
-		
-		if(index != -1) {			
-			followId = alreadyinputIds;
+		if(alreadyinputIds.length == 0) {	
+			followId = followId;	
 		} else {
-			followId = alreadyinputIds + ',' + followId;
+			// 검사
+			var index = alreadyinputIds.indexOf(followId);	
+			
+			if(index == -1) {
+				followId = alreadyinputIds + ',' + followId
+			} else {
+				followId = alreadyinputIds;
+			}
 		}
 		
 		$("#TAKE_ID").val(followId);

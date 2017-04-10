@@ -285,6 +285,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+	checkRow = checkRow + ",1000";
 	alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){

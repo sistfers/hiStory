@@ -19,7 +19,7 @@
 
 
 	<!-- 어노테이션에 기반한 트랜잭션 활성화 -->
-	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	<!-- JDBC의 연결을 처리하는 기능을 가진 DataSource -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"

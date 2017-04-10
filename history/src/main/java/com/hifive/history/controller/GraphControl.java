@@ -242,6 +242,16 @@ public class GraphControl {
 		
 		List<Map<String, Object>> neighborList = followService.hi_getNeighborList(map);
 		mav.addObject("neighborList", neighborList);
+		
+		//내가 팔로우하는 사람들
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("SEARCH_CON", "ifollow");
+		condition.put("id", user.getId());
+		condition.put("PAGE", "notpage");
+		
+		List<Map<String, Object>> followList = followService.hi_selectList(condition);
+		mav.addObject("followList", followList);
+		
 		//블로그 타이틀
 		BlogDto blogdto = blogService.getMyBlog(user.getId());
 		mav.addObject("blogdto", blogdto);

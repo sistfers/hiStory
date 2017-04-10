@@ -13,7 +13,21 @@
 	List<Map<String, Object>> neighborList = new ArrayList<>();
 	neighborList = (List<Map<String, Object>>)request.getAttribute("neighborList");
 	
+	List<Map<String, Object>> followList = new ArrayList<>();
+	followList = (List<Map<String, Object>>)request.getAttribute("followList");
+	
 	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
+%>
+<%!
+	private static boolean checkFollow(String id, List<Map<String, Object>> followList){
+		boolean flag = true;
+		for(int i = 0 ; i < followList.size(); ++i){
+			if(followList.get(i).get("ID").equals(id)){
+				flag = false;
+			}
+		}
+		return flag;
+	}
 %>
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -43,6 +57,14 @@ border-radius: 15px;
 function do_add(id) {
 	//var id = $("#neighbor").find("td").eq(1).text();
 	if(confirm(id + "을 이웃으로 추가 하시겠습니까?")){
+		$("#addid").val(id);
+		var frm = document.addForm;
+		frm.submit();
+	}
+}
+function do_cancel(id) {
+	//var id = $("#neighbor").find("td").eq(1).text();
+	if(confirm(id + "을 이웃에서 삭제 하시겠습니까?")){
 		$("#addid").val(id);
 		var frm = document.addForm;
 		frm.submit();
@@ -100,7 +122,17 @@ function do_del(id) {
 							</td>
 							<td><%=neighborList.get(i).get("TITLE") %></td>
 							<td style="text-align: center;">
+					<%
+						if( checkFollow( (neighborList.get(i).get("MY_ID")).toString(),followList) ){
+					%>
 							<button type="button" class="btn-xs btn-info" id="addNeighbor" onclick="do_add('<%=neighborList.get(i).get("MY_ID")%>')">이웃추가</button>
+					<%
+						}else{
+					%>
+							<button type="button" class="btn-xs btn-info" id="addNeighbor" onclick="do_cancel('<%=neighborList.get(i).get("MY_ID")%>')">이웃취소</button>
+					<%
+						}
+					%>
 							<button type="button" class="btn-xs btn-danger" id="delNeighbor" onclick="do_del('<%=neighborList.get(i).get("MY_ID")%>')">차단</button>
 							</td>
 						</tr>

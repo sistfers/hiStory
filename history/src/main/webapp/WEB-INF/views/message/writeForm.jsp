@@ -57,6 +57,67 @@ $(document).ready(function () {
 	        $("#textNote").submit();
 	    }
 	});
+	
+	$("#TAKE_ID").on('keyup',function(e){
+		if(e.which == 32) {
+			// alert('스페이스바');
+			
+			var alreadyinputIds = $("#TAKE_ID").val();
+			alreadyinputIds = alreadyinputIds.trim();
+			
+			if(alreadyinputIds.length == 0) {
+				$("#TAKE_ID").val("");
+			} else {
+				$("#TAKE_ID").val(alreadyinputIds +",");
+			}
+		}
+	});
+	
+	$("#TAKE_ID").blur(function() {
+		// alert('벗어남');
+		
+		var alreadyinputIds = '';
+		var outputIds 		= '';
+		alreadyinputIds = $("#TAKE_ID").val();
+		
+		/*
+		 *  input  : ,,<, sung ,123,,,hi,,성우
+		 *  output : sung,123,hi
+		 * 
+		 *  1. 유효하지 않는 , 삭제 
+		 *  2. 앞뒤 공백 제거(이건 입력하는 부분에서 할까)
+		 *  3. , 를 제외한 모든 특수문자 삭제
+		 *  4. 한글 제거
+		 */
+ 
+		if(alreadyinputIds.length == 0) {	
+			 
+		} else {
+			var idArr = alreadyinputIds.split(',');
+			 
+			for(var i = 0; i < idArr.length; i++) {
+				// alert(idArr[i]);
+				 
+				if(idArr[i].length == 0) {
+					continue;
+				} else {
+					var stringRegx = /[`~!@\#$%<>{}^&*\()\-=+_;:?\’|ㄱ-ㅎ|가-힣]/gi; 
+					// var special =  /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+					
+					if(stringRegx.test(idArr[i])) {
+						continue;
+					}
+					 
+					outputIds = outputIds + idArr[i] + ",";
+				}
+			}
+		}
+		
+		outputIds = outputIds.substring(0,outputIds.lastIndexOf(","));
+		
+		// alert(outputIds)
+		$("#TAKE_ID").val(outputIds);
+	});
 });
 	
 function sendCheck() {
@@ -170,23 +231,26 @@ $(document).ready(function() {
         return html;
     }
 
-	function in_follow(followId) {
-		var alreadyinputIds = '';
-		alreadyinputIds = $("#TAKE_ID").val();
-		
-		
+function in_follow(followId) {
+	var alreadyinputIds = '';
+	alreadyinputIds = $("#TAKE_ID").val();
+	
+	if(alreadyinputIds.length == 0) {	
+		followId = followId;	
+	} else {
 		// 검사
-		var index = alreadyinputIds.indexOf(followId);		
+		var index = alreadyinputIds.indexOf(followId);	
 		
-		if(index != -1) {			
-			followId = alreadyinputIds;
+		if(index == -1) {
+			followId = alreadyinputIds + ',' + followId
 		} else {
-			followId = alreadyinputIds + ',' + followId;
+			followId = alreadyinputIds;
 		}
-		
-		$("#TAKE_ID").val(followId);
-        $("#myModal").modal('toggle');
-    }
+	}
+	
+	$("#TAKE_ID").val(followId);
+       $("#myModal").modal('toggle');
+}
 </script>
 
 <style type="text/css">

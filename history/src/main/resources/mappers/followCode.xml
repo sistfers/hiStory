@@ -201,6 +201,7 @@
 	                WHERE MY_ID = #{myid}
 	                AND YOU_ID  = #{youid}
 	                AND TO_CHAR(FDATE, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	                AND STATE = '0'
 	              ) AS SEQ
 	         FROM DUAL       
 	      ) T2

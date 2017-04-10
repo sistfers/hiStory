@@ -138,8 +138,8 @@ public class MessageControl {
 		 * 사용자로부터 쪽지 쓰기 요청(좌측 메뉴)
 		 */
 		} else {
-			String TAKEID ="";
-			String NAME	  ="";
+//			String TAKEID ="";
+//			String NAME	  ="";
 			
 //			TAKEID = res.getParameter("TAKEID");	
 //			NAME   = res.getParameter("NAME");
@@ -183,8 +183,13 @@ public class MessageControl {
 		ModelAndView mav = new ModelAndView();
 		String[] arrIdx = TAKEID.split(",");
 		for(int i = 0; i < arrIdx.length; i++) {
-			loger.debug("ARRIDX - > " + arrIdx[i]);
+			loger.debug("ARRIDX -> " + arrIdx[i]);
 		}
+		/*
+		 * 
+		 * 
+		 * 
+		 */	
 		
 		StringBuffer blackIds = new StringBuffer();
 		int result[] = new int[arrIdx.length];
@@ -221,6 +226,10 @@ public class MessageControl {
 				}	
 			}	
 			
+			// 미확인 쪽지
+			int unReadNotes = messageService.hi_unread_note(SENDID);
+			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			
 			mav.setView(new RedirectView(("send.hi")));
 			for(int i = 0; i < arrIdx.length; i++) {
 				if(result[i] == -1) {
@@ -228,7 +237,8 @@ public class MessageControl {
 					str = str.substring(0, str.length() - 1);
 					
 					loger.debug("String str  -> " + str);
-					mav.addObject("blackIds", str);						
+					mav.addObject("blackIds", str);				
+					mav.addObject("UNREADNOTES", unReadNotes);
 					mav.setViewName("/message/writeForm");
 					
 					loger.debug("BLACKIDS(str)  -> " + str);
@@ -265,12 +275,17 @@ public class MessageControl {
 				blackIds.append(arrIdx[0]);
 			}	
 			
+			// 미확인 쪽지
+			int unReadNotes = messageService.hi_unread_note(SENDID);
+			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			
 			if(result[0] == 1) {
 				mav.setView(new RedirectView(("send.hi")));
 				
 			} else {
 				String str = blackIds.toString();				
-				mav.addObject("blackIds", str);					
+				mav.addObject("blackIds", str);				
+				mav.addObject("UNREADNOTES", unReadNotes);
 				mav.setViewName("/message/writeForm");
 				
 				loger.debug("BLACKIDS(str)  -> " + str);

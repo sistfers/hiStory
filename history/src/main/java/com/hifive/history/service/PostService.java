@@ -17,25 +17,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hifive.history.model.PostDto;
 import com.hifive.history.model.iDto;
-import com.hifive.history.repository.BoxDao;
+import com.hifive.history.repository.IBox;
 import com.hifive.history.repository.PostDao;
 import com.hifive.history.util.CommonUtils;
 import com.hifive.history.util.FileUtils;
 
 @Service
-public class PostService implements iService {
+public class PostService implements IPostService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private PostDao postDao;
 	
 	@Autowired
-	private BoxDao boxDao;
+	private IBox boxDao;
 	
 	@Resource(name="fileUtils")
     private FileUtils fileUtils;
@@ -47,6 +48,7 @@ public class PostService implements iService {
 	}
 	
 	@SuppressWarnings("resource")
+	@Override
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
 		FILE_URL = request.getSession().getServletContext().getRealPath("/")+"resources\\uploadImages\\";
 		String originalFileExtension = null;
@@ -89,6 +91,8 @@ public class PostService implements iService {
 		return postDao.hi_insert(dto);
 	}
 	
+	@Transactional
+	@Override
 	public int hi_insertMap(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		int flag = postDao.hi_insertMap(map);
 		
@@ -104,12 +108,12 @@ public class PostService implements iService {
 	@Override
 	public int hi_update(iDto dto) {
 		logger.debug("PostService.dto.toString() = "+dto.toString());
-		int flag = postDao.hi_update(dto);
-		PostDto pDto = (PostDto)dto;
 		
-		return flag;
+		return postDao.hi_update(dto);
 	}
 	
+	@Transactional
+	@Override
 	public int hi_updateBoardnFile(Map<String, Object> map, HttpServletRequest request) throws Exception{
 		int flag = postDao.hi_updateBoardnFile(map);
 		
@@ -157,37 +161,40 @@ public class PostService implements iService {
 		logger.debug("PostService.condition.toString() = "+condition.toString());
 		return postDao.hi_selectList(condition);
 	}
-	
+	@Override
 	public List<Map<String, Object>> hi_bloggerRankList() {
 		return postDao.hi_bloggerRankList();
 	}
+	@Override
 	public List<HashMap<String, Object>> hi_selectCommentRank(String id){
 		return postDao.hi_selectCommentRank(id);
 	}
+	@Override
 	public List<HashMap<String, Object>> hi_selectTodayCommentRank(HashMap<String, String> map){
 		return postDao.hi_selectTodayCommentRank(map);
 	}
+	@Override
 	public List<HashMap<String, Object>> hi_selectLoveRank(HashMap<String, String> map) throws Exception{
 		return postDao.hi_selectLoveRank(map);
 	}
-	
+	@Override
 	public List<Map<String, Object>> hi_selectFollowerList(Map<String, Object> condition) throws Exception {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectFollowerList(condition);
 	}
-	
+	@Override
 	public List<Map<String, Object>> hi_selectThemeList(Map<String, Object> condition) throws Exception {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectThemeList(condition);
 	}
-	
+	@Override
 	public List<Map<String, Object>> hi_selectSearchList(Map<String, Object> condition) throws Exception {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectSearchList(condition);
 	}
 	
-	
-	
+	@Transactional
+	@Override
 	public int hi_insertList(List<Map<String, Object>> boxList) throws SQLException{
 		int flagCnt = 0;
 		for(Map<String, Object> map:boxList){
@@ -196,10 +203,11 @@ public class PostService implements iService {
 		}
 		return flagCnt;
 	}
-	
+	@Override
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
 	      return postDao.getLovePost(dto);
 	}
+	@Override
 	public List<Map<String, Object>> getHashTag()throws SQLException{
 		return postDao.getHashTag();
 	}

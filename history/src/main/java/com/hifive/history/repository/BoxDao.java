@@ -12,50 +12,19 @@ import org.springframework.stereotype.Repository;
 import com.hifive.history.model.iDto;
 
 @Repository
-public class BoxDao implements iDao {
+public class BoxDao implements IBox {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final String namespace="com.hifive.history.repository.mappers.boxCode";
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
-
-	@Override
-	public int hi_insert(iDto dto) {
-		String statement = namespace +".hi_insert";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.insert(statement,dto);
-	}
 	
+	@Override
 	public int hi_insertMap(Map<String, Object> map) {
 		String statement = namespace +".hi_insertMap";
 	
 		return sqlSession.insert(statement,map);
-	}
-
-	@Override
-	public int hi_update(iDto dto) {
-		String statement = namespace +".hi_update";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.update(statement,dto);
-	}
-
-	@Override
-	public iDto hi_detail(iDto dto) {
-		String statement = namespace +".hi_detail";
-		logger.debug("statement"+statement);
-		logger.debug("dto.toString() = "+dto.toString());
-		return sqlSession.selectOne(statement,dto);
-	}
-
-	@Override
-	public int hi_delete(int cnt) {
-		String statement = namespace +".hi_delete";
-		logger.debug("statement"+statement);
-		logger.debug("cnt = "+cnt);
-		return sqlSession.update(statement,cnt);
 	}
 
 	@Override
@@ -66,17 +35,20 @@ public class BoxDao implements iDao {
 		return sqlSession.selectList(statement,dto);
 	}
 	
+	@Override
 	public Map<String, Object> hi_selectFileInfo(Map<String, Object> map) throws Exception{
 		String statement = namespace +".hi_selectFileInfo";
 		
 		return sqlSession.selectOne(statement, map);
 	}
 
+	@Override
 	public void hi_deleteFileList(Map<String, Object> map) throws Exception{
 		String statement = namespace +".hi_deleteFileList";
 		sqlSession.update(statement, map);
 	}
-	 
+	
+	@Override
 	public void hi_updateFile(Map<String, Object> map) throws Exception{
 		String statement = namespace +".hi_updateFile";
 		sqlSession.update(statement, map);

@@ -41,8 +41,8 @@ import com.hifive.history.service.CategoryService;
 import com.hifive.history.service.CodeDService;
 import com.hifive.history.service.CommentService;
 import com.hifive.history.service.FollowService;
+import com.hifive.history.service.IPostService;
 import com.hifive.history.service.LoveService;
-import com.hifive.history.service.PostService;
 import com.hifive.history.service.UserService;
 import com.hifive.history.service.VisitService;
 
@@ -53,7 +53,7 @@ public class BlogControl {
 	private CategoryService categoryService;
 
 	@Autowired
-	private PostService postSvc;
+	private IPostService postSvc;
 
 	@Autowired
 	private CodeDService codeDSvc;

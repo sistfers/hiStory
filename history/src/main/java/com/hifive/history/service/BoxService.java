@@ -15,24 +15,29 @@ public class BoxService implements iService {
 	@Autowired
 	private BoxDao boxDao;
 
+
 	@Override
 	public int hi_insert(iDto dto) {
-		return boxDao.hi_insert(dto);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int hi_update(iDto dto) {
-		return boxDao.hi_update(dto);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public iDto hi_detail(iDto dto) {
-		return boxDao.hi_detail(dto);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public int hi_delete(int cnt) {
-		return boxDao.hi_delete(cnt);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override

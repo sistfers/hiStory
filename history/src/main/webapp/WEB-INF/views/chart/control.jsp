@@ -8,11 +8,12 @@
 <html>
 <head>
 <%
+	//현재 카테고리 리스트 받아오기
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
+	//비로그인시 블로그관리 접근 권한이 없긴하지만 한번 더 막아주기.
 	if(session.getAttribute("user")!=null){
 		UserDto user = (UserDto)session.getAttribute("user");
 	}
-	
 	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">

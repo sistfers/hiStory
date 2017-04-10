@@ -162,7 +162,7 @@ public class BlogControl {
 		postDto.setSeq(seq);
 		postDto.setCt_seq(ct_seq);
 		Map<String, Object> visitorMap = new HashMap<String, Object>(); 
-		visitorMap.put("visit_id", userDto.getId() == null || userDto.getId().equals("") ? "" : userDto.getId());
+		visitorMap.put("visit_id", userDto == null ? "" : userDto.getId());
 		visitorMap.put("blogger_id", ID);
 		postDto.setVisit_id(Integer.parseInt((String)postSvc.hi_isFollower(visitorMap).get("VISIT_ID")));
 		logger.debug("여기에요여기여기에요여기여기에요여기ㅍ여기에요여기여기에요여기여기에요여기여기에요여기ㅍ"+postDto.toString());
@@ -188,9 +188,12 @@ public class BlogControl {
 			// 아래 5개 목록 리스트 보여주기
 			Map<String, Object> condition = new HashMap<String, Object>();
 			String PAGE_NUM = request.getParameter("PAGE_NUM")==null||request.getParameter("PAGE_NUM").equals("")?"1":request.getParameter("PAGE_NUM");         //페이지NUM
+			
+			
 			condition.put("ID", ID);
 			condition.put("PAGE_NUM", PAGE_NUM);
 			condition.put("ct_seq", ct_seq);
+			condition.put("visit_id", Integer.parseInt((String)postSvc.hi_isFollower(visitorMap).get("VISIT_ID")));
 		
 			List<Map<String, Object>> lists = postSvc.hi_selectList(condition);
 			logger.debug("BlogControl.lists.toString() = "+lists.toString());

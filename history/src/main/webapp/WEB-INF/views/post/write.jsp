@@ -65,7 +65,7 @@
 		
 <!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="content" rows="500"></textarea>
+		<textarea name="content" id="content" rows="500"></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
 				height : '400px',
@@ -262,6 +262,11 @@ $("#save").click(function(){
        $("#TITLE").focus();
        return false;
    }
+/*    if(!$("#content").val()){
+       alert('내용을 입력해주세요.');
+       $("#content").focus();
+       return false;
+   } */
    frm.submit();
 });
 

@@ -8,7 +8,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <%
 	List<Map<String, Object>> lovepostList = new ArrayList<>();
 	lovepostList = (List<Map<String, Object>>)request.getAttribute("lovepostList");
@@ -17,9 +19,9 @@
 %>
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>:::::::::::이웃보기:::::::::::::::</title>
 <style type="text/css">
 .mydiv{
@@ -54,9 +56,9 @@ border-radius: 15px;
 	        <div class="col-xs-1"></div>
 	        <div class="col-xs-10">
 		        <!-- 포스트-->
-		        <div class="col-xs-12" style="background-color: #f2f7ff; margin-top:20px; padding-top: 20px; margin-bottom: 20px">
+		        <div class="col-xs-12" style="background-color: #ffffff; margin-top:20px; padding-top: 20px; margin-bottom: 20px">
 		 			<p style="font-size: 25px; margin-top: 20px">내가 공감한 글</p>
-					<table class="table" style="margin-top: 20px" id="neighbor">
+					<table class="table table-hover" style="margin-top: 20px" id="neighbor">
 					<tr class="warning">
 						<th>No</th>
 						<th>ID</th>
@@ -67,7 +69,7 @@ border-radius: 15px;
 						if(lovepostList!=null && lovepostList.size()!=0){
 							for(int i = 0; i < lovepostList.size(); ++i){
 					%>
-						<tr class="active">
+						<tr class="default">
 							<td><%=i+1 %></td>
 							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>">
 							<%=lovepostList.get(i).get("POSTID")+" "%></a>
@@ -80,8 +82,8 @@ border-radius: 15px;
 					<%
 							}
 					%>
-						<tr>
-							<td colspan="4" style="text-align: center;">
+						</table>
+						<center>
 							<ul class="pagination pagination-sm">
 							 <li class="disabled"><a href="#">&laquo;</a></li>
 							<%
@@ -108,19 +110,18 @@ border-radius: 15px;
 								%>
 							<li><a href="#">&raquo;</a></li>
 							</ul>
-							</td>
-						</tr>
+						</center>
 					<%
 						}else{
 					%>
 						<tr class="active">
 						<td colspan="4" style="text-align: center;">회원님이 공감하신 글이 없습니다.</td> 
 						</tr>
-						
+						</table>
 					<%
 						}
 					%>
-					</table>
+					
 				</div>
 				
 	  		</div>

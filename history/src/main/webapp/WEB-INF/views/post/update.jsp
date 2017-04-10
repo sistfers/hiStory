@@ -54,15 +54,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title> 포스트수정 </title>
 
 	<!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 	
 	<!-- ckeditor -->
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
 	<script src="/resources/js/common.js"></script>
 </head>
 <body>
@@ -106,9 +110,6 @@
 			}); 
 		</script>
 		</div>
-		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
-		        <input type="hidden" name="fileCnt" id="fileCnt" value='<%=postDto.getFileList().size()%>'>
-		        <input type="hidden" name="IDX" value='<%=postDto.getFileList().get(0).get("POST_SEQ")%>'>
 <!-- 첨부파일 -->
 				<div class="col-xs-12" style="word-wrap : break-word;" >
 					<table class="board_view">
@@ -120,22 +121,29 @@
        				</colgroup>
 				        <tr>
 		                <th scope="row">첨부파일</th>
-		                <td id="fileTr">			
+		                <td id="fileTr" colspan="3">
+						<input type="hidden" name="IDX" value='<%=postDto.getSeq()%>'>
 <%
-						for(Map<String, Object> map : postDto.getFileList()){
+						if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { 
 %>
-							<p>
-	                        <input type="hidden" name='IDX_<%=map.get("SEQ") %>' id="IDX" value='<%=map.get("SEQ")%>'>
-	                        <a href="#" id='name_<%=map.get("SEQ")%>' name='name_<%=map.get("SEQ")%>'>
-	                        <%=map.get("ORI_NAME")%></a>
-	                        file_<%=map.get("SEQ")%>
-	                        <input type="file" id='file_<%=map.get("SEQ")%>' name='file_<%=map.get("SEQ")%>'>
-	                        (<%=map.get("FILE_SIZE")%>kb)
-	                        <a href="#" class="btn" id='delete_<%=map.get("SEQ")%>' name='delete_<%=map.get("SEQ")%>'>삭제</a>
-	                        </p>
+				        <input type="hidden" name="fileCnt" id="fileCnt" value='<%=postDto.getFileList().size()%>'>
 <%
+							for(Map<String, Object> map : postDto.getFileList()){
+%>
+								<p>
+		                        <input type="hidden" name='IDX_<%=map.get("SEQ") %>' id="IDX" value='<%=map.get("SEQ")%>'>
+		                        <a href="#" id='name_<%=map.get("SEQ")%>' name='name_<%=map.get("SEQ")%>'>
+		                        <%=map.get("ORI_NAME")%></a>
+		                        file_<%=map.get("SEQ")%>
+		                        <input type="file" id='file_<%=map.get("SEQ")%>' name='file_<%=map.get("SEQ")%>'>
+		                        (<%=map.get("FILE_SIZE")%>kb)
+		                        <a href="#" class="btn" id='delete_<%=map.get("SEQ")%>' name='delete_<%=map.get("SEQ")%>'>삭제</a>
+		                        </p>
+<%
+							}
 						}
 %>
+
 		                </td>
 		            	</tr>
 		            	<tr>
@@ -146,7 +154,6 @@
 		            	</tr>
 	            	</table>
             	</div>
-		        <% } %>
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="FIELD" name="field">

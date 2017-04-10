@@ -28,6 +28,7 @@
 	BlogDto blogdto = (BlogDto)request.getAttribute("blogdto");
 %>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>

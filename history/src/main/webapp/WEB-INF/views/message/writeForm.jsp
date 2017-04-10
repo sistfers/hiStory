@@ -11,6 +11,8 @@ String TAKEID = "";
 HttpSession sesson = null;
 UserDto dto 	   = null;
 String blackIds    = null;
+
+int unReadNotes    = 0;
 	
 if(session.getAttribute("user") != null) {
 	sesson = request.getSession(false);
@@ -25,6 +27,9 @@ if(session.getAttribute("user") != null) {
 		out.println("<script>alert('쪽지 전달을 실패하였습니다. " + blackIds + " 아이디가 존재하지 않습니다. 쪽지 수신자 아이디를 확인해 주세요.');</script>");
 	}
 	
+	if(request.getAttribute("UNREADNOTES") != null) {
+		unReadNotes = (Integer) request.getAttribute("UNREADNOTES");
+	}	
 } else {
 	response.sendRedirect("../main/login");
 }
@@ -36,9 +41,12 @@ if(session.getAttribute("user") != null) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>쪽지함</title>
 	<!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet"	type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -48,6 +56,67 @@ $(document).ready(function () {
 	    if (sendCheck()) {
 	        $("#textNote").submit();
 	    }
+	});
+	
+	$("#TAKE_ID").on('keyup',function(e){
+		if(e.which == 32) {
+			// alert('스페이스바');
+			
+			var alreadyinputIds = $("#TAKE_ID").val();
+			alreadyinputIds = alreadyinputIds.trim();
+			
+			if(alreadyinputIds.length == 0) {
+				$("#TAKE_ID").val("");
+			} else {
+				$("#TAKE_ID").val(alreadyinputIds +",");
+			}
+		}
+	});
+	
+	$("#TAKE_ID").blur(function() {
+		// alert('벗어남');
+		
+		var alreadyinputIds = '';
+		var outputIds 		= '';
+		alreadyinputIds = $("#TAKE_ID").val();
+		
+		/*
+		 *  input  : ,,<, sung ,123,,,hi,,성우
+		 *  output : sung,123,hi
+		 * 
+		 *  1. 유효하지 않는 , 삭제 
+		 *  2. 앞뒤 공백 제거(이건 입력하는 부분에서 할까)
+		 *  3. , 를 제외한 모든 특수문자 삭제
+		 *  4. 한글 제거
+		 */
+ 
+		if(alreadyinputIds.length == 0) {	
+			 
+		} else {
+			var idArr = alreadyinputIds.split(',');
+			 
+			for(var i = 0; i < idArr.length; i++) {
+				// alert(idArr[i]);
+				 
+				if(idArr[i].length == 0) {
+					continue;
+				} else {
+					var stringRegx = /[`~!@\#$%<>{}^&*\()\-=+_;:?\’|ㄱ-ㅎ|가-힣]/gi; 
+					// var special =  /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+					
+					if(stringRegx.test(idArr[i])) {
+						continue;
+					}
+					 
+					outputIds = outputIds + idArr[i] + ",";
+				}
+			}
+		}
+		
+		outputIds = outputIds.substring(0,outputIds.lastIndexOf(","));
+		
+		// alert(outputIds)
+		$("#TAKE_ID").val(outputIds);
 	});
 });
 	
@@ -162,23 +231,26 @@ $(document).ready(function() {
         return html;
     }
 
-	function in_follow(followId) {
-		var alreadyinputIds = '';
-		alreadyinputIds = $("#TAKE_ID").val();
-		
-		
+function in_follow(followId) {
+	var alreadyinputIds = '';
+	alreadyinputIds = $("#TAKE_ID").val();
+	
+	if(alreadyinputIds.length == 0) {	
+		followId = followId;	
+	} else {
 		// 검사
-		var index = alreadyinputIds.indexOf(followId);		
+		var index = alreadyinputIds.indexOf(followId);	
 		
-		if(index != -1) {			
-			followId = alreadyinputIds;
+		if(index == -1) {
+			followId = alreadyinputIds + ',' + followId
 		} else {
-			followId = alreadyinputIds + ',' + followId;
+			followId = alreadyinputIds;
 		}
-		
-		$("#TAKE_ID").val(followId);
-        $("#myModal").modal('toggle');
-    }
+	}
+	
+	$("#TAKE_ID").val(followId);
+       $("#myModal").modal('toggle');
+}
 </script>
 
 <style type="text/css">
@@ -209,11 +281,13 @@ $(document).ready(function() {
 
 		<!-- 좌측메뉴 -->
 		<div class="col-xs-2">
-			<jsp:include page="menu.jsp" />
+		<jsp:include page="menu.jsp" flush="false">
+			<jsp:param name="unReadNotes" value="<%=unReadNotes%>" />
+		</jsp:include>
 		</div>
 
 		<!--내용 START -->
-		<div class="col-xs-10" style="min-height: 600px">
+		<div class="col-xs-10" style="min-height: 700px">
 			<center>
 				<h2>:: 쪽지쓰기 ::</h2>
 			</center>

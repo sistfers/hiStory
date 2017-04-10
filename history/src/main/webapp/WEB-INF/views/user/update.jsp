@@ -8,11 +8,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>회원정보수정</title>
 	<!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 	<script type="text/javascript">
         var emailCheck = true;
         var passwordCheck = true;
@@ -277,7 +280,7 @@
 			<div class="form-group" id="divProfileImg">
 				<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 				<div class="col-lg-10">
-					<img src="<%=user_pf_img%>" width="130" name="previewimg" id="previewimg" alt="">
+					<img src="<%=user_pf_img%>" width="130" name="previewimg" id="previewimg" alt="" onerror="src='/resources/image/noimg.png'">
 					<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg', '<%=user_pf_img%>')"   style="display:none;">
 					<input type="button" value="사진찾기"  class="btn btn-default" id="upload_btn">
 				</div>

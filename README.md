@@ -154,47 +154,7 @@ Spring Web MVC 개발 전반에 걸쳐 주요 기술을 숙달하는 것을 목�
 
 
 ## Plan
-
-|일|월|화|수|목|금|토|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|2017-03-12|[2017-03-13][01]|[2017-03-14][02]|[2017-03-15][03]|[2017-03-16][04]|[2017-03-17][05]|2017-03-18|
-|-|팀 선정|주제 선정|기능 선정|DB 테이블 설계|기획 발표 및 추가 기능 선정|-|
-|2017-03-19|[2017-03-20][06]|[2017-03-21][07]|[2017-03-22][08]|[2017-03-23][09]|[2017-03-24][10]|2017-03-25|
-|-|ERD 체크 및 화면구성|쿼리 작성|쿼리 작성|쿼리 작성|class diagram 설계|-|
-|2017-03-26|[2017-03-27][11]|[2017-03-28][12]|[2017-03-29][13]|[2017-03-30][14]|[2017-03-31][15]|2017-04-01|
-|-|기능 구현|기능 구현|기능 구현|기능 구현|기능 구현|-|
-|2017-04-02|[2017-04-03][16]|[2017-04-04][17]|[2017-04-05][18]|[2017-04-06][19]|[2017-04-07][20]|2017-04-08|
-|-|기능 구현|기능 구현|기능 구현|기능 구현|기능 구현|-|
-|2017-04-09|[2017-04-10][21]|[2017-04-11][22]|[2017-04-12][23]|[2017-04-13][24]|[2017-04-14][25]|2017-04-15|
-|-|디버그|디버그|디버그|발표준비|발표|-|
-
 ![Plan](http://sistfers.github.io/hiStory/docs/plan/plan.png)
-
-[01]: http://sistfers.github.io/hiStory/2017/03/13/planning.html "2017-03-13 기획"
-[02]: http://sistfers.github.io/hiStory/2017/03/14/analysis.html "2017-03-14 분석"
-[03]: http://sistfers.github.io/hiStory/2017/03/15/analysis.html "2017-03-15 분석"
-[04]: http://sistfers.github.io/hiStory/2017/03/16/design.html "2017-03-16 설계"
-[05]: http://sistfers.github.io/hiStory/2017/03/17/design.html "2017-03-17 설계"
-[06]: http://sistfers.github.io/hiStory/2017/03/20/design.html "2017-03-20 설계"
-[07]: http://sistfers.github.io/hiStory/2017/03/21/design.html "2017-03-21 설계"
-[08]: http://sistfers.github.io/hiStory/2017/03/22/design.html "2017-03-22 설계"
-[09]: http://sistfers.github.io/hiStory/2017/03/23/design.html "2017-03-23 설계"
-[10]: http://sistfers.github.io/hiStory/2017/03/24/design.html "2017-03-24 설계"
-[11]: http://sistfers.github.io/hiStory/2017/03/27/design.html "2017-03-27 설계"
-[12]: http://sistfers.github.io/hiStory/2017/03/28/implementation.html "2017-03-28 구현"
-[13]: http://sistfers.github.io/hiStory/2017/03/29/implementation.html "2017-03-29 구현"
-[14]: http://sistfers.github.io/hiStory/2017/03/30/implementation.html "2017-03-30 구현"
-[15]: http://sistfers.github.io/hiStory/2017/03/31/implementation.html "2017-03-31 구현"
-[16]: http://sistfers.github.io/hiStory/2017/04/03/implementation.html "2017-04-03 구현"
-[17]: http://sistfers.github.io/hiStory/2017/04/04/implementation.html "2017-04-04 구현"
-[18]: http://sistfers.github.io/hiStory/2017/04/05/implementation.html "2017-04-05 구현"
-[19]: http://sistfers.github.io/hiStory/2017/04/06/implementation.html "2017-04-06 구현"
-[20]: http://sistfers.github.io/hiStory/2017/04/07/implementation.html "2017-04-07 구현"
-[21]: http://sistfers.github.io/hiStory/2017/04/10/test.html "2017-04-10 시험"
-[22]: http://sistfers.github.io/hiStory/2017/04/11/test.html "2017-04-11 시험"
-[23]: http://sistfers.github.io/hiStory/2017/04/12/test.html "2017-04-12 시험"
-[24]: http://sistfers.github.io/hiStory/2017/04/13/test.html "2017-04-13 시험"
-[25]: http://sistfers.github.io/hiStory/2017/04/14/presentation.html "2017-04-14 발표"
 
 
 

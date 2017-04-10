@@ -43,6 +43,24 @@
 </sql>
 
 
+<sql id="visitCondition">
+		<choose>
+			<when test="visit_id == 0 ">	<!-- 방문자 비로그인 상태일때-->
+				WHERE STATE = '0'
+			</when>
+			<when test="visit_id == 1 "> <!-- 로그인 상태에 자신일때-->
+				WHERE NOT STATE = '2' 
+			</when>
+			<when test="visit_id == 2 "> <!-- 로그인 상태이며 이웃일때 -->
+				WHERE STATE IN (0, 3) 
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+</sql>
+
+
+
 <!-- 결과 리턴을 MAP으로 할때 스타일 지정해주기 -->  
 <resultMap id = "PostMap" type="java.util.HashMap">
    <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
@@ -116,6 +134,38 @@
 	<result javaType="int" column="TOT_CNT" property="TOT_CNT" />
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
+
+<select id="hi_isFollower" parameterType="hashmap" resultType="hashmap">
+	SELECT ROWNUM, CASE
+        WHEN
+        #{visit_id, jdbcType=VARCHAR} IN ( 
+              SELECT followtable.YOU_ID as ID
+            FROM (
+                   SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
+                   FROM FOLLOW_H
+                   WHERE MY_ID = #{blogger_id, jdbcType=VARCHAR}
+                   GROUP BY MY_ID, YOU_ID
+                 )followtable
+          WHERE MOD(followtable.cnt, 2) = 1
+          )
+        THEN
+        (
+        '2'
+          )
+        WHEN
+        #{visit_id, jdbcType=VARCHAR} = #{blogger_id, jdbcType=VARCHAR}
+        THEN
+        (
+        '1'
+        )
+        ELSE
+        (
+        '0'
+        )
+        END AS VISIT_ID
+		FROM POST_H
+  		WHERE ROWNUM =1
+</select>
 <!--포스트쓰기  -->
 <insert id="hi_insertMap"  parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
 	 <selectKey keyProperty="IDX" resultType="string" order="BEFORE">
@@ -179,10 +229,10 @@
 	WHERE SEQ = 
 	(SELECT MAX(SEQ) MAXSEQ
 	      FROM POST_H P
-	      WHERE NOT STATE = '2' 
-	      AND ID = #{id}
+	    <include refid="visitCondition"></include> 
+	      AND ID = #{id, jdbcType=VARCHAR}
 		<include refid="categoryCondition1"/>
-		)
+	)
 </select>
 
 
@@ -204,9 +254,11 @@
 	    WDATE,
 	    HASHTAG,
 	    STATE,
-	    CO_STATE
-	  FROM POST_H
-	  WHERE NOT STATE = '2'
+	    CO_STATE,
+	    (SELECT count(*) FROM COMMENT_H
+	     WHERE POST_SEQ=A.SEQ) AS CO_CNT
+	  FROM POST_H A
+	  <include refid="visitCondition"></include> 
 	  AND ID = #{ID}       
 	      <include refid="categoryCondition"/> 
 	        order by SEQ DESC                               
@@ -214,7 +266,7 @@
 	    (                                                  
 	      SELECT COUNT(*) as TOT_CNT                              
 	      FROM POST_H  
-	      WHERE NOT STATE = '2'                      
+	      <include refid="visitCondition"></include>                  
 	      AND ID = #{ID}
 	      <include refid="categoryCondition"/>                        
 	    )T2                                                

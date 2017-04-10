@@ -8,7 +8,6 @@ import com.hifive.history.model.CategoryDto;
 import com.hifive.history.model.UserDto;
 import com.hifive.history.service.*;
 import com.hifive.history.util.EmailSenderUtil;
-import com.hifive.history.util.IssueAnTokenUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,10 +50,7 @@ public class UserControl {
 	CategoryService categoryService;
 	
 	@Autowired
-	EmailSenderUtil emailSenderUtil;
-	
-	@Autowired
-	IssueAnTokenUtil issueAnTokenUtil;
+	EmailSenderUtil emailSenderUtil;	
 
 	@RequestMapping(value = "user/join.hi", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) throws Exception {
@@ -87,21 +83,6 @@ public class UserControl {
 			mav.setViewName("redirect:/");
 
 			userService.hi_insert(userDto);
-
-//			// 인증 이메일 자체 확인 부분
-//			// 토큰 생성
-//			String token = issueAnTokenUtil.tokenMaker(userDto);
-//
-//			//  Table에 id와 토큰 저장
-//			int flag = userService.hi_throwToken(userDto, token);
-//
-//			if(flag == 1) {
-//				// 이메일 발송 -> /auth/welcome 페이지 이동
-//				mav = emailSenderUtil.eamilSender(userDto, token);
-//
-//			} else {
-//				// 예외 처리
-//			}
 
 			// 블로그 추가
 			BlogDto blogDto = new BlogDto();

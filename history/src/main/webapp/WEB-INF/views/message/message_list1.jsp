@@ -45,12 +45,15 @@ if(session.getAttribute("user") != null) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title> 받은쪽지함 </title>
     <!-- Bootstrap CSS -->
 	<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <!-- http://aramk.tistory.com/21 -->
 <script type="text/javascript">
 /* 내용 검색  */
@@ -61,11 +64,22 @@ $(document).ready(function() {
         
 		do_search_for_filtered('filtered.hi', 1, id, words);
 	});	
-	
-	$(".fuck").click(function(){
-		alert('클릭햇냐');
-	});
 });
+
+(function poll() {
+    setTimeout(function() {
+        $.ajax({
+        	type: "GET",      
+            url: "pooling.hi",
+            dataType: "json",
+            success: function(data) {
+                alert("polling");
+            },            
+            complete: poll,
+            timeout: 2000
+        });
+    }, 2000);
+})();
 
 function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 	var url 	= url_i;
@@ -286,6 +300,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+	checkRow = checkRow + ",1000";
 	alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){
@@ -363,7 +378,7 @@ function viewAll() {
 </div>
 
 <!--내용 START -->
-<div class="col-xs-10" style="min-height: 600px">
+<div class="col-xs-10" style="min-height: 700px">
 <center><h2> :: 받은쪽지함 ::</h2></center><br>
 	<div class="col-xs-1">
 	</div>
@@ -383,7 +398,7 @@ function viewAll() {
 			</div> --%>
 			
 			<!-- 입력창 -->
-			<div class="col-xs-5" align="left">
+			<div class="col-xs-7" align="left">
 				<div class="input-group"> 
 			 	<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
 				<input type="text" id="searchbox" class="form-control" placeholder="검색어를 입력하삼"/>
@@ -432,13 +447,13 @@ function viewAll() {
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
-					<td><a href='#' class="fuck"><%=subContents %></a></td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=bty'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
 			
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>
-					<td align="center">미확인</td>
+					<td align="center" ><b>미확인</b></td>
 				<%	
 				} else {
 				%>

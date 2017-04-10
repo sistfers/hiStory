@@ -99,16 +99,16 @@
 	
 	String ct_seq = request.getParameter("ct_seq");	
 	if(ct_seq == null) ct_seq = "0";
-	
+
 	// 공감갯수
 	int loveCount = 0;
 	List<Map<String, Object>> loveList = (List<Map<String, Object>>)request.getAttribute("loveCount");
-	
+
 	//System.out.println("loveList"+loveList.toString());
 	if(loveList != null && loveList.size() >0){
 		loveCount = Integer.parseInt(loveList.get(0).get("TOT_CNT")+"");
 	}
-	
+
 	//해당 포스트에 공감을 했는지 체크
 	LoveDto loveCheck = (LoveDto)request.getAttribute("loveCheck");
 	
@@ -220,38 +220,41 @@ function go_delete(){
 	        <div class="col-xs-10" style="background-color: #FCFCFC; margin-top:20px; margin-bottom: 20px; border-radius: 15px;min-height: 1200px">
 	        
 	        
-<!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->	
-		        
+<!-- 글 내용 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->
+		        <form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
+			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
+			        <input type="hidden" name="id" value="<%=id%>">
+		        </form>
+		        <form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
+			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
+			        <input type="hidden" name="id" value="<%=id%>">
+		        </form>
+		        <form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
+			        <input type="hidden" name="PAGE_NUM" value="">
+			        <input type="hidden" name="id" value="<%=id%>">
+			        <input type="hidden" name="ct_seq" value="<%=ct_seq%>">
+			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
+		        </form>
+		        <form name="commentForm" action="main.hi" method="get">						<!-- 댓글 누를때  -->
+			        <input type="hidden" name="PAGE_NUM" value="<%=page_num%>">
+			        <input type="hidden" name="CO_PAGE_NUM" value="">
+			        <input type="hidden" name="id" value="<%=id%>">
+			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
+		        </form>
 				<%
 				if(postDto.getSeq() == 0){	// 글 내용 없을때
-				%>	
+				%>
 					<div class="col-xs-12">
 							<br><br><br><br><br><br><br><br><br><br><br><br>
 							<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
 					</div>
-				<%}else{  %>
-	
-				<form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
-					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
-					<input type="hidden" name="id" value="<%=id%>">
-				</form> 
-				<form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
-					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
-					<input type="hidden" name="id" value="<%=id%>">  
-				</form> 
-				<form name="postForm" action="main.hi" method="get">						<!-- 페이지 열릴때, 페이지 새로고침할때  -->
-					<input type="hidden" name="PAGE_NUM" value="">  
-					<input type="hidden" name="id" value="<%=id%>">
-					<input type="hidden" name="ct_seq" value="<%=ct_seq%>">
-					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
-				</form> 
-				<form name="commentForm" action="main.hi" method="get">						<!-- 댓글 누를때  -->
-					<input type="hidden" name="PAGE_NUM" value="<%=page_num%>">
-					<input type="hidden" name="CO_PAGE_NUM" value="">
-					<input type="hidden" name="id" value="<%=id%>">
-					<input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
-				</form>
-
+		        <%}else if(postDto.getState().equals("1") && userDto == null ||
+				            postDto.getState().equals("1") && !userDto.getId().equals(postDto.getId())){ //비공개 글일때 %>
+			        <div class="col-xs-12">
+				        <br><br><br><br><br>
+				        <center><h3>해당 포스트는 비공개 포스트입니다.</h3></center>
+			        </div>
+		        <%}else{  %>
 
 		        <div class="col-xs-12" style="word-wrap:break-word;word-break:break-all;">
 		        <table width="100%" >
@@ -268,13 +271,12 @@ function go_delete(){
 		        <%
 		       	 	if (loveCheck != null) {
 		        %>
-		        	
-		        	<button class="btn btn-default btn-sm" style="color: red" id="postLove">♥ (<span id="postLoveCount"><%=loveCount %></span>) 공감취소</button> 
+		        	<button class="btn btn-default btn-sm" style="color: red" id="postLove">♥ (<span id="postLoveCount"><%=loveCount %></span>)공감취소</button>
 		        	<input type="hidden" id="loveState" value="loveDelete.hi">
 		        <%
 		       	 	}else{
 		        %>
-		       	 	<button class="btn btn-default btn-sm" style="color: red" id="postLove">♡ (<span id="postLoveCount"><%=loveCount %></span>) 공감</button>
+		       	 	<button class="btn btn-default btn-sm" style="color: red" id="postLove">♡ (<span id="postLoveCount"><%=loveCount %></span>)공감</button>
 		       	 	<input type="hidden" id="loveState" value="loveInsert.hi">
 		        <%} %>
 <!--글 수정/삭제 버튼  -->
@@ -300,35 +302,41 @@ function go_delete(){
 
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>
 				<!-- 첨부파일 -->
-				<div class="col-xs-12" style="word-wrap : break-word;" ><hr>
-						<div class="col-xs-3">
-		                <i class="icon-file"></i> 첨부파일
-		                </div>
-		                
-		                <div class="col-xs-9" style="font-size: 12px;text-align: left;">
+				<div class="col-xs-12" style="word-wrap : break-word;" >
+					<table class="board_view">
+						<colgroup>
+							<col width="25%"/>
+							<col width="35%"/>
+							<col width="10%"/>
+							<col width="30%"/>
+						</colgroup>
+				        <tr>
+		                <th scope="row">첨부파일</th>
+		                <td colspan="3">
 			                <form name="download" method="post">
 				                <%
 					                for(Map<String, Object> map : ((PostDto)postDto).getFileList()){
 				                %>
 				                <input type="hidden" name="IDX" id="IDX" value="<%=map.get("POST_SEQ")%>">
 				                <a href="#" name="file"><%=map.get("ORI_NAME")%></a>
-				                (<%=map.get("FILE_SIZE")%>kb)<br>
+				                (<%=map.get("FILE_SIZE")%>kb)
 
 				                <%
 					                }
 				                %>
 			                </form>
-					</div>
+		                </td>
+		            	</tr>
+	            	</table>
             	</div>
 		        <% } %>
 
-<!-- 해시태그 부분 -->
+				<!-- 해시태그 부분 -->
 				<div class="col-xs-12" style="margin-bottom: 10px" >
-				<hr>
-				<button type="button" class="btn btn-default btn-sm disabled">
-				 <span class="glyphicon glyphicon-tags"></span> 태그
-        		</button>&nbsp;&nbsp;&nbsp;&nbsp;
-        		
+					<hr>
+					<button type="button" class="btn btn-default btn-sm disabled">
+						<span class="glyphicon glyphicon-tags"></span> 태그
+	                </button>&nbsp;&nbsp;&nbsp;&nbsp;
         		<%
         			if (postDto.getHashtag() != null) {
         				String str[] = split(postDto.getHashtag());
@@ -492,6 +500,8 @@ function go_delete(){
 						</table>
 					</c:if>
 				</div>
+		        <%} //if end %>
+
 
 
 
@@ -517,7 +527,7 @@ function go_delete(){
 						<div style="word-wrap:break-word;word-break:break-all;">
 							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
 							<span style="color: #212121; font-weight: bold; font-size: 10px"> (<%=mapdatas.get("CO_CNT") %>)</span>
-							
+
 							<%
 							if(mapdatas.get("STATE").toString().equals("1")){	// 비밀글
 							%>
@@ -539,7 +549,6 @@ function go_delete(){
 					<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
 				</center>
 				</div>
-<%} //if end %>	
 
 	  		</div>
 	  		<div class="col-xs-1"></div>
@@ -603,23 +612,23 @@ $(function(){
 		var loveState = document.getElementById('loveState').value;
 		var postLoveCount = Number($('#postLoveCount').text());
 		console.log("postLoveCount = "+$('#postLoveCount').text());
-		
+
 		$.ajax({
 			type:"POST",
 			url:loveState,			// 컨트롤러에 보낼 이름
 			dataType:"html",
 			data:{
-				"seq" 	: <%=postDto.getSeq()%>,
+				"seq" 	: <%=postDto.getSeq()%>
 				
 			},
 			success:function(data){
 				console.log("data"+data);
 				var flag = $.parseJSON(data);
-				
-				if (flag.msg=="intrue") {	
+
+				if (flag.msg=="intrue") {
 					document.getElementById('postLove').innerHTML ="♥ (<span id=\"postLoveCount\">"+(postLoveCount+1)+"</span>) 공감취소";
 					document.getElementById('loveState').value = "loveDelete.hi";
-				}else if(flag.msg=="deltrue") {	
+				}else if(flag.msg=="deltrue") {
 					document.getElementById('postLove').innerHTML ="♡ (<span id=\"postLoveCount\">"+(postLoveCount-1)+"</span>) 공감";
 					document.getElementById('loveState').value = "loveInsert.hi";
 				}

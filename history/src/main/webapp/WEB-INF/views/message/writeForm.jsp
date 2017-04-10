@@ -58,6 +58,21 @@ $(document).ready(function () {
 	    }
 	});
 	
+	$("#TAKE_ID").on('keyup',function(e){
+		if(e.which == 32) {
+			// alert('스페이스바');
+			
+			var alreadyinputIds = $("#TAKE_ID").val();
+			alreadyinputIds = alreadyinputIds.trim();
+			
+			if(alreadyinputIds.length == 0) {
+				$("#TAKE_ID").val("");
+			} else {
+				$("#TAKE_ID").val(alreadyinputIds +",");
+			}
+		}
+	});
+	
 	$("#TAKE_ID").blur(function() {
 		// alert('벗어남');
 		
@@ -86,7 +101,9 @@ $(document).ready(function () {
 				if(idArr[i].length == 0) {
 					continue;
 				} else {
-					var stringRegx = /[~!@\#$%<>^&*\()\-=+_\’|ㄱ-ㅎ|가-힣]/gi; 
+					var stringRegx = /[`~!@\#$%<>{}^&*\()\-=+_;:?\’|ㄱ-ㅎ|가-힣]/gi; 
+					// var special =  /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+					
 					if(stringRegx.test(idArr[i])) {
 						continue;
 					}

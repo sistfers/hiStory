@@ -277,7 +277,7 @@
 			<div class="form-group" id="divProfileImg">
 				<label for="divProfileImg" class="col-lg-2 control-label" style="color: #A6A6A6">프로필사진</label>
 				<div class="col-lg-10">
-					<img src="<%=user_pf_img%>" width="130" name="previewimg" id="previewimg" alt="">
+					<img src="<%=user_pf_img%>" width="130" name="previewimg" id="previewimg" alt="" onerror="src='/resources/image/noimg.png'">
 					<input type="file" accept="image/*" id="fileInput" name="profileImg" onchange="loadname(this,'previewimg', '<%=user_pf_img%>')"   style="display:none;">
 					<input type="button" value="사진찾기"  class="btn btn-default" id="upload_btn">
 				</div>

@@ -476,7 +476,7 @@ function go_delete(){
 							<!-- 기본 댓글 입력창(맨아래) -->
 							<tr>
 								<td width="11%" align="left">
-									<img src="${sessionScope.user.pf_image}" width="40px" height="40px">
+									<img src="${sessionScope.user.pf_image}" width="40px" height="40px" onerror="src='/resources/image/noimg.png'">
 								</td>
 								<td width="69%">
 									<textarea rows="2" class="form-control" style="resize: none" id="commentParentText"></textarea>
@@ -514,6 +514,14 @@ function go_delete(){
 						<div style="word-wrap:break-word;word-break:break-all;">
 							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
 							<span style="color: #212121; font-weight: bold; font-size: 10px"> (<%=mapdatas.get("CO_CNT") %>)</span>
+							
+							<%
+							if(mapdatas.get("STATE").toString().equals("1")){	// 비밀글
+							%>
+							<span class="label label-default">비밀</span>
+							 <%}else if(mapdatas.get("STATE").toString().equals("3")){ %>
+							 <span class="label label-primary">이웃공개</span>
+							 <%} %>
 						</div></td>
 						<td><%=wdate %></td>
 					</tr>
@@ -842,7 +850,7 @@ $(function(){
             var commentEditor = '<tr id="commentEditor">'+
                                 '<td style="width:1%"><span class="glyphicon glyphicon-arrow-right"></span></td>'+
                                 '<td style="width:10%">'+
-                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px"></td>'+
+                                '<img src="${sessionScope.user.pf_image}" width="40px" height="40px" onerror="src=\'/resources/image/noimg.png\'"></td>'+
                                 '<td width="69%">'+
                                 '<textarea rows="2" class="form-control" style="resize: none" id="commentChildText"></textarea>'+
                                 '</td>'+

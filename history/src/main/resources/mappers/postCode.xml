@@ -204,8 +204,10 @@
 	    WDATE,
 	    HASHTAG,
 	    STATE,
-	    CO_STATE
-	  FROM POST_H
+	    CO_STATE,
+	    (SELECT count(*) FROM COMMENT_H
+	     WHERE POST_SEQ=A.SEQ) AS CO_CNT
+	  FROM POST_H A
 	  WHERE NOT STATE = '2'
 	  AND ID = #{ID}       
 	      <include refid="categoryCondition"/> 

@@ -19,7 +19,7 @@
 
 
 	<!-- 어노테이션에 기반한 트랜잭션 활성화 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	<!-- JDBC의 연결을 처리하는 기능을 가진 DataSource -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
@@ -46,14 +46,14 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- <bean id="forkAdvice" class="com.hifive.history.util.ForkAdvice" /> -->
+	<bean id="forkAdvice" class="com.hifive.history.util.ForkAdvice" />
 
-	<!-- <aop:config>
+	<aop:config>
 		<aop:aspect ref="forkAdvice">
 			<aop:around method="fork"
 				pointcut="execution(* org.springframework.mail.javamail.JavaMailSenderImpl.send(..))" />
 		</aop:aspect>
-	</aop:config> -->
+	</aop:config>
 
 	<!-- 메일보내기 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

@@ -43,6 +43,86 @@
 </sql>
 
 
+<sql id="VisitCondition">
+		<choose>
+			<when test="visit_id == 0 ">	<!-- 방문자 비로그인 상태일때-->
+				<include refid="type0"></include>
+			</when>
+			<when test="visit_id == 1 "> <!-- 로그인 상태에 자신일때-->
+				<include refid="type1"></include>
+			</when>
+			<when test="visit_id == 2 "> <!-- 로그인 상태이며 이웃일때 -->
+				<include refid="type2"></include>
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+</sql>
+
+<sql id="type0">
+	SELECT SEQ,
+	      CT_SEQ,
+	      ID,
+	      FIELD,
+	      TITLE,
+	      CONTENT,
+	      WDATE,
+	      HASHTAG,
+	      STATE,
+	      CO_STATE
+	FROM POST_H
+	WHERE SEQ = 
+	(SELECT MAX(SEQ) MAXSEQ
+	      FROM POST_H P
+	      WHERE STATE = '0' 
+	      AND ID = #{id, jdbcType=VARCHAR}
+		<include refid="categoryCondition1"/>
+		)
+</sql>
+
+<sql id="type1">
+	SELECT SEQ,
+	      CT_SEQ,
+	      ID,
+	      FIELD,
+	      TITLE,
+	      CONTENT,
+	      WDATE,
+	      HASHTAG,
+	      STATE,
+	      CO_STATE
+	FROM POST_H
+	WHERE SEQ = 
+	(SELECT MAX(SEQ) MAXSEQ
+	      FROM POST_H P
+	      WHERE NOT STATE = '2' 
+	      AND ID = #{id, jdbcType=VARCHAR}
+		<include refid="categoryCondition1"/>
+		)
+</sql>
+
+<sql id="type2">
+	SELECT SEQ,
+	      CT_SEQ,
+	      ID,
+	      FIELD,
+	      TITLE,
+	      CONTENT,
+	      WDATE,
+	      HASHTAG,
+	      STATE,
+	      CO_STATE
+	FROM POST_H
+	WHERE SEQ = 
+	(SELECT MAX(SEQ) MAXSEQ
+	      FROM POST_H P
+	      WHERE STATE IN (0, 3) 
+	      AND ID = #{id, jdbcType=VARCHAR}
+		<include refid="categoryCondition1"/>
+		)
+</sql>
+
+
 <!-- 결과 리턴을 MAP으로 할때 스타일 지정해주기 -->  
 <resultMap id = "PostMap" type="java.util.HashMap">
    <result javaType="java.lang.String" column="CONTENT" property="CONTENT" jdbcType="CLOB" />
@@ -116,6 +196,38 @@
 	<result javaType="int" column="TOT_CNT" property="TOT_CNT" />
 	<!-- result javaType="데이터타입" column="db컬럼명" property="맵에서 키값"/ -->
 </resultMap>
+
+<select id="hi_isFollower" parameterType="hashmap" resultType="hashmap">
+	SELECT ROWNUM, CASE
+        WHEN
+        #{visit_id, jdbcType=VARCHAR} IN ( 
+              SELECT followtable.YOU_ID as ID
+            FROM (
+                   SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
+                   FROM FOLLOW_H
+                   WHERE MY_ID = #{blogger_id, jdbcType=VARCHAR}
+                   GROUP BY MY_ID, YOU_ID
+                 )followtable
+          WHERE MOD(followtable.cnt, 2) = 1
+          )
+        THEN
+        (
+        '2'
+          )
+        WHEN
+        #{visit_id, jdbcType=VARCHAR} = #{blogger_id, jdbcType=VARCHAR}
+        THEN
+        (
+        '1'
+        )
+        ELSE
+        (
+        '0'
+        )
+        END AS VISIT_ID
+		FROM POST_H
+  		WHERE ROWNUM =1
+</select>
 <!--포스트쓰기  -->
 <insert id="hi_insertMap"  parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
 	 <selectKey keyProperty="IDX" resultType="string" order="BEFORE">
@@ -165,24 +277,7 @@
 
 <!--최신 포스트 1건 읽기  -->
 <select id="hi_detail" parameterType="com.hifive.history.model.PostDto" resultType="com.hifive.history.model.PostDto">
-	SELECT SEQ,
-	      CT_SEQ,
-	      ID,
-	      FIELD,
-	      TITLE,
-	      CONTENT,
-	      WDATE,
-	      HASHTAG,
-	      STATE,
-	      CO_STATE
-	FROM POST_H
-	WHERE SEQ = 
-	(SELECT MAX(SEQ) MAXSEQ
-	      FROM POST_H P
-	      WHERE NOT STATE = '2' 
-	      AND ID = #{id}
-		<include refid="categoryCondition1"/>
-		)
+	<include refid="VisitCondition"></include>
 </select>
 
 

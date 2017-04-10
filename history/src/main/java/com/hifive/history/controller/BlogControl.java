@@ -161,6 +161,12 @@ public class BlogControl {
 		
 		postDto.setSeq(seq);
 		postDto.setCt_seq(ct_seq);
+		Map<String, Object> visitorMap = new HashMap<String, Object>(); 
+		visitorMap.put("visit_id", userDto.getId() == null || userDto.getId().equals("") ? "" : userDto.getId());
+		visitorMap.put("blogger_id", ID);
+		postDto.setVisit_id(Integer.parseInt((String)postSvc.hi_isFollower(visitorMap).get("VISIT_ID")));
+		logger.debug("여기에요여기여기에요여기여기에요여기ㅍ여기에요여기여기에요여기여기에요여기여기에요여기ㅍ"+postDto.toString());
+		
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 
 		mav.addObject("DTO"   ,DTO);		

@@ -37,6 +37,12 @@ public class PostDao implements iDao {
 	
 		return sqlSession.insert(statement,map);
 	}
+	
+	public Map<String, Object> hi_isFollower(Map<String, Object> map){
+		String statement = namespace +".hi_isFollower";
+		
+		return sqlSession.selectOne(statement, map);
+	}
 
 	@Override
 	public int hi_update(iDto dto) {

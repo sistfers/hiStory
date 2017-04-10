@@ -32,4 +32,5 @@ public interface IPostService {
 	public int hi_insertList(List<Map<String, Object>> boxList) throws SQLException;
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException;
 	public List<Map<String, Object>> getHashTag()throws SQLException;
+	public Map<String, Object> hi_isFollower(Map<String, Object> map);
 }

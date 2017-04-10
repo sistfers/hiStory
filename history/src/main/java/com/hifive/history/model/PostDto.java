@@ -18,6 +18,7 @@ public class PostDto implements iDto, Serializable {
 	private	String	state;
 	private String	co_state;
 	private List<Map<String,Object>> fileList;
+	private int visit_id;
 
 	public PostDto() {
 	}
@@ -35,8 +36,14 @@ public class PostDto implements iDto, Serializable {
 		this.state = state;
 		this.co_state = co_state;
 	}
-	
-	
+
+	public int getVisit_id() {
+		return visit_id;
+	}
+
+	public void setVisit_id(int visit_id) {
+		this.visit_id = visit_id;
+	}
 
 	public List<Map<String, Object>> getFileList() {
 		return fileList;
@@ -130,6 +137,7 @@ public class PostDto implements iDto, Serializable {
 	public String toString() {
 		return "PostDto [seq=" + seq + ", ct_seq=" + ct_seq + ", id=" + id + ", field=" + field + ", title=" + title
 				+ ", content=" + content + ", wdate=" + wdate + ", hashtag=" + hashtag + ", state=" + state
+				+ ", visit_id=" + visit_id
 				+ ", co_state=" + co_state + "]";
 	}
 	

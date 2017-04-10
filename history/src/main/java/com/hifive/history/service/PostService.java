@@ -211,4 +211,8 @@ public class PostService implements IPostService {
 	public List<Map<String, Object>> getHashTag()throws SQLException{
 		return postDao.getHashTag();
 	}
+	
+	public Map<String, Object> hi_isFollower(Map<String, Object> map){
+		return postDao.hi_isFollower(map);
+	}
 }

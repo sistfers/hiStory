@@ -91,8 +91,8 @@ border-radius: 15px;
 			        <table class="table" style="margin-top: 10px">
 			        	<tr class="info">
 							<th>순위</th>
-							<th>글제목</th>
 							<th>분야</th>
+							<th>글제목</th>
 							<th>공감수</th>
 							<th>작성일</th>
 			        	</tr>
@@ -102,8 +102,8 @@ border-radius: 15px;
 			    		%>	
 			    		       		<tr class="active">
 			    		       		<td><%=i+1 %>위</td>
-			    		       		<td><%=loveRank.get(i).get("TITLE") %></td>
 			    		       		<td><%=loveRank.get(i).get("FIELD") %></td>
+			    		       		<td><%=loveRank.get(i).get("TITLE") %></td>
 			    		       		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
 			    		       		<td><%=loveRank.get(i).get("WDATE") %></td>
 			    		       		</tr>

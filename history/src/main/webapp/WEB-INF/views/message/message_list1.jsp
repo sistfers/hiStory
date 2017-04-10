@@ -61,10 +61,6 @@ $(document).ready(function() {
         
 		do_search_for_filtered('filtered.hi', 1, id, words);
 	});	
-	
-	$(".fuck").click(function(){
-		alert('클릭햇냐');
-	});
 });
 
 function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
@@ -432,7 +428,7 @@ function viewAll() {
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
 					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
-					<td><a href='#' class="fuck"><%=subContents %></a></td>
+					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=bty'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
 			
 				<% 

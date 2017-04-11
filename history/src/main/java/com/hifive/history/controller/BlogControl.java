@@ -396,8 +396,9 @@ public class BlogControl {
 		
 		// 선택 글 내용 보여주기
 		PostDto postDto = new PostDto();
-		postDto.setId(ID);
+		postDto.setId(ID);	
 		postDto.setSeq(seq);
+		postDto.setVisit_id(1);	// state 2(삭제) 빼고 다가져오는 조건
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 		
 

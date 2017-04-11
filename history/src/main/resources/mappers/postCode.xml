@@ -422,10 +422,16 @@ FROM
     (SELECT COUNT(*) TOT_CNT
     FROM POST_H B1
     WHERE EXISTS
-      (SELECT 1 
-      FROM FOLLOW_H B2 
-      WHERE B1.ID = B2.YOU_ID 
-      AND B2.MY_ID=#{ID}
+      (SELECT 1
+          FROM
+          (
+            SELECT YOU_ID, COUNT(*) CNT
+            FROM FOLLOW_H
+            WHERE MY_ID=#{ID}
+            GROUP BY YOU_ID
+          )A
+          WHERE B1.ID = A.YOU_ID
+          AND MOD(A.CNT,2)=1
       )
     AND STATE IN (0,3)
     )T4

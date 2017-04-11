@@ -291,10 +291,12 @@ $(document).ready(function () {
          items: [
             //데이터 받아오기
             <%
-            for(int i=0; i<searchRank.size(); ++i){
-            %>
-                {text: '<%=searchRank.get(i).get("SEARCH_WORD") %>', count: '<%=searchRank.get(i).get("CNT") %>'},
-            <%
+            if(searchRank != null){
+	            for(int i=0; i<searchRank.size(); ++i){
+	            %>
+	                {text: '<%=searchRank.get(i).get("SEARCH_WORD") %>', count: '<%=searchRank.get(i).get("CNT") %>'},
+	            <%
+	            }
             }
             %>
          ],
@@ -519,7 +521,7 @@ $(document).ready(function () {
 		
 		<table class="table table-hover" id="followTable">
 			<tbody>
-		<% if(followList.size() != 0) {
+		<% if(followList != null && followList.size() != 0) {
 			for(int i=0; i<followList.size(); ++i) { %>
 				<tr name="follow_detail" style="cursor:pointer;">
 					<td id="<%=followList.get(i).get("ID")%>" width="15%">
@@ -788,6 +790,9 @@ function do_search_page(url, page_num) {
 <!-- BEST 블로거 START -->
 <br><br>
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
+<%
+	if(bloggerRank != null){
+%>
 <div class="col-xs-12">
             <div style="background-color: #FCF8F7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
                 <h3 style="text-align: center;" class="text-danger"><i class="icon-thumbs-up"></i> BEST 블로거 </h3>
@@ -813,6 +818,9 @@ function do_search_page(url, page_num) {
 			}
 %>
 </div>
+<%
+	}
+%>
 </div>
 </div>
 </div>

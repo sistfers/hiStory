@@ -101,12 +101,14 @@ if(session.getAttribute("user") != null) {
 						if(bt_yn.equals("bty")) {
 					%>
 							<button type="submit" class="btn btn-danger col-lg-3 col-md-offset-3">답장</button>
+							<button type="button" onclick="historyBack()" class="btn btn-default col-lg-3 col-md-offset-1">뒤로가기</button>
 					<%							
 						} else {
-						
+					%>
+							<button type="button" onclick="historyBack()" class="btn btn-default col-lg-3 col-md-offset-5">뒤로가기</button>
+					<%		
 						}
-					%>						
-						<button type="button" onclick="historyBack()" class="btn btn-default col-lg-3 col-md-offset-1">Cancel</button>
+					%>		
 					</div>
 				</form>
 			</div>

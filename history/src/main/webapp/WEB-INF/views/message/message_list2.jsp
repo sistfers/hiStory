@@ -88,6 +88,10 @@ function deleteAction(){
 	    //"${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url;
 	}
 }
+
+function gotoBlog(id) {
+	location.href='/post/main.hi?id='+id;
+}
 </script>	
 </head>
 <body>
@@ -153,7 +157,8 @@ function deleteAction(){
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
-					<td><%=item.get("NAME") %>  <span style="font-size: 11px; color :#670000 ">(<%=item.get("TAKE_ID") %>)</span></td>
+					<%-- <td><%=item.get("NAME") %>  <span style="font-size: 11px; color :#670000 ">(<%=item.get("TAKE_ID") %>)</span></td> --%>
+<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<a href="javascript:void(0);" onclick="gotoBlog('<%=item.get("TAKE_ID") %>');"><%=item.get("TAKE_ID") %></a>)</span></td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=btn'><%=subContents %></a></td>
 					
 					

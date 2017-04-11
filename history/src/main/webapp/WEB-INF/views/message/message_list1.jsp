@@ -285,7 +285,6 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-	checkRow = checkRow + ",1000";
 	alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){
@@ -313,7 +312,7 @@ function replyAction() {
 			
 		} else {
 			// checkRow = checkRow + $(this).closest('td').next().html()+",";
-			checkRow = checkRow + $(this).closest('td').next().find('span:first').html()+",";
+			checkRow = checkRow + $(this).closest('td').next().find('a:first').html()+",";
 		}
 	});
 	
@@ -324,7 +323,10 @@ function replyAction() {
 	
 		  변경 후
 	<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>
-	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> --%>
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td> 
+	
+	<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<a href="javascript:void(0);" onclick="gotoBlog('<%=item.get("SEND_ID") %>');"><%=item.get("SEND_ID") %></a>)</span></td>
+	--%>
 	
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); 
 	alert('답장 대상 ' +checkRow);
@@ -342,6 +344,10 @@ function replyAction() {
 
 function viewAll() {
 	location.href='receive.hi';
+}
+
+function gotoBlog(id) {
+	location.href='/post/main.hi?id='+id;
 }
 
 
@@ -431,10 +437,9 @@ function viewAll() {
 			%>
 				<tr>
 					<td align="center"><input type="checkbox" name="checkRow" value="<%=item.get("SEQ") %>"></td>					
-					<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<%=item.get("SEND_ID") %>)</span> </td>
+<td><%=item.get("NAME") %> <span style="font-size: 11px; color :#670000">(<a href="javascript:void(0);" onclick="gotoBlog('<%=item.get("SEND_ID") %>');"><%=item.get("SEND_ID") %></a>)</span></td>
 					<td><a href='read.hi?note=<%=item.get("SEQ") %>&show=bty'><%=subContents %></a></td>
 					<td align="center"><%=item.get("WDATE") %></td>
-			
 				<% 
 				if(item.get("STATE").equals("0")) {
 				%>

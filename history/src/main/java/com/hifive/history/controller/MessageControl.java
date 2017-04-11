@@ -132,10 +132,12 @@ public class MessageControl {
 			String ids = "";
 
 			for(int i = 0; i < values.length; i++) {
-				int lastIdx = values[i].indexOf(')');				
-				ids = ids + values[i].substring(1, lastIdx) + ",";
+//				int lastIdx = values[i].indexOf(')');				
+//				ids = ids + values[i].substring(1, lastIdx) + ",";
+				ids = ids + values[i] + ",";
 				
-				loger.debug("VALUES LIST	-> " + values[i].substring(0, lastIdx));
+//				loger.debug("VALUES LIST	-> " + values[i].substring(0, lastIdx));
+				loger.debug("VALUES LIST	-> " + values[i]);
 				loger.debug("IDS LIST	-> " + ids);
 			}
 			
@@ -325,41 +327,43 @@ public class MessageControl {
 		
 		HttpSession session = res.getSession(true); 	
 		if(session.getAttribute("user") != null) {
-		MessageDto dto = new MessageDto();
-		dto.setSeq(seq);
-		dto.setSend_id("");
-		dto.setTake_id("");
-		dto.setContents("");
-		dto.setWdate("");
-		dto.setRdate("");
-		dto.setState("");
-		dto.setName("");
-		dto.setSend_view("");
-		dto.setTake_view("");
+			MessageDto dto = new MessageDto();
+			dto.setSeq(seq);
+			dto.setSend_id("");
+			dto.setTake_id("");
+			dto.setContents("");
+			dto.setWdate("");
+			dto.setRdate("");
+			dto.setState("");
+			dto.setName("");
+			dto.setSend_view("");
+			dto.setTake_view("");
 		
-		MessageDto note = new MessageDto();
-		note = (MessageDto) messageService.hi_detail(dto);
-		loger.debug("NOTE	-> ", note);
+			MessageDto note = new MessageDto();
+			note = (MessageDto) messageService.hi_detail(dto);
+			loger.debug("NOTE	-> ", note);
 		
-		if(note.getState().equals("0")) {
-			messageService.hi_detail_state(note.getSeq(), bt_yn);
+			if(note.getState().equals("0")) {
+				messageService.hi_detail_state(note.getSeq(), bt_yn);
+				
+			} else {
+				
+			}	
 			
-		} else {
+			UserDto user = (UserDto) session.getAttribute("user");
+		
+			// 미확인 쪽지
+			int unReadNotes = messageService.hi_unread_note(user.getId());
+			loger.debug("UNREADNOTES	-> " + unReadNotes);
 			
-		}		
-		
-		// 미확인 쪽지
-		int unReadNotes = messageService.hi_unread_note(note.getTake_id());
-		loger.debug("UNREADNOTES	-> " + unReadNotes);
-		
-		mav.setViewName("/message/read");
-		mav.addObject("NOTE", note);	
-		mav.addObject("BT_YN", bt_yn);
-		mav.addObject("UNREADNOTES", unReadNotes);
-		
-		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
-		loger.debug("----------------------------------------------------------");
+			mav.setViewName("/message/read");
+			mav.addObject("NOTE", note);	
+			mav.addObject("BT_YN", bt_yn);
+			mav.addObject("UNREADNOTES", unReadNotes);
+			
+			
+			loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
+			loger.debug("----------------------------------------------------------");
 		
 		} else {
 			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");

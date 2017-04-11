@@ -15,6 +15,8 @@
 	String ct_seq = request.getParameter("ct_seq");	
 	if(ct_seq == null) ct_seq = "0";
 	
+	String state = request.getParameter("state");
+	
 	List<CategoryDto> categoryList = (List<CategoryDto>)request.getAttribute("categoryList");
 
 	// 로그인 유저
@@ -125,7 +127,7 @@
 <%
 	if(loginuser != null){
 		if(id.equals(loginuser.getId())){ %>
-			<a href="write.hi?id=<%=id %>&ct_seq=<%=ct_seq %>" class="btn btn-default btn-md">
+			<a href="write.hi?id=<%=id %>&ct_seq=<%=ct_seq %>&state=<%=state %>" class="btn btn-default btn-md">
 			    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
 			</a>
 		<% } else if(follow){ %>
@@ -152,7 +154,7 @@
   <%
   	for(int i = 0 ; i < categoryList.size(); ++i){
   %>
-    <a class="list-group-item <%if(ct_seq.equals(categoryList.get(i).getSeq()+"")) out.println("active");%>" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>" >
+    <a class="list-group-item <%if(ct_seq.equals(categoryList.get(i).getSeq()+"")) out.println("active");%>" href="main.hi?ct_seq=<%=categoryList.get(i).getSeq() %>&id=<%=id%>&state=<%=categoryList.get(i).getState() %>" >
 	    <span class="badge"><%=cateCount.get(i).get("TOTAL") %></span>		<!-- 카테고리별 글 갯수  -->
 	    <%=categoryList.get(i).getName() %>
     </a>

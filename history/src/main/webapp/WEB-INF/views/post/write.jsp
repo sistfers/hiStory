@@ -18,6 +18,8 @@
 	String id = request.getParameter("id");
 	String ct_seq = request.getParameter("ct_seq");	
 	if(ct_seq == null) ct_seq = "0";
+	
+	String state = request.getParameter("state");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -122,9 +124,13 @@
 	    	<label for="field"> 공개범위</label>
 			<select class="form-control" id="STATE" name="state">
 			       <%if(postViewCode.size() != 0){
-			       		for(int i=0; i<postViewCode.size(); ++i){%>
-			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>
-			       <%	}
+			    	   if(state.equals("1")){%>
+			    	  	 <option value="1">비공개</option>
+			    		<%}else{
+			       			for(int i=0; i<postViewCode.size(); ++i){ %>
+			       				<option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>	
+			       <%	} // for end
+			    		} // if end
 			       	 } else{ %>
 			       <option>오류:::</option>
 			       <%} %>

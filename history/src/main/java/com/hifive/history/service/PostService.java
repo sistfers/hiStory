@@ -215,4 +215,10 @@ public class PostService implements IPostService {
 	public Map<String, Object> hi_isFollower(Map<String, Object> map){
 		return postDao.hi_isFollower(map);
 	}
+	
+	public int hi_updatePostState(Map<String, String> data) {
+		return postDao.hi_updatePostState(data);
+	}
+	
+	
 }

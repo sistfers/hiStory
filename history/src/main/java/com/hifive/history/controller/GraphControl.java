@@ -386,15 +386,37 @@ public class GraphControl {
 			Map<String, String> map = new HashMap<>();
 			map.put("cateseq", cateseq);
 			map.put("catename", catename);
-			map.put("catestate", catestate);
+			map.put("catestate", catestate);	
+			
+			
 			if(request.getParameter("btn").equals("mod")){
 				categoryService.updateCategory(map);
+				
+				HashMap<String, String> data = new HashMap<String, String>();
+				data.put("UserId", user.getId());
+				data.put("cateseq", cateseq);
+				data.put("catename", catename);
+				data.put("catestate", catestate);
+				
+				postService.hi_updatePostState(data);				
+				
+				
 			}else if(request.getParameter("btn").equals("del")){
 				categoryService.hi_delete(Integer.parseInt(cateseq));
+				
+				HashMap<String, String> data = new HashMap<String, String>();
+				data.put("UserId", user.getId());
+				data.put("cateseq", cateseq);
+				data.put("catename", catename);
+				data.put("catestate", catestate);
+				
+				postService.hi_updatePostState(data);		
+				
 			}else{
 				
 			}
-		}
+		}		
+		
 		
 		//카테고리 불러오기(전체)
 		Map<String, String> dto = new HashMap<>();

@@ -339,7 +339,6 @@ $("#save").click(function(){
 	
 	tag_post();
 	
-	//var frm = document.postForm;
 	
    if(!$("#TITLE").val()){
        alert('제목을 입력해주세요.');
@@ -347,17 +346,18 @@ $("#save").click(function(){
        return false;
    }
    
-   if(!$("#CONTENT").val()){
-       alert('내용을 입력해주세요.');
-       $("#CONTENT").focus();
-       return false;
+   var ckeditor = CKEDITOR.instances['content']; //객체가져오기
+   
+   if (ckeditor.getData()=="") {//null값은 안옴 = 빈문자열
+        alert("글 내용을 입력하세요");
+        ckeditor.focus();
+        return false;
    }
    
    var comSubmit = new ComSubmit("postForm");
 	comSubmit.setUrl("update.hi");
 	comSubmit.submit();
    
-   //frm.submit();
 });
 
 /* 취소버튼 */

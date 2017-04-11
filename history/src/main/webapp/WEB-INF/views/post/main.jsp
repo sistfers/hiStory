@@ -506,16 +506,18 @@ function go_delete(){
 
 
 				<!--글 목록 보여주기 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
-				<div class="col-xs-12">
+				
+
+					<%
+						if (totalPostList != null) {
+					%>
+					<div class="col-xs-12">
 					<table class="table table-hover tbList">
 					<tr class="warning">
 						<th width="80%" >제목 <span style="font-size: 10px">(댓글갯수)</span></th>
 						<th width="20%">작성일</th>
 					</tr>
-
 					<%
-						if (totalPostList != null) {
-					
 							for (int i = 0; i < totalPostList.size(); i++) {
 					
 								HashMap<String, Object> mapdatas = (HashMap<String, Object>) (totalPostList.get(i));
@@ -539,17 +541,18 @@ function go_delete(){
 						<td><%=wdate %></td>
 					</tr>
 					
-					<%} //FOR END
-					} // IF END%>					
+					<%} //FOR END%>
 					</table>
 					
-				<center>
-					<!-- Paging Area Start -->
-					<%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
-					<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
-				</center>
-				</div>
-
+					<center>
+						<!-- Paging Area Start -->
+						<%=PagingUtil.renderPaging(intTotalCount, page_num, 5, 5, "main.hi", "do_search_page")%>
+						<!-- Paging Area end //--> 					<!--밑에 페이지 갯수 몇개씩 보여줄건지   -->	
+					</center>
+					</div>
+					
+					<%} // IF END%>					
+					
 	  		</div>
 	  		<div class="col-xs-1"></div>
   		</div>

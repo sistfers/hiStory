@@ -138,12 +138,12 @@
 <select id="hi_isFollower" parameterType="hashmap" resultType="hashmap">
 	SELECT ROWNUM, CASE
         WHEN
-        #{visit_id, jdbcType=VARCHAR} IN ( 
+        #{blogger_id, jdbcType=VARCHAR} IN ( 
               SELECT followtable.YOU_ID as ID
             FROM (
                    SELECT count(MY_ID) as cnt, MY_ID, YOU_ID
                    FROM FOLLOW_H
-                   WHERE MY_ID = #{blogger_id, jdbcType=VARCHAR}
+                   WHERE MY_ID = #{visit_id, jdbcType=VARCHAR}
                    GROUP BY MY_ID, YOU_ID
                  )followtable
           WHERE MOD(followtable.cnt, 2) = 1

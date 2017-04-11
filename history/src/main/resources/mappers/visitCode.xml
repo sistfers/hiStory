@@ -73,7 +73,8 @@
     (SELECT count(*) men10											
        FROM (SELECT *											
               FROM VISIT_H											
-              WHERE BIRTH BETWEEN to_char(add_months(sysdate,-240)-1,'yyyy-mm-dd') AND to_char(sysdate,'yyyy-mm-dd'))											
+              WHERE BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-240)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH > TO_DATE(TO_CHAR(sysdate,'yyyy-mm-dd'),'YYYY-MM-DD')
+              )											
        WHERE V_ID = #{id}											
              AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
              AND SEX = '0'											
@@ -83,7 +84,8 @@
       SELECT count(*) women10											
         FROM (SELECT *											
               FROM VISIT_H											
-              WHERE BIRTH BETWEEN to_char(add_months(sysdate,-240)-1,'yyyy-mm-dd') AND to_char(sysdate,'yyyy-mm-dd'))											
+              WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-240)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(sysdate,'yyyy-mm-dd'),'YYYY-MM-DD')
+              )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '1'											
@@ -93,7 +95,8 @@
       SELECT count(*) men20											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-360)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-240),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-360)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-240),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '0'											
@@ -103,7 +106,8 @@
       SELECT count(*) women20											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-360)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-240),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-360)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-240),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '1'											
@@ -113,7 +117,8 @@
       SELECT count(*) men30											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-480)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-360),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-480)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-360),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '0'											
@@ -123,7 +128,8 @@
       SELECT count(*) women30											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-480)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-360),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-480)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-360),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '1'											
@@ -133,7 +139,8 @@
       SELECT count(*) men40											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-600)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-480),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-600)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-480),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')										
             AND SEX = '0'											
@@ -143,7 +150,8 @@
       SELECT count(*) women40											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-600)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-480),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-600)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-480),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')										
             AND SEX = '1'											
@@ -153,7 +161,8 @@
       SELECT count(*) men50											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-720)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-600),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-720)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-600),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '0'											
@@ -163,7 +172,8 @@
       SELECT count(*) women50											
       FROM (SELECT *											
             FROM VISIT_H											
-            WHERE BIRTH BETWEEN to_char(add_months(sysdate,-720)-1,'yyyy-mm-dd') AND to_char(add_months(sysdate,-600),'yyyy-mm-dd'))											
+            WHERE BIRTH > TO_DATE(TO_CHAR(add_months(sysdate,-720)-1,'yyyy-mm-dd'),'YYYY-MM-DD') AND BIRTH < TO_DATE(TO_CHAR(add_months(sysdate,-600),'yyyy-mm-dd'),'YYYY-MM-DD')
+            )											
       WHERE V_ID = #{id}											
             AND VDATE >= TO_DATE(#{startday}, 'YYYY-MM-DD') AND VDATE < TO_DATE(#{endday}, 'YYYY-MM-DD')											
             AND SEX = '1'											

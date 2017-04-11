@@ -10,7 +10,7 @@ String TAKEID = "";
 
 HttpSession sesson = null;
 UserDto dto 	   = null;
-String blackIds    = null;
+String blackIds    = null; 
 
 int unReadNotes    = 0;
 	

@@ -12,4 +12,4 @@ String unReadNotes = (String) request.getParameter("unReadNotes");
   받은쪽지확인 <span style="font-weight: bold;font-size: 12px;color: red">(<%=unReadNotes %>)</span> </a>
   <a class="list-group-item <%if(request.getRequestURL().toString().contains("/WEB-INF/views/message/message_list2.jsp")) out.println("active");%>" href="send.hi">보낸쪽지확인 </a>
 </div>
-
+ 

@@ -8,7 +8,7 @@
 MessageDto data = new MessageDto();
 String bt_yn 	= "";
 
-int unReadNotes = 0;
+int unReadNotes = 0; 
 
 if(session.getAttribute("user") != null) {
 	if(request.getAttribute("NOTE") != null) {

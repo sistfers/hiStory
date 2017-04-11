@@ -11,7 +11,7 @@
 
 List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
 int page_num 		= 1;
-int unReadNotes 	= 0;
+int unReadNotes 	= 0; 
 int intTotalCount	= 0;
 
 if(session.getAttribute("user") != null) {

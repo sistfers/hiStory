@@ -117,7 +117,7 @@ public class MessageControl {
 			int unReadNotes = messageService.hi_unread_note(dto.getId());
 			loger.debug("UNREADNOTES	-> " + unReadNotes);
 			
-		/*
+		/* 
 		 * 사용자로부터 답장(1개 이상) 요청
 		 * jsp	: message_list1.jsp 
 		 * js	: replyAction()

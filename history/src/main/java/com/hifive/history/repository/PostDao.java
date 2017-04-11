@@ -139,4 +139,27 @@ public class PostDao implements iDao {
 		return sqlSession.selectList(statement);
 	}
 	
+	public int hi_updatePostState(Map<String, String> data) {
+		
+		
+		String statement = namespace +".hi_updatePostState";
+		logger.debug("statement"+statement);
+		logger.debug("data.toString() = "+data.toString());
+		logger.debug("===================================");
+		logger.debug("===================================");
+		logger.debug("===================================");
+//		data.put("UserId", user.getId());
+//		data.put("cateseq", cateseq);
+//		data.put("catename", catename);
+//		data.put("catestate", catestate);		
+		logger.debug("===================================");
+		logger.debug("===================================");
+		logger.debug("===================================");
+		logger.debug("===================================");
+		logger.debug("===================================");		
+		
+		
+		return sqlSession.update(statement,data);	
+	}
+	
 }

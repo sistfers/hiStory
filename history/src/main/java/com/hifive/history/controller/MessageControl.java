@@ -147,17 +147,17 @@ public class MessageControl {
 			mav.addObject("UNREADNOTES", unReadNotes);
 		
 		/*
-		 * 사용자로부터 쪽지 쓰기 요청(좌측 메뉴)
+		 * 사용자로부터 쪽지 쓰기 요청(좌측 메뉴, 헤더)
 		 */
 		} else {
-//			String TAKEID ="";
+			String TAKEID ="";
 //			String NAME	  ="";
 			
-//			TAKEID = res.getParameter("TAKEID");	
+			TAKEID = res.getParameter("TAKEID");	
 //			NAME   = res.getParameter("NAME");
 			
 			mav.setViewName("/message/writeForm");
-//			mav.addObject("TAKEID", TAKEID);
+			mav.addObject("TAKEID", TAKEID);
 //			mav.addObject("NAME", NAME);
 			mav.addObject("UNREADNOTES", unReadNotes);
 		}

@@ -25,10 +25,17 @@
 				    idCheck = false;
                     $("#idCheckSuccess").hide();
                     $("#idCheckFail").hide();
+					$("#idOnlyEngNum").hide();
                 },
 	            blur: function () {
                     var id = $("#id").val();
                     if (id != "") {
+                    	if (!validateID(id) || id.length < 4 || id.length > 12) {
+							$("#idOnlyEngNum").show();
+		                    idCheck = false;
+                    		return;
+	                    }
+
                         $.ajax({
                             type: "POST",
                             url: "/user/idCheck.hi",
@@ -221,6 +228,10 @@
 				incorrect += "incorrect file type";
 			}
 		}
+		function validateID(id) {
+			var re = /^[_A-Za-z0-9-]*$/ ;
+			return re.test(id);
+		}
 	</script>
 </head>
 <body>
@@ -253,8 +264,9 @@
 					<div class="col-lg-10">
 						<input type="text" class="form-control onlyHangul" id="id"
 							name="id" data-rule-required="true" placeholder="원하는ID를 입력하세요"
-							maxlength="20">
+							maxlength="20" style="ime-mode: disabled" onkeydown="nonHangulSpecialKey()">
 <!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: green" hidden="hidden" id="idCheckSuccess"> 사용하실 수 있는 ID입니다. </p>
+										<p style="color: red" hidden="hidden" id="idOnlyEngNum"> 4~12자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다. </p>
 <!--ajax로 갔다온후 결과 보여주기  -->	<p style="color: red" hidden="hidden" id="idCheckFail"> ID가 이미 존재합니다. 다른 ID를 선택하세요. </p>
 					</div>
 				</div>

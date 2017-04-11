@@ -16,10 +16,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Component("fileUtils")
 public class FileUtils {
 	private String filePath = "";
-    
+	final String resourcePath = "http://hi-history.com/resources/uploadImages/"; 
     public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+        
         
         filePath = request.getSession().getServletContext().getRealPath("/")+"resources\\uploadImages\\";
         
@@ -44,14 +45,14 @@ public class FileUtils {
                 originalFileName = multipartFile.getOriginalFilename();
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-                 
+                
                 file = new File(filePath + storedFileName);
                 multipartFile.transferTo(file);
                  
                 listMap = new HashMap<String,Object>();
                 listMap.put("BOARD_IDX", boardIdx);
                 listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-                listMap.put("STORED_FILE_NAME", filePath+storedFileName);
+                listMap.put("STORED_FILE_NAME", resourcePath+storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());
                 list.add(listMap);
             }
@@ -91,7 +92,7 @@ public class FileUtils {
                 listMap.put("IS_NEW", "Y");
                 listMap.put("BOARD_IDX", boardIdx);
                 listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-                listMap.put("STORED_FILE_NAME", filePath + storedFileName);
+                listMap.put("STORED_FILE_NAME", resourcePath + storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());
                 list.add(listMap);
             }

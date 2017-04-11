@@ -42,7 +42,7 @@ public class PostService implements IPostService {
     private FileUtils fileUtils;
 	
 	static String FILE_URL = "";	//저장할 경로
-	static final String SAVE_URL = "../resources/uploadImages";	// 불러올 경로
+	static final String SAVE_URL = "http://hi-history.com/resources/uploadImages";	// 불러올 경로
 	
 	public PostService() {
 	}

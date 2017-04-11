@@ -174,7 +174,7 @@
 	<td id="<%=searchList.get(i).get("ID")%>" width="10%" align="center">
 	<div class="media">
 		<a href="#" class="pull-left">
-		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>'height="90px" onerror="src='/resources/image/noimg.png'">
+		<img src='<%=get_img(searchList.get(i).get("CONTENT")+"") %>'height="90px" width="100%" onerror="src='/resources/image/noimg.png'">
 		</a>
 	</div>
 	</td>

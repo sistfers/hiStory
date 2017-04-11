@@ -842,5 +842,32 @@ SELECT HASHTAG
 FROM POST_H
 WHERE TO_DATE(WDATE,'YYYY-MM-DD') = TO_DATE(SYSDATE,'YYYY-MM-DD')
 </select>
+
+
+
+
+<update id="hi_updatePostState" parameterType="hashmap">
+	UPDATE POST_H
+	<include refid="cateStCondition"></include> 
+	WHERE CT_SEQ  = #{cateseq, jdbcType=VARCHAR}
+</update>
+
+
+<sql id="cateStCondition">
+	<choose>
+		<when test="catestate == 0 ">	<!-- 공개-->
+			SET	STATE   = '0'
+		</when>
+		<when test="catestate == 1 "> <!-- 비공개-->
+			SET STATE   = '1'
+		</when>
+		<when test="catestate == 2 "> <!-- 삭제 -->
+			SET STATE   = '2'
+		</when>
+		<otherwise>
+		</otherwise>
+	</choose>
+</sql>
+
 </mapper>
 

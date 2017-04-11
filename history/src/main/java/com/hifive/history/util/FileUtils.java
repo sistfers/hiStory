@@ -22,7 +22,7 @@ public class FileUtils {
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
         
         
-        filePath = request.getSession().getServletContext().getRealPath("/")+"resources\\uploadImages\\";
+        filePath = request.getSession().getServletContext().getRealPath("/")+"resources/uploadImages/";
         
         MultipartFile multipartFile = null;
         String originalFileName = null;
@@ -64,7 +64,7 @@ public class FileUtils {
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
         
-        filePath = request.getSession().getServletContext().getRealPath("/")+"resources\\uploadImages\\";
+        filePath = request.getSession().getServletContext().getRealPath("/")+"resources/uploadImages/";
         
         MultipartFile multipartFile = null;
         String originalFileName = null;
@@ -99,7 +99,6 @@ public class FileUtils {
             else{
                 requestName = multipartFile.getName();
                 idx = "IDX_"+requestName.substring(requestName.indexOf("_")+1);
-                System.out.println("dfkjdskfjadsklfhadsklfjaslfkjaslkfahdskfkas fadshfkladsfadshfasdfadsㄻㅇㄴㄻㄴsfhadshfaskdgjasl"+idx);
                 if(map.containsKey(idx) == true && map.get(idx) != null){
                     listMap = new HashMap<String,Object>();
                     listMap.put("IS_NEW", "N");

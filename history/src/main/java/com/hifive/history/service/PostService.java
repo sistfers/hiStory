@@ -50,7 +50,7 @@ public class PostService implements IPostService {
 	@SuppressWarnings("resource")
 	@Override
 	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile file) throws Exception {
-		FILE_URL = request.getSession().getServletContext().getRealPath("/")+"resources\\uploadImages\\";
+		FILE_URL = request.getSession().getServletContext().getRealPath("/")+"resources/uploadImages/";
 		String originalFileExtension = null;
 		String storedFileName = null;
 		

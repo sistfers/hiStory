@@ -157,7 +157,7 @@
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
 			<select class="form-control" id="FIELD" name="field">
-			       <%if(themeCode.size() != 0){
+			       <%if(themeCode != null){
 			       		for(int i=0; i<themeCode.size(); ++i){%>
 			       <option value="<%=themeCode.get(i).get("CD_D_NM") %>" <%if((postDto.getField().equals(themeCode.get(i).get("CD_D_NM")))) { out.print("selected"); }%>>
 			       <%=themeCode.get(i).get("CD_D_NM") %></option>
@@ -170,7 +170,7 @@
 	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 댓글허용</label>
 			<select class="form-control" id="CO_STATE" name="co_state">
-			       <%if(reviewCode.size() != 0){
+			       <%if(reviewCode != null){
 			       		for(int i=0; i<reviewCode.size(); ++i){%>
 			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getCo_state() == reviewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
 			       <%=reviewCode.get(i).get("CD_D_NM") %></option>
@@ -183,7 +183,7 @@
 	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field"> 공개범위</label>
 			<select class="form-control" id="STATE" name="state">
-			       <%if(postViewCode.size() != 0){
+			       <%if(postViewCode != null){
 			       		for(int i=0; i<postViewCode.size(); ++i){%>
 			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getState() == postViewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
 			       <%=postViewCode.get(i).get("CD_D_NM") %></option>
@@ -205,7 +205,7 @@
 	<div id="after_tag" class="col-xs-12">
 
 				<%
-					if (postDto.getHashtag() != null) {
+					if (postDto != null && postDto.getHashtag() != null) {
 						String str[] = split(postDto.getHashtag());
 						for (int i = 0; i < str.length; ++i) {
 				%>

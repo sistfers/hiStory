@@ -52,7 +52,7 @@ public class FileUtils {
                 listMap = new HashMap<String,Object>();
                 listMap.put("BOARD_IDX", boardIdx);
                 listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-                listMap.put("STORED_FILE_NAME", resourcePath+storedFileName);
+                listMap.put("STORED_FILE_NAME", filePath+storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());
                 list.add(listMap);
             }
@@ -92,7 +92,7 @@ public class FileUtils {
                 listMap.put("IS_NEW", "Y");
                 listMap.put("BOARD_IDX", boardIdx);
                 listMap.put("ORIGINAL_FILE_NAME", originalFileName);
-                listMap.put("STORED_FILE_NAME", resourcePath + storedFileName);
+                listMap.put("STORED_FILE_NAME", filePath + storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());
                 list.add(listMap);
             }

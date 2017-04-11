@@ -229,7 +229,7 @@ public class BlogControl {
 		
 		ModelAndView mav = new ModelAndView();
 		Map<String, String> dto = new HashMap<String, String>();
-		dto.put("isAll", "false");
+		dto.put("isAll", "true");
 		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
 
 		Map<String, Object> codeMap = new HashMap<String, Object>();
@@ -365,7 +365,7 @@ public class BlogControl {
 		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 140 글 공개 여부
 		
 		Map<String, String> dto = new HashMap<String, String>();
-		dto.put("isAll", "false");
+		dto.put("isAll", "true");
 		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
 
 		Map<String, Object> codeMap = new HashMap<String, Object>();
@@ -382,7 +382,12 @@ public class BlogControl {
 			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
 			
 			if((Integer)(codeData.get("CD_ID")) == 130) reviewCode.add(codeData);
-			else if((Integer)(codeData.get("CD_ID")) == 140) postViewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 140){
+				if((Integer)(codeData.get("CD_D_ID")) != 2){
+					postViewCode.add(codeData);
+				}
+			}
+			
 			else if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
 		}
 		

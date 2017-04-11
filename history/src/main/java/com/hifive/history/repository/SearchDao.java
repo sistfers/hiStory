@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hifive.history.model.iDto;
-
+ 
 /**
  * Created by Admin on 2017-03-24.
  */

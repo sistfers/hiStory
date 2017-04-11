@@ -335,26 +335,33 @@ function go_delete(){
 		        <% } %>
 
 				<!-- 해시태그 부분 -->
-				<div class="col-xs-12" style="margin-bottom: 10px" >
+				<div class="col-xs-12" style="margin-bottom: 10px;">
 					<hr>
-					<button type="button" class="btn btn-default btn-sm disabled">
-						<span class="glyphicon glyphicon-tags"></span> 태그
-	                </button>
-	               
-        		<%
-        			if (postDto.getHashtag() != null) {
-        				String str[] = split(postDto.getHashtag());
-        				for(int i = 0; i < str.length; ++i){
-        		%>
-        					 <form name="search_hashtag" method="post" action="">
-        					<input type="hidden" name="search_word" value="<%=str[i]%>">
-        						<a href="#" name="hashtag"><%="#" + str[i] %></a>
-        					</form>
-        		<%
-        				}
-        			}
-        		%>
-        			
+					<table align="left">
+					<tr>
+					<td>
+						<button type="button" class="btn btn-default btn-sm disabled">
+							<span class="glyphicon glyphicon-tags"></span> 태그
+		                </button>
+	               </td>
+		        		<%
+		        			if (postDto.getHashtag() != null) {
+		        				String str[] = split(postDto.getHashtag());
+		        				for(int i = 0; i < str.length; ++i){
+		        		%>
+		        		<td nowrap="nowrap" style="padding-left: 10px">
+		        					<form name="search_hashtag" method="post" action="">
+		        					<input type="hidden" name="search_word" value="<%=str[i]%>">
+		        					<a href="#" name="hashtag"><%="#" + str[i] %></a>
+		        					</form>
+		        		</td>
+		        		<%
+		        				}
+		        			}
+		        		%>
+        		
+        		</tr>
+        			</table>
 				</div>
 				
 				<!-- 댓글 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->

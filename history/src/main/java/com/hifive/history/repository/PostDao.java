@@ -149,7 +149,7 @@ public class PostDao implements iDao {
 		logger.debug("===================================");
 		logger.debug("===================================");
 //		data.put("UserId", user.getId());
-//		data.put("cateseq", cateseq);
+//		data.put("cateseq", cateseq); 
 //		data.put("catename", catename);
 //		data.put("catestate", catestate);		
 		logger.debug("===================================");

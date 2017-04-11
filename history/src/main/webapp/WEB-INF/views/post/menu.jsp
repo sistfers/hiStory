@@ -117,7 +117,7 @@
 <img src="/resources/image/level<%=userDto.getGrade()%>.png" height="20px"> }</h5>
 
 <!-- 블로그 주인의 블로그소개를 넣습니다 -->
-<div style="word-wrap:break-word; word-break:break-all; font-size: 13px; color: #747474">
+<div style="word-wrap:break-word; word-break:break-all; font-size: 13px;">
 <%=userDto.getPf_content() %>
 </div>
 <br>

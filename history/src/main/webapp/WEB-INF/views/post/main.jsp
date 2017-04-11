@@ -188,8 +188,11 @@ function go_update(){
 
 /* 글 삭제 */ 
 function go_delete(){
+	
 	var frm = document.postDeleteForm;
-	frm.submit();
+	if (confirm("정말 삭제할꺼임???????") == true){  
+		frm.submit();
+	}
 }
 
 </script>
@@ -290,7 +293,7 @@ function go_delete(){
 		        
 <!-- 포스트 작성일 -->
 		        <tr>
-		        <td align="left"><h6>&nbsp;&nbsp;<%=postDto.getWdate() %></h6></td>
+		        <td align="left"><h6><%=postDto.getWdate() %></h6></td>
 		        <td></td>
 		        </tr>
 		        </table>
@@ -336,25 +339,35 @@ function go_delete(){
 					<hr>
 					<button type="button" class="btn btn-default btn-sm disabled">
 						<span class="glyphicon glyphicon-tags"></span> 태그
-	                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+	                </button>
+	               
         		<%
         			if (postDto.getHashtag() != null) {
         				String str[] = split(postDto.getHashtag());
         				for(int i = 0; i < str.length; ++i){
         		%>
-        					<form name="search_hashtag" method="post" action="">
+        					 <form name="search_hashtag" method="post" action="">
         					<input type="hidden" name="search_word" value="<%=str[i]%>">
-        					<a href="#" name="hashtag"><%="#" + str[i] %></a>
+        						<a href="#" name="hashtag"><%="#" + str[i] %></a>
         					</form>
         		<%
         				}
         			}
         		%>
+        			
 				</div>
 				
 				<!-- 댓글 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★-->
 				<div class="col-xs-12">
-					<h5>댓글</h5>
+				<%
+				if(postDto.getCo_state().equals("1")){
+				%>
+					<h5>댓글비허용</h5>
+					<br>
+					<hr>
+					</div>
+				<%}else{ %>
+					<h5>댓글허용</h5>
 
 					<!-- 댓글이 나올 테이블 -->
 					<table class="table table-condensed" id="commentTable">
@@ -502,7 +515,7 @@ function go_delete(){
 				</div>
 		        <%} //if end %>
 
-
+<%} %>
 
 
 				<!--글 목록 보여주기 ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
@@ -557,6 +570,7 @@ function go_delete(){
 	  		<div class="col-xs-1"></div>
   		</div>
 </div>
+
 
 <!--메인내용 END -->
 

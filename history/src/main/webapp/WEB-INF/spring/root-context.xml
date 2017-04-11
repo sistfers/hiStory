@@ -23,8 +23,8 @@
 	<!-- JDBC의 연결을 처리하는 기능을 가진 DataSource -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
-		p:url="jdbc:oracle:thin:@myoracledb.c5xvgnaaogg7.ap-northeast-2.rds.amazonaws.com:1521:ORCL"
-		p:username="sistsystem" p:password="sistsystem" p:maxActive="10"
+		p:url="jdbc:oracle:thin:@mydb.c5xvgnaaogg7.ap-northeast-2.rds.amazonaws.com:1521:ORCL"
+		p:username="systsystem" p:password="systsystem" p:maxActive="10"
 		p:maxIdle="5" p:maxWait="-1" />
 
 	<!-- SqlSessionFactoryBean 생성 -->

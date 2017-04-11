@@ -125,7 +125,7 @@
 <%
 	if(loginuser != null){
 		if(id.equals(loginuser.getId())){ %>
-			<a href="write.hi?id=<%=id %>" class="btn btn-default btn-md">
+			<a href="write.hi?id=<%=id %>&ct_seq=<%=ct_seq %>" class="btn btn-default btn-md">
 			    <span class="glyphicon glyphicon-pencil"></span> 포스트쓰기
 			</a>
 		<% } else if(follow){ %>

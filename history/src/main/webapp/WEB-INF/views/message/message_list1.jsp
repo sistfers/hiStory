@@ -66,21 +66,6 @@ $(document).ready(function() {
 	});	
 });
 
-(function poll() {
-    setTimeout(function() {
-        $.ajax({
-        	type: "GET",      
-            url: "pooling.hi",
-            dataType: "json",
-            success: function(data) {
-                alert("polling");
-            },            
-            complete: poll,
-            timeout: 2000
-        });
-    }, 2000);
-})();
-
 function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 	var url 	= url_i;
 	var words 	= words_i;

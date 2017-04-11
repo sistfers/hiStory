@@ -172,7 +172,7 @@
 			<select class="form-control" id="CO_STATE" name="co_state">
 			       <%if(reviewCode != null){
 			       		for(int i=0; i<reviewCode.size(); ++i){%>
-			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getCo_state() == reviewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
+			       <option value="<%=reviewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getCo_state().equals(reviewCode.get(i).get("CD_D_ID")+""))) { out.print("selected"); }%>>
 			       <%=reviewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>
@@ -185,7 +185,7 @@
 			<select class="form-control" id="STATE" name="state">
 			       <%if(postViewCode != null){
 			       		for(int i=0; i<postViewCode.size(); ++i){%>
-			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getState() == postViewCode.get(i).get("CD_D_ID"))) { out.print("selected"); }%>>
+			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getState().equals(postViewCode.get(i).get("CD_D_ID")+""))) { out.print("selected"); }%>>
 			       <%=postViewCode.get(i).get("CD_D_NM") %></option>
 			       <%	}
 			       	 } else{ %>

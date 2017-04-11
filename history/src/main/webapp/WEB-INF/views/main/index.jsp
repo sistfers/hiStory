@@ -805,7 +805,7 @@ function do_search_page(url, page_num) {
 			<div class="col-xs-3 text-center">
                 <center>
                 <a href="post/main.hi?id=<%=bloggerRank.get(i).get("ID")%>">
-                <img height="150px"  class="img-circle img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" onerror='src="/resources/image/noimg.png"'>
+                <img height="100px" width="100px"  class="img-circle img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" onerror='src="/resources/image/noimg.png"'>
                 </a>
                 </center>
                 

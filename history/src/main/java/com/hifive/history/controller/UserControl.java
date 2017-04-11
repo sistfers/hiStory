@@ -71,15 +71,15 @@ public class UserControl {
 			userDto.setArea(request.getParameter("area"));
 			userDto.setBirth(request.getParameter("birth"));
 			userDto.setSex(request.getParameter("sex"));
-			userDto.setPf_content(request.getParameter("profileCon"));
+			if (request.getParameter("profileCon").equals(""))
+				userDto.setPf_content("안녕하세요.");
+			else
+				userDto.setPf_content(request.getParameter("profileCon"));
 			if (imageFile.getOriginalFilename().equals(""))
 				userDto.setPf_image(defaultImage);
 			else
 				userDto.setPf_image(resourcePath + saveFile(imageFile, userDto.getId(), rootPath));
 
-			System.out.println("======================================================");
-			System.out.println("udto = " + userDto.toString());
-			System.out.println("rootPath = " + rootPath);
 			mav.setViewName("redirect:/");
 
 			userService.hi_insert(userDto);

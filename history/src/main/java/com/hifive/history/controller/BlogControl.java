@@ -246,7 +246,11 @@ public class BlogControl {
 			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
 			
 			if((Integer)(codeData.get("CD_ID")) == 130) reviewCode.add(codeData);
-			else if((Integer)(codeData.get("CD_ID")) == 140) postViewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 140) {
+				if((Integer)(codeData.get("CD_D_ID")) != 2){
+					postViewCode.add(codeData);
+				}
+			}
 			else if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
 		}
 		

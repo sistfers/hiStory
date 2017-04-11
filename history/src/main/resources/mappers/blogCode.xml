@@ -10,7 +10,7 @@
 	</update>
 
 	<insert id="hi_insert" parameterType="com.hifive.history.model.BlogDto">
-		INSERT INTO SISTSYSTEM.BLOG_H (ID, TITLE)
+		INSERT INTO BLOG_H (ID, TITLE)
 		  VALUES (#{id}, #{title})
 	</insert>
 	<select id="getMyBlog" parameterType="String" resultType="com.hifive.history.model.BlogDto">

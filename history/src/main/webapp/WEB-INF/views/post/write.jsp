@@ -16,6 +16,8 @@
 	postViewCode = (List<Map<String, Object>>)request.getAttribute("postViewCode");
 	
 	String id = request.getParameter("id");
+	String ct_seq = request.getParameter("ct_seq");	
+	if(ct_seq == null) ct_seq = "0";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,6 +33,7 @@
 	<!-- ckeditor -->
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 	
 </head>
@@ -50,7 +53,7 @@
 			<select class="form-control" id="category" name="ct_seq">
 			       <%if(categoryList.size() != 0){
 			       		for(int i=0; i<categoryList.size(); ++i){%>
-			       <option value="<%=categoryList.get(i).getSeq()%>">
+			       <option value="<%=categoryList.get(i).getSeq()%>" <%if((ct_seq.equals(categoryList.get(i).getSeq()+""))) { out.print("selected"); }%>>
 			       <%=categoryList.get(i).getName() %></option>
 			       
 			       <%	}

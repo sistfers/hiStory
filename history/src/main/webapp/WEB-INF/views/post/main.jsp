@@ -410,7 +410,7 @@ function go_delete(){
 							%>
 								<!-- 작성자/작성일 -->
 								<td width="69%" style="text-align: left;" name="contentsTd">
-									<a href="#"> <%=commentdata.get("NAME")%></a>
+									<a href="/post/main.hi?id=<%=commentdata.get("ID")%>"> <%=commentdata.get("NAME")%></a>
 									<%=commentdata.get("WDATE")%><br>
 									<!-- 댓글내용 -->
 									<span name="contentsSpan" style="word-wrap:break-word;word-break:break-all;"><%=commentdata.get("CONTENT")%></span>

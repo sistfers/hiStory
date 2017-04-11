@@ -43,7 +43,7 @@
 			<center>
 			<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN" />
 			<div class="clearfix"></div><br>	<!-- 줄 띄기  -->
-			<a href='/user/join.hi'>회원가입</a>
+			<a href='javascript:do_join()'>회원가입</a> <%--헤더에 있는 do_join() function 사용--%>
 			</center>
 		</form>
 

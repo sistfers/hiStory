@@ -34,7 +34,7 @@
 	}
 
 %>
-
+ 
 <%
 	String PAGE_NUM = "1"; //페이지NUM
 	String PAGE_SIZE = "5"; //페이지SIZE

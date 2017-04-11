@@ -102,7 +102,7 @@
 		
 <!--내용  -->		
 		<div class="col-xs-12">
-		<textarea name="content" id="CONTENT" rows="500"><%=postDto.getContent() %></textarea>
+		<textarea name="content" id="content" rows="500"><%=postDto.getContent() %></textarea>
 		<script type="text/javascript">
 			CKEDITOR.replace( 'content',{
 				height : '400px',
@@ -346,7 +346,7 @@ $("#save").click(function(){
        return false;
    }
    
-   var ckeditor = CKEDITOR.instances['content']; //객체가져오기
+	var ckeditor = CKEDITOR.instances['content']; //객체가져오기
    
    if (ckeditor.getData()=="") {//null값은 안옴 = 빈문자열
         alert("글 내용을 입력하세요");

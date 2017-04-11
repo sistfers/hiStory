@@ -155,6 +155,7 @@
 	String user_pf_img = user.getPf_image();
 	String user_grade = user.getGrade();
 	String grades[] = {"몽땅연필", "색연필", "만년필"};
+	System.out.println(user_sex + "!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@############################$$$$$$$$$$");
 %>
 
 <!--헤더 START-->
@@ -259,12 +260,12 @@
 				<label class="col-lg-2 control-label" for="select">성별</label>
 				<div class="col-lg-10">
 					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-default active">
-							<input type="radio" name="sex" id="male" autocomplete="off" value="0" <%if (user_sex.equals("0")){%>checked<%}%> >
+						<label class="btn btn-default <%if (user_sex.equals("0")){%> active <%}%>">
+							<input type="radio" name="sex" id="male" value="0" <%if (user_sex.equals("0")){%>checked="checked" <%}%> >
 							남
 						</label>
-						<label class="btn btn-default">
-							<input type="radio" name="sex" id="femail" autocomplete="off" value="1" <%if (user_sex.equals("1")){%>checked<%}%> >
+						<label class="btn btn-default <%if (user_sex.equals("1")){%> active <%}%>">
+							<input type="radio" name="sex" id="femail" value="1" <%if (user_sex.equals("1")){%>checked="checked"<%}%> >
 							여
 						</label>
 					</div>

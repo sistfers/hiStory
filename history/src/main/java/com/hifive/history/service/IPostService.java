@@ -33,4 +33,5 @@ public interface IPostService {
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException;
 	public List<Map<String, Object>> getHashTag()throws SQLException;
 	public Map<String, Object> hi_isFollower(Map<String, Object> map);
+	public List<Map<String, Object>> hi_hashtagSearchList(Map<String, Object> condition) throws Exception;
 }

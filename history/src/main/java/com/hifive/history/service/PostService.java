@@ -192,6 +192,11 @@ public class PostService implements IPostService {
 		logger.debug("dto.toString() = "+condition.toString());
 		return postDao.hi_selectSearchList(condition);
 	}
+	@Override
+	public List<Map<String, Object>> hi_hashtagSearchList(Map<String, Object> condition) throws Exception {
+		logger.debug("dto.toString() = "+condition.toString());
+		return postDao.hi_hashtagSearchList(condition);
+	}
 	
 	@Transactional
 	@Override

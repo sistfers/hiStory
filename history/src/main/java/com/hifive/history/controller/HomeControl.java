@@ -190,7 +190,9 @@ public class HomeControl {
 	public ModelAndView do_search(HttpServletRequest res, HttpSession session)throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
-		String apiSearch_word = res.getParameter("search_word").trim(); 
+		String apiSearch_word = res.getParameter("search_word").trim();
+		String only_hashtag = res.getParameter("only_hashtag") == null || res.getParameter("only_hashtag").trim().equals("") ? "no" : res.getParameter("only_hashtag").trim();
+		
 		String search_word = "%"+apiSearch_word+"%";
 		String PAGE_SIZE 	= "10";	//페이지사이즈
 		String PAGE_NUM		= "1";	//페이지NUM
@@ -220,8 +222,15 @@ public class HomeControl {
 		condition.put("PAGE_SIZE", PAGE_SIZE);
 		condition.put("PAGE_NUM", PAGE_NUM);
 		condition.put("SEARCH_WORD", search_word);
-		condition.put("SEARCH_TAG","#"+apiSearch_word+"#");
-		List<Map<String, Object>> searchList = postSvc.hi_selectSearchList(condition);
+		condition.put("SEARCH_TAG","%#"+apiSearch_word+"#%");
+		
+		List<Map<String, Object>> searchList = null; 
+		
+		if(only_hashtag.equals("yes")){
+			searchList = postSvc.hi_hashtagSearchList(condition);
+		}else{
+			searchList = postSvc.hi_selectSearchList(condition);
+		}
 		
 		for(int i=0; i<searchList.size(); ++i){
 			loger.debug(i+"번째 blog_title" + searchList.get(i).get("blog_title"));

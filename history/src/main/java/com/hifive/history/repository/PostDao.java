@@ -128,6 +128,14 @@ public class PostDao implements iDao {
 		logger.debug("dto.toString() = "+condition.toString());
 		return sqlSession.selectList(statement,condition);
 	}
+	
+	public List<Map<String, Object>> hi_hashtagSearchList(Map<String, Object> condition) throws Exception {
+		String statement = namespace +".hi_hashtagSearchList";
+		logger.debug("statement"+statement);
+		logger.debug("dto.toString() = "+condition.toString());
+		return sqlSession.selectList(statement,condition);
+	}
+	
 	public List<Map<String, Object>> getLovePost(Map<String, String> dto)throws SQLException{
 		String statement = namespace +".getLovePost";
 		logger.debug("statement"+statement);

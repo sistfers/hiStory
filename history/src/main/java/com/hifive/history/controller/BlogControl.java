@@ -413,7 +413,7 @@ public class BlogControl {
 	
 	
 	//블로그 글 수정
-	@RequestMapping("post/update.hi")
+	@RequestMapping(value="post/update.hi", method=RequestMethod.POST)
 	public String postUpdate(HttpServletRequest request) throws Exception{
 		// view에서 넘어온값 받기
 		/*int	   seq 		= Integer.parseInt(request.getParameter("seq"));

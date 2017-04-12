@@ -332,8 +332,8 @@ var gfv_count = 1;	//파일 추가 카운트를 위한 전역변수
 	}
 	
 	function removeTag( html ) {
-		html = html.replaceAll("<", "&lt;");
-		html = html.replaceAll(">", "&gt;");
+		html = html.replace(/</gi, "&lt;");
+		html = html.replace(/>/gi, "&gt;");
 		return html;
 	}
 </script>

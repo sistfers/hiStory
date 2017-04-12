@@ -154,7 +154,7 @@ $(document).ready(function() {
 
 <!-- 중간 START -->
 <div class="container" >
-	<form class="form-horizontal postForm" id = "postForm" name="postForm" enctype="multipart/form-data">
+	<form class="form-horizontal postForm" id = "postForm" name="postForm" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="seq" value="<%=seq%>"/>
 	<input type="hidden" name="id" value="<%=id%>"/>
 <!-- 카테고리 -->
@@ -414,8 +414,8 @@ var gfv_count = $('#fileCnt').val()+1;
 	}
 	
 	function removeTag( html ) {
-		html = html.replaceAll("<", "&lt;");
-		html = html.replaceAll(">", "&gt;");
+		html = html.replace(/</gi, "&lt;");
+		html = html.replace(/>/gi, "&gt;");
 		return html;
 	}
 </script>

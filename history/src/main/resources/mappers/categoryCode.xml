@@ -75,5 +75,12 @@
 		) B
 		ON A.SEQ = B.CT_SEQ
 	</select>
+	
+	
+	<select id="getCategoryRange" parameterType="int" resultType="String">
+		SELECT STATE
+		FROM CATEGORY_H
+		WHERE SEQ=#{selected}
+	</select>
 
 </mapper>

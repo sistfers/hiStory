@@ -265,6 +265,70 @@ public class BlogControl {
 			
 	}
 	
+	@RequestMapping(value="post/openrange.hi", method=RequestMethod.POST,
+			produces = "application/json; charset=utf8")
+	public @ResponseBody String do_filtered(HttpServletRequest res, HttpSession session) throws Exception {
+		
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: post/openrange.hi");	
+		
+		
+		int selected = Integer.parseInt(res.getParameter("selected"));
+		logger.debug("[[[selected     ]]] " + selected);
+		
+		String stateRange = categoryService.getCategoryRange(selected);		
+		logger.debug("[[[stateRange   ]]] " + stateRange);
+		
+		
+		List<Map<String, Object>> themeCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 100 글 주제
+		List<Map<String, Object>> reviewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 130 댓글허용 여부
+		List<Map<String, Object>> postViewCode = new ArrayList<Map<String, Object>>(); 	//Page코드 : 140 글 공개 여부
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("stateRange", stateRange);
+		postViewCode.add(data);
+		
+		
+		/////////////////////////////////////////////////////////////////////////
+		ModelAndView mav = new ModelAndView();
+		Map<String, String> dto = new HashMap<String, String>();
+		dto.put("isAll", "true");
+		dto.put("id", ((UserDto)session.getAttribute("user")).getId());
+
+		Map<String, Object> codeMap = new HashMap<String, Object>();
+		List<String> codeList = new ArrayList<String>();
+		codeList.add("100");
+		codeList.add("130");
+		codeList.add("140");
+		codeMap.put("code_list", codeList);
+		
+		List<CategoryDto> categoryList = (List<CategoryDto>)categoryService.hi_selectCategory(dto);
+		List<Map<String, Object>> codes = (List<Map<String, Object>>)codeDSvc.hi_selectList(codeMap);
+		
+		for(int i=0; i<codes.size(); ++i){
+			Map<String, Object> codeData = (Map<String, Object>)codes.get(i);
+			
+			if((Integer)(codeData.get("CD_ID")) == 130) reviewCode.add(codeData);
+			else if((Integer)(codeData.get("CD_ID")) == 140) {
+				if((Integer)(codeData.get("CD_D_ID")) != 2){
+					postViewCode.add(codeData);
+				}
+			}
+			else if((Integer)(codeData.get("CD_ID")) == 100) themeCode.add(codeData);
+		}
+		
+		Gson gson = new Gson();
+		
+		
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: post/openrange.hi");
+		logger.debug("----------------------------------------------------------");
+		
+		return gson.toJson(postViewCode);
+	}
+	
+	
+	
+	
 	
 	//블로그 글 쓰기(insert)
 	@RequestMapping("post/writeInsert.hi")

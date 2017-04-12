@@ -80,4 +80,11 @@ public class CategoryDao implements iDao {
 		logger.debug("map.toString() = "+map.toString());
 		return sqlSession.selectList(statement,map);
 	}
+	
+	public String getCategoryRange(int selected) {
+		String statement = namespace +".getCategoryRange";
+		logger.debug("statement"+statement);
+		logger.debug("selected = "+selected);
+		return sqlSession.selectOne(statement, selected);
+	}
 }

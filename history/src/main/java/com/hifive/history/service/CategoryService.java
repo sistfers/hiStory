@@ -57,4 +57,9 @@ public class CategoryService implements iService {
 	public List<HashMap<String, Object>> getCategoryCount(Map<String, String> map){
 		return categoryDao.getCategoryCount(map);
 	}
+	
+	public String getCategoryRange(int selected) {
+		
+		return categoryDao.getCategoryRange(selected);	
+	}
 }

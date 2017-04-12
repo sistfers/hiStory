@@ -37,7 +37,79 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
-	
+
+<script type="text/javascript">
+$(document).ready(function() {	
+	$("#category").on("change", function() {
+		var selected = $("#category option:selected").val();
+		// alert(selected);
+		
+		$.ajax({
+			type : "POST",
+			url  : "openrange.hi",
+			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+			data : {
+				"selected" : selected
+			},
+			success : function(data) {
+				
+		    	var item = $.parseJSON(data);
+				/* [{"stateRange":"1"},
+					{"CD_D_ID":0,"CD_ID":140,"CD_D_NM":"전체공개"},
+					{"CD_D_ID":1,"CD_ID":140,"CD_D_NM":"비공개"},
+					{"CD_D_ID":3,"CD_ID":140,"CD_D_NM":"이웃공개"}] 
+				*/		
+			      
+				if(item.length > 1) {	
+					if(item[0].stateRange == "0") {
+						// alert(data);
+						$("#orange").remove();
+						$("#STATE").remove();
+						
+						var selectForm = '<label for="field" id="orange"> 공개범위</label>';
+						selectForm = selectForm + '<select class="form-control" id="STATE" name="state">';						
+						
+						for(var i = 1; i < item.length; i++) {
+							selectForm = selectForm + '<option value='+item[i].CD_D_ID+'>'+ item[i].CD_D_NM;
+							selectForm = selectForm + '</option>';
+						}
+						selectForm = selectForm + '</select>';
+						
+						$("#openrange").append(selectForm);	
+						
+					} else if(item[0].stateRange == "1") {
+						// alert(data);
+						$("#orange").remove();
+						$("#STATE").remove();
+						
+						var selectForm = '<label for="field" id="orange"> 공개범위</label>';
+						selectForm = selectForm + '<select class="form-control" id="STATE" name="state">';
+						selectForm = selectForm + '<option value="1">비공개</option>';
+						selectForm = selectForm + '</select>';
+						
+						$("#openrange").append(selectForm);	
+					} else { 
+						
+					}
+				} else {
+					var selectForm = '<label for="field" id="orange"> 공개범위</label>';
+					selectForm = selectForm + '<select class="form-control" id="STATE" name="state">';
+					selectForm = selectForm + '<option>오류:::</option>';	
+					selectForm = selectForm + '</select>';
+					
+					$("#openrange").append(selectForm);	
+				}			
+			},
+			complete : function(data) {
+				
+			},
+			error : function(xhr, status, error) {
+				alert("에러 발생");
+			}
+		});
+	});
+});
+</script>	
 </head>
 <body>
 <!--헤더 START-->
@@ -120,8 +192,8 @@
 			       <%} %>
 		    </select>
 	    </div>
-	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
-	    	<label for="field"> 공개범위</label>
+	    <div id="openrange" class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
+	    	<label for="field" id="orange"> 공개범위</label>
 			<select class="form-control" id="STATE" name="state">
 			       <%if(postViewCode.size() != 0){
 			    	   if(state.equals("1")){%>

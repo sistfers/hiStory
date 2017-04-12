@@ -67,13 +67,16 @@ border-width: 1px;
 <!--헤더 END-->
 <script>
 	function do_func(ment) {
-		if($("#catename").val()!=null && $("#catename").val()!=''){
-			
+		if($("#catename").val()!=null && $("#catename").val()!='' && $("#cateseq").val()!=''){
 			if(ment=='del'){
 				if(confirm("정말 삭제하시겠습니까?")){
-					$("#btn").val(ment);
-					var frm = document.output;
-					frm.submit();
+					if(<%=categoryList.size()==1%>){
+						alert('최소 카테고리 1개는 유지 해야 합니다!');
+					}else{
+						$("#btn").val(ment);
+						var frm = document.output;
+						frm.submit();
+					}
 				}
 			}else{
 				if(confirm("정말 수정하시겠습니까?")){
@@ -82,6 +85,8 @@ border-width: 1px;
 					frm.submit();
 				}
 			}
+		}else if($("#catename").val()==null || $("#catename").val()==''){
+			alert("카테고리명을 입력하세요");
 		}else{
 			alert("카테고리를 선택하세요");
 		}
@@ -159,7 +164,7 @@ border-width: 1px;
 							</div>
 							<div class="form-group" style="margin-left: 10px">
 								<input type="text" class="form-control" id="catename" name="catename"
-									placeholder="◀카테고리를 선택하세요" value="">
+									placeholder="◀ 카테고리를 선택하세요" value="">
 								<input type="hidden" id="cateseq" name="cateseq" value="">
 							</div>
 						
@@ -168,7 +173,7 @@ border-width: 1px;
 							</div>	
 							<div class="form-group" style="margin-left: 15px">
 									<label class="radio-inline"> <input type="radio" name="catestate"
-										id="optionsRadios1" value="true" >공개
+										id="optionsRadios1" value="true" checked="checked">공개
 									</label>
 								
 									<label class="radio-inline"> <input type="radio" name="catestate"

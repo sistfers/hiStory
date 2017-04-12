@@ -82,30 +82,32 @@ border-radius: 15px;
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color:<%=blogdto.getTheme() %>">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;min-height: 780px">
 		       	 <div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 			       	<fieldset>
-			       	<legend><i class="icon-bar-chart"></i> 전체</legend></fieldset>
+			       	<legend><i class="icon-bar-chart"></i> 공감수 순위 전체기간</legend></fieldset>
 		        
 			       	<!-- <p style="font-size: 25px; margin-top: 20px">전체</p> -->
-			        <table class="table" style="margin-top: 10px">
-			        	<tr class="info">
-							<th>순위</th>
-							<th>분야</th>
-							<th>글제목</th>
-							<th>공감수</th>
-							<th>작성일</th>
+			        <table class="table table-bordered" style="margin-top: 10px;text-align: center;">
+			        	<tr class="danger">
+							<th width="8%" style="text-align: center;">순위</th>
+							<th width="8%" style="text-align: center;">분야</th>
+							<th width="60%" style="text-align: center;">글제목</th>
+							<th width="10%" style="text-align: center;">공감수</th>
+							<th width="14%" style="text-align: center;">작성일</th>
 			        	</tr>
 			        	<%
 			        		if(loveRank!=null&&loveRank.size()!=0){
 			        			for(int i = 0; i < loveRank.size(); ++i){	
 			    		%>	
-			    		       		<tr class="active">
-			    		       		<td><%=i+1 %>위</td>
-			    		       		<td><%=loveRank.get(i).get("FIELD") %></td>
-			    		       		<td><%=loveRank.get(i).get("TITLE") %></td>
-			    		       		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
-			    		       		<td><%=loveRank.get(i).get("WDATE") %></td>
+			    		       		<tr>
+			    		       		<td><%=i+1 %></td>
+			    		       		<td style="font-size: 12px"><%=loveRank.get(i).get("FIELD") %></td>
+			    		       		<td style="font-size: 14px;text-align: left;">
+			    		       		<a href="/post/main.hi?id=<%=loveRank.get(i).get("ID") %>&seq=<%=loveRank.get(i).get("SEQ") %>"> <%=loveRank.get(i).get("TITLE") %></a>			    		       		
+			    		       		</td>
+			    		       		<td ><%=loveRank.get(i).get("TOTAL_CNT") %></td>
+			    		       		<td style="font-size: 12px"><%=loveRank.get(i).get("WDATE") %></td>
 			    		       		</tr>
 			    		<%
 			    				if(i==4)break;
@@ -123,15 +125,18 @@ border-radius: 15px;
 			        </table>
 			        </div>
 			        <br>
+			        <div class="clearfix"></div>
 			        <hr style="border:2px dashed">
-			        <br>
+			       
 			       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 			        <form class="form-horizontal" method="post" action="love.hi" name="lovechart">
 			<!--        	<p style="font-size: 25px; margin-top: 20px">기간별 조회</p> -->
 			       	
 			       	<fieldset>
-			       	<legend><i class="icon-bar-chart"></i> 기간별 조회</legend></fieldset>
-			       	<div class="form-group" id="">
+			       	<legend><i class="icon-bar-chart"></i> 공감수 순위 기간별 조회 &nbsp;&nbsp;&nbsp;&nbsp;
+			       	<span style="font-size: 11px;color: red;"> <i class="icon-check-sign"></i> 기간별로 공감이 많이 된 포스트를 5개까지 보여드립니다.</span></legend></fieldset>
+			       	
+			       	<div class="form-group" >
 						<div class="col-xs-4">
 							<input type="date" class="form-control" id="startdate" name="startdate">
 						</div>
@@ -142,28 +147,30 @@ border-radius: 15px;
 							<input type="date" class="form-control" id="enddate" name="enddate">
 						</div>
 						<div class="col-xs-3">
-							<button type="button" class="btn btn-primary" onclick="search()"> 조회 </button>
+							<button type="button" class="btn btn-primary btn-block" onclick="search()"> 조회 </button>
 						</div>
 					</div>
 				
-		        <table class="table" style="margin-top: 10px">
+		        <table class="table table-bordered" style="margin-top: 10px;text-align: center;">
 		        	<tr class="info">
-						<th>순위</th>
-						<th>글제목</th>
-						<th>분야</th>
-						<th>공감수</th>
-						<th>작성일</th>
+							<th width="8%" style="text-align: center;">순위</th>
+							<th width="8%" style="text-align: center;">분야</th>
+							<th width="60%" style="text-align: center;">글제목</th>
+							<th width="10%" style="text-align: center;">공감수</th>
+							<th width="14%" style="text-align: center;">작성일</th>
 		        	</tr>
 		        	<%
-		        		if(loveSelectRank!=null&&loveSelectRank.size()!=0){
+		        		if(loveSelectRank!=null && loveSelectRank.size()!=0){
 		        			for(int i = 0; i < loveSelectRank.size(); ++i){	
 		        	%>	
-			        		<tr class="active">
-			        		<td><%=i+1 %>위</td>
-			        		<td><%=loveRank.get(i).get("TITLE") %></td>
-			        		<td><%=loveRank.get(i).get("FIELD") %></td>
-			        		<td><%=loveRank.get(i).get("TOTAL_CNT") %></td>
-			        		<td><%=loveRank.get(i).get("WDATE") %></td>
+			        		<tr>
+			        		<td><%=i+1 %></td>
+			        		<td style="font-size: 12px"><%=loveSelectRank.get(i).get("FIELD") %></td>
+			        		<td style="font-size: 14px;text-align: left;">
+			        		<a href="/post/main.hi?id=<%=loveSelectRank.get(i).get("ID") %>&seq=<%=loveSelectRank.get(i).get("SEQ") %>"> 
+			        		<%=loveSelectRank.get(i).get("TITLE") %></a></td>
+			        		<td><%=loveSelectRank.get(i).get("TOTAL_CNT") %></td>
+			        		<td style="font-size: 12px"><%=loveSelectRank.get(i).get("WDATE") %></td>
 			        		</tr>
 		        	<%
 		        			if(i==4)break;
@@ -171,7 +178,7 @@ border-radius: 15px;
 		        		}else{
 		        	%>
 		        			<tr class="active">
-			        		<td colspan="5" style="text-align: center;">선택하신 기간에 공감받은 글이 없습니다.</td>
+			        		<td colspan="5" style="text-align: center;color: red">선택하신 기간에 공감받은 글이 없습니다.</td>
 			        		</tr>
 			        <%
 		        		}
@@ -179,8 +186,9 @@ border-radius: 15px;
 		        	
 		        	
 		        </table>
+		       
 		        </form>
-				<br><br><br>
+				
 				
 				
 				</div>

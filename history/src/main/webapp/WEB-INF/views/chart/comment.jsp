@@ -64,7 +64,7 @@ border-radius: 15px;
 <!--헤더 END-->
 
 <!-- 중간 START -->
-   <br><br><br><br>
+   <br><br><br>
    <div class="container" >
       <div class="col-xs-2 mydiv" style="background-color: <%=blogdto.getTheme() %>; border-radius: 15px">
          <jsp:include page="menu.jsp"/>
@@ -72,18 +72,17 @@ border-radius: 15px;
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme() %>;">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;">
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;min-height: 780px">
 		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 		       	<fieldset>
 		       	<legend><i class="icon-bar-chart"></i> 전체</legend></fieldset>
-		       	<!-- <p style="font-size: 25px; margin-top: 20px">전체</p> -->
-		        <table class="table" style="margin-top: 10px">
-		        	<tr class="info">
-						<th>순위</th>
-						<th>분야</th>
-						<th>글제목</th>
-						<th>댓글수</th>
-						<th>작성일</th>
+		        <table class="table table-bordered" style="margin-top: 10px;text-align: center;">
+		        	<tr class="danger">
+							<th width="8%" style="text-align: center;">순위</th>
+							<th width="8%" style="text-align: center;">분야</th>
+							<th width="60%" style="text-align: center;">글제목</th>
+							<th width="10%" style="text-align: center;">댓글수</th>
+							<th width="14%" style="text-align: center;">작성일</th>
 		        	</tr>
 		        	<%
 		        		if(postList.size()==0){
@@ -95,12 +94,14 @@ border-radius: 15px;
 		        		}else{
 		        			for(int i = 0; i < postList.size(); ++i){	
 		        	%>	
-		        		<tr class="active">
-		        		<td><%=i+1 %>위</td>
-		        		<td><%=postList.get(i).get("FIELD")%></td>
-		        		<td><%=postList.get(i).get("TITLE")%></td>
+		        		<tr>
+		        		<td><%=i+1 %></td>
+		        		<td style="font-size: 12px"><%=postList.get(i).get("FIELD")%></td>
+		        		<td style="font-size: 14px;text-align: left;">
+		        		<a href="/post/main.hi?id=<%=postList.get(i).get("ID") %>&seq=<%=postList.get(i).get("SEQ") %>"> 
+		        		<%=postList.get(i).get("TITLE")%></a></td>
 		        		<td><%=postList.get(i).get("TOTAL_CNT")%></td>
-		        		<td><%=postList.get(i).get("WDATE")%></td>
+		        		<td style="font-size: 12px"><%=postList.get(i).get("WDATE")%></td>
 		        		</tr>
 		        	<%
 		        			if(i==4)break;
@@ -112,13 +113,14 @@ border-radius: 15px;
 		        </table>
 		        </div>
 			        <br>
-			        <br>
+			        <div class="clearfix"></div>
 			        <hr style="border:2px dashed">
-			        <br>
 			        <div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 		        <form class="form-horizontal" method="post" action="comment.hi" name="commentchart">
 		        	<fieldset>
-			       	<legend><i class="icon-bar-chart"></i> 기간별 조회</legend></fieldset>
+			       	<legend><i class="icon-bar-chart"></i> 댓글수 순위 기간별 조회
+			       	&nbsp;&nbsp;&nbsp;&nbsp;
+			       	<span style="font-size: 11px;color: red;"> <i class="icon-check-sign"></i> 기간별로 댓글이 많이 달린 된 포스트를 5개까지 보여드립니다.</span></legend></fieldset>
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">기간별 조회</p> -->
 		       	<div class="form-group" id="">
 					<div class="col-xs-4">
@@ -131,27 +133,27 @@ border-radius: 15px;
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
 					<div class="col-xs-3">
-						<button type="button" class="btn btn-primary" onclick="search()"> 조회 </button>
+						<button type="button" class="btn btn-primary btn-block" onclick="search()"> 조회 </button>
 					</div>
 				</div>
-		        <table class="table" style="margin-top: 10px">
+		        <table class="table table-bordered" style="margin-top: 10px;text-align: center;">
 		        	<tr class="info">
-						<th>순위</th>
-						<th>분야</th>
-						<th>글제목</th>
-						<th>댓글수</th>
-						<th>작성일</th>
+							<th width="8%" style="text-align: center;">순위</th>
+							<th width="8%" style="text-align: center;">분야</th>
+							<th width="60%" style="text-align: center;">글제목</th>
+							<th width="10%" style="text-align: center;">댓글수</th>
+							<th width="14%" style="text-align: center;">작성일</th>
 		        	</tr>
 		        	<%
 		        		if(postTodayList!=null && postTodayList.size()!=0){
 		        			for(int i = 0; i < postTodayList.size(); ++i){
 		        	%>	
-				       		<tr class="active">
-				       		<td><%=i+1 %>위</td>		        		
-				       		<td><%=postTodayList.get(i).get("FIELD") %></td>
-				       		<td><%=postTodayList.get(i).get("TITLE") %></td>
+				       		<tr>
+				       		<td><%=i+1 %></td>		        		
+				       		<td style="font-size: 12px"><%=postTodayList.get(i).get("FIELD") %></td>
+				       		<td style="font-size: 14px;text-align: left;"><%=postTodayList.get(i).get("TITLE") %></td>
 				       		<td><%=postTodayList.get(i).get("TOTAL_CNT") %></td>
-				       		<td><%=postTodayList.get(i).get("WDATE") %></td>
+				       		<td style="font-size: 12px"><%=postTodayList.get(i).get("WDATE") %></td>
 				       		</tr>
 				     <%
 				        	if(i==4)break;
@@ -169,7 +171,6 @@ border-radius: 15px;
 		        	
 		        </table>
 		        </form>
-				<br><br><br>
 				
 				</div>
 

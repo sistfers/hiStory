@@ -69,7 +69,7 @@
 		(
 		SELECT CT_SEQ, COUNT(*) TOTAL
 		FROM POST_H
-		WHERE ID = #{id}
+		WHERE ID = #{id} AND STATE != '2'
 		GROUP BY CT_SEQ
 		ORDER BY CT_SEQ
 		) B

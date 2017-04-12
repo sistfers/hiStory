@@ -895,6 +895,7 @@ WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
     )TT2							
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+	ORDER BY LDATE DESC
 </select>
 <select id="getHashTag" resultType="map">
 SELECT HASHTAG

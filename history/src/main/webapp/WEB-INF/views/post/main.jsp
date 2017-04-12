@@ -183,6 +183,14 @@ function do_comment_page(url, co_page_num) {
 /* 글 수정 */
 function go_update(){
 	var frm = document.postUdateForm;
+	
+	
+	
+	
+	
+	
+	
+	
 	frm.submit();
 }
 
@@ -227,6 +235,7 @@ function go_delete(){
 		        <form name="postUdateForm" action="updateDetail.hi" method="get">			<!-- 글수정 -->
 			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 			        <input type="hidden" name="id" value="<%=id%>">
+			        <input type="hidden" name="postst" value="<%=postDto.getState() %>" />
 		        </form>
 		        <form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
 			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">

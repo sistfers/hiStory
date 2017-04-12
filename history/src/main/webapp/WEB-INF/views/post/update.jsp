@@ -48,6 +48,8 @@
 	// 포스트 내용 1건 보여주기
 	PostDto postDto = (PostDto)request.getAttribute("DTO");
 	
+	String state1 = (String) request.getAttribute("state");
+	System.out.println(state1);
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -67,8 +69,82 @@
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="/resources/js/common.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {	
+	$("#category").on("change", function() {
+		var selected = $("#category option:selected").val();
+		// alert(selected);
+		
+		$.ajax({
+			type : "POST",
+			url  : "openrange.hi",
+			dataType : "html", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+			data : {
+				"selected" : selected
+			},
+			success : function(data) {
+				
+		    	var item = $.parseJSON(data);
+				/* [{"stateRange":"1"},
+					{"CD_D_ID":0,"CD_ID":140,"CD_D_NM":"전체공개"},
+					{"CD_D_ID":1,"CD_ID":140,"CD_D_NM":"비공개"},
+					{"CD_D_ID":3,"CD_ID":140,"CD_D_NM":"이웃공개"}] 
+				*/		
+			      
+				if(item.length > 1) {	
+					if(item[0].stateRange == "0") {
+						// alert(data);
+						$("#orange").remove();
+						$("#STATE").remove();
+						
+						var selectForm = '<label for="field" id="orange"> 공개범위</label>';
+						selectForm = selectForm + '<select class="form-control" id="STATE" name="state">';						
+						
+						for(var i = 1; i < item.length; i++) {
+							selectForm = selectForm + '<option value='+item[i].CD_D_ID+'>'+ item[i].CD_D_NM;
+							selectForm = selectForm + '</option>';
+						}
+						selectForm = selectForm + '</select>';
+						
+						$("#openrange").append(selectForm);	
+						
+					} else if(item[0].stateRange == "1") {
+						// alert(data);
+						$("#orange").remove();
+						$("#STATE").remove();
+						
+						var selectForm = '<label for="field" id="orange"> 공개범위</label>';
+						selectForm = selectForm + '<select class="form-control" id="STATE" name="state">';
+						selectForm = selectForm + '<option value="1">비공개</option>';
+						selectForm = selectForm + '</select>';
+						
+						$("#openrange").append(selectForm);	
+					} else { 
+						
+					}
+				} else {
+					var selectForm = '<label for="field" id="orange"> 공개범위</label>';
+					selectForm = selectForm + '<select class="form-control" id="STATE" name="state">';
+					selectForm = selectForm + '<option>오류:::</option>';	
+					selectForm = selectForm + '</select>';
+					
+					$("#openrange").append(selectForm);	
+				}			
+			},
+			complete : function(data) {
+				
+			},
+			error : function(xhr, status, error) {
+				alert("에러 발생");
+			}
+		});
+	});
+});
+
+
+</script>	
 </head>
 <body>
 <!--헤더 START-->
@@ -181,14 +257,18 @@
 			       <%} %>
 		    </select>
 	    </div>
-	    <div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
-	    	<label for="field"> 공개범위</label>
+	    
+	    <div id="openrange" class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
+	    	<label for="field" id="orange"> 공개범위</label>
 			<select class="form-control" id="STATE" name="state">
-			       <%if(postViewCode != null){
-			       		for(int i=0; i<postViewCode.size(); ++i){%>
-			       <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getState().equals(postViewCode.get(i).get("CD_D_ID")+""))) { out.print("selected"); }%>>
-			       <%=postViewCode.get(i).get("CD_D_NM") %></option>
-			       <%	}
+				   <%if(postViewCode.size() != 0){
+					   if(state1.equals("1")) {
+					%> <option value="1">비공개</option>
+			    		<%}else{
+			       			for(int i=0; i<postViewCode.size(); ++i){ %>
+			       				<option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>	
+			       <%	} // for end
+			    		} // if end
 			       	 } else{ %>
 			       <option>오류:::</option>
 			       <%} %>

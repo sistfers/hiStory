@@ -154,6 +154,17 @@ public class BlogControl {
 		PostDto postDto = new PostDto();
 		postDto.setId(ID);
 		
+		
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		logger.debug(postDto.toString());
+		
+		
 		if (ct_seqString == null)
 			ct_seq = 0;
 		else
@@ -168,6 +179,18 @@ public class BlogControl {
 		logger.debug("여기에요여기여기에요여기여기에요여기ㅍ여기에요여기여기에요여기여기에요여기여기에요여기ㅍ"+postDto.toString());
 		
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
+//		logger.debug("PostDto DTO " + DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+//		logger.debug(DTO.toString());
+		
 
 		mav.addObject("DTO"   ,DTO);		
 		
@@ -256,6 +279,18 @@ public class BlogControl {
 		
 		mav.setViewName("post/write");
 		mav.addObject("categoryList", categoryList);
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		logger.debug(categoryList.toString());
+		
 		mav.addObject("reviewCode", reviewCode);
 		mav.addObject("postViewCode", postViewCode);
 		mav.addObject("themeCode", themeCode);
@@ -471,6 +506,22 @@ public class BlogControl {
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
 		
 
+		String state = "";
+		state = request.getParameter("postst");
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		logger.debug(state);
+		
+		mav.addObject("state", state);
 		mav.addObject("DTO"   ,DTO);	
 		mav.setViewName("post/update");
 		//System.out.println("넘어오는 데이타 뭐니? PostDto"+DTO.toString());

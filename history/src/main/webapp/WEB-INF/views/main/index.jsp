@@ -6,7 +6,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%!
 /**
  * 모든 HTML 태그를 제거하고 반환한다.
@@ -247,29 +247,29 @@
 <jsp:include page="/header.hi"/>
 <!--헤더 END-->
 <div class="container" >
-	<br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
-	
-	<!--내용 START -->
-	
-	
-	<!-- 검색하기 -->
-	<form name="do_search" method="post" action="/main/do_search.hi">
-	<div class="col-xs-2"></div>
-	<div class="col-xs-8">
-		<div class="form-group">
-		  <div class="input-group"> 	
-		    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
-		     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
-		    <span class="input-group-btn">
-		     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:submit()">
-		    </span>
-		    
-		  </div>
-		</div>  
-	</div> 
-	<div class="col-xs-2"></div>
-	</form>
-	<br>
+<br><br> <!-- 헤더때문에 윗에 공백 넣어주는거임 -->
+
+<!--내용 START -->
+
+
+<!-- 검색하기 -->
+<form name="do_search" method="post" action="/main/do_search.hi">
+<div class="col-xs-2"></div>
+<div class="col-xs-8">
+	<div class="form-group">
+	  <div class="input-group"> 	
+	    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
+	     <input type="text" class="form-control input-lg" placeholder="검색어를 입력하세요" max="20" name="search_word" size=20>
+	    <span class="input-group-btn">
+	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:submit()">
+	    </span>
+	    
+	  </div>
+	</div>  
+</div> 
+<div class="col-xs-2"></div>
+</form>
+<br>
 
 <!-- 사이즈 조절해서 사용하세요  -->
 <!-- 해시태그 START -->
@@ -382,207 +382,211 @@ $(document).ready(function () {
 <br><br><br><br>
 <!-- 테마별보기 START -->
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
-	<div class="col-xs-12">
-	<center>
-		<div style="background-color: #F7F9F9;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
- 			<h3 class="text-primary"><i class="icon-coffee"></i> 테마별보기</h3>  
-  					<ul class="nav nav-pills">
-    					<li class="active" style="width: 110px">
-    						<a data-toggle="pill" href="#menu1" style="font-weight: bold;margin-left: 15px">
-    						<%=themeCode.get(0).get("CD_D_NM") %>
-    						</a>
-    					</li>
+<div class="col-xs-12">
+<center>
+<div style="background-color: #F7F9F9;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
+ <h3 class="text-primary"><i class="icon-coffee"></i> 테마별보기</h3>  
+  <%if(themeCode != null) {%>
+  <ul class="nav nav-pills">
+    <li class="active" style="width: 110px">
+    <a data-toggle="pill" href="#menu1" style="font-weight: bold;margin-left: 15px">
+    <%=themeCode.get(0).get("CD_D_NM") %></a></li>
     
-						<!-- 테마 목록 -->
-    					<%for(int i=1; i<themeCode.size(); ++i){ %>
-  	  					<li style="width: 110px">
-  	  						<a data-toggle="tab" href="#menu<%=i+1%>" style="font-weight: bold;">
-  	  						<%=themeCode.get(i).get("CD_D_NM") %>
-  	  						</a>
-  	  					</li>
-    					<%} %>
-  					</ul>
-		</div>
-		<!-- 테마 선택시 내용보이기 -->
-  		<div class="tab-content">
-    	<br>
+<!-- 테마 목록 -->
+    <%for(int i=1; i<themeCode.size(); ++i){ %>
+  	  <li style="width: 110px"><a data-toggle="tab" href="#menu<%=i+1%>" style="font-weight: bold;">
+  	  <%=themeCode.get(i).get("CD_D_NM") %></a></li>
+    <%} %>
+  </ul>
+	</div>
+<!-- 테마 선택시 내용보이기 -->
+  <div class="tab-content">
+    <br>
 	
-    	<%for(int i=0; i<themeCode.size(); ++i){
-    		if(i==0) {%>
-    			<div id="menu<%=i+1 %>" class="tab-pane fade in active">
-    	  <%}else{ %>
-    			<div id="menu<%=i+1 %>" class="tab-pane fade" style="cursor:pointer;">
-    	  <%}
+    <%for(int i=0; i<themeCode.size(); ++i){
+    	if(i==0) {%>
+    		<div id="menu<%=i+1 %>" class="tab-pane fade in active">
+    	<%}else{ %>
+    		<div id="menu<%=i+1 %>" class="tab-pane fade" style="cursor:pointer;">
+    	<%}
     		int k = 0;
     		for(int j=0; j<themeList.size(); ++j){
     			if(themeList.get(j).get("FIELD").equals(themeCode.get(i).get("CD_D_NM"))){%>
     				<%k++;
     				  if(k<=3){ %>
-    				  	<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
-	    					<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
+    					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
+	    				<div class="view view-first col-xs-4" style="padding-bottom: 15px; cursor: pointer;">
 	    				
-	    						<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/life.jpg"'
-	    							style="height: 230px"/>
+	    				<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/life.jpg"'
+	    				style="height: 230px"/>
 	    				
-	    						<div class="mask" style="padding-bottom: 15px;">
-	      							<h2>
-	      							<%
-	      								String title = themeList.get(j).get("TITLE")+"";
-	      								if(title.length() >15){
-	      									title = title.substring(0,15) + "...";
-	      								} %>
-	      								<%=title %> 
-	 								</h2>
-	      							<p>
-	      							<%
-	      							String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
-	      							String content = tempContent;
-	      							if(tempContent.length() >25){
-		      							content = tempContent.substring(0,25) + "...";
-	      							} %>
-	      							<%=content %> 
-	      							</p>
-	      							<p><%=themeList.get(j).get("NAME") %></p>
-	      							<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
-	    						</div>
-	    					</div> 
+	    				<div class="mask" style="padding-bottom: 15px;">
+	      				<h2>
+	      				<%
+	      					String title = themeList.get(j).get("TITLE")+"";
+	      					if(title.length() >15){
+	      						title = title.substring(0,15) + "...";
+	      					} %>
+	      					<%=title %> 
+	 					</h2>
+	      				<p>
+	      					<%
+	      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
+	      					String content = tempContent;
+	      					if(tempContent.length() >25){
+		      					content = tempContent.substring(0,25) + "...";
+	      					} %>
+	      					<%=content %> 
+	      				</p>
+	      				<p><%=themeList.get(j).get("NAME") %></p>
+	      				<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
+	    				</div>
+	    				</div> 
+	    				
     					</a>
     					
     				<%}else{%>
     					<a href="/post/main.hi?id=<%=themeList.get(j).get("ID") %>&seq=<%=themeList.get(j).get("SEQ") %>">
-    						<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
-	    						<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/noimg.png"'
-	    							style="height: 230px"/>
-		    					<div class="mask" style="padding-top: 15px">
-				      				<h2>
-		      						<%
-		      						String title = themeList.get(j).get("TITLE")+"";
-		      						if(title.length() >15){
-			      						title = title.substring(0,15) + "...";
-			      					} %>
-		    	  					<%=title %> 
-									</h2>
-		      						<p>
-		      						<%
-			      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
-			      					String content = tempContent;
-			      					if(tempContent.length() >25){
-				      					content = tempContent.substring(0,25) + "...";
-			      					} %>
-		      						<%=content %> 
-		      						</p>
-		      						<p><%=themeList.get(j).get("NAME") %></p>
-		      						<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
-		    					</div>
-	    					</div>
+    					<div class="view view-first col-xs-4" style="padding-top: 15px; cursor: pointer;">
+	    				<img src="<%=get_img(themeList.get(j).get("CONTENT")+"") %>" onerror='this.src="/resources/image/noimg.png"'
+	    				style="height: 230px"/>
+	    				<div class="mask" style="padding-top: 15px">
+	      				<h2>
+	      				<%
+	      					String title = themeList.get(j).get("TITLE")+"";
+	      					if(title.length() >15){
+	      						title = title.substring(0,15) + "...";
+	      					} %>
+	      					<%=title %> 
+						</h2>
+	      				<p>
+	      					<%
+	      					String tempContent = removeTag(themeList.get(j).get("CONTENT")+"");
+	      					String content = tempContent;
+	      					if(tempContent.length() >25){
+		      					content = tempContent.substring(0,25) + "...";
+	      					} %>
+	      					<%=content %> 
+	      				</p>
+	      				<p><%=themeList.get(j).get("NAME") %></p>
+	      				<p><%=themeList.get(j).get("BLOG_TITLE") %></p>
+	    				</div>
+	    				</div>
+	    				 
 	    				</a>
     				<%	
-    				  }		
+    				  }
+    				%>
+	  				
+    	<%			
     			}
     		}
     	%>
     	
-    			</div>
+    	</div>
     <%}//THEME별로 사진넣을 프레임 구분 %>
     
-		</div><!-- 탭컨텐츠 -->
+	</div>
+	
+	<%} //if(themeCode != null)끝%>	
+	
+	</div><!-- 탭컨텐츠 -->
 
 	</center>
-	</div><!-- col-xs-12 종료 -->
 	<br>
 	<div class="clearfix"></div><br>
 </div>
 <!-- 테마별보기 END -->
-</div>
+
+
 <!-- 이웃새글 START -->
 <!-- 로그인전 =============================================================================== -->
 <%
-if (session.getAttribute("user") == null) {
+	if (session.getAttribute("user") == null) {
 %>
-	<br><br>
-	<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
+		<br><br>
+		<div class="row" style="background-color: #F6F6F6; border-radius: 15px">
 		<div class="col-xs-12">
 		<!-- 로그인후 =============================================================================== -->
 <%
-} else {
+	} else {
 %>
-	<br><br>
-	<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
+		<br><br>
+		<div class="row" style="background-color: #F6F6F6	; border-radius: 15px">
 		<div class="col-xs-12">
-			<div style="background-color: #F9FFF7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
-	 			<h3 style="text-align: center;" class="text-success"><i class="icon-bullhorn"></i>  이웃새글</h3>
-	 		</div>
-	 		<div class="clearfix"></div><br>
-	
-			<table class="table table-hover" id="followTable">
-			<tbody>
-				<% if(followList != null && followList.size() != 0) {
-						for(int i=0; i<followList.size(); ++i) { %>
-						<tr name="follow_detail" style="cursor:pointer;">
-							<td id="<%=followList.get(i).get("ID")%>" width="15%">
-								<div>
-									<a href="#" class="pull-left">
-									<img src="<%=get_img(followList.get(i).get("CONTENT")+"") %>" width="130px" height="90px" onerror='src="/resources/image/noimg.png"'>
-									</a>
-								</div>
-							</td>
-							<td valign="top" id="<%=followList.get(i).get("SEQ")%>"  width="65%">
-								<div style="word-wrap:break-word;word-break:break-all;">
-								<h5 class="title">
-<%									String tempTitle = followList.get(i).get("TITLE")+"";
-									String title = tempTitle;
-									if(tempTitle.length() > 40 ) {
-										title = tempTitle.substring(0,40) + "...";
-									}
-%>
-									<%= title%>
-								</h5>
-<%									String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
-									String content = tempContent;
-									if(tempContent.length() > 100) {
-										content = tempContent.substring(0,100) + "...";
-									}
-%>
-								<p class="summary" style="word-wrap:break-word;word-break:break-all;font-size: 12px;"> <%= content%></p>
-								</div>
-							</td>
-							<td align="right" valign="middle" width="10%" style="font-size: 12px">
-								<%=followList.get(i).get("NAME") %>
-							</td>
-							<td align="right" valign="top" width="10%" style="font-size: 12px;color:#747474 ">
-								<div style="display: block;">
-									<%=followList.get(i).get("WDATE") %>
-								</div>
-							</td>
-						</tr>
-			</tbody>
-<%		}
-	} else {%>
-				<tr>
-					<td align="center">:::이웃의 새 글이 없습니다:::</td>
-				</tr>
-<%	} %>
-			</table>
+		<div style="background-color: #F9FFF7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
+		 <h3 style="text-align: center;" class="text-success"><i class="icon-bullhorn"></i>  이웃새글</h3>
+		 </div>
+		 <div class="clearfix"></div><br>
 		
-			<center> 
-			<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
-			<table id="pageTable">
-				<tbody>
-					<tr>
-						<td style="text-align: center;">
-							<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "/main/followPost.hi", "do_search_page")%>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			</center>
+		<table class="table table-hover" id="followTable">
+			<tbody>
+		<% if(followList != null && followList.size() != 0) {
+			for(int i=0; i<followList.size(); ++i) { %>
+				<tr name="follow_detail" style="cursor:pointer;">
+					<td id="<%=followList.get(i).get("ID")%>" width="15%">
+						<div>
+							<a href="#" class="pull-left">
+							<img src="<%=get_img(followList.get(i).get("CONTENT")+"") %>" width="130px" height="90px" onerror='src="/resources/image/noimg.png"'>
+							</a>
+						</div>
+					</td>
+					<td valign="top" id="<%=followList.get(i).get("SEQ")%>"  width="65%">
+						<div style="word-wrap:break-word;word-break:break-all;">
+							<h5 class="title">
+<%								String tempTitle = followList.get(i).get("TITLE")+"";
+								String title = tempTitle;
+								if(tempTitle.length() > 40 ) {
+									title = tempTitle.substring(0,40) + "...";
+								}
+%>
+							<%= title%>
+							</h5>
+<%								String tempContent = removeTag(followList.get(i).get("CONTENT")+"");
+								String content = tempContent;
+								if(tempContent.length() > 100) {
+									content = tempContent.substring(0,100) + "...";
+								}
+%>
+							<p class="summary" style="word-wrap:break-word;word-break:break-all;font-size: 12px;"> <%= content%></p>
+						</div>
+					</td>
+					<td align="right" valign="middle" width="10%" style="font-size: 12px">
+						<%=followList.get(i).get("NAME") %>
+					</td>
+					<td align="right" valign="top" width="10%" style="font-size: 12px;color:#747474 ">
+						<div style="display: block;">
+							<%=followList.get(i).get("WDATE") %>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+<%		}%>
+<%	} else {%>
+			<tr>
+				<td align="center">:::이웃의 새 글이 없습니다:::</td>
+			</tr>
+<%	} %>
+		</table>
+		
+		<center> 
+		<!-- 총글수, 현제page_no,페이지 사이즈, 10 --> 
+		<table id="pageTable">
+			<tbody>
+				<tr>
+					<td style="text-align: center;">
+						<%=PagingUtil.renderPaging(intTotalCount, page_num, page_size, 5, "/main/followPost.hi", "do_search_page")%>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</center>
 <%
 }
 %> 
-		
 
-		</div>
-	</div>
+
+</div>
 </div>
 <!-- 디테일 클릭시 해당 ID, SEQ 들고 폼전송 구간 Start -->
 <form name="do_detail" method="get" action="">
@@ -786,34 +790,41 @@ function do_search_page(url, page_num) {
 <!-- BEST 블로거 START -->
 <br><br>
 <div class="row" style="background-color: #F6F6F6; border-radius: 15px">
-
-	<div class="col-xs-12">
-    	<div style="background-color: #FCF8F7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
-        	<h3 style="text-align: center;" class="text-danger"><i class="icon-thumbs-up"></i> BEST 블로거 </h3>
-        </div>
-        <br>
 <%
-		for(int i=0; i<bloggerRank.size(); ++i){
+	if(bloggerRank != null){
+%>
+<div class="col-xs-12">
+            <div style="background-color: #FCF8F7;border-radius: 15px;padding-top: 1px;padding-bottom: 5px;margin-top: 10px">
+                <h3 style="text-align: center;" class="text-danger"><i class="icon-thumbs-up"></i> BEST 블로거 </h3>
+            </div>
+            <br>
+<%
+			for(int i=0; i<bloggerRank.size(); ++i){
 %>
 
-		<div class="col-xs-3 text-center">
-	        <center>
-	        <a href="post/main.hi?id=<%=bloggerRank.get(i).get("ID")%>">
-	        <img height="100px" width="100px"  class="img-circle img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" onerror='src="/resources/image/noimg.png"'>
-	        </a>
-	        </center>
-	        
-	        <h4><%=bloggerRank.get(i).get("NAME") %>
-	            <br><small><%=bloggerRank.get(i).get("TITLE") %></small>
-	        </h4>
-	        <p style="word-wrap:break-word;word-break:break-all;"><%=bloggerRank.get(i).get("PF_CONTENT") %></p>
-		</div>
+			<div class="col-xs-3 text-center">
+                <center>
+                <a href="post/main.hi?id=<%=bloggerRank.get(i).get("ID")%>">
+                <img height="100px" width="100px"  class="img-circle img-center" src="<%=bloggerRank.get(i).get("PF_IMAGE") %>" onerror='src="/resources/image/noimg.png"'>
+                </a>
+                </center>
+                
+                <h4><%=bloggerRank.get(i).get("NAME") %>
+                    <br><small><%=bloggerRank.get(i).get("TITLE") %></small>
+                </h4>
+                <p style="word-wrap:break-word;word-break:break-all;"><%=bloggerRank.get(i).get("PF_CONTENT") %></p>
+            </div>
 <%
-		}
+			}
 %>
-	</div>
 </div>
-
+<%
+	}
+%>
+</div>
+</div>
+</div>
+</div>
 <!-- BEST 블로거 END -->
 </div><!-- 컨테이너 -->
 

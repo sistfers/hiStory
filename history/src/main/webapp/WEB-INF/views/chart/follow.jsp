@@ -110,7 +110,7 @@ border-radius: 15px;
 							<input type="date" class="form-control" id="endday" name="endday">
 						</div>
 						<div class="col-xs-4">
-							<button type="submit" class="btn btn-primary"> 조회 </button>
+							<button type="submit" class="btn btn-danger"> 조회 </button>
 						</div>
 					</div>
 				</form>

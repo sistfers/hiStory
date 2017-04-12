@@ -64,7 +64,7 @@ function drawVisualization() {
 ]);
 
 var options = {
-title : '성별 분석',
+title : '성별분석',
 vAxis: {title: '방문수'},
 hAxis: {title: '<%=comment2%> ~ <%=comment1%>'},
 seriesType: 'bars',
@@ -142,7 +142,7 @@ border-radius: 15px;
 		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 		       	
 		       	<fieldset>
-		       	<legend><i class="icon-bar-chart"></i> 연령별/성별 방문자수 통계</legend></fieldset>
+		       	<legend><i class="icon-bar-chart"></i> 방문자수 성별/연령별 통계</legend></fieldset>
 		       	
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">방문자수</p> -->
 		       	
@@ -154,22 +154,24 @@ border-radius: 15px;
 					<div class="col-xs-4">
 						<input type="date" class="form-control" id="startdate" name="startdate">
 					</div>
-					<div class="col-xs-1"><i class="icon-ellipsis-horizontal"></i></div>
+					<div class="col-xs-1"><h4><i class="icon-ellipsis-horizontal"></i></h4></div>
 					<div class="col-xs-4">
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
 					<div class="col-xs-2">
-						<button type="button" class="btn btn-primary" onclick="search()"> 조회 </button>
+						<button type="button" class="btn btn-danger" onclick="search()"> 조회 </button>
 					</div>
 				</div>
 				</form>
 				
 				<!--차트1  -->
+				<center>
 		       	<div class="col-xs-12" id="chart_div" style="height: 500px;"></div>
-		       	
+		       	<br>
+		       	<hr style="border:2px dashed">
 		       	<!--차트2  -->
-		       	<div class="col-xs-12" id="donutchart" style="height: 500px;"></div>
-		       	
+		       	<div class="col-xs-12" id="donutchart" style="height: 600px;"></div>
+		       	</center>
 		       	</div>
 		       	
 			<div class="col-xs-1"></div>

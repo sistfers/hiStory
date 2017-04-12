@@ -285,7 +285,7 @@ function deleteAction(){
 	  checkRow = checkRow + $(this).val()+"," ;
 	});
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-	alert('삭제 ' +checkRow);	
+	// alert('삭제 ' +checkRow);	
 	
 	if(checkRow == ''){
 		alert("삭제할 대상을 선택하세요.");
@@ -329,7 +329,7 @@ function replyAction() {
 	--%>
 	
 	checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); 
-	alert('답장 대상 ' +checkRow);
+	// alert('답장 대상 ' +checkRow);
 	
 	if(checkRow == ''){
 		alert("답장할 대상을 선택하세요.");

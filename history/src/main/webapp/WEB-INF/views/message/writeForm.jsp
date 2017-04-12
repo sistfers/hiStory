@@ -51,9 +51,20 @@ if(session.getAttribute("user") != null) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+function replaceLeftOpenTag(obj) {
+	return obj.replace(/</g, "&lt;");
+}
+function replaceRightOpenTag(obj) {
+	return obj.replace(/>/g, "&gt;");
+}
+
 $(document).ready(function () {
 	$("#sending").on("click", function () {
 	    if (sendCheck()) {
+	    	
+	    	$("#realNote").val(replaceLeftOpenTag($("#realNote").val()));	    	
+	    	$("#realNote").val(replaceRightOpenTag($("#realNote").val()));	    
+	    	
 	        $("#textNote").submit();
 	    }
 	});

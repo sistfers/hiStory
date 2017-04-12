@@ -190,6 +190,10 @@
 		        alert("이메일이 인증되지 않았습니다.");
 			    return false;
 		    }
+		    if ($("#birthday").val().indexOf('-') != 4) {
+		    	alert("날짜포맷이 맞지 않았습니다.");
+			    return false;
+		    }
 			return true;
         }
         function validateEmail(email) {

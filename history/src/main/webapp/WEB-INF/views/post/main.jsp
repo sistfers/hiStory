@@ -309,7 +309,7 @@ function go_delete(){
 		        
 				<hr>		        
 <!-- 포스트 내용 -->
-				<%=postDto.getContent() %>
+				<div style="min-height: 100px"><%=postDto.getContent() %></div>
 				</div>
 
 		        <% if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { %>

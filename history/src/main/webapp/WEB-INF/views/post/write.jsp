@@ -330,6 +330,10 @@ var gfv_count = 1;	//파일 추가 카운트를 위한 전역변수
 	function fn_deleteFile(obj){
 		obj.parent().remove();
 	}
+	
+	function removeTag( html ) {
+		return html.replace(/(<([^>]+)>)/gi, "");
+	}
 </script>
 	
 <script type="text/javascript">
@@ -354,6 +358,8 @@ $("#save").click(function(){
         return false;
    }
 
+   $("#TITLE").val(removeTag($("#TITLE").val()));
+   
    frm.submit();
 });
 

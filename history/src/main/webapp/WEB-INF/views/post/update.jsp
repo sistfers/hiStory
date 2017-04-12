@@ -412,6 +412,10 @@ var gfv_count = $('#fileCnt').val()+1;
 	function fn_deleteFile(obj){
 		obj.parent().remove();
 	}
+	
+	function removeTag( html ) {
+		return html.replace(/(<([^>]+)>)/gi, "");
+	}
 </script>
 	
 <script type="text/javascript">
@@ -434,6 +438,8 @@ $("#save").click(function(){
         ckeditor.focus();
         return false;
    }
+	
+   $("#TITLE").val(removeTag($("#TITLE").val()));
    
    var comSubmit = new ComSubmit("postForm");
 	comSubmit.setUrl("update.hi");

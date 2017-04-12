@@ -67,7 +67,7 @@ border-width: 1px;
 <!--헤더 END-->
 <script>
 	function do_func(ment) {
-		if($("#catename").val()!=null && $("#catename").val()!='' && $("#cateseq").val()!=''){
+		if($("#catename").val()!=null && $("#catename").val().trim()!='' && $("#cateseq").val()!=''){
 			if(ment=='del'){
 				if(confirm("정말 삭제하시겠습니까?")){
 					if(<%=categoryList.size()==1%>){
@@ -85,14 +85,14 @@ border-width: 1px;
 					frm.submit();
 				}
 			}
-		}else if($("#catename").val()==null || $("#catename").val()==''){
+		}else if($("#catename").val()==null || $("#catename").val().trim()==''){
 			alert("카테고리명을 입력하세요");
 		}else{
 			alert("카테고리를 선택하세요");
 		}
 	}
 	function check() {
-		if($("#name").val()!=null && $("#name").val()!=''){
+		if($("#name").val()!=null && $("#name").val().trim()!=''){
 			if(confirm($("#name").val()+" 카테고리를 추가하시겠어요?")){
 				var frm = document.regiCate;
 				frm.submit();
@@ -262,7 +262,7 @@ border-width: 1px;
 									<tr>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"
-										id="optionsRadios1" value="#f7e3a3" <%if(blogdto.getTheme().equals("#f7e3a3")){%>checked="checked"<%} %>></label>
+										id="optionsRadios1" value="#f7e3a3" <%if(blogdto.getTheme().equals("#f7e3a3") || blogdto.getTheme().equals("DEFAULT_THEME")) {%>checked="checked"<%} %>></label>
 										</td>
 										<td style="text-align: center;">
 										<label class="radio-inline"> <input type="radio" name="theme"

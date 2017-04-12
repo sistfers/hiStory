@@ -1,6 +1,8 @@
 package com.hifive.history.repository;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -152,6 +154,17 @@ public class MessageDao implements iDao {
 		logger.debug("[[[search_info    ]]] "+search_info.toString());
 			
 		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
+		for(int i = 0; i < list.size(); i++) {
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+		}
 		
 		return list;
 	}

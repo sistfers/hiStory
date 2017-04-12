@@ -499,6 +499,14 @@ public class MessageControl {
 			List<Map<String, Object>> getList = messageService.hi_select_getlist(search_info);		
 			loger.debug("GETLIST SIZE	-> " + getList.size());	
 			
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(dto.getId());
 			loger.debug("UNREADNOTES	-> " + unReadNotes);	
@@ -551,6 +559,20 @@ public class MessageControl {
 			// 리스트 가져오기
 			List<Map<String, Object>> getList = messageService.hi_select_sendlist(search_info);
 			loger.debug("SENDLIST SIZE 	-> " + getList.size());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
+			loger.debug(getList.toString());
 			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(dto.getId());

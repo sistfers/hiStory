@@ -226,7 +226,7 @@ public class HomeControl {
 		
 		List<Map<String, Object>> searchList = null; 
 		
-		if(only_hashtag.equals("yes") || apiSearch_word.charAt(0)=='#'){
+		if(only_hashtag.equals("yes") || search_word.charAt(1)=='#'){
 			searchList = postSvc.hi_hashtagSearchList(condition);
 		}else{
 			searchList = postSvc.hi_selectSearchList(condition);

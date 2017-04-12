@@ -222,11 +222,11 @@ public class HomeControl {
 		condition.put("PAGE_SIZE", PAGE_SIZE);
 		condition.put("PAGE_NUM", PAGE_NUM);
 		condition.put("SEARCH_WORD", search_word);
-		condition.put("SEARCH_TAG","%#"+apiSearch_word+"#%");
+		condition.put("SEARCH_TAG","%#"+apiSearch_word.replace("#", "")+"#%");
 		
 		List<Map<String, Object>> searchList = null; 
 		
-		if(only_hashtag.equals("yes")){
+		if(only_hashtag.equals("yes") || apiSearch_word.charAt(0)=='#'){
 			searchList = postSvc.hi_hashtagSearchList(condition);
 		}else{
 			searchList = postSvc.hi_selectSearchList(condition);

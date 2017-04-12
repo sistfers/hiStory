@@ -16,8 +16,29 @@
  * @param html
  * @throws Exception  
  */
-	public String removeTag(String html) throws Exception {
-		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+	public String removeTag(String content) throws Exception {
+	Pattern SCRIPTS = Pattern.compile("<script([^'\"]|\"[^\"]*\"|'[^']*')*?</script>",Pattern.DOTALL);
+	Pattern STYLE = Pattern.compile("<style[^>]*>.*</style>",Pattern.DOTALL);
+//		Pattern TAGS = Pattern.compile("<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>");
+	Pattern TAGS = Pattern.compile("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>");
+	Pattern nTAGS = Pattern.compile("<\\w+\\s+[^<]*\\s*>");
+	Pattern ENTITY_REFS = Pattern.compile("&[^;]+;");
+	Pattern WHITESPACE = Pattern.compile("\\s\\s+");		
+
+	Matcher m;
+			
+	m = SCRIPTS.matcher(content);
+	content = m.replaceAll("");
+	m = STYLE.matcher(content);
+	content = m.replaceAll("");
+	m = TAGS.matcher(content);
+	content = m.replaceAll("");
+	m = ENTITY_REFS.matcher(content);
+	content = m.replaceAll("");
+	m = WHITESPACE.matcher(content);
+	content = m.replaceAll(" "); 		
+
+	return content;
 	}
 
 	public String get_img(String content){
@@ -193,7 +214,7 @@
 		<%= title%>
 		</h5>
 <!--글내용 -->		
-		<%String tempContent = removeTag(searchList.get(i).get("CONTENT")+"");
+		<%String tempContent = removeTag((String)searchList.get(i).get("CONTENT"));
 			String content = tempContent;
 			if(tempContent.length() >150){
 				content = tempContent.substring(0,150) + "...";

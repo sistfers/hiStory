@@ -71,8 +71,8 @@ border-radius: 15px;
 					%>
 						<tr class="default">
 							<td><%=i+1 %></td>
-							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>">
-							<%=lovepostList.get(i).get("POSTID")+" "%></a>
+							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("ID")%>">
+							<%=lovepostList.get(i).get("ID")+" "%></a>
 							</td>
 							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>&seq=<%=lovepostList.get(i).get("POST_SEQ")%>">
 							<%=lovepostList.get(i).get("TITLE") %></a>

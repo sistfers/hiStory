@@ -876,26 +876,31 @@ WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 </select>
 
 <select id="getLovePost" parameterType="map" resultType="map">
-	SELECT TT2.*							
-	FROM(							
-      SELECT T1.*, T2.TOT_CNT							
-      FROM(	  
-        SELECT ROWNUM RNUM, A.POST_SEQ, A.ID, TO_CHAR(A.LDATE, 'YYYY-MM-DD') LDATE, B.ID POSTID, B.TITLE
-        FROM LOVE_H A INNER JOIN POST_H B
-          ON A.POST_SEQ = B.SEQ
-       WHERE A.ID = #{id}
-       ) T1 
-       NATURAL JOIN
-       (
-        SELECT COUNT(*) TOT_CNT
-        FROM LOVE_H A INNER JOIN POST_H B
-          ON A.POST_SEQ = B.SEQ
-        WHERE A.ID = #{id}
-        )T2							
-    )TT2							
+SELECT TT2.*							
+  FROM(
+        SELECT ROWNUM RNUM, T1.*, T2.*
+          FROM
+              (
+               SELECT A.POST_SEQ ,B.ID ,B.TITLE ,TO_CHAR(A.LDATE, 'YYYY-MM-DD') LDATE
+               FROM(
+                     SELECT POST_SEQ, LDATE
+                     FROM LOVE_H
+                     WHERE ID = #{id}
+                     ORDER BY LDATE DESC
+                     )A INNER JOIN POST_H B
+               ON A.POST_SEQ = B.SEQ
+               ORDER BY LDATE DESC
+              )T1
+              NATURAL JOIN 
+              (
+                   SELECT COUNT(*) TOT_CNT
+                   FROM LOVE_H A INNER JOIN POST_H B
+                    ON A.POST_SEQ = B.SEQ
+                  WHERE A.ID = #{id}
+             )T2	
+  )TT2
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)							
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
-	ORDER BY LDATE DESC
 </select>
 <select id="getHashTag" resultType="map">
 SELECT HASHTAG

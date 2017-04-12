@@ -8,9 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>블로그 관리/통계</title>
 <%
 	List<Map<String, Object>> lovepostList = new ArrayList<>();
 	lovepostList = (List<Map<String, Object>>)request.getAttribute("lovepostList");
@@ -22,7 +20,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>:::::::::::이웃보기:::::::::::::::</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
 .mydiv{
 width:20%;
@@ -41,10 +42,6 @@ border-radius: 15px;
 <jsp:include page="/header.hi"/>
 <!--헤더 END-->
 
-<!-- 
-태마 버전
-그린 : rgb(224, 239, 208) / rgb(251, 255, 247)
- -->
 <!-- 중간 START -->
    <br><br><br><br>
    <div class="container" >
@@ -54,10 +51,13 @@ border-radius: 15px;
       <!--내용 START -->
         <div class="col-xs-10 mydiv2" style="background-color: <%=blogdto.getTheme()%>;">
 	        <div class="col-xs-1"></div>
-	        <div class="col-xs-10">
+	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;min-height: 500px">
 		        <!-- 포스트-->
-		        <div class="col-xs-12" style="background-color: #ffffff; margin-top:20px; padding-top: 20px; margin-bottom: 20px">
-		 			<p style="font-size: 25px; margin-top: 20px">내가 공감한 글</p>
+		        <div class="col-xs-12" style="background-color: white; padding-top: 20px;">
+<!-- 		 			<p style="font-size: 25px; margin-top: 20px">내가 공감한 글</p> -->
+		 			<fieldset>
+		       	<legend><i class="icon-heart"></i> 내가 공감한 글</legend></fieldset>
+		       	
 					<table class="table table-hover" style="margin-top: 20px" id="neighbor">
 					<tr class="warning">
 						<th>No</th>

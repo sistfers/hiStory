@@ -352,6 +352,7 @@ function go_delete(){
 		        		<td nowrap="nowrap" style="padding-left: 10px">
 		        					<form name="search_hashtag" method="post" action="">
 		        					<input type="hidden" name="search_word" value="<%=str[i]%>">
+		        					<input type="hidden" name="only_hashtag" value="yes">
 		        					<a href="#" name="hashtag"><%="#" + str[i] %></a>
 		        					</form>
 		        		</td>

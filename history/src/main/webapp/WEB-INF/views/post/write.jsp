@@ -332,7 +332,9 @@ var gfv_count = 1;	//파일 추가 카운트를 위한 전역변수
 	}
 	
 	function removeTag( html ) {
-		return html.replace(/(<([^>]+)>)/gi, "");
+		html = html.replaceAll("<", "&lt;");
+		html = html.replaceAll(">", "&gt;");
+		return html;
 	}
 </script>
 	

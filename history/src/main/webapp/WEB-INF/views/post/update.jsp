@@ -414,7 +414,9 @@ var gfv_count = $('#fileCnt').val()+1;
 	}
 	
 	function removeTag( html ) {
-		return html.replace(/(<([^>]+)>)/gi, "");
+		html = html.replaceAll("<", "&lt;");
+		html = html.replaceAll(">", "&gt;");
+		return html;
 	}
 </script>
 	

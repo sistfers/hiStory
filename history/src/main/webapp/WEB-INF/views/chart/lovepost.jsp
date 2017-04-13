@@ -54,30 +54,27 @@ border-radius: 15px;
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;min-height: 500px">
 		        <!-- 포스트-->
 		        <div class="col-xs-12" style="background-color: white; padding-top: 20px;">
-<!-- 		 			<p style="font-size: 25px; margin-top: 20px">내가 공감한 글</p> -->
-		 			<fieldset>
+		 		<fieldset>
 		       	<legend><i class="icon-heart"></i> 내가 공감한 글</legend></fieldset>
 		       	
 					<table class="table table-hover" style="margin-top: 20px" id="neighbor">
 					<tr class="warning">
-						<th>No</th>
-						<th>ID</th>
-						<th>제목</th>
-						<th>공감일</th>
+						<th width="15%" style="text-align: center;">ID</th>
+						<th width="70%" style="text-align: center;">글제목</th>
+						<th width="15%" style="text-align: center;">공감일</th>
 					</tr>
 					<%
 						if(lovepostList!=null && lovepostList.size()!=0){
 							for(int i = 0; i < lovepostList.size(); ++i){
 					%>
 						<tr class="default">
-							<td><%=i+1 %></td>
-							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("ID")%>">
+							<td style="text-align: center;font-weight: bold;"><a href="/post/main.hi?id=<%=lovepostList.get(i).get("ID")%>">
 							<%=lovepostList.get(i).get("ID")+" "%></a>
 							</td>
-							<td><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>&seq=<%=lovepostList.get(i).get("POST_SEQ")%>">
+							<td style="font-size: 13px"><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>&seq=<%=lovepostList.get(i).get("POST_SEQ")%>">
 							<%=lovepostList.get(i).get("TITLE") %></a>
 							</td>
-							<td><%=lovepostList.get(i).get("LDATE") %></td>
+							<td style="font-size: 13px;text-align: center;"><%=lovepostList.get(i).get("LDATE") %></td>
 						</tr>
 					<%
 							}

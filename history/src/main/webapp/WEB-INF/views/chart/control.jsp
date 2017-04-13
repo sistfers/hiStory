@@ -86,7 +86,7 @@ border-width: 1px;
 				}
 			}
 		}else if($("#catename").val()==null || $("#catename").val().trim()==''){
-			alert("카테고리명을 입력하세요");
+			alert("카테고리를 선택하세요");
 		}else{
 			alert("카테고리를 선택하세요");
 		}

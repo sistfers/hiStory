@@ -162,6 +162,9 @@ border-radius: 15px;
 						<button type="button" class="btn btn-danger" onclick="search()"> 조회 </button>
 					</div>
 				</div>
+<!-- 				<div class="form-group"> -->
+<!-- 				<p style="color: red; font-size: 13px; text-align: center;">* 선택한 날짜로부터 7일전까지의 데이터를 확인할 수 있습니다.</p> -->
+<!-- 				</div> -->
 				</form>
 				
 				<!--차트1  -->

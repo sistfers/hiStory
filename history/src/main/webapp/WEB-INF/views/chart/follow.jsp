@@ -113,8 +113,11 @@ border-radius: 15px;
 							<button type="submit" class="btn btn-danger"> 조회 </button>
 						</div>
 					</div>
+				<div class="form-group">
+				<p style="color: red; font-size: 13px; text-align: center;">* 선택한 날짜로부터 7일전까지의 데이터를 확인할 수 있습니다.</p>
+				</div>
 				</form>
-				<div id="chart_div" style="width: 100%; height: 500px;"></div><hr>
+				<div id="chart_div" style="width: 100%; height: 500px;"></div>
 					<div class="col-xs-12">
 		       		
 		        	<h5>이웃증감</h5>

@@ -131,10 +131,10 @@ border-radius: 15px;
 		       	<br>
 		       	
 		       	<form class="form-horizontal" action="visitdown.hi">
-			
-		       		<h5>일별 방문자수</h5> 
-		       		<button type="submit" class="btn btn-danger"> 엑셀로 저장 </button>
-		       		<table class="table table-bordered" style="margin-top: 10px;">
+					<span style="font-size: 13px;float: right;color: green"> * 선택한 날짜로부터 1달치 데이타가 엑셀로 저장됩니다</span><br>
+		       		<span style="font-weight: bold;font-size: 18px">일별 방문자수</span>
+		       		<button type="submit" class="btn btn-success btn-sm" style="float: right;"> 엑셀로 저장 </button>
+		       		<table class="table table-bordered" style="margin-top: 20px;">
 		        	<tr class="info">
 						<td style="font-size: 11px">날짜</td>
 						<%

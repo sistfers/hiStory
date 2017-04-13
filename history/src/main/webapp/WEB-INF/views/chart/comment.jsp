@@ -75,7 +75,7 @@ border-radius: 15px;
 	        <div class="col-xs-10" style="margin-top: 20px; margin-bottom : 20px; background-color: #FCFCFC;min-height: 780px">
 		       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
 		       	<fieldset>
-		       	<legend><i class="icon-bar-chart"></i> 전체</legend></fieldset>
+		       	<legend><i class="icon-bar-chart"></i> 댓글수 순위 전체기간 </legend></fieldset>
 		        <table class="table table-bordered" style="margin-top: 10px;text-align: center;">
 		        	<tr class="danger">
 							<th width="8%" style="text-align: center;">순위</th>
@@ -151,7 +151,9 @@ border-radius: 15px;
 				       		<tr>
 				       		<td><%=i+1 %></td>		        		
 				       		<td style="font-size: 12px"><%=postTodayList.get(i).get("FIELD") %></td>
-				       		<td style="font-size: 14px;text-align: left;"><%=postTodayList.get(i).get("TITLE") %></td>
+				       		<td style="font-size: 14px;text-align: left;">
+				       		<a href="/post/main.hi?id=<%=postTodayList.get(i).get("ID") %>&seq=<%=postTodayList.get(i).get("SEQ") %>">
+				       		<%=postTodayList.get(i).get("TITLE") %></td>
 				       		<td><%=postTodayList.get(i).get("TOTAL_CNT") %></td>
 				       		<td style="font-size: 12px"><%=postTodayList.get(i).get("WDATE") %></td>
 				       		</tr>

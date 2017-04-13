@@ -24,10 +24,13 @@
 
 <img src="/resources/image/logo.png" width="700px">
 <br>
-<h2 style="color: #F4309C"><b>조윤행 ★ 김미현 ★ 박성우 ★ 배한주 ★ 이인재</b></h2> 
+<h3 style="color: #F4309C"><b>조윤행 ★ 김미현 ★ 박성우 ★ 배한주 ★ 이인재</b></h3> 
 
 <h4 style="color: #000F75">쌍용교육센터. 3차 팀 프로젝트</h4>
 <h5 style="color: #000F75">git_hub 기반의 스프링을 활용한 실전 프레임워크 설계와 구축 개발자</h5>
+<br>
+<a href="http://hi-history.com"><h5>http://hi-history.com</h5></a>
+<a href="https://github.com/sistfers/hiStory"><h5>https://github.com/sistfers/hiStory</h5></a>
 </div>
 </center>
 <!--푸터 START -->

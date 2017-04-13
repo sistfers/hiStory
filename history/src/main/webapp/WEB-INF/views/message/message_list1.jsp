@@ -193,13 +193,14 @@ function renderPaging(
 	var url = url_i; // 호출 URL
 	var scriptName = scriptName_i; // 호출 자바스크립트
 
-	var maxPageNo = parseInt(maxNum / rowPerPage) + 1;
-	var startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;
-	var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
-	var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
-	var maxBlockNo = parseInt(((maxNum - 1) / bottomCount)) + 1;
-	
-	// alert(maxPageNo + ", " + startPageNo + ", " + endPageNo + ", " + nowBlockNo + ", " + maxBlockNo);
+	// alert("maxNum " + maxNum +", currPageNo " + currPageNo+", rowPerPage " + rowPerPage+", bottomCount " + bottomCount);
+	var maxPageNo   = parseInt(maxNum / rowPerPage) + 1;
+	var startPageNo = parseInt((currPageNo - 1) / bottomCount) * bottomCount + 1;
+	var endPageNo   = parseInt((currPageNo - 1) / bottomCount + 1) * bottomCount;	
+	var nowBlockNo  = parseInt((currPageNo - 1) / bottomCount) + 1;
+	var maxBlockNo  = parseInt((maxNum - 1) / bottomCount) + 1;
+
+	// alert("maxPageNo " + maxPageNo + ", startPageNo" + startPageNo + ", endPageNo" + endPageNo + ", nowBlockNo" + nowBlockNo + ", maxBlockNo" + maxBlockNo);
 
 	var inx = parseInt("0");
 	var html = "";
@@ -212,7 +213,6 @@ function renderPaging(
 	html +="<td class=\"list_num\">";
 	html +="<ul class=\"pagination pagination-sm\">";	
 	
-	// alert("nowBlockNo > 1 && nowBlockNo <= maxBlockNo " + nowBlockNo > 1 && nowBlockNo <= maxBlockNo);
 	// <<
 	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
 			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\"> ";

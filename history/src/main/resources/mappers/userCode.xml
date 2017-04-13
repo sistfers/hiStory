@@ -47,8 +47,9 @@
 	<select id="hi_login" parameterType="com.hifive.history.model.UserDto" resultType="com.hifive.history.model.UserDto">
 		SELECT ID, PASSWORD, TO_CHAR(BIRTH, 'YYYY/MM/DD') as BIRTH, SEX, NAME, EMAIL, AREA, GRADE, PF_IMAGE, PF_CONTENT
 		FROM  USER_H
-		WHERE ID = #{id} AND PASSWORD = #{password}
+		WHERE ID = #{id}
 	</select>
+
 	<select id="checkGradeCondition" parameterType="String" resultType="map">
 		SELECT couNt(*) CNT
 		FROM POST_H A INNER JOIN LOVE_H B

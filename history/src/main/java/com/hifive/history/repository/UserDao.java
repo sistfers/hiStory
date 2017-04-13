@@ -80,7 +80,6 @@ public class UserDao implements iDao {
 	}
 	
 	public int hi_throwToken(iDto dto) {	
-		
 		String statement = tokenspace +".hi_throwToken";
 		logger.debug("statement"+statement);
 		logger.debug("dto.toString() = "+dto.toString());
@@ -88,18 +87,14 @@ public class UserDao implements iDao {
 	}
 	
 	public iDto hi_searchToken(String id) {	
-		
 		String statement = tokenspace +".hi_searchToken";
 		logger.debug("id"+id);
-//		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.selectOne(statement, id);
 	}
 	
 	public int hi_unlockId(String id) {
-		
 		String statement = tokenspace +".hi_unlockId";
 		logger.debug("id"+id);
-//		logger.debug("dto.toString() = "+dto.toString());
 		return sqlSession.update(statement, id);
 	}
 	public Map<String, Object> checkGradeCondition(String id){

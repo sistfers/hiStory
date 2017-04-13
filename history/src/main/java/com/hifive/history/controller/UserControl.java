@@ -10,6 +10,7 @@ import com.hifive.history.service.*;
 import com.hifive.history.util.EmailSenderUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -62,11 +63,14 @@ public class UserControl {
 			final String resourcePath = "http://hi-history.com/resources/uploadImages/";
 			final String defaultImage = "http://hi-history.com/resources/image/girl.png";
 
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+			String pw = encoder.encode(request.getParameter("password"));
+
 			// 회원 추가
 			UserDto userDto = new UserDto();
 			userDto.setId(request.getParameter("id"));
 			userDto.setName(request.getParameter("name"));
-			userDto.setPassword(request.getParameter("password"));
+			userDto.setPassword(pw);
 			userDto.setEmail(request.getParameter("email"));
 			userDto.setArea(request.getParameter("area"));
 			userDto.setBirth(request.getParameter("birth"));
@@ -98,6 +102,7 @@ public class UserControl {
 			categoryService.hi_insert(categoryDto);
 
 			// 세션에 로그인정보 추가
+			userDto.setPassword(request.getParameter("password"));
 			userDto = (UserDto) userService.hi_login(userDto);
 			model.addAttribute("user", userDto);
 			mav.setViewName("redirect:/");
@@ -117,6 +122,7 @@ public class UserControl {
 			List<String> areaList = new ArrayList<String>();
 			for (int i = 0; i < areaMapList.size(); i++)
 				areaList.add((String) areaMapList.get(i).get("CD_D_NM"));
+
 			mav.addObject("areaList", areaList);
 			mav.setViewName("/user/join");
 		}
@@ -224,11 +230,14 @@ public class UserControl {
 			final String defaultImage = loginUser.getPf_image();
 
 
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+			String pw = encoder.encode(request.getParameter("password"));
+
 			// 회원 추가
 			UserDto userDto = new UserDto();
 			userDto.setId(request.getParameter("id"));
 			userDto.setName(request.getParameter("name"));
-			userDto.setPassword(request.getParameter("password"));
+			userDto.setPassword(pw);
 			userDto.setEmail(request.getParameter("email"));
 			userDto.setArea(request.getParameter("area"));
 			userDto.setBirth(request.getParameter("birth"));
@@ -247,6 +256,7 @@ public class UserControl {
 
 
 			// 세션에 로그인정보 추가
+			userDto.setPassword(request.getParameter("password"));
 			userDto = (UserDto) userService.hi_login(userDto);
 			model.addAttribute("user", userDto);
 			mav.setViewName("redirect:/");

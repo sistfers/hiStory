@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hifive.history.model.TokenDto;
@@ -68,8 +69,14 @@ public class UserService implements iService {
 				userDao.upGrade(condition);
 			}
 		}
-		
-		return userDao.hi_login(dto);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(16);
+
+		String rawPassword = ((UserDto) dto).getPassword();
+		UserDto checkUserDto = (UserDto)userDao.hi_login(dto);
+		if (checkUserDto != null && passwordEncoder.matches(rawPassword, checkUserDto.getPassword()))
+			return checkUserDto;
+		else
+			return null;
 	}
 	
 	

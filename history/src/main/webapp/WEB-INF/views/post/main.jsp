@@ -267,6 +267,7 @@ function go_delete(){
 			        <div class="col-xs-12">
 				        <br><br><br><br><br>
 				        <center><h3>해당 포스트는 비공개 포스트입니다.</h3></center>
+				        <!-- 이건 실행이 안되는데 왜 넣은거야?? 어떻게 실행시킬수 있어?? 방법은??   -->
 			        </div>
 		        <%}else{  %>
 

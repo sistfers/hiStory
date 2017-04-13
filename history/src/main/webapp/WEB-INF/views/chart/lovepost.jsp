@@ -71,7 +71,7 @@ border-radius: 15px;
 							<td style="text-align: center;font-weight: bold;"><a href="/post/main.hi?id=<%=lovepostList.get(i).get("ID")%>">
 							<%=lovepostList.get(i).get("ID")+" "%></a>
 							</td>
-							<td style="font-size: 13px"><a href="/post/main.hi?id=<%=lovepostList.get(i).get("POSTID")%>&seq=<%=lovepostList.get(i).get("POST_SEQ")%>">
+							<td style="font-size: 13px"><a href="/post/main.hi?id=<%=lovepostList.get(i).get("ID")%>&seq=<%=lovepostList.get(i).get("POST_SEQ")%>">
 							<%=lovepostList.get(i).get("TITLE") %></a>
 							</td>
 							<td style="font-size: 13px;text-align: center;"><%=lovepostList.get(i).get("LDATE") %></td>

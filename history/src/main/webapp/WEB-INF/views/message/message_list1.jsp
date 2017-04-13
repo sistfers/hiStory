@@ -97,7 +97,7 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 			});	 */			
 			
 			if (item.length == 0) {
-				alert('item.length ' +item.length);
+				// alert('item.length ' +item.length);
 				$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="20%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
 			}
 			else {
@@ -199,7 +199,7 @@ function renderPaging(
 	var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
 	var maxBlockNo = parseInt(((maxNum - 1) / bottomCount)) + 1;
 	
-	alert(maxPageNo + ", " + startPageNo + ", " + endPageNo + ", " + nowBlockNo + ", " + maxBlockNo);
+	// alert(maxPageNo + ", " + startPageNo + ", " + endPageNo + ", " + nowBlockNo + ", " + maxBlockNo);
 
 	var inx = parseInt("0");
 	var html = "";

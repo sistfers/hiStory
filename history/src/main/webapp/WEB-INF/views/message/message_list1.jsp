@@ -194,7 +194,7 @@ function renderPaging(
 	var scriptName = scriptName_i; // 호출 자바스크립트
 
 	// alert("maxNum " + maxNum +", currPageNo " + currPageNo+", rowPerPage " + rowPerPage+", bottomCount " + bottomCount);
-	var maxPageNo   = parseInt(maxNum / rowPerPage) + 1;
+	var maxPageNo   = parseInt((maxNum - 1) / rowPerPage) + 1;
 	var startPageNo = parseInt((currPageNo - 1) / bottomCount) * bottomCount + 1;
 	var endPageNo   = parseInt((currPageNo - 1) / bottomCount + 1) * bottomCount;	
 	var nowBlockNo  = parseInt((currPageNo - 1) / bottomCount) + 1;

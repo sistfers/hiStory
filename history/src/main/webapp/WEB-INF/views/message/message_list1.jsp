@@ -96,8 +96,8 @@ function do_search_for_filtered(url_i, page_i, take_id_i, words_i) {
 						', name:'+value.NAME+', TOTAL:'+value.TOTAL);
 			});	 */			
 			
-			if (item.length == 0) {
-				alert('item.length ' +item.length);
+			if (item.length == 1) {
+				// alert('item.length ' +item.length);
 				$("#wrapfilteredForm").append('<table id="filteredForm" class="table"><tr class="warning" ><th width="10%" style="text-align: center;"><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAl();" /></th><th width="20%" style="text-align: center;">보낸사람</th><th width="40%" style="text-align: center;">내용</th><th width="20%" style="text-align: center;">날짜</th><th width="10%" style="text-align: center;">읽음</th><tr><td align="center" colspan="5">쪽지가 없습니다.</td></tr>');
 			}
 			else {
@@ -193,13 +193,14 @@ function renderPaging(
 	var url = url_i; // 호출 URL
 	var scriptName = scriptName_i; // 호출 자바스크립트
 
-	var maxPageNo = parseInt(maxNum / rowPerPage) + 1;
-	var startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;
-	var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
-	var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
-	var maxBlockNo = parseInt(((maxNum - 1) / bottomCount)) + 1;
-	
-	alert(maxPageNo + ", " + startPageNo + ", " + endPageNo + ", " + nowBlockNo + ", " + maxBlockNo);
+	// alert("maxNum " + maxNum +", currPageNo " + currPageNo+", rowPerPage " + rowPerPage+", bottomCount " + bottomCount);
+	var maxPageNo   = parseInt(maxNum / rowPerPage) + 1;
+	var startPageNo = parseInt((currPageNo - 1) / bottomCount) * bottomCount + 1;
+	var endPageNo   = parseInt((currPageNo - 1) / bottomCount + 1) * bottomCount;	
+	var nowBlockNo  = parseInt((currPageNo - 1) / bottomCount) + 1;
+	var maxBlockNo  = parseInt((maxNum - 1) / bottomCount) + 1;
+
+	// alert("maxPageNo " + maxPageNo + ", startPageNo" + startPageNo + ", endPageNo" + endPageNo + ", nowBlockNo" + nowBlockNo + ", maxBlockNo" + maxBlockNo);
 
 	var inx = parseInt("0");
 	var html = "";
@@ -212,7 +213,6 @@ function renderPaging(
 	html +="<td class=\"list_num\">";
 	html +="<ul class=\"pagination pagination-sm\">";	
 	
-	// alert("nowBlockNo > 1 && nowBlockNo <= maxBlockNo " + nowBlockNo > 1 && nowBlockNo <= maxBlockNo);
 	// <<
 	if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
 			html +="<li><a href=\"javascript:" + scriptName + "( '" + url+ "', 1,'" + take_id + "','" + words + "');\"> ";

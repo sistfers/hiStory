@@ -115,8 +115,7 @@
 	</sql>
 	
 	<!-- 리스트 불러오기(내용 검색) -->
-	<select id="hi_select_filtered" parameterType="hashmap" resultMap="GetNotes">
-				
+	<select id="hi_select_filtered" parameterType="hashmap" resultMap="GetNotes">				
 		SELECT T1.*
 		  FROM (
 				SELECT T.IDX, T.SEQ, T.SEND_ID, T.TAKE_ID,   T.CONTENTS, 							
@@ -135,19 +134,20 @@
 					        	   AND CONTENTS LIKE '%' || #{words} || '%'						
 					        	 ORDER BY WDATE DESC					
 					           ) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)		
-		 <![CDATA[			                   		
-		 WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
-		 ) T      							
-		 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
-		 ) T1
-		 ]]>
+					     <![CDATA[			                   		
+					 	 WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
+					   ) T      							
+				 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
+			   ) T1 ]]>
+	  ORDER BY T1.SEQ DESC
+					 
 	</select>
 	
 	<!-- 리스트 불러오기(보낸 쪽지) -->
-	<!-- <select id="hi_select_SENDlist" parameterType="String" resultMap="GetNotes" resultOrdered="true">
+	<select id="hi_select_SENDlist" parameterType="String" resultMap="GetNotes">
 		<![CDATA[
 		SELECT T1.*, T2.*
-		  FROM (
+		  FROM ((
 				SELECT T.IDX, T.SEQ,    T.SEND_ID,   T.TAKE_ID, T.CONTENTS, 							
 					   TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
 					   TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
@@ -164,82 +164,51 @@
 					        	   AND SEND_VIEW=0						
 					        	 ORDER BY WDATE DESC				
 		          			   ) LST JOIN USER_H B ON(LST.TAKE_ID=B.ID)			
-		      	 WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
-		       ) T      							
-		 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
-		 ) T1 NATURAL JOIN  
-		 (                                                  
-		  SELECT COUNT(*) TOTAL                                  
-		    FROM MESSAGE_H                        
-		   WHERE SEND_ID=#{SENDID} 
-		     AND SEND_VIEW=0) T2
+		      			 WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
+		       			) T      							
+		 		 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
+				 ) T1 NATURAL JOIN  
+				 (                                                  
+				  SELECT COUNT(*) TOTAL                                  
+				    FROM MESSAGE_H                        
+				   WHERE SEND_ID=#{SENDID} 
+				     AND SEND_VIEW=0) T2)
+			ORDER BY T1.SEQ DESC	     
 		]]>	
-	</select> -->
-	
-	<!-- 리스트 불러오기(보낸 쪽지) -->
-	<select id="hi_select_SENDlist" parameterType="String" resultMap="GetNotes">
-	<![CDATA[
-		SELECT T1.*, T2.*
-		  FROM (
-				SELECT T.IDX,   T.SEQ,  T.SEND_ID,   T.TAKE_ID, T.CONTENTS, 							
-			           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
-			           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-			           T.STATE, T.NAME, T.SEND_VIEW, T.TAKE_VIEW							
-		    	  FROM (							
-				     	SELECT ROWNUM IDX,   LST.SEQ,   	LST.SEND_ID, LST.TAKE_ID, 							
-				               LST.CONTENTS, LST.WDATE, 	LST.RDATE,   LST.STATE,
-				               B.NAME,		 LST.SEND_VIEW, LST.TAKE_VIEW					
-		     			  FROM (							
-					        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, 
-					        		   STATE, SEND_VIEW, TAKE_VIEW							
-					       		  FROM MESSAGE_H							
-					        	 WHERE SEND_ID=#{SENDID}	
-					        	   AND SEND_VIEW=0							
-					        	 ORDER BY WDATE	DESC			
-					           ) LST JOIN USER_H B ON(LST.TAKE_ID=B.ID)			
-				      	 WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
-				       ) T      							
-		 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
-		 ) T1 NATURAL JOIN  
-		 (                                                  
-		  SELECT COUNT(*) TOTAL                                  
-		    FROM MESSAGE_H                        
-		   WHERE SEND_ID=#{SENDID} 
-		     AND SEND_VIEW=0) T2
-		]]>		
 	</select>
 	
 	<!-- 리스트 불러오기(받은 쪽지) -->
 	<select id="hi_select_GETlist" parameterType="String" resultMap="GetNotes">
 		<![CDATA[
 		SELECT T1.*, T2.*
-		  FROM (
-				SELECT T.IDX,   T.SEQ,  T.SEND_ID,   T.TAKE_ID, T.CONTENTS, 							
-			           TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
-			           TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
-			           T.STATE, T.NAME, T.SEND_VIEW, T.TAKE_VIEW							
-		    	  FROM (							
-				     	SELECT ROWNUM IDX,   LST.SEQ,   	LST.SEND_ID, LST.TAKE_ID, 							
-				               LST.CONTENTS, LST.WDATE, 	LST.RDATE,   LST.STATE,
-				               B.NAME,		 LST.SEND_VIEW, LST.TAKE_VIEW					
+		  FROM ((
+				SELECT T.IDX, T.SEQ,    T.SEND_ID,   T.TAKE_ID, T.CONTENTS, 							
+					   TO_CHAR(T.WDATE, 'YYYY-MM-DD') WDATE,							
+					   TO_CHAR(T.RDATE, 'YYYY-MM-DD') RDATE,							
+					   T.STATE, T.NAME, T.SEND_VIEW, T.TAKE_VIEW							
+		   		  FROM (							
+				      	SELECT ROWNUM IDX,   LST.SEQ,   	LST.SEND_ID, LST.TAKE_ID, 							
+				               LST.CONTENTS, LST.WDATE,	 	LST.RDATE,   LST.STATE,
+				               B.NAME,		 LST.SEND_VIEW, LST.TAKE_VIEW								
 		     			  FROM (							
 					        	SELECT SEQ, SEND_ID, TAKE_ID, CONTENTS, WDATE, RDATE, 
 					        		   STATE, SEND_VIEW, TAKE_VIEW							
 					       		  FROM MESSAGE_H							
-					        	 WHERE TAKE_ID=#{TAKEID}
-					        	   AND TAKE_VIEW=0							
-					        	 ORDER BY WDATE	DESC			
-					           ) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
-				      	 WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
-				       ) T      							
-		 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
-		 ) T1 NATURAL JOIN  
-		 (                                                  
-		  SELECT COUNT(*) TOTAL                                  
-		    FROM MESSAGE_H                        
-		   WHERE TAKE_ID=#{TAKEID} 
-		     AND TAKE_VIEW=0) T2
-		]]>		  
+					        	 WHERE TAKE_ID=#{TAKEID}	
+					        	   AND TAKE_VIEW=0						
+					        	 ORDER BY SEQ DESC				
+		          			   ) LST JOIN USER_H B ON(LST.SEND_ID=B.ID)			
+		      	 	WHERE ROWNUM <= (( 10 * (#{PAGE_NUM}-1))+10 )		      							
+			       ) T      							
+			 WHERE T.IDX >= (10 * (#{PAGE_NUM}-1)+1)
+			 ) T1 NATURAL JOIN  
+			 (                                                  
+			  SELECT COUNT(*) TOTAL                                  
+			    FROM MESSAGE_H                        
+			   WHERE TAKE_ID=#{TAKEID} 
+			     AND TAKE_VIEW=0) T2 )
+		ORDER BY T1.SEQ DESC
+		]]>	
 	</select>
 		
 </mapper>

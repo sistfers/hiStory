@@ -258,13 +258,16 @@ function go_delete(){
 				%>
 					<div class="col-xs-12">
 							<br><br><br><br><br><br><br><br><br><br><br><br>
-							<center><h3>해당 카테고리에 포스트가 없습니다.</h3></center>
+							<center><h3>해당 카테고리에 포스트가 없습니다.</h3>
+							<h6 style="color: #050099">{비밀글이거나 이웃공개 글일수 있습니다}</h6>
+							</center>
 					</div>
 		        <%}else if(postDto.getState().equals("1") && userDto == null ||
 				            postDto.getState().equals("1") && !userDto.getId().equals(postDto.getId())){ //비공개 글일때 %>
 			        <div class="col-xs-12">
 				        <br><br><br><br><br>
 				        <center><h3>해당 포스트는 비공개 포스트입니다.</h3></center>
+				        <!-- 이건 실행이 안되는데 왜 넣은거야?? 어떻게 실행시킬수 있어?? 방법은??   -->
 			        </div>
 		        <%}else{  %>
 

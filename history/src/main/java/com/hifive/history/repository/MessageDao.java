@@ -141,6 +141,17 @@ public class MessageDao implements iDao {
 		logger.debug("[[[search_info    ]]] "+search_info.toString());
 		
 		List<Map<String, Object>> list = sqlSession.selectList(statement, search_info);
+		for(int i = 0; i < list.size(); i++) {
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+			logger.debug(list.get(i).get("SEQ") + "");
+		}
 				
 		return list;
 	}	

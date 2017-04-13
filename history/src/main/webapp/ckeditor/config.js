@@ -8,7 +8,6 @@ CKEDITOR.editorConfig = function( config ) {
 	 config.font_defaultLabel='굴림';
 	 config.resize_enabled=false;
 	 config.language='ko';
-	 config.extraPlugins = 'emojione';
 
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';

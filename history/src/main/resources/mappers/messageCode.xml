@@ -26,6 +26,17 @@
 		VALUES(SEQ_MESSAGE.NEXTVAL, #{send_id}, #{take_id}, #{contents}, NULL)
 	</update>
 	
+	<sql id="BaseConditionDetail">
+		<choose>
+			<when test="name == 'bty'">
+				ON (A.SEND_ID=B.ID)
+			</when>
+			<when test="name == 'btn'">
+				ON (A.TAKE_ID=B.ID)
+			</when>
+		</choose>
+	</sql>
+	
 	<!-- 쪽지 읽기 -->
 	<select id="hi_detail" parameterType="int" resultType="com.hifive.history.model.MessageDto">
 		SELECT A.*, B.NAME
@@ -36,7 +47,7 @@
 					   STATE, SEND_VIEW, TAKE_VIEW
 				  FROM MESSAGE_H
 				 WHERE SEQ=#{seq}) A JOIN USER_H B 
-				              	       ON (A.SEND_ID=B.ID)
+				            <include refid="BaseConditionDetail" />
 	</select>	
 	
 	<sql id="BaseConditionFords">

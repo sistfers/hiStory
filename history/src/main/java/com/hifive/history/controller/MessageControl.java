@@ -335,20 +335,21 @@ public class MessageControl {
 			dto.setWdate("");
 			dto.setRdate("");
 			dto.setState("");
-			dto.setName("");
+			dto.setName(bt_yn);
 			dto.setSend_view("");
 			dto.setTake_view("");
 		
 			MessageDto note = new MessageDto();
 			note = (MessageDto) messageService.hi_detail(dto);
 			loger.debug("NOTE	-> ", note);
-		
-			if(note.getState().equals("0")) {
-				messageService.hi_detail_state(note.getSeq(), bt_yn);
-				
+			
+			if(bt_yn.equals("bty")) {
+				if(note.getState().equals("0")) {
+					messageService.hi_detail_state(note.getSeq(), bt_yn);
+				}
 			} else {
 				
-			}	
+			}
 			
 			UserDto user = (UserDto) session.getAttribute("user");
 		

@@ -73,12 +73,59 @@ if(session.getAttribute("user") != null) {
 					<input type="hidden" name="NAME"   value="<%=data.getName() %>"/>
 
 					<div class="form-group">
+					<%
+						if(bt_yn.equals("bty")) {
+					%>
 						<label class="col-lg-2 control-label">보낸사람</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
 								value="<%=data.getSend_id()%>(<%=data.getName()%>)" maxlength="30">
 						</div>
+					</div>		
+					
+					<div class="form-group">
+						<label class="col-lg-2 control-label">보낸날짜</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" 
+								readonly="readonly" value="<%=data.getWdate()%>" maxlength="30">
+						</div>
+					</div>	
+					<%		
+						} else {
+					%>
+						<label class="col-lg-2 control-label">받는사람</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
+								value="<%=data.getTake_id()%>(<%=data.getName()%>)" maxlength="30">
+						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-lg-2 control-label">받은날짜</label>
+						<div class="col-lg-10">
+					<%
+							if(data.getRdate() != null) {
+					%>
+								<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" 
+								readonly="readonly" value="<%=data.getRdate()%>" maxlength="30">
+					<%			
+							} else {
+					%>
+								<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" 
+								readonly="readonly" value="미확인" maxlength="30">
+					<%			
+							}
+					%>
+						</div>
+					</div>
+					<%		
+						}
+					%>
+						<%-- <label class="col-lg-2 control-label">보낸사람</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" readonly="readonly"
+								value="<%=data.getSend_id()%>(<%=data.getName()%>)" maxlength="30">
+						</div> 
+					</div> 
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">보낸날짜</label>
@@ -86,7 +133,7 @@ if(session.getAttribute("user") != null) {
 							<input type="text" class="form-control" id=TAKE_ID name="TAKE_ID" 
 								readonly="readonly" value="<%=data.getWdate()%>" maxlength="30">
 						</div>
-					</div>
+					</div> --%>
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">내용</label>

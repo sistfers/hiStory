@@ -155,18 +155,17 @@ $(document).ready(function() {
 		<br>
 		
 <!-- 첨부 파일 업로드 시작  -->
-		<div class="col-xs-3">
+		<div class="col-xs-3" style="margin-left: 7px; padding-top: 10px;">
 		<label for="field"> 파일 선택 </label>
 		<a href="#" class="btn" id="addFile">파일 추가</a>
 		</div>
 		
-		<div id="fileDiv" class="col-xs-9">
+		<div id="fileDiv" class="col-xs-8" style="padding-top: 10px;">
 			<p>
-				<input type="file" id="file" name="file_0">
+				<input type="file" id="file" name="file_0" class="btn" style="background-color: #FFFFE9">
 			</p>		
 		</div>
-		<div class="col-xs-12">
-		</div>
+		<div class="clearfix"></div>
 <!-- 첨부 파일 업로드 끝  -->		
 		<div class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 			<label for="field"> 주제 선택 </label>
@@ -319,7 +318,7 @@ var gfv_count = 1;	//파일 추가 카운트를 위한 전역변수
 	    console.log("해시태그 ="+$("#tag").val(ts).val());
 	}
 	function fn_addFile(){
-		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+		var str = "<p><input type='file' name='file_"+(gfv_count++)+"' class=\"btn\" style=\"background-color: #FFFFE9\"><a href='#this' class='btn' name='delete'>삭제</a></p>";
 		$("#fileDiv").append(str);
 		$("a[name='delete']").on("click", function(e){ //삭제 버튼
 			e.preventDefault();

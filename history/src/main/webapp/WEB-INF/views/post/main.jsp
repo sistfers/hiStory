@@ -59,6 +59,9 @@
 	// 포스트 내용 1건 보여주기
 	PostDto postDto = (PostDto)request.getAttribute("DTO");
 	
+	//
+	String catest = "0";
+	catest = (String) request.getAttribute("catest");
 
 	int intTotalCount 	= 0;	// 총글수
 	int intTotalCommentCount 	= 0;	// 총댓글수
@@ -236,6 +239,7 @@ function go_delete(){
 			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">
 			        <input type="hidden" name="id" value="<%=id%>">
 			        <input type="hidden" name="postst" value="<%=postDto.getState() %>" />
+			        <input type="hidden" name="catest" value="<%=catest%>">
 		        </form>
 		        <form name="postDeleteForm" action="delete.hi" method="get">				<!-- 글삭제 -->
 			        <input type="hidden" name="seq" value="<%=postDto.getSeq()%>">

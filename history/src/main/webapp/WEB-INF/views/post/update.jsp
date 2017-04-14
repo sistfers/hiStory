@@ -49,7 +49,23 @@
 	PostDto postDto = (PostDto)request.getAttribute("DTO");
 	
 	String state1 = (String) request.getAttribute("state");
+	
+	String catest = (String) request.getAttribute("catest");
+	
+	
 	System.out.println(state1);
+	System.out.println(state1);
+	System.out.println(state1);
+	System.out.println(state1);
+	System.out.println(state1);
+	System.out.println(state1);
+	
+	System.out.println(catest);
+	System.out.println(catest);
+	System.out.println(catest);
+	System.out.println(catest);
+	System.out.println(catest);
+	System.out.println(catest);
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -200,10 +216,10 @@ $(document).ready(function() {
 		                <th scope="row">첨부파일</th>
 		                <td id="fileTr" colspan="3">
 						<input type="hidden" name="IDX" value='<%=postDto.getSeq()%>'>
+						<input type="hidden" name="fileCnt" id="fileCnt" value='<%=postDto.getFileList() == null ? 0: postDto.getFileList().size()%>'>
 <%
 						if (postDto.getFileList() != null && postDto.getFileList().size() > 0) { 
-%>
-				        <input type="hidden" name="fileCnt" id="fileCnt" value='<%=postDto.getFileList().size()%>'>
+%>				     
 <%
 							for(Map<String, Object> map : postDto.getFileList()){
 %>
@@ -261,17 +277,28 @@ $(document).ready(function() {
 	    <div id="openrange" class="form-group col-xs-4" style="margin-left: 7px; padding-top: 10px;">
 	    	<label for="field" id="orange"> 공개범위</label>
 			<select class="form-control" id="STATE" name="state">
-				   <%if(postViewCode.size() != 0){
-					   if(state1.equals("1")) {
-					%> <option value="1">비공개</option>
-			    		<%}else{
-			       			for(int i=0; i<postViewCode.size(); ++i){ %>
-			       				<option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>	
-			       <%	} // for end
-			    		} // if end
-			       	 } else{ %>
-			       <option>오류:::</option>
-			       <%} %>
+				   <%if(postViewCode.size() != 0){					   
+					   // 공개
+					   if(catest.equals("0")) {
+						   for(int i=0; i<postViewCode.size(); ++i){
+							   %>
+							   <option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>	
+							   <%
+						   }
+					   // 비공개   
+					   } else if(catest.equals("1")) {
+						   if(state1.equals("1")) {
+						%>
+							<option value="1">비공개</option>
+						<%	   
+						   }
+					   } else {
+						%>
+							<option>오류:::</option>
+						<%
+					   }
+				   }
+				   %>
 		    </select>
 	    </div>
 	

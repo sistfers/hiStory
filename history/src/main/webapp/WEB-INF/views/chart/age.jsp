@@ -44,9 +44,12 @@
 	// % 구하기
 	Double ppMen 	= (sumMen/totSum)*100;
 	Double ppWomen	= (sumWomen/totSum)*100;
+	if(ppMen.toString().equalsIgnoreCase("NaN")) ppMen = 0.0;
+	if(ppWomen.toString().equalsIgnoreCase("NaN")) ppWomen = 0.0;
 	
 	String d1 = f1.format(ppMen); 
 	String d2 = f1.format(ppWomen);
+	
 // 나이별 통계 
 	Double sum10 = 0.0,sum20 = 0.0,sum30 = 0.0,sum40 = 0.0,sum50 = 0.0;
 	Double totageSum = 0.0;
@@ -63,6 +66,13 @@
 	Double ppsum30 = (sum30/totageSum)*100;
 	Double ppsum40 = (sum40/totageSum)*100;
 	Double ppsum50 = (sum50/totageSum)*100;
+	
+	if(ppsum10.toString().equalsIgnoreCase("NaN")) ppsum10 = 0.0;
+	if(ppsum20.toString().equalsIgnoreCase("NaN")) ppsum20 = 0.0;
+	if(ppsum30.toString().equalsIgnoreCase("NaN")) ppsum30 = 0.0;
+	if(ppsum40.toString().equalsIgnoreCase("NaN")) ppsum40 = 0.0;
+	if(ppsum50.toString().equalsIgnoreCase("NaN")) ppsum50 = 0.0;
+	
 	
 	String age1 = f1.format(ppsum10); 
 	String age2 = f1.format(ppsum20);

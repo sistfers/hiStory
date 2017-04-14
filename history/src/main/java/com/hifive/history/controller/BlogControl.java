@@ -126,6 +126,16 @@ public class BlogControl {
 		String ct_seqString = request.getParameter("ct_seq");
 		Integer ct_seq;
 		
+		logger.debug("ct_seqString");
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		logger.debug(ct_seqString);
+		
 		int	   seq 	= request.getParameter("seq")==null ? 0 : Integer.parseInt(request.getParameter("seq"));
 		HashMap<String,String> dto = new HashMap<>();
 		
@@ -154,21 +164,12 @@ public class BlogControl {
 		PostDto postDto = new PostDto();
 		postDto.setId(ID);
 		
-		
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		logger.debug(postDto.toString());
-		
-		
 		if (ct_seqString == null)
 			ct_seq = 0;
 		else
 			ct_seq = Integer.parseInt(ct_seqString);
+		
+		
 		
 		postDto.setSeq(seq);
 		postDto.setCt_seq(ct_seq);
@@ -179,20 +180,27 @@ public class BlogControl {
 		logger.debug("여기에요여기여기에요여기여기에요여기ㅍ여기에요여기여기에요여기여기에요여기여기에요여기ㅍ"+postDto.toString());
 		
 		PostDto DTO = (PostDto) postSvc.hi_detail(postDto);
-//		logger.debug("PostDto DTO " + DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
-//		logger.debug(DTO.toString());
+		
+		String catest = "0";
+		if(DTO != null) {
+			catest = categoryService.getCategoryRange(DTO.getCt_seq());
+		}
+		
+		
+		logger.debug("catest");
+		logger.debug(catest);
+		logger.debug(catest);
+		logger.debug(catest);
+		logger.debug(catest);
+		logger.debug(catest);
+		logger.debug(catest);
+		logger.debug(catest);
+		logger.debug(catest);
+		
 		
 
-		mav.addObject("DTO"   ,DTO);		
+		mav.addObject("DTO"   ,DTO);	
+		mav.addObject("catest", catest);
 		
 		if(DTO != null){
 			// 해당글의 댓글 보여주기
@@ -515,12 +523,19 @@ public class BlogControl {
 		logger.debug(state);
 		logger.debug(state);
 		logger.debug(state);
-		logger.debug(state);
-		logger.debug(state);
-		logger.debug(state);
-		logger.debug(state);
-		logger.debug(state);
 		
+		String catest = "";
+		catest = request.getParameter("catest");
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		logger.debug("catest " + catest);
+		
+		mav.addObject("catest", catest);
 		mav.addObject("state", state);
 		mav.addObject("DTO"   ,DTO);	
 		mav.setViewName("post/update");

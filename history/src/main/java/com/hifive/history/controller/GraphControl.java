@@ -56,24 +56,42 @@ public class GraphControl {
 		ModelAndView mav = new ModelAndView("chart/visit");
 		
 		Date date = new Date();
+		Date tmp  = new Date();		
+		
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		date.setDate(date.getDate()+1);
+		tmp.setDate(tmp.getDate()+1);
+		
 		String enddate = sd.format(date);
 		
+		
 		if(request.getParameter("enddate")!=null){
+			String nddate = sd.format(tmp);
+			
+			
 			enddate  = request.getParameter("enddate");
+			
 			Date end = sd.parse(enddate);
+			Date nd  = sd.parse(enddate);
+			
 			end.setDate(end.getDate()+1);
+			nd.setDate(end.getDate()-1);
 			
 			enddate = sd.format(end);
+			nddate = sd.format(nd);
+			
+			mav.addObject("enddate", nddate);
 		}
+		loger.debug("enddate");
+		loger.debug(enddate);
+		loger.debug(enddate);
 		
 		HashMap<String,String> dto = new HashMap<>();
 		dto.put("id", user.getId());
 		dto.put("enddate", enddate);
 		
 		List<Map<String,Object>> visitList = visitService.hi_getTodayVisit(dto);
-		mav.addObject("visitList", visitList);
+		mav.addObject("visitList", visitList);			
 		
 		
 		//블로그 타이틀

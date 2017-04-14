@@ -20,10 +20,19 @@
 	visitList = (List<Map<String,Object>>)request.getAttribute("visitList");
 	
 	Date date = new Date();
-	SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-DD");
 	String comment2 = sd.format(date);
 	date.setDate(date.getDate()-7);
 	String comment1 = sd.format(date);
+	
+	
+	
+	Date enddate = null;
+	String enddate_str = "";
+	if(request.getAttribute("enddate") != null){
+		enddate_str = (String)request.getAttribute("enddate");
+		// enddate = sd.parse(enddate_str);
+	}
 	
 	//블로그 테마색 불러오기
 	if(session.getAttribute("user")!=null){
@@ -114,7 +123,8 @@ border-radius: 15px;
 						</div>
 						
 						<div class="col-xs-4" style="margin-left: 0; text-align: left">
-							<input type="date" class="form-control" id="enddate" name="enddate">
+							<input type="date" class="form-control" id="enddate" name="enddate" value="<%=enddate_str == null ? "": enddate_str%>">
+							
 						</div>
 						<div class="col-xs-4">
 							<button type="button" id="search" class="btn btn-danger"> 조회 </button>

@@ -282,7 +282,7 @@ $(document).ready(function() {
 					   if(catest.equals("0")) {
 						   for(int i=0; i<postViewCode.size(); ++i){
 							   %>
-							   <option value="<%=postViewCode.get(i).get("CD_D_ID") %>"><%=postViewCode.get(i).get("CD_D_NM") %></option>	
+							   <option value="<%=postViewCode.get(i).get("CD_D_ID") %>" <%if((postDto.getState().equals(postViewCode.get(i).get("CD_D_ID")+""))) { out.print("selected"); }%>><%=postViewCode.get(i).get("CD_D_NM") %></option>	
 							   <%
 						   }
 					   // 비공개   

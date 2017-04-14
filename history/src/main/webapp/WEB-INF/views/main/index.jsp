@@ -724,11 +724,14 @@ function do_search_page(url, page_num) {
 		var url = url_i; // 호출 URL
 		var scriptName = scriptName_i; // 호출 자바스크립트
 
-		var maxPageNo = ((maxNum - 1) / rowPerPage) + 1;
-		var startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;
-		var endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;
-		var nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;
-		var maxBlockNo = ((maxNum - 1) / bottomCount) + 1;
+		// alert("maxNum " + maxNum +", currPageNo " + currPageNo+", rowPerPage " + rowPerPage+", bottomCount " + bottomCount);
+		var maxPageNo   = parseInt((maxNum - 1) / rowPerPage) + 1;
+		var startPageNo = parseInt((currPageNo - 1) / bottomCount) * bottomCount + 1;
+		var endPageNo   = parseInt((currPageNo - 1) / bottomCount + 1) * bottomCount;	
+		var nowBlockNo  = parseInt((currPageNo - 1) / bottomCount) + 1;
+		var maxBlockNo  = parseInt((maxNum - 1) / bottomCount) + 1;		
+		
+		// alert("maxPageNo " + maxPageNo + ", startPageNo" + startPageNo + ", endPageNo" + endPageNo + ", nowBlockNo" + nowBlockNo + ", maxBlockNo" + maxBlockNo);
 		
 		var inx = parseInt("0");
 		var html = "";

@@ -107,7 +107,7 @@ border-radius: 15px;
 							<i class="icon-calendar" style="font-size: 35px; margin-top: 5px"></i>
 						</div>
 						<div class="col-xs-4">
-							<input type="date" class="form-control" id="endday" name="endday">
+							<input type="date" class="form-control" id="enddate" name="enddate">
 						</div>
 						<div class="col-xs-4">
 							<button type="button" id="search" class="btn btn-danger"> 조회 </button>
@@ -172,7 +172,7 @@ border-radius: 15px;
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#search").on("click", function () {
-		if ($("#endday").val().indexOf('-') != 4) {
+		if ($("#enddate").val().indexOf('-') != 4) {
 	    	alert("날짜포맷이 맞지 않았습니다.");
 		    return false;
 	    }else{

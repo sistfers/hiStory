@@ -139,16 +139,7 @@ chart.draw(data, options);
       }
 </script>
 
-<script>
-	function search() {
-		if($("#startdate").val()<$("#enddate").val()){
-			var frm = document.agechart;
-			frm.submit();
-		}else{
-			alert("기간을 확인하세요");
-		}
-	}
-</script>
+
 
 <title>블로그 관리/통계</title>
 <style type="text/css">
@@ -230,7 +221,7 @@ em { font-style: normal; }
 		       	
 		       	<!-- <p style="font-size: 25px; margin-top: 20px">방문자수</p> -->
 		       	
-		       	<form class="form-horizontal" method="post" action="age.hi" name="agechart">
+		       	<form class="form-horizontal" method="post" action="age.hi" name="agechart" id="agechart">
 		       	<div class="form-group" id="" style="margin-top: 10px">
 						<div class="col-xs-1" style="text-align: right;margin-right: 0">
 							<i class="icon-calendar" style="font-size: 35px; margin-top: 5px"></i>
@@ -243,7 +234,7 @@ em { font-style: normal; }
 						<input type="date" class="form-control" id="enddate" name="enddate">
 					</div>
 					<div class="col-xs-2">
-						<button type="button" class="btn btn-danger" onclick="search()"> 조회 </button>
+						<button type="button"  id="search" class="btn btn-danger"> 조회 </button>
 					</div>
 				</div>
 				</form>
@@ -368,5 +359,23 @@ em { font-style: normal; }
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>	
 <!--푸터 START -->
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#search").on("click", function () {
+		if($("#startdate").val()<$("#enddate").val()){
+			if ($("#startdate").val().indexOf('-') != 4 || $("#enddate").val().indexOf('-') != 4) {
+		    	alert("날짜포맷이 맞지 않았습니다.");
+			    return false;
+		    }else{
+		    	$("#agechart").submit();
+		    }
+		}else{
+			alert("기간을 확인하세요");
+		}
+	});
+});
+</script>
+
 </body>
 </html>

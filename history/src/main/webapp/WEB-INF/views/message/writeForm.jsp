@@ -307,6 +307,8 @@ function in_follow(followId) {
 			<div class="col-xs-8">
 				<form id="textNote" action="write.hi" method="post" class="form-horizontal">
 					<input type="hidden" name="SEND_ID" value="<%=SENDID %>" />
+					
+
 					<div class="form-group">
 						<label class="col-lg-2 control-label">받는사람</label>
 						<div class="col-lg-7">
@@ -348,7 +350,10 @@ function in_follow(followId) {
 							</div>
 						</div>
 					</div>
-
+					<div class="form-group">
+					<div class="col-lg-2"></div> 
+					<div class="col-lg-10" style="font-size: 12px;color: #003399">* 최대5명에게 그룹쪽지를 보낼수 있습니다.</div></div>
+					
 					<div id="wrap" class="form-group">
 						<label class="col-lg-2 control-label">내용</label>
 						<div class="col-lg-10">

@@ -564,7 +564,7 @@ function go_delete(){
 						<%-- <td><%=i+1 %></td> --%>
 						<td align="left">
 						<div style="word-wrap:break-word;word-break:break-all;">
-							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>&ct_seq=<%=ct_seq%>"> <%=mapdatas.get("TITLE") %></a>
+							<a href="/post/main.hi?seq=<%=mapdatas.get("SEQ") %>&id=<%=id%>&PAGE_NUM=<%=page_num%>"> <%=mapdatas.get("TITLE") %></a>
 							<span style="color: #212121; font-weight: bold; font-size: 10px"> (<%=mapdatas.get("CO_CNT") %>)</span>
 
 							<%

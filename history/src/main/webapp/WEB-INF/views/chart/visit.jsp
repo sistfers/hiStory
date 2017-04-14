@@ -107,7 +107,7 @@ border-radius: 15px;
 		       	<fieldset>
 		       	<legend><i class="icon-bar-chart"></i> 방문자수 통계</legend></fieldset>
 		       	
-		       	<form class="form-horizontal" method="post" action="visit.hi">
+		       	<form class="form-horizontal" id="search_form" method="post" action="visit.hi">
 			       	<div class="form-group" id="startdate" style="margin-top: 10px">
 						<div class="col-xs-4" style="text-align: right;margin-right: 0">
 							<i class="icon-calendar" style="font-size: 35px; margin-top: 5px"></i>
@@ -117,7 +117,7 @@ border-radius: 15px;
 							<input type="date" class="form-control" id="enddate" name="enddate">
 						</div>
 						<div class="col-xs-4">
-							<button type="submit" class="btn btn-danger"> 조회 </button>
+							<button type="button" id="search" class="btn btn-danger"> 조회 </button>
 						</div>
 					</div>
 				<div class="form-group">
@@ -171,5 +171,18 @@ border-radius: 15px;
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>
 <!--푸터 START -->
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#search").on("click", function () {
+		if ($("#enddate").val().indexOf('-') != 4) {
+	    	alert("날짜포맷이 맞지 않았습니다.");
+		    return false;
+	    }else{
+	    	$("#search_form").submit();
+	    }
+	});
+});
+</script>
 </body>
 </html>

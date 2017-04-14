@@ -56,17 +56,6 @@ border-radius: 15px;
 }
 </style>
 
-<script>
-	function search() {
-		if($("#startdate").val()<$("#enddate").val()){
-			var frm = document.lovechart;
-			frm.submit();
-		}else{
-			alert("기간을 확인하세요");
-		}
-	}
-</script>
-
 </head>
 <body>
 <!--헤더 START-->
@@ -129,7 +118,7 @@ border-radius: 15px;
 			        <hr style="border:2px dashed">
 			       
 			       	<div class="col-xs-12" style="background-color: white; padding-top: 20px;">
-			        <form class="form-horizontal" method="post" action="love.hi" name="lovechart">
+			        <form class="form-horizontal" method="post" action="love.hi" id="lovechart" name="lovechart">
 			<!--        	<p style="font-size: 25px; margin-top: 20px">기간별 조회</p> -->
 			       	
 			       	<fieldset>
@@ -147,7 +136,7 @@ border-radius: 15px;
 							<input type="date" class="form-control" id="enddate" name="enddate">
 						</div>
 						<div class="col-xs-3">
-							<button type="button" class="btn btn-primary btn-block" onclick="search()"> 조회 </button>
+							<button type="button" class="btn btn-primary btn-block" id="search"> 조회 </button>
 						</div>
 					</div>
 				
@@ -204,5 +193,23 @@ border-radius: 15px;
 <!--푸터 START -->
 <jsp:include page="../main/footer.jsp"/>	
 <!--푸터 START -->
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#search").on("click", function () {
+		if($("#startdate").val()<$("#enddate").val()){
+			if ($("#startdate").val().indexOf('-') != 4 || $("#enddate").val().indexOf('-') != 4) {
+		    	alert("날짜포맷이 맞지 않았습니다.");
+			    return false;
+		    }else{
+		    	$("#lovechart").submit();
+		    }
+		}else{
+			alert("기간을 확인하세요");
+		}
+	});
+});
+</script>
+
 </body>
 </html>

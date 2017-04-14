@@ -232,8 +232,7 @@ public class UserControl {
 			final String defaultImage = loginUser.getPf_image();
 
 
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-			String pw = encoder.encode(request.getParameter("password"));
+			String pw = passwordEncoder.encode(request.getParameter("password"));
 
 			// 회원 추가
 			UserDto userDto = new UserDto();

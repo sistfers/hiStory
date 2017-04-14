@@ -30,7 +30,7 @@ import com.hifive.history.service.UserService;
 @Controller
 public class MessageControl {
 	
-	Logger loger = LoggerFactory.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	UserService userService;
@@ -44,19 +44,19 @@ public class MessageControl {
 //		Gson gson = new Gson();
 //		
 //		
-//		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
-//		loger.debug("----------------------------------------------------------");
+//		logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
+//		logger.debug("----------------------------------------------------------");
 //		
 //		return gson.toJson("hi");
 //	}
 	
-	// loger debug
+	// logger debug
 	@RequestMapping(value="message/filtered.hi", method=RequestMethod.POST,
 			produces = "application/json; charset=utf8")
 	public @ResponseBody String do_filtered(HttpServletRequest res) {
 		
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/filtered.hi");	
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/filtered.hi");
 				
 		
 		String condi = res.getParameter("condi");
@@ -76,24 +76,24 @@ public class MessageControl {
 		search_info.put("id", id);
 		search_info.put("PAGE_NUM", page);
 		
-		loger.debug("[[[condi     ]]] " + condi);
-		loger.debug("[[[words     ]]] " + words);
-		loger.debug("[[[id	      ]]] " + id);
-		loger.debug("[[[PAGE_NUM  ]]] " + page);		
+		logger.debug("[[[condi     ]]] " + condi);
+		logger.debug("[[[words     ]]] " + words);
+		logger.debug("[[[id	      ]]] " + id);
+		logger.debug("[[[PAGE_NUM  ]]] " + page);
 		
 		List<Map<String, Object>> filteredList = messageService.hi_select_filtered(search_info);
 		
 		// 내가 입력한 검색어를 넣어보자
 		Map<String, Object> inputWords = new HashMap<String, Object>();
 		inputWords.put("INPUTWORDS", words);
-		loger.debug("[[[INPUTWORDS  ]]] " + inputWords.toString());
+		logger.debug("[[[INPUTWORDS  ]]] " + inputWords.toString());
 		filteredList.add(inputWords);
 		
 		Gson gson = new Gson();
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/filtered.hi");
+		logger.debug("----------------------------------------------------------");
 		
 		return gson.toJson(filteredList);
 	}	
@@ -102,8 +102,8 @@ public class MessageControl {
 	@RequestMapping("message/writeForm.hi")
 	public ModelAndView do_write_ready(HttpServletRequest res) {
 		
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/writeForm.hi");	
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/writeForm.hi");
 		
 		
 		ModelAndView mav = new ModelAndView();
@@ -115,7 +115,7 @@ public class MessageControl {
 			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(dto.getId());
-			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			logger.debug("UNREADNOTES	-> " + unReadNotes);
 			
 		/* 
 		 * 사용자로부터 답장(1개 이상) 요청
@@ -126,7 +126,7 @@ public class MessageControl {
 		 */
 		if(res.getParameter("list") != null) {
 			String list = res.getParameter("list");
-			loger.debug("답장 보낼 대상	-> "+ list);
+			logger.debug("답장 보낼 대상	-> "+ list);
 			
 			String values[] = list.split(",");					
 			String ids = "";
@@ -136,13 +136,13 @@ public class MessageControl {
 //				ids = ids + values[i].substring(1, lastIdx) + ",";
 				ids = ids + values[i] + ",";
 				
-//				loger.debug("VALUES LIST	-> " + values[i].substring(0, lastIdx));
-				loger.debug("VALUES LIST	-> " + values[i]);
-				loger.debug("IDS LIST	-> " + ids);
+//				logger.debug("VALUES LIST	-> " + values[i].substring(0, lastIdx));
+				logger.debug("VALUES LIST	-> " + values[i]);
+				logger.debug("IDS LIST	-> " + ids);
 			}
 			
 			ids = ids.substring(0, ids.lastIndexOf(","));
-			loger.debug("TAKEID		-> " + ids);
+			logger.debug("TAKEID		-> " + ids);
 			
 			mav.setViewName("/message/writeForm");
 			mav.addObject("TAKEID", ids);	
@@ -164,13 +164,13 @@ public class MessageControl {
 			mav.addObject("UNREADNOTES", unReadNotes);
 		}
 		} else {
-			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
+			logger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
 			mav.setViewName("/main/login");
 		}
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/writeForm.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/writeForm.hi");
+		logger.debug("----------------------------------------------------------");
 
 		return mav;
 	}
@@ -178,8 +178,8 @@ public class MessageControl {
 	@RequestMapping("message/write.hi")
 	public ModelAndView do_write(HttpServletRequest res) {
 		
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/write.hi");
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/write.hi");
 		
 		
 		String SENDID = "";
@@ -189,15 +189,15 @@ public class MessageControl {
 		SENDID = res.getParameter("SEND_ID");
 		TAKEID = res.getParameter("TAKE_ID");		
 		note   = res.getParameter("NOTE");
-		loger.debug("SENDID -> " + SENDID);
-		loger.debug("TAKEID -> " + TAKEID);
-		loger.debug("NOTE   -> " + note);
+		logger.debug("SENDID -> " + SENDID);
+		logger.debug("TAKEID -> " + TAKEID);
+		logger.debug("NOTE   -> " + note);
 		
 		
 		ModelAndView mav = new ModelAndView();
 		String[] arrIdx = TAKEID.split(",");
 		for(int i = 0; i < arrIdx.length; i++) {
-			loger.debug("ARRIDX -> " + arrIdx[i]);
+			logger.debug("ARRIDX -> " + arrIdx[i]);
 		}
 		/*
 		 * 
@@ -209,7 +209,7 @@ public class MessageControl {
 		int result[] = new int[arrIdx.length];
 		
 		if(arrIdx.length > 1) {	
-			loger.debug("=== 전체  쪽지 ===");
+			logger.debug("=== 전체  쪽지 ===");
 			
 			for (int i = 0; i < arrIdx.length; i++) {
 				MessageDto dto = new MessageDto();
@@ -242,7 +242,7 @@ public class MessageControl {
 			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(SENDID);
-			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			logger.debug("UNREADNOTES	-> " + unReadNotes);
 			
 			mav.setView(new RedirectView(("send.hi")));
 			for(int i = 0; i < arrIdx.length; i++) {
@@ -250,17 +250,17 @@ public class MessageControl {
 					String str = blackIds.toString();
 					str = str.substring(0, str.length() - 1);
 					
-					loger.debug("String str  -> " + str);
+					logger.debug("String str  -> " + str);
 					mav.addObject("blackIds", str);				
 					mav.addObject("UNREADNOTES", unReadNotes);
 					mav.setViewName("/message/writeForm");
 					
-					loger.debug("BLACKIDS(str)  -> " + str);
+					logger.debug("BLACKIDS(str)  -> " + str);
 					break;
 				}					
 			}	
 		} else {
-			loger.debug("=== 단일  쪽지 ===");
+			logger.debug("=== 단일  쪽지 ===");
 			
 			MessageDto dto = new MessageDto();
 			dto.setSeq(0);
@@ -279,7 +279,7 @@ public class MessageControl {
 			condition.put("id", arrIdx[0]);
 			
 			int flag   = userService.hi_usercheck(condition);	
-			loger.debug("FLAG	->	" + flag);
+			logger.debug("FLAG	->	" + flag);
 			
 			if(flag == 1) {
 				// 유효 아이디
@@ -291,7 +291,7 @@ public class MessageControl {
 			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(SENDID);
-			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			logger.debug("UNREADNOTES	-> " + unReadNotes);
 			
 			if(result[0] == 1) {
 				mav.setView(new RedirectView(("send.hi")));
@@ -302,13 +302,13 @@ public class MessageControl {
 				mav.addObject("UNREADNOTES", unReadNotes);
 				mav.setViewName("/message/writeForm");
 				
-				loger.debug("BLACKIDS(str)  -> " + str);
+				logger.debug("BLACKIDS(str)  -> " + str);
 			}
 		}						
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/write.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/write.hi");
+		logger.debug("----------------------------------------------------------");
 		
 		
 		return mav;
@@ -319,8 +319,8 @@ public class MessageControl {
 			@RequestParam(value = "note", required=true) int seq,
 			@RequestParam(value = "show", required=true) String bt_yn) {
 	
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");	
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/read.hi");
 		
 		
 		ModelAndView mav = new ModelAndView();
@@ -341,7 +341,7 @@ public class MessageControl {
 		
 			MessageDto note = new MessageDto();
 			note = (MessageDto) messageService.hi_detail(dto);
-			loger.debug("NOTE	-> ", note);
+			logger.debug("NOTE	-> ", note);
 			
 			if(bt_yn.equals("bty")) {
 				if(note.getState().equals("0")) {
@@ -355,7 +355,7 @@ public class MessageControl {
 		
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(user.getId());
-			loger.debug("UNREADNOTES	-> " + unReadNotes);
+			logger.debug("UNREADNOTES	-> " + unReadNotes);
 			
 			mav.setViewName("/message/read");
 			mav.addObject("NOTE", note);	
@@ -363,11 +363,11 @@ public class MessageControl {
 			mav.addObject("UNREADNOTES", unReadNotes);
 			
 			
-			loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
-			loger.debug("----------------------------------------------------------");
+			logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/read.hi");
+			logger.debug("----------------------------------------------------------");
 		
 		} else {
-			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
+			logger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
 			mav.setViewName("/main/login");
 		}
 		
@@ -382,11 +382,11 @@ public class MessageControl {
 			@RequestParam(value = "to", required=true) 
 						String to) {
 		
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/delete.hi");	
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/delete.hi");
 				
-		loger.debug("paramMap	-> "+paramMap.toString());
-		loger.debug("to			-> "+to.toString());
+		logger.debug("paramMap	-> "+paramMap.toString());
+		logger.debug("to			-> "+to.toString());
 		
 		String[] arrIdx = paramMap.split(",");
 		for (int i = 0; i < arrIdx.length; i++) {		
@@ -435,8 +435,8 @@ public class MessageControl {
 		mav.setView(new RedirectView((to+".hi")));
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/delete.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/delete.hi");
+		logger.debug("----------------------------------------------------------");
 		
 		return mav;
 	}
@@ -449,11 +449,11 @@ public class MessageControl {
 			@RequestParam(value = "to", required=true) 
 			String to) {
 		
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/reply.hi");	
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: message/reply.hi");
 		
 		
-		loger.debug("paramMap -> "+paramMap.toString());
+		logger.debug("paramMap -> "+paramMap.toString());
 		String[] arrIdx = paramMap.split(",");
 		for (int i = 0; i < arrIdx.length; i++) {
 			int result = messageService.hi_delete(Integer.parseInt(arrIdx[i]));
@@ -463,8 +463,8 @@ public class MessageControl {
 		mav.setView(new RedirectView((to+".hi")));
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: message/reply.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: message/reply.hi");
+		logger.debug("----------------------------------------------------------");
 		
 		return mav;
 	}	
@@ -472,8 +472,8 @@ public class MessageControl {
 	@RequestMapping("message/receive.hi")
 	public ModelAndView do_search(HttpServletRequest res) {
 			
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: receive.hi");		
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: receive.hi");
 		
 			
 		ModelAndView mav = new ModelAndView();			
@@ -485,7 +485,7 @@ public class MessageControl {
 		
 		HttpSession session = res.getSession(true); 	
 		if(session.getAttribute("user") != null) {
-			loger.debug("SESSION INFO	-> " + session.toString());
+			logger.debug("SESSION INFO	-> " + session.toString());
 			
 			UserDto dto = (UserDto) session.getAttribute("user");
 			
@@ -493,24 +493,24 @@ public class MessageControl {
 			
 			search_info.put("PAGE_NUM", PAGE_NUM);
 			search_info.put("TAKEID", dto.getId());
-			loger.debug("TAKEID			-> " + dto.getId());
-			loger.debug("SEARCH_INFO	-> " + search_info.toString());
+			logger.debug("TAKEID			-> " + dto.getId());
+			logger.debug("SEARCH_INFO	-> " + search_info.toString());
 			
 			// 리스트 가져오기
 			List<Map<String, Object>> getList = messageService.hi_select_getlist(search_info);		
-			loger.debug("GETLIST SIZE	-> " + getList.size());	
+			logger.debug("GETLIST SIZE	-> " + getList.size());
 			
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
 			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(dto.getId());
-			loger.debug("UNREADNOTES	-> " + unReadNotes);	
+			logger.debug("UNREADNOTES	-> " + unReadNotes);
 			
 			mav.setViewName("/message/message_list1");
 			mav.addObject("GETLIST", getList);
@@ -518,13 +518,13 @@ public class MessageControl {
 			mav.addObject("UNREADNOTES", unReadNotes);
 			
 		} else {
-			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
+			logger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
 			mav.setViewName("/main/login");
 		}	
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: receive.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: receive.hi");
+		logger.debug("----------------------------------------------------------");
 		
 		return mav;		
 	}
@@ -533,8 +533,8 @@ public class MessageControl {
 	@RequestMapping("message/send.hi")
 	public ModelAndView messageList(HttpServletRequest res) {
 		
-		loger.debug("----------------------------------------------------------");
-		loger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: send.hi");		
+		logger.debug("----------------------------------------------------------");
+		logger.debug("<<S..<<T..<<A..<<R..<<T..<<.. REQUEST: send.hi");
 		
 		
 		ModelAndView mav = new ModelAndView();
@@ -546,7 +546,7 @@ public class MessageControl {
 		
 		HttpSession session = res.getSession(true); 
 		if(session.getAttribute("user") != null) {
-			loger.debug("SESSION INFO	-> " + session.toString());
+			logger.debug("SESSION INFO	-> " + session.toString());
 			
 			UserDto dto = (UserDto) session.getAttribute("user");
 			
@@ -554,30 +554,30 @@ public class MessageControl {
 			
 			search_info.put("PAGE_NUM", PAGE_NUM);
 			search_info.put("SENDID", dto.getId());
-			loger.debug("SENDID	 		-> " + dto.getId());
-			loger.debug("SEARCH_INFO	-> " + search_info.toString());
+			logger.debug("SENDID	 		-> " + dto.getId());
+			logger.debug("SEARCH_INFO	-> " + search_info.toString());
 			
 			// 리스트 가져오기
 			List<Map<String, Object>> getList = messageService.hi_select_sendlist(search_info);
-			loger.debug("SENDLIST SIZE 	-> " + getList.size());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
-			loger.debug(getList.toString());
+			logger.debug("SENDLIST SIZE 	-> " + getList.size());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
+			logger.debug(getList.toString());
 			
 			// 미확인 쪽지
 			int unReadNotes = messageService.hi_unread_note(dto.getId());
-			loger.debug("UNREADNOTES	-> " + unReadNotes);	
+			logger.debug("UNREADNOTES	-> " + unReadNotes);
 			
 			mav.setViewName("/message/message_list2");
 			mav.addObject("GETLIST", getList);
@@ -585,13 +585,13 @@ public class MessageControl {
 			mav.addObject("UNREADNOTES", unReadNotes);
 			
 		} else {
-			loger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
+			logger.debug("SESSION.GETATTRIBUTE(USER) -> NULL");
 			mav.setViewName("/main/login");
 		}		
 		
 		
-		loger.debug("<<E..<<N..<<D..<<.. REQUEST: send.hi");
-		loger.debug("----------------------------------------------------------");
+		logger.debug("<<E..<<N..<<D..<<.. REQUEST: send.hi");
+		logger.debug("----------------------------------------------------------");
 		
 		return mav;	
 	}

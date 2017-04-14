@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,13 @@ import com.hifive.history.repository.UserDao;
 @Service
 public class UserService implements iService {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public int hi_insert(iDto dto) {
@@ -69,13 +76,18 @@ public class UserService implements iService {
 				userDao.upGrade(condition);
 			}
 		}
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(16);
+
+		logger.debug("user service에서 bcryptpasswordencoder 선언 전");
+		logger.debug("user service에서 bcryptpasswordencoder 선언 후");
 
 		String rawPassword = ((UserDto) dto).getPassword();
 		UserDto checkUserDto = (UserDto)userDao.hi_login(dto);
-		if (checkUserDto != null && passwordEncoder.matches(rawPassword, checkUserDto.getPassword()))
+
+		logger.debug("user service에서 matches 호출 전");
+		if (checkUserDto != null && passwordEncoder.matches(rawPassword, checkUserDto.getPassword())) {
+			logger.debug("user service에서 matches 호출 후");
 			return checkUserDto;
-		else
+		} else
 			return null;
 	}
 	

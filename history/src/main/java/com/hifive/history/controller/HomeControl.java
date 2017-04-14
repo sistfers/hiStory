@@ -29,7 +29,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.hifive.history.model.SearchDto;
 import com.hifive.history.model.UserDto;
-import com.hifive.history.model.iDto;
 import com.hifive.history.portal.Channel;
 import com.hifive.history.portal.Item;
 import com.hifive.history.portal.Rss;
@@ -44,7 +43,7 @@ import com.hifive.history.service.UserService;
 @Controller
 @SessionAttributes("user")
 public class HomeControl {
-	Logger loger = LoggerFactory.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	SearchService searchSvc;
@@ -142,7 +141,9 @@ public class HomeControl {
 			loginDto.setId(id);
 			loginDto.setPassword(password);
 
+			logger.debug("로그인 메소드 실행 전");
 			UserDto userDto = (UserDto)userService.hi_login(loginDto);
+			logger.debug("로그인 메소드 실행 후");
 			if (userDto == null) {
 				mav.addObject("fail", "아이디 혹은 패스워드를 확인해 주세요.");
 				return mav;
@@ -211,12 +212,12 @@ public class HomeControl {
 			
 			int flag = searchSvc.hi_insert(dto);
 			
-			if(flag > 0) loger.debug("단어 인썰트 성공~~~~~~~~~~~~~~~~~~~~~~쑤아뤼");	
+			if(flag > 0) logger.debug("단어 인썰트 성공~~~~~~~~~~~~~~~~~~~~~~쑤아뤼");
 		}
 		//검색어 기록에 추가 end
 		
 		PAGE_NUM		= (res.getParameter("PAGE_NUM")==null || res.getParameter("PAGE_NUM").equals("")) ? "1" : res.getParameter("PAGE_NUM");	//페이지NUM
-		loger.debug("들어왔다!!!!!!! 단어는 ::"+ search_word);
+		logger.debug("들어왔다!!!!!!! 단어는 ::"+ search_word);
 		Map<String, Object> condition = new HashMap();
 		
 		condition.put("PAGE_SIZE", PAGE_SIZE);
@@ -233,7 +234,7 @@ public class HomeControl {
 		}
 		
 		for(int i=0; i<searchList.size(); ++i){
-			loger.debug(i+"번째 blog_title" + searchList.get(i).get("blog_title"));
+			logger.debug(i+"번째 blog_title" + searchList.get(i).get("blog_title"));
 		}
 		
 		mav.setViewName("/main/home_search");
@@ -269,9 +270,9 @@ public class HomeControl {
 			  items=(List<Item>) channel.getItem();
 			  for(Item item:items)
 			  {
-				  loger.debug("::::"+item.getTitle());
-				  loger.debug("::::"+item.getPostdate());
-				  loger.debug("::::"+item.getBloggername());
+				  logger.debug("::::"+item.getTitle());
+				  logger.debug("::::"+item.getPostdate());
+				  logger.debug("::::"+item.getBloggername());
 			  }
         }catch(Exception e){
         	

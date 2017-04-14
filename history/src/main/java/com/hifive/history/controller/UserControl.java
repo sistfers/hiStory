@@ -51,7 +51,10 @@ public class UserControl {
 	CategoryService categoryService;
 	
 	@Autowired
-	EmailSenderUtil emailSenderUtil;	
+	EmailSenderUtil emailSenderUtil;
+
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 
 	@RequestMapping(value = "user/join.hi", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView join(HttpServletRequest request, @RequestParam(value="profileImg", required=false) MultipartFile imageFile, Model model) throws Exception {
@@ -63,8 +66,7 @@ public class UserControl {
 			final String resourcePath = "http://hi-history.com/resources/uploadImages/";
 			final String defaultImage = "http://hi-history.com/resources/image/girl.png";
 
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-			String pw = encoder.encode(request.getParameter("password"));
+			String pw = passwordEncoder.encode(request.getParameter("password"));
 
 			// 회원 추가
 			UserDto userDto = new UserDto();

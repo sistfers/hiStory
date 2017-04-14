@@ -168,9 +168,9 @@
 	<div class="form-group">
 	  <div class="input-group"> 	
 	    <span class="input-group-addon input-lg"><i class="glyphicon glyphicon-search"></i></span>
-	     <input type="text" class="form-control input-lg" name="search_word" size=20 value="<%= search_word%>">
+	     <input type="text" class="form-control input-lg" id="search_word" name="search_word" size=20 value="<%= search_word%>">
 	    <span class="input-group-btn">
-	     <input type="button" class="btn btn-primary btn-lg" value="조 회" onclick="javascript:submit()">
+	     <input type="button" id="search_sumit" class="btn btn-primary btn-lg" value="조 회">
 	    </span>
 	    
 	  </div>
@@ -296,8 +296,21 @@ $(document).ready(function () {
 		
 		window.open(url);
 	});
+	
+	$("#search_sumit").click(function(){
+		var frm = document.do_search;
+	   $("#search_word").val(removeSomechar($("#search_word").val()));
+	   
+	   frm.submit();
+	});
 
  });
+ 
+function removeSomechar( html ) {
+	html = html.replace(/`/gi, "&#96;");
+	html = html.replace(/'/gi, "&#39;");
+	return html;
+}
  
 function do_search() {
 	var frm = document.searchForm;

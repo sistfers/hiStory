@@ -413,6 +413,8 @@ FROM
                       WHERE B1.ID = A.YOU_ID
                       AND MOD(A.CNT,2)=1) 
       AND STATE IN (0,3)
+      AND WDATE >= TO_CHAR(SYSDATE-7,'YYYY-MM-DD')
+      ORDER BY WDATE DESC
       )T1
     LEFT OUTER JOIN
       ( SELECT *
@@ -451,7 +453,6 @@ FROM
       )
     AND STATE IN (0,3)
     )T4
-    ORDER BY WDATE DESC
   )TT2
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
@@ -811,7 +812,7 @@ SELECT TT2.*
                               GROUP BY POST_SEQ 
                               HAVING POST_SEQ = A1.SEQ)
                 OR A2.POST_SEQ IS NULL
-                
+                ORDER BY WDATE DESC
        )T1
         INNER JOIN
        (SELECT ID, TITLE AS BLOG_TITLE
@@ -854,7 +855,7 @@ SELECT TT2.*
                               GROUP BY POST_SEQ 
                               HAVING POST_SEQ = A1.SEQ)
                 OR A2.POST_SEQ IS NULL
-                
+                ORDER BY WDATE DESC
        )T1
         INNER JOIN
        (SELECT ID, TITLE AS BLOG_TITLE

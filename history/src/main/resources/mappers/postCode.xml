@@ -394,6 +394,7 @@ WHERE SEQ     = #{SEQ}
 </select>
 
 <select id="hi_selectFollowerList" parameterType="hashmap" resultMap="FollowerPostMap">
+	<![CDATA[
 SELECT TT2.*
 FROM
   (SELECT ROWNUM RNUM, T3.*, T4.*, BLOG1.BLOG_TITLE, USER1.NAME
@@ -413,7 +414,7 @@ FROM
                       WHERE B1.ID = A.YOU_ID
                       AND MOD(A.CNT,2)=1) 
       AND STATE IN (0,3)
-      AND WDATE >= TO_CHAR(SYSDATE-7,'YYYY-MM-DD')
+      AND WDATE >= TO_DATE(TO_CHAR(SYSDATE-7,'YYYY-MM-DD'))
       ORDER BY WDATE DESC
       )T1
     LEFT OUTER JOIN
@@ -456,6 +457,7 @@ FROM
   )TT2
 	WHERE RNUM BETWEEN (#{PAGE_SIZE} * (#{PAGE_NUM}-1)+1)
 	AND ((#{PAGE_SIZE} * (#{PAGE_NUM}-1))+#{PAGE_SIZE})
+]]>
 </select>
 
 <select id="hi_selectThemeList" parameterType="hashmap" resultMap="ThemePostMap">

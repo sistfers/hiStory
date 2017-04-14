@@ -164,12 +164,7 @@ Spring Web MVC 개발 전반에 걸쳐 주요 기술을 숙달하는 것을 목�
 
 
 ### Entity-Relationship Diagram
-![Entity-Relationship](http://sistfers.github.io/hiStory/docs/modeling/ERD_V5.0.PNG)
-
-
-
-### Class Diagram
-![Class](http://sistfers.github.io/hiStory/docs/modeling/Class_diagram_V1.0.PNG)
+![Entity-Relationship](http://sistfers.github.io/hiStory/docs/modeling/ERD_V6.0.PNG)
 
 
 

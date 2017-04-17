@@ -84,9 +84,6 @@ public class BlogControl {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset-utf-8");
 		
-		System.out.println("getContextPath() : " + request.getContextPath());
-		System.out.println("getRealPath(\"/\") : " + request.getSession().getServletContext().getRealPath("/"));
-		
 		try {
 			postSvc.ckeditorImageUpload(request, response, upload);
 			
@@ -98,7 +95,6 @@ public class BlogControl {
 	public void downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String,Object> condition = new HashMap<String,Object>();
 		condition.put("IDX", request.getParameter("IDX"));
-	    System.out.println("영차영차영차영차영차영차영차영차영차영차영차영차영차영차영차영차 : " + condition.get("IDX"));
 		
 		Map<String,Object> map = boxService.hi_selectFileInfo(condition);
 	    String storedFileName = (String)map.get("SAVE_NAME");
@@ -539,7 +535,7 @@ public class BlogControl {
 		mav.addObject("state", state);
 		mav.addObject("DTO"   ,DTO);	
 		mav.setViewName("post/update");
-		//System.out.println("넘어오는 데이타 뭐니? PostDto"+DTO.toString());
+		
 		return mav;
 	}
 	

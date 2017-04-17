@@ -155,7 +155,6 @@
 	String user_pf_img = user.getPf_image();
 	String user_grade = user.getGrade();
 	String grades[] = {"몽땅연필", "색연필", "만년필"};
-	System.out.println(user_sex + "!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@############################$$$$$$$$$$");
 %>
 
 <!--헤더 START-->

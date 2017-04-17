@@ -107,7 +107,6 @@
 	int loveCount = 0;
 	List<Map<String, Object>> loveList = (List<Map<String, Object>>)request.getAttribute("loveCount");
 
-	//System.out.println("loveList"+loveList.toString());
 	if(loveList != null && loveList.size() >0){
 		loveCount = Integer.parseInt(loveList.get(0).get("TOT_CNT")+"");
 	}

@@ -213,7 +213,6 @@ public class UserControl {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(followList);
 
 		Gson gson = new Gson();
 		return gson.toJson(followList);

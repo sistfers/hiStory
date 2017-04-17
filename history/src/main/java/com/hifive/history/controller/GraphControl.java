@@ -461,7 +461,6 @@ public class GraphControl {
 				dto2.setName(name);
 				dto2.setState(state);
 				
-				if(categoryService.hi_insert(dto2)>0){System.out.println("::::::::::::::::::데이터입력성공");};
 			}			
 		}
 		
@@ -470,7 +469,6 @@ public class GraphControl {
 			String title = request.getParameter("title");
 			String theme = request.getParameter("theme");
 			BlogDto bdto = new BlogDto(user.getId(), title, theme);
-			if(blogService.hi_update(bdto)>0){System.out.println("::::::::::::::::::블로그테마 변경 성공");};
 		}
 		//블로그 타이틀
 		BlogDto blogdto = blogService.getMyBlog(user.getId());

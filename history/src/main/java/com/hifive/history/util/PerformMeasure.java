@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 public class PerformMeasure {
 	 Logger log=LoggerFactory.getLogger(this.getClass());
 	 
-	 @Around("execution(* com..kl.*Controller.*(..))")
+	 @Around("execution(* com.hifive.history.controller.*Control.*(..))")
 	 public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
 		 
 		    String type = joinPoint.getSignature().getDeclaringTypeName();

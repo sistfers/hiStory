@@ -110,7 +110,7 @@ border-radius: 15px;
 							<input type="date" class="form-control" id="enddate" name="enddate">
 						</div>
 						<div class="col-xs-4">
-							<button type="button" id="search" class="btn btn-danger"> 조회 </button>
+							<button type="submit" id="search" class="btn btn-danger"> 조회 </button>
 						</div>
 					</div>
 				<div class="form-group">
@@ -169,7 +169,7 @@ border-radius: 15px;
 <jsp:include page="../main/footer.jsp"/>	
 <!--푸터 START -->
 
-<script type="text/javascript">
+<!-- <script>
 $(document).ready(function () {
 	$("#search").on("click", function () {
 		if ($("#enddate").val().indexOf('-') != 4) {
@@ -180,7 +180,7 @@ $(document).ready(function () {
 	    }
 	});
 });
-</script>
+</script> -->
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.hifive.history.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -7,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StopWatch;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hifive.history.model.PerformDto;
 import com.hifive.history.service.IPerformService;
@@ -24,6 +27,7 @@ public class PerformMeasure {
 		 
 		    String type = joinPoint.getSignature().getDeclaringTypeName();
 		    String name= joinPoint.getSignature().getName();
+		    
 		    dto.setID(CommonUtils.getRandomString());
 		    dto.setCLASS_NM(type);
 		    dto.setMETHOD_NM(name);
@@ -32,7 +36,12 @@ public class PerformMeasure {
 
 	        try {
 	            stopWatch.start();
-	            
+	            for (Object obj : joinPoint.getArgs()) {
+	                if (obj instanceof HttpServletRequest || obj instanceof MultipartHttpServletRequest) {
+	                    HttpServletRequest request = (HttpServletRequest) obj;
+
+	                }
+	            }    
 	            // 핵심 로직 실행.
 	            Object retValue = joinPoint.proceed();
 	            

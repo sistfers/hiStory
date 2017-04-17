@@ -7,6 +7,8 @@ public class PerformDto implements iDto {
 	long   P_TIME; 
 	String REG_DT; 
 	String REG_ID;
+	String ARGU_NM_VALUE;
+	
 	public String getID() {
 		return ID;
 	}
@@ -42,6 +44,12 @@ public class PerformDto implements iDto {
 	}
 	public void setREG_ID(String rEG_ID) {
 		REG_ID = rEG_ID;
+	}
+	public String getARGU_NM_VALUE() {
+		return ARGU_NM_VALUE;
+	}
+	public void setARGU_NM_VALUE(String aRGU_NM_VALUE) {
+		ARGU_NM_VALUE = aRGU_NM_VALUE;
 	}
 	
 	

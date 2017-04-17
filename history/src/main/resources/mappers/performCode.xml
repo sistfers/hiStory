@@ -12,7 +12,8 @@
 	    METHOD_NM,
 	    P_TIME,
 	    REG_DT,
-	    REG_ID
+	    REG_ID,
+	    ARGU_NM_VALUE
 	  )
 	  VALUES
 	  (
@@ -21,7 +22,8 @@
 	    #{METHOD_NM},
 	    #{P_TIME},
 	    SYSDATE,
-	    'SYSTEM'
+	    'SYSTEM',
+	    #{ARGU_NM_VALUE, jdbcType=VARCHAR}
 	  )
 </insert>
 

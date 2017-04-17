@@ -1,5 +1,7 @@
 package com.hifive.history.util;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -27,7 +29,7 @@ public class PerformMeasure {
 		 
 		    String type = joinPoint.getSignature().getDeclaringTypeName();
 		    String name= joinPoint.getSignature().getName();
-		    
+		    StringBuffer sb = new StringBuffer();
 		    dto.setID(CommonUtils.getRandomString());
 		    dto.setCLASS_NM(type);
 		    dto.setMETHOD_NM(name);
@@ -39,8 +41,27 @@ public class PerformMeasure {
 	            for (Object obj : joinPoint.getArgs()) {
 	                if (obj instanceof HttpServletRequest || obj instanceof MultipartHttpServletRequest) {
 	                    HttpServletRequest request = (HttpServletRequest) obj;
-
+	                    Enumeration enums = request.getParameterNames();
+	            		
+	                    	
+	                    while(enums.hasMoreElements()){
+	            			String paramName = (String)enums.nextElement();
+	            			String[] parameters = request.getParameterValues(paramName);
+	            			// Parameter가 배열일 경우
+	            			if(parameters.length > 1){
+	            				sb.append(paramName + " : " +parameters[0]);
+	            				for(int i=1; i<parameters.length; ++i){
+	            					sb.append(", " + parameters[i]);
+	            				}
+	            				sb.append("\n");
+	            			// Parameter가 배열이 아닌 경우
+	            			}else{
+	            				sb.append(paramName + " : " +parameters[0] + "\n");
+	            			}
+	            		}
+	                    dto.setARGU_NM_VALUE(sb.toString());
 	                }
+	            
 	            }    
 	            // 핵심 로직 실행.
 	            Object retValue = joinPoint.proceed();

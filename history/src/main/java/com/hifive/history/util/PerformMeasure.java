@@ -5,15 +5,13 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @Aspect
 public class PerformMeasure {
 	 Logger log=LoggerFactory.getLogger(this.getClass());
 	 
-	 @Around("execution(* com.hifive.history.controller.*Control.*(..))")
+	 @Around("execution(* com..history.controller.*Control.*(..))")
 	 public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
 		 
 		    String type = joinPoint.getSignature().getDeclaringTypeName();

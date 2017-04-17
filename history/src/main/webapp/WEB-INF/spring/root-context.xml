@@ -20,14 +20,13 @@
 	</context:component-scan>
 	<!-- Controller만 추가했는데, context-common.xml에서 @Controller를 제외한 나머지를 등록시켜 주는 역할을 한다.-->
     <bean id="loggingAspect" class="com.hifive.history.util.PerformMeasure"  />
-    <!-- <bean id="hello" class="com.hifive.history.controller.BlogControl"  />
-    <aop:config>
+	<!-- <aop:config> 세부 메소드 실행시간 보고싶을 때 사용
         <aop:aspect id="logAspect" ref="loggingAspect">
             <aop:pointcut  id="logPointCut"  expression="execution(* com..*.*(..))" />
             <aop:around pointcut-ref="logPointCut" method="logging"/>
         </aop:aspect>
-    </aop:config> -->
-
+    </aop:config> --> 
+    
 	<!-- 어노테이션에 기반한 트랜잭션 활성화 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	<!-- JDBC의 연결을 처리하는 기능을 가진 DataSource -->

@@ -29,7 +29,9 @@
 	</beans:bean>
 	
 	<!-- base-package -->
-	<context:component-scan base-package="com.hifive.history.controller" />
+	<context:component-scan base-package="com.hifive.history.*" use-default-filters="false">
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
 <!--     Exception Resolver
     <beans:bean id="exceptionMapping"         
@@ -43,12 +45,9 @@
             
             <beans:property name="defaultErrorView" value="notiles/error/error" />
     </beans:bean> -->
-	<context:component-scan base-package="com.hifive.history.*" use-default-filters="false">  
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
 	   
     <aop:aspectj-autoproxy/>
-    <beans:bean id="loggerAspect" class="com.hifive.history.util.PerformMeasure" />
+    <beans:bean id="loggingAspect" class="com.hifive.history.util.PerformMeasure" />
 
 	<!-- ckediter upload -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />

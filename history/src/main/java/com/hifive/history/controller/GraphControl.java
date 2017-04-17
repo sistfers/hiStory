@@ -183,10 +183,10 @@ public class GraphControl {
 		String enddate = sd.format(date);
 		loger.debug("String enddate              ->  " + enddate);
 		
-		if(request.getParameter("endday")!=null){
-			enddate = request.getParameter("endday");
+		if(request.getParameter("enddate")!=null){
+			enddate = request.getParameter("enddate");
 		}
-		loger.debug("String endday               ->  " + enddate);
+		loger.debug("String enddate               ->  " + enddate);
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("id", user.getId());

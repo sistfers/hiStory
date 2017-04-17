@@ -141,8 +141,9 @@ public class HomeControl {
 			loginDto.setId(id);
 			loginDto.setPassword(password);
 
+			logger.debug("로그인 메소드 실행 전");
 			UserDto userDto = (UserDto)userService.hi_login(loginDto);
-			
+			logger.debug("로그인 메소드 실행 후");
 			if (userDto == null) {
 				mav.addObject("fail", "아이디 혹은 패스워드를 확인해 주세요.");
 				return mav;
@@ -211,11 +212,12 @@ public class HomeControl {
 			
 			int flag = searchSvc.hi_insert(dto);
 			
+			if(flag > 0) logger.debug("단어 인썰트 성공~~~~~~~~~~~~~~~~~~~~~~쑤아뤼");
 		}
 		//검색어 기록에 추가 end
 		
 		PAGE_NUM		= (res.getParameter("PAGE_NUM")==null || res.getParameter("PAGE_NUM").equals("")) ? "1" : res.getParameter("PAGE_NUM");	//페이지NUM
-
+		logger.debug("들어왔다!!!!!!! 단어는 ::"+ search_word);
 		Map<String, Object> condition = new HashMap();
 		
 		condition.put("PAGE_SIZE", PAGE_SIZE);
@@ -229,6 +231,10 @@ public class HomeControl {
 			searchList = postSvc.hi_hashtagSearchList(condition);
 		}else{
 			searchList = postSvc.hi_selectSearchList(condition);
+		}
+		
+		for(int i=0; i<searchList.size(); ++i){
+			logger.debug(i+"번째 blog_title" + searchList.get(i).get("blog_title"));
 		}
 		
 		mav.setViewName("/main/home_search");
@@ -262,6 +268,12 @@ public class HomeControl {
 			
 			  Channel channel = (Channel)rss.getChannel();
 			  items=(List<Item>) channel.getItem();
+			  for(Item item:items)
+			  {
+				  logger.debug("::::"+item.getTitle());
+				  logger.debug("::::"+item.getPostdate());
+				  logger.debug("::::"+item.getBloggername());
+			  }
         }catch(Exception e){
         	
         }		

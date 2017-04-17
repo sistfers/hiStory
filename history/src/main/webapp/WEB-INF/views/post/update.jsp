@@ -51,21 +51,6 @@
 	String state1 = (String) request.getAttribute("state");
 	
 	String catest = (String) request.getAttribute("catest");
-	
-	
-	System.out.println(state1);
-	System.out.println(state1);
-	System.out.println(state1);
-	System.out.println(state1);
-	System.out.println(state1);
-	System.out.println(state1);
-	
-	System.out.println(catest);
-	System.out.println(catest);
-	System.out.println(catest);
-	System.out.println(catest);
-	System.out.println(catest);
-	System.out.println(catest);
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
